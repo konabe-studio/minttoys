@@ -84,14 +84,14 @@ def harness(
 
 def test_without_the_daemon_it_says_so_and_offers_nothing(harness: Harness) -> None:
     assert harness.status() == "MintToys is not running."
-    assert harness.tray.status_icon.get_tooltip_text() == "MintToys is not running."
+    assert harness.tray.tooltip == "MintToys is not running."
     assert not harness.item("Until turned off").get_sensitive()
     assert not harness.item("Keep the screen on").get_sensitive()
 
 
 def test_shows_the_state(harness: Harness) -> None:
     harness.tray.update(ON)
-    assert harness.tray.status_icon.get_icon_name() == app.icon(view.ICON_ON)
+    assert harness.tray.icon_name == app.icon(view.ICON_ON)
     assert harness.status() == "Awake is on until you turn it off."
     assert harness.item("Turn off").get_sensitive()
     assert harness.item("Keep the screen on").get_active()
