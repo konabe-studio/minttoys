@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MintToys panel icon
+Comment=Keep the computer awake from the panel
+Exec=@LIBEXECDIR@/minttoys-tray
+Icon=io.github.konabe_studio.MintToys-awake-on-symbolic
+OnlyShowIn=X-Cinnamon;
+X-GNOME-Autostart-enabled=true
