@@ -21,6 +21,9 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-dev.txt
       - run: pip install -r requirements-dev.txt
+      - name: Install gettext
+        # For the tests that compile the translations and extract the template from the code.
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends gettext
       - name: Lint
         run: ruff check
       - name: Format

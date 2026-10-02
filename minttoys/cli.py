@@ -93,6 +93,7 @@ def run_modules(client: Client, args: argparse.Namespace, out: TextIO) -> None:
 
 
 def describe_modules(infos: list[ModuleInfo]) -> str:
+    # TRANSLATORS: a module's state in the list `minttoys modules` prints.
     states = {"on": _("on"), "off": _("off"), "failed": _("failed")}
     width = max((len(info.id) for info in infos), default=0)
     lines = []

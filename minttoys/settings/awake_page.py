@@ -57,6 +57,7 @@ class TimeRow(SettingsWidget):
                 field.connect("output", _two_digits)
             parts = [self.hours, Gtk.Label(label=":"), self.minutes]
         else:
+            # TRANSLATORS: the units after the hours field and after the minutes field.
             parts = [self.hours, Gtk.Label(label=_("h")), self.minutes, Gtk.Label(label=_("min"))]
         for part in parts:
             box.pack_start(part, False, False, 0)
@@ -118,8 +119,10 @@ class AwakePage(SettingsPage):
         self.mode = ComboBox(_("Keep the computer awake"), values.modes())
         self.mode.content_widget.connect("changed", self._on_mode)
         self.click.add_row(self.mode)
+        # TRANSLATORS: the label in front of the hours and minutes of a duration.
         self.duration = TimeRow(_("For"), 99, time_of_day=False)
         self.duration_revealer = self.click.add_reveal_row(self.duration)
+        # TRANSLATORS: the label in front of a time of day.
         self.until = TimeRow(_("Until"), 23, time_of_day=True)
         self.until_revealer = self.click.add_reveal_row(self.until)
         for field in (self.duration.hours, self.duration.minutes):

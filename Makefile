@@ -10,7 +10,24 @@ SYSCONFDIR ?= /etc
 
 SUBSTITUTE = sed -e 's|@LIBDIR@|$(LIBDIR)|g' -e 's|@LIBEXECDIR@|$(LIBEXECDIR)|g'
 
+LINGUAS = $(shell cat po/LINGUAS)
+POT ?= po/minttoys.pot
+
 all:
+
+# For maintainers: the template from the sources, then every translation merged with it.
+pot:
+	xgettext --language=Python --from-code=UTF-8 --add-comments=TRANSLATORS: \
+		--add-location=file --package-name=minttoys \
+		--msgid-bugs-address=https://github.com/konabe-studio/minttoys/issues \
+		-o $(POT) $$(find minttoys -name '*.py' | LC_ALL=C sort)
+	xgettext --language=Desktop --join-existing --add-location=file \
+		-o $(POT) data/*/*.desktop.in
+
+update-po: pot
+	for lang in $(LINGUAS); do \
+		msgmerge --update --backup=none --previous po/$$lang.po $(POT); \
+	done
 
 check:
 	PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider
@@ -36,4 +53,4 @@ install:
 	cd data && find icons -name '*.svg' -exec install -D -m 644 {} $(DESTDIR)$(DATADIR)/{} \;
 	install -D -m 644 -t $(DESTDIR)$(DATADIR)/man/man1 data/man/*.1
 
-.PHONY: all check install
+.PHONY: all pot update-po check install
