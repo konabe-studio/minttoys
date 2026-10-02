@@ -56,7 +56,7 @@ jobs:
       - name: Install the build tools
         run: |
           sudo apt-get update
-          packages="build-essential dbus debhelper dh-python lintian python3-pytest tzdata"
+          packages="build-essential dbus debhelper dh-python gettext lintian python3-pytest tzdata"
           sudo apt-get install --yes --no-install-recommends $packages
       - name: Build
         run: |
@@ -73,6 +73,10 @@ jobs:
           minttoys --help > /dev/null
           # D-Bus starts the daemon on the first call, from the installed service file.
           test "$(dbus-run-session -- minttoys awake status)" = "Awake is off."
+          # The Hungarian catalogue is where the installed code looks for it, and the menu
+          # entry carries its translated text.
+          test "$(LANGUAGE=hu dbus-run-session -- minttoys awake status)" = "Az Awake ki van kapcsolva."
+          grep -q '^Comment\[hu\]=' /usr/share/applications/io.github.konabe_studio.MintToys.desktop
           sudo apt-get purge --yes minttoys
           left=$(grep -E 'minttoys|konabe_studio' installed.txt | while read -r path; do
             if [ -e "$path" ]; then echo "$path"; fi

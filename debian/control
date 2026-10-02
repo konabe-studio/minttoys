@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Kōnabe Studio <konabe@proton.me>
 Build-Depends: debhelper-compat (= 13),
                dh-python,
+               gettext,
                python3:any,
                python3-pytest <!nocheck>,
                tzdata <!nocheck>,
