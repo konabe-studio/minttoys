@@ -4,6 +4,7 @@ test's own. Needs a display: xvfb in CI, the desktop otherwise.
 
 from collections.abc import Callable, Iterator
 from datetime import datetime
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -90,9 +91,7 @@ def test_without_the_daemon_it_says_so_and_offers_nothing(harness: Harness) -> N
 
 def test_shows_the_state(harness: Harness) -> None:
     harness.tray.update(ON)
-    assert harness.tray.status_icon.get_icon_name().endswith(view.ICON_ON + ".svg") or (
-        harness.tray.status_icon.get_icon_name() == view.ICON_ON
-    )
+    assert harness.tray.status_icon.get_icon_name() == app.icon(view.ICON_ON)
     assert harness.status() == "Awake is on until you turn it off."
     assert harness.item("Turn off").get_sensitive()
     assert harness.item("Keep the screen on").get_active()
@@ -154,3 +153,13 @@ def test_follows_the_daemon_on_the_bus(harness: Harness, pump: Callable[..., boo
         None, AWAKE_PATH, AWAKE_INTERFACE, "StateChanged", GLib.Variant("(a{sv})", (on,))
     )
     assert pump(lambda: harness.status() == "Awake is on until you turn it off.")
+
+
+@pytest.mark.parametrize("name", [view.ICON_ON, view.ICON_OFF])
+def test_an_icon_not_installed_reaches_the_panel_as_a_file_it_can_load(name: str) -> None:
+    if Gtk.IconTheme.get_default().has_icon(name):
+        pytest.skip("the icons are installed, so they go by name")
+    path = Path(app.icon(name))
+    # Cinnamon's applet looks up anything with "symbolic" in it by name, path or not.
+    assert "symbolic" not in str(path)
+    assert path.read_bytes() == (app.CHECKOUT_ICONS / f"{name}.svg").read_bytes()

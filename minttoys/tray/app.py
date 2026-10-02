@@ -38,13 +38,26 @@ class Client(Protocol):
 
 
 def icon(name: str) -> str:
-    """The icon's name when the icon theme has it, as it does once installed; otherwise
-    the file in the checkout, which the panel can load by its path.
+    """The icon's name when the icon theme has it, as it does once installed, so the panel
+    colours it to match; otherwise a file path to the checkout's copy.
+
+    Cinnamon's panel applet (xapp-status) loads a file path only for a full-colour icon.
+    Anything with "symbolic" in it, the path included, it looks up as a name in the theme,
+    finds nothing, and shows an empty, clickable space. So until the icons are installed,
+    the panel gets a copy under a name without the word, in the runtime directory, which
+    goes at logout: the cup shows, though uncoloured.
     """
     if Gtk.IconTheme.get_default().has_icon(name):
         return name
-    path = CHECKOUT_ICONS / f"{name}.svg"
-    return str(path) if path.exists() else name
+    source = CHECKOUT_ICONS / f"{name}.svg"
+    if not source.exists():
+        return name
+    copy = Path(GLib.get_user_runtime_dir()) / "minttoys" / f"{name.removesuffix('-symbolic')}.svg"
+    content = source.read_bytes()
+    if not copy.exists() or copy.read_bytes() != content:
+        copy.parent.mkdir(parents=True, exist_ok=True)
+        copy.write_bytes(content)
+    return str(copy)
 
 
 class Tray:
