@@ -89,6 +89,12 @@ class AwakePage(SettingsPage):
         super().__init__()
         self._client = client
         self._show_error = show_error
+        # What the daemon last said, as shown. A widget's change is saved only when it
+        # differs from this: GTK may deliver the notification of a value the page set
+        # itself after the page is done setting it, and that must not count as the
+        # user's change.
+        self._shown: dict[str, object] = {}
+        self._shown_enabled: bool | None = None
         self._loading = False
         self._pending: dict[str, object] = {}
         self._save_timer = 0
@@ -153,6 +159,7 @@ class AwakePage(SettingsPage):
 
     def show_settings(self, settings: Mapping[str, object]) -> None:
         """Shows settings changed elsewhere, the panel icon's check box for one."""
+        self._shown = dict(settings)
         self._loading = True
         try:
             mode = str(settings["default_mode"])
@@ -167,10 +174,11 @@ class AwakePage(SettingsPage):
     def _show(
         self, info: ModuleInfo | None, settings: Mapping[str, object] | None, problem: str
     ) -> None:
+        self._shown_enabled = bool(info and info.state == "on") if info else None
         self._loading = True
         try:
             self.enabled.set_sensitive(info is not None)
-            self.enabled.content_widget.set_active(bool(info and info.state == "on"))
+            self.enabled.content_widget.set_active(bool(self._shown_enabled))
         finally:
             self._loading = False
         if settings is not None:
@@ -184,9 +192,10 @@ class AwakePage(SettingsPage):
         self.until_revealer.set_reveal_child(mode == "until")
 
     def _on_enabled(self, switch: Gtk.Switch, _spec: object) -> None:
-        if self._loading:
+        enabled = switch.get_active()
+        if self._loading or self._shown_enabled is None or enabled == self._shown_enabled:
             return
-        self._call(lambda: self._client.set_module_enabled("awake", switch.get_active()))
+        self._call(lambda: self._client.set_module_enabled("awake", enabled))
         self.refresh()
 
     def _on_mode(self, combo: Gtk.ComboBox) -> None:
@@ -194,22 +203,26 @@ class AwakePage(SettingsPage):
         if mode is None:
             return
         self._reveal(mode)
-        if not self._loading:
-            self._save({"default_mode": mode})
+        self._save({"default_mode": mode})
 
     def _on_duration(self, _field: Gtk.SpinButton) -> None:
-        if not self._loading:
-            self._save({"default_minutes": values.join_minutes(*self.duration.get())}, later=True)
+        self._save({"default_minutes": values.join_minutes(*self.duration.get())}, later=True)
 
     def _on_until(self, _field: Gtk.SpinButton) -> None:
-        if not self._loading:
-            self._save({"default_until": values.join_time(*self.until.get())}, later=True)
+        self._save({"default_until": values.join_time(*self.until.get())}, later=True)
 
     def _on_keep_screen(self, switch: Gtk.Switch, _spec: object) -> None:
-        if not self._loading:
-            self._save({"keep_screen": switch.get_active()})
+        self._save({"keep_screen": switch.get_active()})
 
     def _save(self, changes: Mapping[str, object], *, later: bool = False) -> None:
+        """Saves what differs from what the daemon last said; the rest is the page showing
+        that, not a change.
+        """
+        if self._loading or not self._shown:
+            return
+        changes = {key: value for key, value in changes.items() if self._shown.get(key) != value}
+        if not changes:
+            return
         self._pending.update(changes)
         if self._save_timer:
             GLib.source_remove(self._save_timer)
@@ -222,7 +235,11 @@ class AwakePage(SettingsPage):
     def _save_now(self) -> bool:
         self._save_timer = 0
         changes, self._pending = self._pending, {}
-        if changes and not self._call(lambda: self._client.awake_set_settings(changes)):
+        if not changes:
+            return GLib.SOURCE_REMOVE
+        if self._call(lambda: self._client.awake_set_settings(changes)):
+            self._shown.update(changes)
+        else:
             self.refresh()  # puts back what the daemon has
         return GLib.SOURCE_REMOVE
 
