@@ -112,8 +112,11 @@ class Tray:
     def _render(self) -> None:
         now = self._now()
         shown = view.present(self._state, now, self._problem)
-        self.status_icon.set_icon_name(icon(shown.icon))
-        self.status_icon.set_tooltip_text(shown.status)
+        # Kept, since XApp.StatusIcon has setters but, in the XApp of Ubuntu 24.04, no getters.
+        self.icon_name = icon(shown.icon)
+        self.tooltip = shown.status
+        self.status_icon.set_icon_name(self.icon_name)
+        self.status_icon.set_tooltip_text(self.tooltip)
         self._status.set_label(shown.status)
         for item in self._actions:
             item.set_sensitive(shown.available)
