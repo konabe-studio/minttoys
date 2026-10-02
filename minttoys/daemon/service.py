@@ -10,14 +10,16 @@ Interface io.github.konabe_studio.MintToys at /io/github/konabe_studio/MintToys:
 """
 
 import logging
+from collections.abc import Mapping
 from pathlib import Path
+from typing import Any
 
 from gi.repository import Gio, GLib
 
 from minttoys import OBJECT_PATH
 from minttoys.api import DAEMON_INTERFACE
 from minttoys.core import config
-from minttoys.daemon.host import ModuleHost
+from minttoys.daemon.host import ModuleHost, ModuleLoader
 
 log = logging.getLogger(__name__)
 
@@ -37,8 +39,8 @@ INTERFACE_XML = f"""
 
 
 class DaemonService:
-    def __init__(self, host: ModuleHost, config_path: Path) -> None:
-        self._host = host
+    def __init__(self, loaders: Mapping[str, ModuleLoader], config_path: Path) -> None:
+        self._host = ModuleHost(loaders, save=self.save_settings)
         self._config_path = config_path
         self._bus: Gio.DBusConnection | None = None
         self._registration = 0
@@ -62,12 +64,18 @@ class DaemonService:
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
         if module_id not in self._host.module_ids:
             raise ValueError(f"unknown module: {module_id!r}")
+        self._host.apply(self.save_settings(module_id, {"enabled": enabled}), self._bus)
+
+    def save_settings(self, module_id: str, changes: Mapping[str, Any]) -> config.Config:
+        """Merges `changes` into one module's section of the config file and saves it.
+
+        The file is read again first, so what another writer saved in between is kept.
+        Returns the config as saved.
+        """
         settings = config.load(self._config_path)
-        section = settings.module(module_id)
-        section["enabled"] = enabled
-        settings.set_module(module_id, section)
+        settings.set_module(module_id, {**settings.module(module_id), **changes})
         config.save(settings, self._config_path)
-        self._host.apply(settings, self._bus)
+        return settings
 
     def _on_call(
         self,

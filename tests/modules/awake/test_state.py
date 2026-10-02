@@ -3,7 +3,15 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.awake.state import OFF, Mode, State, expired, next_check, request
+from minttoys.modules.awake.state import (
+    OFF,
+    Defaults,
+    Mode,
+    State,
+    expired,
+    next_check,
+    request,
+)
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=BUDAPEST)  # 08:00 UTC
@@ -84,3 +92,47 @@ class TestTiming:
     def test_checks_at_once_when_the_end_has_passed(self) -> None:
         wanted = request("duration", 1, "", False, NOW)
         assert next_check(wanted, NOW + timedelta(hours=3), timedelta(minutes=1)) == timedelta(0)
+
+
+class TestDefaults:
+    def test_without_settings_toggle_starts_indefinite_with_the_screen_free(self) -> None:
+        defaults = Defaults.read({})
+        assert defaults == Defaults(Mode.INDEFINITE, 60, "18:00", False)
+        assert defaults.start(NOW) == State(Mode.INDEFINITE, False)
+
+    def test_reads_every_setting(self) -> None:
+        settings = {
+            "default_mode": "duration",
+            "default_minutes": 45,
+            "default_until": "7:30",
+            "keep_screen": True,
+        }
+        defaults = Defaults.read(settings)
+        assert defaults == Defaults(Mode.DURATION, 45, "07:30", True)
+        assert defaults.start(NOW) == State(
+            Mode.DURATION, True, datetime(2026, 6, 1, 8, 45, tzinfo=UTC)
+        )
+
+    def test_until_starts_until_the_time_set(self) -> None:
+        defaults = Defaults.read({"default_mode": "until", "default_until": "18:00"})
+        assert defaults.start(NOW).ends_at == datetime(2026, 6, 1, 16, 0, tzinfo=UTC)
+
+    @pytest.mark.parametrize(
+        "settings",
+        [
+            {"default_mode": "off"},
+            {"default_mode": "sometimes"},
+            {"default_mode": 3},
+            {"default_minutes": 0},
+            {"default_minutes": -5},
+            {"default_minutes": "60"},
+            {"default_minutes": True},
+            {"default_minutes": 1.5},
+            {"default_until": "25:00"},
+            {"default_until": 1800},
+            {"keep_screen": "yes"},
+            {"keep_screen": 1},
+        ],
+    )
+    def test_a_value_of_the_wrong_kind_falls_back(self, settings: dict) -> None:
+        assert Defaults.read(settings) == Defaults()

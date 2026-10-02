@@ -8,6 +8,8 @@ import importlib
 import logging
 from collections.abc import Callable, Mapping
 from enum import StrEnum
+from functools import partial
+from typing import Any
 
 from minttoys.api import ModuleInfo
 from minttoys.core.config import Config
@@ -34,9 +36,18 @@ class State(StrEnum):
     FAILED = "failed"
 
 
+type SettingsSaver = Callable[[str, Mapping[str, Any]], None]
+
+
+def _discard(module_id: str, changes: Mapping[str, Any]) -> None:
+    pass
+
+
 class ModuleHost:
-    def __init__(self, loaders: Mapping[str, ModuleLoader]) -> None:
+    def __init__(self, loaders: Mapping[str, ModuleLoader], save: SettingsSaver = _discard) -> None:
+        """`save(module_id, changes)` is what a module's Context.save calls."""
         self._loaders = loaders
+        self._save = save
         self._classes: dict[str, type[Module] | None] = {}
         # In the order they were switched on, so they go off in reverse.
         self._running: dict[str, Module] = {}
@@ -57,7 +68,8 @@ class ModuleHost:
             if not isinstance(wanted, bool):
                 wanted = module_class.enabled_by_default
             if wanted and module_id not in self._running:
-                self._enable(module_id, module_class, Context(bus=bus, settings=settings))
+                context = Context(bus, settings, partial(self._save, module_id))
+                self._enable(module_id, module_class, context)
             elif not wanted and module_id in self._running:
                 self._disable(module_id)
 

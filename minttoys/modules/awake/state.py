@@ -2,9 +2,11 @@
 for, when a timed mode has ended, and when to look at the clock again.
 """
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import StrEnum
+from typing import Any
 
 from minttoys.modules.awake import timer
 
@@ -34,6 +36,51 @@ class State:
 
 
 OFF = State()
+
+
+@dataclass(frozen=True)
+class Defaults:
+    """Awake's settings: what Toggle starts, and whether the screen stays on.
+
+    keep_screen is also what a client shows and starts with when it does not choose for
+    itself, so the tray's check box and a plain `minttoys awake on` agree.
+    """
+
+    mode: Mode = Mode.INDEFINITE
+    minutes: int = 60
+    until: str = "18:00"
+    keep_screen: bool = False
+
+    @classmethod
+    def read(cls, settings: Mapping[str, Any]) -> "Defaults":
+        """From Awake's section of the config, under default_mode, default_minutes,
+        default_until and keep_screen. A value of the wrong kind falls back to its
+        default, so a config edited by hand cannot keep Awake from starting.
+        """
+        fallback = cls()
+        mode = settings.get("default_mode")
+        minutes = settings.get("default_minutes")
+        until = settings.get("default_until")
+        keep_screen = settings.get("keep_screen")
+        return cls(
+            Mode(mode) if mode in ("indefinite", "duration", "until") else fallback.mode,
+            minutes if type(minutes) is int and minutes > 0 else fallback.minutes,
+            _time_of_day(until) or fallback.until,
+            keep_screen if isinstance(keep_screen, bool) else fallback.keep_screen,
+        )
+
+    def start(self, now: datetime) -> State:
+        """The state Toggle switches to."""
+        return request(self.mode, self.minutes, self.until, self.keep_screen, now)
+
+
+def _time_of_day(value: object) -> str | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        return f"{timer.parse_clock_time(value):%H:%M}"
+    except ValueError:
+        return None
 
 
 def request(mode: str, minutes: int, until: str, keep_screen: bool, now: datetime) -> State:

@@ -1,9 +1,13 @@
 """What every module is, and what the daemon hands it."""
 
 from abc import ABC, abstractmethod
-from collections.abc import Mapping
-from dataclasses import dataclass
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass, field
 from typing import Any, ClassVar
+
+
+def _discard(changes: Mapping[str, Any]) -> None:
+    pass
 
 
 @dataclass(frozen=True)
@@ -13,8 +17,11 @@ class Context:
     # The session bus, a Gio.DBusConnection. Typed loosely so that this file, the daemon's
     # module host and their tests need no PyGObject.
     bus: Any
-    # The module's own section of the config.
+    # The module's own section of the config, as it was when the module was switched on.
     settings: Mapping[str, Any]
+    # Saves changes to that section: the keys given replace their old values, the rest of
+    # the section stays. Raises OSError when the config cannot be written.
+    save: Callable[[Mapping[str, Any]], None] = field(default=_discard)
 
 
 class Module(ABC):

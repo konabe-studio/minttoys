@@ -21,7 +21,6 @@ from gi.repository import Gio, GLib
 from minttoys import BUS_NAME
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
 from minttoys.client import Client
-from minttoys.daemon.host import ModuleHost
 from minttoys.daemon.service import DaemonService
 from minttoys.modules.awake.inhibit import Flags
 from minttoys.modules.awake.module import Awake
@@ -107,9 +106,7 @@ def remote(
 ) -> Iterator[Remote]:
     service_bus, client_bus = private_bus
     take_name(service_bus)
-    service = DaemonService(
-        ModuleHost({"awake": lambda: QuietAwake, "broken": broken_import}), config_path
-    )
+    service = DaemonService({"awake": lambda: QuietAwake, "broken": broken_import}, config_path)
     service.start(service_bus)
     yield Remote(Client(client_bus), pump)
     service.stop()
@@ -136,6 +133,29 @@ def test_switching_awake_off_saves_it_and_takes_it_off_the_bus(
 def test_switching_awake_back_on(remote: Remote) -> None:
     remote(lambda client: client.set_module_enabled("awake", False))
     remote(lambda client: client.set_module_enabled("awake", True))
+    assert remote(lambda client: client.awake_state())["mode"] == "off"
+
+
+def test_the_screen_setting_is_saved_next_to_the_rest(remote: Remote, config_path: Path) -> None:
+    remote(lambda client: client.set_module_enabled("awake", True))
+    remote(lambda client: client.awake_set_keep_screen(True))
+    assert json.loads(config_path.read_text(encoding="utf-8")) == {
+        "modules": {"awake": {"enabled": True, "keep_screen": True}}
+    }
+    assert remote(lambda client: client.awake_state())["keep_screen"] is True
+
+
+def test_the_screen_setting_survives_switching_awake_off_and_on(remote: Remote) -> None:
+    remote(lambda client: client.awake_set_keep_screen(True))
+    remote(lambda client: client.set_module_enabled("awake", False))
+    remote(lambda client: client.set_module_enabled("awake", True))
+    assert remote(lambda client: client.awake_state())["keep_screen"] is True
+
+
+def test_toggle(remote: Remote) -> None:
+    remote(lambda client: client.awake_toggle())
+    assert remote(lambda client: client.awake_state())["mode"] == "indefinite"
+    remote(lambda client: client.awake_toggle())
     assert remote(lambda client: client.awake_state())["mode"] == "off"
 
 

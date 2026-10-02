@@ -48,6 +48,10 @@ class FakeClient:
         self._check()
         self.calls.append(("awake_stop",))
 
+    def awake_toggle(self) -> None:
+        self._check()
+        self.calls.append(("awake_toggle",))
+
 
 def run(client: FakeClient, *argv: str) -> tuple[int, str, str]:
     out, err = io.StringIO(), io.StringIO()
@@ -76,6 +80,16 @@ class TestAwakeOn:
     def test_screen(self, client: FakeClient) -> None:
         run(client, "awake", "on", "--screen")
         assert client.calls == [("awake_start", "indefinite", 0, "", True)]
+
+    def test_no_screen_overrides_the_setting(self, client: FakeClient) -> None:
+        client.state = {"mode": "off", "keep_screen": True, "ends_at": 0}
+        run(client, "awake", "on", "--no-screen")
+        assert client.calls == [("awake_start", "indefinite", 0, "", False)]
+
+    def test_without_either_the_setting_decides(self, client: FakeClient) -> None:
+        client.state = {"mode": "off", "keep_screen": True, "ends_at": 0}
+        run(client, "awake", "on", "--for", "30m")
+        assert client.calls == [("awake_start", "duration", 30, "", True)]
 
     def test_prints_the_state_it_ends_up_in(self, client: FakeClient) -> None:
         client.state = {"mode": "indefinite", "keep_screen": True, "ends_at": 0}
@@ -119,45 +133,10 @@ class TestAwakeOffAndStatus:
         assert run(client, "awake", "status")[0] == 0
         assert client.calls == []
 
-
-class TestDescribeAwake:
-    def test_off(self) -> None:
-        assert cli.describe_awake(OFF, NOW) == "Awake is off."
-
-    def test_indefinite_with_the_screen_on(self) -> None:
-        state = {"mode": "indefinite", "keep_screen": True, "ends_at": 0}
-        assert cli.describe_awake(state, NOW) == (
-            "Awake is on until you turn it off.\nThe screen stays on."
-        )
-
-    def test_timed_without_the_screen(self) -> None:
-        state = {"mode": "duration", "keep_screen": False, "ends_at": unix(2026, 6, 1, 9, 25)}
-        assert cli.describe_awake(state, NOW) == (
-            "Awake is on for 1 h 25 min more, until 11:25.\n"
-            "The screen may turn off, but the computer will not sleep."
-        )
-
-    def test_past_midnight_shows_the_time_only(self) -> None:
-        state = {"mode": "until", "keep_screen": False, "ends_at": unix(2026, 6, 1, 23, 0)}
-        late = NOW.replace(hour=23)
-        assert "for 2 h more, until 01:00." in cli.describe_awake(state, late)
-
-    def test_a_day_or_more_away_shows_the_date(self) -> None:
-        state = {"mode": "duration", "keep_screen": False, "ends_at": unix(2026, 6, 3, 8, 0)}
-        assert "until 2026-06-03 10:00." in cli.describe_awake(state, NOW)
-
-    def test_counts_real_time_across_a_clock_change(self) -> None:
-        # 01:00 to 04:00 on the night the clocks go forward is two hours, not three.
-        now = datetime(2026, 3, 29, 1, 0, tzinfo=BUDAPEST)
-        state = {"mode": "until", "keep_screen": False, "ends_at": unix(2026, 3, 29, 2, 0)}
-        assert "for 2 h more, until 04:00." in cli.describe_awake(state, now)
-
-
-@pytest.mark.parametrize(
-    ("minutes", "text"), [(0, "0 min"), (45, "45 min"), (60, "1 h"), (125, "2 h 5 min")]
-)
-def test_format_minutes(minutes: int, text: str) -> None:
-    assert cli.format_minutes(minutes) == text
+    def test_toggle(self, client: FakeClient) -> None:
+        status, out, _ = run(client, "awake", "toggle")
+        assert (status, client.calls) == (0, [("awake_toggle",)])
+        assert out == "Awake is off.\n"
 
 
 class TestModules:

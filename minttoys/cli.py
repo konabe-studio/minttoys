@@ -1,7 +1,8 @@
 """The minttoys command: Awake and the modules, from a terminal or a script.
 
-    minttoys awake on [--for 90m | --until 18:00] [--screen]
+    minttoys awake on [--for 90m | --until 18:00] [--screen | --no-screen]
     minttoys awake off
+    minttoys awake toggle
     minttoys awake status
     minttoys modules [list | enable MODULE | disable MODULE]
 
@@ -17,7 +18,7 @@ from typing import Protocol, TextIO
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
 from minttoys.core import clock
 from minttoys.core.i18n import _
-from minttoys.modules.awake import timer
+from minttoys.modules.awake import text, timer
 
 
 class Client(Protocol):
@@ -28,6 +29,7 @@ class Client(Protocol):
     def awake_state(self) -> dict: ...
     def awake_start(self, mode: str, minutes: int, until: str, keep_screen: bool) -> None: ...
     def awake_stop(self) -> None: ...
+    def awake_toggle(self) -> None: ...
 
 
 def main(
@@ -64,15 +66,21 @@ def main(
 
 def run_awake(client: Client, args: argparse.Namespace, now: datetime, out: TextIO) -> None:
     if args.action == "on":
+        # Without --screen or --no-screen, the setting the panel icon shows decides.
+        keep_screen = args.screen
+        if keep_screen is None:
+            keep_screen = client.awake_state()["keep_screen"]
         if args.duration is not None:
-            client.awake_start("duration", args.duration, "", args.screen)
+            client.awake_start("duration", args.duration, "", keep_screen)
         elif args.until is not None:
-            client.awake_start("until", 0, args.until, args.screen)
+            client.awake_start("until", 0, args.until, keep_screen)
         else:
-            client.awake_start("indefinite", 0, "", args.screen)
+            client.awake_start("indefinite", 0, "", keep_screen)
     elif args.action == "off":
         client.awake_stop()
-    print(describe_awake(client.awake_state(), now), file=out)
+    elif args.action == "toggle":
+        client.awake_toggle()
+    print(text.describe(client.awake_state(), now), file=out)
 
 
 def run_modules(client: Client, args: argparse.Namespace, out: TextIO) -> None:
@@ -82,44 +90,6 @@ def run_modules(client: Client, args: argparse.Namespace, out: TextIO) -> None:
     else:
         infos = client.modules()
     print(describe_modules(infos), file=out)
-
-
-def describe_awake(state: dict, now: datetime) -> str:
-    """Awake's state in a sentence or two, the way `minttoys awake status` prints it."""
-    if state["mode"] == "off":
-        return _("Awake is off.")
-    if state["mode"] == "indefinite":
-        first = _("Awake is on until you turn it off.")
-    else:
-        end = datetime.fromtimestamp(state["ends_at"], now.tzinfo)
-        first = _("Awake is on for {left} more, until {end}.").format(
-            left=format_minutes(timer.minutes_left(now, end)), end=format_end(end, now)
-        )
-    if state["keep_screen"]:
-        second = _("The screen stays on.")
-    else:
-        second = _("The screen may turn off, but the computer will not sleep.")
-    return f"{first}\n{second}"
-
-
-def format_minutes(minutes: int) -> str:
-    hours, minutes = divmod(minutes, 60)
-    if not hours:
-        return _("{minutes} min").format(minutes=minutes)
-    if not minutes:
-        return _("{hours} h").format(hours=hours)
-    return _("{hours} h {minutes} min").format(hours=hours, minutes=minutes)
-
-
-def format_end(end: datetime, now: datetime) -> str:
-    """The time of day within the next 24 hours, which leaves no doubt which day it is; the
-    date as well beyond that.
-    """
-    local = end.astimezone(now.tzinfo)
-    # Not end - now: both carry the same zone, and Python would subtract clock times.
-    if timer.remaining(now, end) < timedelta(hours=24):
-        return f"{local:%H:%M}"
-    return f"{local:%Y-%m-%d %H:%M}"
 
 
 def describe_modules(infos: list[ModuleInfo]) -> str:
@@ -164,8 +134,16 @@ def parser() -> argparse.ArgumentParser:
         metavar=_("HH:MM"),
         help=_("stay awake until this time of day, even one past midnight"),
     )
-    on.add_argument("--screen", action="store_true", help=_("keep the screen on as well"))
+    on.add_argument(
+        "--screen",
+        action=argparse.BooleanOptionalAction,
+        help=_("keep the screen on as well, or not; without either, as set in MintToys"),
+    )
     actions.add_parser("off", help=_("switch Awake off"))
+    actions.add_parser(
+        "toggle",
+        help=_("switch Awake off when on, or on as set in MintToys; good for a shortcut"),
+    )
     actions.add_parser("status", help=_("show whether Awake is on, and for how long"))
 
     modules = commands.add_parser(
@@ -175,11 +153,11 @@ def parser() -> argparse.ArgumentParser:
     )
     which = modules.add_subparsers(dest="action", metavar=_("ACTION"))
     which.add_parser("list", help=_("list the modules and their state (the default)"))
-    for action, text in (
+    for action, help_text in (
         ("enable", _("switch a module on")),
         ("disable", _("switch a module off")),
     ):
-        choice = which.add_parser(action, help=text)
+        choice = which.add_parser(action, help=help_text)
         choice.add_argument("module", metavar=_("MODULE"))
     return root
 
