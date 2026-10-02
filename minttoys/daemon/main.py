@@ -13,6 +13,7 @@ from gi.repository import Gio, GLib
 from minttoys import BUS_NAME
 from minttoys.core import config
 from minttoys.daemon.host import ModuleHost, lazy
+from minttoys.daemon.service import DaemonService
 from minttoys.modules import AVAILABLE
 
 log = logging.getLogger("minttoysd")
@@ -22,6 +23,7 @@ def main() -> int:
     logging.basicConfig(level=logging.INFO, format="minttoysd: %(levelname)s: %(message)s")
     loop = GLib.MainLoop()
     host = ModuleHost({module_id: lazy(spec) for module_id, spec in AVAILABLE.items()})
+    service = DaemonService(host, config.default_path())
     owned = False
     status = 0
 
@@ -30,7 +32,7 @@ def main() -> int:
         owned = True
         log.info("running as %s", name)
         try:
-            host.apply(config.load(config.default_path()), connection)
+            service.start(connection)
         except Exception:
             log.exception("could not start the modules")
             status = 1
@@ -65,7 +67,7 @@ def main() -> int:
     try:
         loop.run()
     finally:
-        host.stop_all()
+        service.stop()
         Gio.bus_unown_name(owner)
     log.info("stopped")
     return status

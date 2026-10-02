@@ -9,6 +9,7 @@ import logging
 from collections.abc import Callable, Mapping
 from enum import StrEnum
 
+from minttoys.api import ModuleInfo
 from minttoys.core.config import Config
 from minttoys.modules.base import Context, Module
 
@@ -64,6 +65,28 @@ class ModuleHost:
         """Switches every running module off, the last one switched on first."""
         for module_id in reversed(list(self._running)):
             self._disable(module_id)
+
+    @property
+    def module_ids(self) -> tuple[str, ...]:
+        return tuple(self._loaders)
+
+    def describe(self) -> list[ModuleInfo]:
+        """Every module with its state, as ListModules reports it. A module that could not
+        be imported has no name or description to give, so it goes by its id.
+        """
+        infos = []
+        for module_id in self._loaders:
+            module_class = self._class(module_id)
+            infos.append(
+                ModuleInfo(
+                    module_id,
+                    module_class.name if module_class else module_id,
+                    module_class.description if module_class else "",
+                    str(self.states[module_id]),
+                    self.errors.get(module_id, ""),
+                )
+            )
+        return infos
 
     def _class(self, module_id: str) -> type[Module] | None:
         # A module that failed to import stays failed until the daemon restarts: importing
