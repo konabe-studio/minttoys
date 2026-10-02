@@ -7,7 +7,8 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # The base of Linux Mint 22, rather than whatever ubuntu-latest points at.
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         # Linux Mint 22 ships Python 3.12, LMDE 7 ships 3.13.
