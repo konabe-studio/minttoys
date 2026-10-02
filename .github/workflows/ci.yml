@@ -27,3 +27,18 @@ jobs:
         run: ruff format --check
       - name: Test
         run: pytest
+
+  session:
+    # The system Python with PyGObject and pytest from apt, as a Linux Mint 22 user has
+    # them, and a session bus of its own, so the tests that start the daemon run here too.
+    # There is no session manager on that bus, so the inhibit tests skip; they need a
+    # desktop session.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends python3-gi python3-pytest dbus
+      - name: Test
+        run: dbus-run-session -- python3 -m pytest
