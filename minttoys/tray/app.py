@@ -98,8 +98,9 @@ class Tray:
             Gio.DBusSignalFlags.NONE,
             self._on_state_changed,
         )
+        # AUTO_START: once installed, D-Bus starts the daemon if it is not running yet.
         self._watch = Gio.bus_watch_name_on_connection(
-            bus, BUS_NAME, Gio.BusNameWatcherFlags.NONE, self._on_appeared, self._on_vanished
+            bus, BUS_NAME, Gio.BusNameWatcherFlags.AUTO_START, self._on_appeared, self._on_vanished
         )
         self._render()
 
