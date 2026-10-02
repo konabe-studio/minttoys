@@ -11,6 +11,11 @@ from minttoys.core.i18n import _
 
 def main() -> int:
     try:
+        import gi
+
+        # Before the first import of Gtk, or PyGObject warns and picks a version itself.
+        gi.require_version("Gtk", "3.0")
+        gi.require_version("XApp", "1.0")
         from gi.repository import Gio, GLib, Gtk
 
         from minttoys.client import Client
