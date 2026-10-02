@@ -127,3 +127,25 @@ def test_awake_answers_under_the_daemon_s_name(
         return described["mode"] == "off"
 
     assert soon(awake_is_off), "Awake never answered under the daemon's name"
+
+
+def test_the_command_line_talks_to_the_daemon(
+    bus: Gio.DBusConnection, start: Callable[[], subprocess.Popen[str]]
+) -> None:
+    start()
+
+    def command(*argv: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            [sys.executable, "-m", "minttoys", *argv],
+            cwd=CHECKOUT,
+            env={**os.environ, "LANGUAGE": "C"},  # English, whatever is installed
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+
+    assert soon(lambda: command("awake", "status").returncode == 0)
+    assert command("awake", "status").stdout == "Awake is off.\n"
+    listing = command("modules")
+    assert listing.returncode == 0
+    assert listing.stdout.startswith("awake  on")
