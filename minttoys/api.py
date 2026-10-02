@@ -17,6 +17,13 @@ from minttoys import APP_ID, OBJECT_PATH
 DAEMON_INTERFACE = APP_ID
 AWAKE_PATH = f"{OBJECT_PATH}/modules/awake"
 AWAKE_INTERFACE = f"{APP_ID}.Awake"
+# Awake's settings over D-Bus, with the type each one travels as.
+AWAKE_SETTINGS = {
+    "default_mode": "s",
+    "default_minutes": "u",
+    "default_until": "s",
+    "keep_screen": "b",
+}
 
 
 class ModuleInfo(NamedTuple):

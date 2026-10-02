@@ -8,10 +8,15 @@ Interface io.github.konabe_studio.MintToys.Awake at
   minutes), "until" (reads until, as "18:00") or "off". A bad value is InvalidArgs.
 - Stop()
 - Toggle(): Stop when on; when off, Start with Awake's settings (see state.Defaults).
-- SetKeepScreen(keep_screen b): saves it as the setting, and applies it at once when on.
+- SetKeepScreen(keep_screen b): SetSettings with keep_screen alone.
+- GetSettings() -> a{sv}: default_mode s, default_minutes u, default_until s, keep_screen b
+  (see state.Defaults).
+- SetSettings(a{sv}): saves the settings given, the rest stay. An unknown key or a bad
+  value is InvalidArgs, and then nothing changes. keep_screen applies at once when on.
 - GetState() -> a{sv}: mode s, keep_screen b, ends_at x (unix time, 0 when not timed).
   While off, keep_screen is the setting, the one the next Toggle uses.
 - StateChanged(a{sv}): the same, whenever any of it changes
+- SettingsChanged(a{sv}): every setting, whenever one changes
 """
 
 import logging
@@ -26,6 +31,7 @@ from gi.repository import Gio, GLib
 from minttoys import APP_ID
 from minttoys.api import AWAKE_INTERFACE as INTERFACE
 from minttoys.api import AWAKE_PATH as OBJECT_PATH
+from minttoys.api import AWAKE_SETTINGS
 from minttoys.core import clock, notifications
 from minttoys.core.i18n import _
 from minttoys.modules.awake import state
@@ -49,16 +55,26 @@ INTERFACE_XML = f"""
     <method name="SetKeepScreen">
       <arg name="keep_screen" type="b" direction="in"/>
     </method>
+    <method name="GetSettings">
+      <arg name="settings" type="a{{sv}}" direction="out"/>
+    </method>
+    <method name="SetSettings">
+      <arg name="settings" type="a{{sv}}" direction="in"/>
+    </method>
     <method name="GetState">
       <arg name="state" type="a{{sv}}" direction="out"/>
     </method>
     <signal name="StateChanged">
       <arg name="state" type="a{{sv}}"/>
     </signal>
+    <signal name="SettingsChanged">
+      <arg name="settings" type="a{{sv}}"/>
+    </signal>
   </interface>
 </node>
 """
 SIGNATURES = {"mode": "s", "keep_screen": "b", "ends_at": "x"}
+SETTING_SIGNATURES = AWAKE_SETTINGS
 
 
 class Holder(Protocol):
@@ -161,16 +177,23 @@ class Awake(Module):
         else:
             self.stop()
 
-    def set_keep_screen(self, keep_screen: bool) -> None:
-        """Saves the setting first, so that a config that cannot be written changes
-        nothing; then applies it to a running mode, keeping its end.
+    @property
+    def defaults(self) -> Defaults:
+        return self._defaults
+
+    def set_settings(self, changes: Mapping[str, Any]) -> None:
+        """Checks every change, saves them, then applies them; a bad value or a config that
+        cannot be written changes nothing. keep_screen applies to a running mode at once,
+        keeping its end.
         """
-        self._save({"keep_screen": keep_screen})
-        self._defaults = replace(self._defaults, keep_screen=keep_screen)
-        if self._state.mode is not Mode.OFF and self._state.keep_screen != keep_screen:
-            self.start(replace(self._state, keep_screen=keep_screen))
-        else:
-            self._emit()
+        updated = self._defaults.update(changes)
+        self._save({key: updated.settings()[key] for key in changes})
+        self._defaults = updated
+        self._emit_settings()
+        if self._state.mode is not Mode.OFF and self._state.keep_screen != updated.keep_screen:
+            self.start(replace(self._state, keep_screen=updated.keep_screen))
+        elif "keep_screen" in changes:
+            self._emit()  # while off, the state reports the setting
 
     def _reported(self) -> State:
         """The state as GetState gives it: while off, with the keep_screen setting."""
@@ -220,6 +243,22 @@ class Awake(Module):
                 GLib.Variant("(a{sv})", (self._described(),)),
             )
 
+    def _emit_settings(self) -> None:
+        if self._bus is not None and self._registration:
+            self._bus.emit_signal(
+                None,
+                OBJECT_PATH,
+                INTERFACE,
+                "SettingsChanged",
+                GLib.Variant("(a{sv})", (self._settings(),)),
+            )
+
+    def _settings(self) -> dict[str, GLib.Variant]:
+        return {
+            key: GLib.Variant(SETTING_SIGNATURES[key], value)
+            for key, value in self._defaults.settings().items()
+        }
+
     def _described(self) -> dict[str, GLib.Variant]:
         return {
             key: GLib.Variant(SIGNATURES[key], value)
@@ -249,7 +288,13 @@ class Awake(Module):
                 invocation.return_value(None)
             elif method == "SetKeepScreen":
                 (keep_screen,) = parameters.unpack()
-                self.set_keep_screen(keep_screen)
+                self.set_settings({"keep_screen": keep_screen})
+                invocation.return_value(None)
+            elif method == "GetSettings":
+                invocation.return_value(GLib.Variant("(a{sv})", (self._settings(),)))
+            elif method == "SetSettings":
+                (changes,) = parameters.unpack()
+                self.set_settings(changes)
                 invocation.return_value(None)
             elif method == "GetState":
                 invocation.return_value(GLib.Variant("(a{sv})", (self._described(),)))

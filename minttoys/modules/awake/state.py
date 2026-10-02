@@ -2,8 +2,9 @@
 for, when a timed mode has ended, and when to look at the clock again.
 """
 
-from collections.abc import Mapping
-from dataclasses import dataclass
+from collections.abc import Callable, Mapping
+from contextlib import suppress
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
 from enum import StrEnum
 from typing import Any
@@ -38,12 +39,19 @@ class State:
 OFF = State()
 
 
+# The longest default duration: the settings app's fields go to 99 h 59 min.
+MAX_MINUTES = 99 * 60 + 59
+
+
 @dataclass(frozen=True)
 class Defaults:
     """Awake's settings: what Toggle starts, and whether the screen stays on.
 
     keep_screen is also what a client shows and starts with when it does not choose for
     itself, so the tray's check box and a plain `minttoys awake on` agree.
+
+    In the config and over D-Bus they are default_mode, default_minutes, default_until
+    and keep_screen.
     """
 
     mode: Mode = Mode.INDEFINITE
@@ -53,34 +61,76 @@ class Defaults:
 
     @classmethod
     def read(cls, settings: Mapping[str, Any]) -> "Defaults":
-        """From Awake's section of the config, under default_mode, default_minutes,
-        default_until and keep_screen. A value of the wrong kind falls back to its
+        """From Awake's section of the config. A value of the wrong kind falls back to its
         default, so a config edited by hand cannot keep Awake from starting.
         """
-        fallback = cls()
-        mode = settings.get("default_mode")
-        minutes = settings.get("default_minutes")
-        until = settings.get("default_until")
-        keep_screen = settings.get("keep_screen")
-        return cls(
-            Mode(mode) if mode in ("indefinite", "duration", "until") else fallback.mode,
-            minutes if type(minutes) is int and minutes > 0 else fallback.minutes,
-            _time_of_day(until) or fallback.until,
-            keep_screen if isinstance(keep_screen, bool) else fallback.keep_screen,
-        )
+        defaults = cls()
+        for key in _CHECKS:
+            if key in settings:
+                with suppress(ValueError):
+                    defaults = defaults.update({key: settings[key]})
+        return defaults
+
+    def update(self, changes: Mapping[str, Any]) -> "Defaults":
+        """These settings with `changes` made, all or none: ValueError for an unknown key
+        or a value its key does not take.
+        """
+        fields = {}
+        for key, value in changes.items():
+            if key not in _CHECKS:
+                raise ValueError(f"unknown setting: {key!r}")
+            field, check = _CHECKS[key]
+            fields[field] = check(value)
+        return replace(self, **fields)
+
+    def settings(self) -> dict[str, str | int | bool]:
+        """As the config and GetSettings have them."""
+        return {
+            "default_mode": str(self.mode),
+            "default_minutes": self.minutes,
+            "default_until": self.until,
+            "keep_screen": self.keep_screen,
+        }
 
     def start(self, now: datetime) -> State:
         """The state Toggle switches to."""
         return request(self.mode, self.minutes, self.until, self.keep_screen, now)
 
 
-def _time_of_day(value: object) -> str | None:
-    if not isinstance(value, str):
-        return None
+def _mode(value: object) -> Mode:
+    if value not in ("indefinite", "duration", "until"):
+        raise ValueError(f"default_mode is indefinite, duration or until, not {value!r}")
+    return Mode(value)
+
+
+def _minutes(value: object) -> int:
+    if type(value) is not int or not 0 < value <= MAX_MINUTES:
+        raise ValueError(f"default_minutes is 1 to {MAX_MINUTES}, not {value!r}")
+    return value
+
+
+def _until(value: object) -> str:
     try:
+        if not isinstance(value, str):
+            raise ValueError
         return f"{timer.parse_clock_time(value):%H:%M}"
     except ValueError:
-        return None
+        raise ValueError(f"default_until is a time of day such as 18:00, not {value!r}") from None
+
+
+def _keep_screen(value: object) -> bool:
+    if not isinstance(value, bool):
+        raise ValueError(f"keep_screen is true or false, not {value!r}")
+    return value
+
+
+# Each setting's key, the field it fills, and the check its value has to pass.
+_CHECKS: dict[str, tuple[str, Callable[[object], Any]]] = {
+    "default_mode": ("mode", _mode),
+    "default_minutes": ("minutes", _minutes),
+    "default_until": ("until", _until),
+    "keep_screen": ("keep_screen", _keep_screen),
+}
 
 
 def request(mode: str, minutes: int, until: str, keep_screen: bool, now: datetime) -> State:
