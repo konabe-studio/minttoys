@@ -44,6 +44,8 @@ def present(state: dict | None, now: datetime, problem: str = "") -> View:
 
 def quick_label(minutes: int) -> str:
     if minutes % 60:
+        # TRANSLATORS: items of the panel icon's menu, each keeping the computer awake for
+        # that long.
         return ngettext("For {count} minute", "For {count} minutes", minutes).format(count=minutes)
     hours = minutes // 60
     return ngettext("For {count} hour", "For {count} hours", hours).format(count=hours)

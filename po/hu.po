@@ -1,0 +1,416 @@
+# Hungarian translation of MintToys.
+# Copyright (C) 2026 Kōnabe Studio
+# This file is distributed under the same license as the minttoys package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: minttoys\n"
+"Report-Msgid-Bugs-To: https://github.com/konabe-studio/minttoys/issues\n"
+"POT-Creation-Date: 2026-10-02 19:09+0200\n"
+"PO-Revision-Date: 2026-10-02 19:09+0200\n"
+"Last-Translator: Kōnabe Studio <konabe@proton.me>\n"
+"Language-Team: Hungarian\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: minttoys/cli.py
+msgid "MintToys needs PyGObject: sudo apt install python3-gi"
+msgstr ""
+"A MintToys működéséhez PyGObject szükséges: sudo apt install python3-gi"
+
+#: minttoys/cli.py
+msgid "MintToys is not running in this session."
+msgstr "A MintToys nem fut ebben a munkamenetben."
+
+#: minttoys/cli.py minttoys/tray/app.py
+msgid "Awake is switched off in MintToys."
+msgstr "Az Awake ki van kapcsolva a MintToysban."
+
+#: minttoys/cli.py
+msgid "Switch it on with: minttoys modules enable awake"
+msgstr "Így kapcsolhatja be: minttoys modules enable awake"
+
+#: minttoys/cli.py minttoys/settings/awake_page.py minttoys/tray/app.py
+#, python-brace-format
+msgid "MintToys refused: {reason}"
+msgstr "A MintToys nem teljesítette a kérést: {reason}"
+
+#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
+#: minttoys/cli.py
+msgid "on"
+msgstr "be"
+
+#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
+#: minttoys/cli.py
+msgid "off"
+msgstr "ki"
+
+#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
+#: minttoys/cli.py
+msgid "failed"
+msgstr "hibás"
+
+#: minttoys/cli.py
+msgid "Power-user utilities for Linux Mint Cinnamon."
+msgstr "Segédeszközök haladó felhasználóknak, Linux Mint Cinnamonhoz."
+
+#: minttoys/cli.py
+msgid "COMMAND"
+msgstr "PARANCS"
+
+#: minttoys/cli.py
+msgid "keep the computer awake"
+msgstr "a számítógép ébren tartása"
+
+#: minttoys/cli.py
+msgid "Keep the computer awake."
+msgstr "A számítógép ébren tartása."
+
+#: minttoys/cli.py
+msgid "ACTION"
+msgstr "MŰVELET"
+
+#: minttoys/cli.py
+msgid "switch Awake on"
+msgstr "az Awake bekapcsolása"
+
+#: minttoys/cli.py
+msgid ""
+"Switch Awake on: until you turn it off, for a set time, or until a time of "
+"day."
+msgstr ""
+"Az Awake bekapcsolása: amíg ki nem kapcsolja, adott ideig vagy egy adott "
+"időpontig."
+
+#: minttoys/cli.py
+msgid "DURATION"
+msgstr "IDŐTARTAM"
+
+#: minttoys/cli.py
+msgid "stay awake this long: 90 or 90m, 2h, 1h30m"
+msgstr "ébren tartás ennyi ideig: 90 vagy 90m, 2h, 1h30m"
+
+#: minttoys/cli.py
+msgid "HH:MM"
+msgstr "ÓÓ:PP"
+
+#: minttoys/cli.py
+msgid "stay awake until this time of day, even one past midnight"
+msgstr "ébren tartás eddig az időpontig, akár éjfél után is"
+
+#: minttoys/cli.py
+msgid "keep the screen on as well, or not; without either, as set in MintToys"
+msgstr ""
+"a képernyő is maradjon bekapcsolva, vagy ne; ha egyik sincs megadva, a "
+"MintToys beállítása szerint"
+
+#: minttoys/cli.py
+msgid "switch Awake off"
+msgstr "az Awake kikapcsolása"
+
+#: minttoys/cli.py
+msgid "switch Awake off when on, or on as set in MintToys; good for a shortcut"
+msgstr ""
+"az Awake kikapcsolása, ha be van kapcsolva, különben bekapcsolása a MintToys "
+"beállítása szerint; gyorsbillentyűhöz ideális"
+
+#: minttoys/cli.py
+msgid "show whether Awake is on, and for how long"
+msgstr "megmutatja, be van-e kapcsolva az Awake, és meddig"
+
+#: minttoys/cli.py
+msgid "list the modules, switch one on or off"
+msgstr "a modulok listázása, egy modul be- vagy kikapcsolása"
+
+#: minttoys/cli.py
+msgid "List MintToys' modules, or switch one on or off."
+msgstr ""
+"A MintToys moduljainak listázása, vagy egy modul be- vagy kikapcsolása."
+
+#: minttoys/cli.py
+msgid "list the modules and their state (the default)"
+msgstr "a modulok és állapotuk listázása (alapértelmezés)"
+
+#: minttoys/cli.py
+msgid "switch a module on"
+msgstr "egy modul bekapcsolása"
+
+#: minttoys/cli.py
+msgid "switch a module off"
+msgstr "egy modul kikapcsolása"
+
+#: minttoys/cli.py
+msgid "MODULE"
+msgstr "MODUL"
+
+#: minttoys/cli.py
+#, python-brace-format
+msgid ""
+"'{text}' is not a duration. Use minutes (90 or 90m), hours (2h), or both "
+"(1h30m)."
+msgstr ""
+"„{text}” nem időtartam. Adja meg percben (90 vagy 90m), órában (2h) vagy "
+"órában és percben (1h30m)."
+
+#: minttoys/cli.py
+#, python-brace-format
+msgid "'{text}' is not a time of day. Use hours and minutes, such as 18:00."
+msgstr "„{text}” nem időpont. Adja meg óra:perc alakban, például 18:00."
+
+#: minttoys/modules/awake/module.py minttoys/settings/awake_page.py
+#: minttoys/settings/window.py
+msgid "Awake"
+msgstr "Awake"
+
+#: minttoys/modules/awake/module.py
+msgid ""
+"Keeps the computer awake until you turn it off, for a set time, or until a "
+"time of day, without changing your power settings."
+msgstr ""
+"Ébren tartja a számítógépet, amíg ki nem kapcsolja, adott ideig vagy egy "
+"adott időpontig, az energiagazdálkodási beállítások módosítása nélkül."
+
+#: minttoys/modules/awake/module.py
+msgid "Awake is keeping the computer awake"
+msgstr "Az Awake ébren tartja a számítógépet"
+
+#: minttoys/modules/awake/module.py
+msgid "Awake is off"
+msgstr "Az Awake kikapcsolt"
+
+#: minttoys/modules/awake/module.py
+msgid "The time is up. Your usual power settings apply again."
+msgstr ""
+"Letelt az idő. Ismét a megszokott energiagazdálkodási beállítások érvényesek."
+
+#: minttoys/modules/awake/text.py
+msgid "Awake is off."
+msgstr "Az Awake ki van kapcsolva."
+
+#: minttoys/modules/awake/text.py
+msgid "Awake is on until you turn it off."
+msgstr "Az Awake bekapcsolva marad, amíg ki nem kapcsolja."
+
+#. TRANSLATORS: {left} is the time left, such as "1 h 25 min", and {end} the time Awake
+#. ends, such as "18:00", with the date in front when that is more than a day away.
+#: minttoys/modules/awake/text.py
+#, python-brace-format
+msgid "Awake is on for {left} more, until {end}."
+msgstr "Az Awake {end}-ig marad bekapcsolva, még {left} van hátra."
+
+#: minttoys/modules/awake/text.py
+msgid "The screen stays on."
+msgstr "A képernyő bekapcsolva marad."
+
+#: minttoys/modules/awake/text.py
+msgid "The screen may turn off, but the computer will not sleep."
+msgstr "A képernyő kikapcsolhat, de a számítógép nem megy alvó állapotba."
+
+#: minttoys/modules/awake/text.py
+#, python-brace-format
+msgid "{minutes} min"
+msgstr "{minutes} perc"
+
+#: minttoys/modules/awake/text.py
+#, python-brace-format
+msgid "{hours} h"
+msgstr "{hours} óra"
+
+#: minttoys/modules/awake/text.py
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr "{hours} óra {minutes} perc"
+
+#. TRANSLATORS: the units after the hours field and after the minutes field.
+#: minttoys/settings/awake_page.py minttoys/tray/app.py
+msgid "h"
+msgstr "óra"
+
+#. TRANSLATORS: the units after the hours field and after the minutes field.
+#: minttoys/settings/awake_page.py minttoys/tray/app.py
+msgid "min"
+msgstr "perc"
+
+#: minttoys/settings/awake_page.py
+msgid "Keeps the computer awake, without changing your power settings."
+msgstr ""
+"Ébren tartja a számítógépet, az energiagazdálkodási beállítások módosítása "
+"nélkül."
+
+#: minttoys/settings/awake_page.py
+msgid "Use Awake"
+msgstr "Awake használata"
+
+#: minttoys/settings/awake_page.py
+msgid "When you click the panel icon"
+msgstr "A panelikonra kattintáskor"
+
+#: minttoys/settings/awake_page.py
+msgid ""
+"The same goes for minttoys awake toggle, on a keyboard shortcut or in a "
+"script."
+msgstr ""
+"Ugyanez érvényes a minttoys awake toggle parancsra is, gyorsbillentyűn vagy "
+"szkriptben."
+
+#: minttoys/settings/awake_page.py
+msgid "Keep the computer awake"
+msgstr "Számítógép ébren tartása"
+
+#. TRANSLATORS: the label in front of the hours and minutes of a duration.
+#: minttoys/settings/awake_page.py
+msgid "For"
+msgstr "Időtartam"
+
+#. TRANSLATORS: the label in front of a time of day.
+#: minttoys/settings/awake_page.py
+msgid "Until"
+msgstr "Időpont"
+
+#: minttoys/settings/awake_page.py minttoys/tray/app.py
+msgid "Keep the screen on"
+msgstr "Képernyő bekapcsolva tartása"
+
+#: minttoys/settings/awake_page.py
+msgid "Otherwise the screen may turn off, but the computer will not sleep."
+msgstr ""
+"Különben a képernyő kikapcsolhat, de a számítógép nem megy alvó állapotba."
+
+#: minttoys/settings/awake_page.py
+msgid "Keyboard shortcut"
+msgstr "Gyorsbillentyű"
+
+#: minttoys/settings/awake_page.py
+msgid "Add a custom shortcut in the Keyboard settings with this command."
+msgstr ""
+"Ezzel a paranccsal vegyen fel egyéni gyorsbillentyűt a "
+"billentyűzet-beállításokban."
+
+#: minttoys/settings/awake_page.py
+msgid "Command"
+msgstr "Parancs"
+
+#: minttoys/settings/awake_page.py
+msgid "Open the Keyboard settings"
+msgstr "Billentyűzet-beállítások megnyitása"
+
+#: minttoys/settings/awake_page.py minttoys/tray/app.py
+msgid "MintToys is not running."
+msgstr "A MintToys nem fut."
+
+#: minttoys/settings/awake_page.py
+#, python-brace-format
+msgid "Awake could not be switched on: {error}"
+msgstr "Az Awake bekapcsolása nem sikerült: {error}"
+
+#: minttoys/settings/main.py
+#, python-brace-format
+msgid "The settings need PyGObject, GTK 3 and python3-xapp: {error}"
+msgstr "A beállításokhoz PyGObject, GTK 3 és python3-xapp szükséges: {error}"
+
+#: minttoys/settings/main.py minttoys/settings/window.py
+#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+#: data/autostart/io.github.konabe_studio.MintToys.desktop.in
+msgid "MintToys"
+msgstr "MintToys"
+
+#: minttoys/settings/values.py minttoys/tray/app.py
+msgid "Until turned off"
+msgstr "Kikapcsolásig"
+
+#: minttoys/settings/values.py
+msgid "For a set time"
+msgstr "Adott ideig"
+
+#: minttoys/settings/values.py
+msgid "Until a time of day"
+msgstr "Egy adott időpontig"
+
+#: minttoys/tray/app.py
+msgid "For a custom time…"
+msgstr "Egyéni időtartamra…"
+
+#: minttoys/tray/app.py
+msgid "Until a time of day…"
+msgstr "Egy adott időpontig…"
+
+#: minttoys/tray/app.py
+msgid "Turn off"
+msgstr "Kikapcsolás"
+
+#: minttoys/tray/app.py
+msgid "Settings…"
+msgstr "Beállítások…"
+
+#: minttoys/tray/app.py
+msgid "Keep the computer awake for"
+msgstr "Számítógép ébren tartása ennyi ideig"
+
+#: minttoys/tray/app.py
+msgid "Keep the computer awake until"
+msgstr "Számítógép ébren tartása eddig"
+
+#: minttoys/tray/app.py
+msgid "Cancel"
+msgstr "Mégse"
+
+#: minttoys/tray/app.py
+msgid "Start"
+msgstr "Indítás"
+
+#: minttoys/tray/main.py
+#, python-brace-format
+msgid "The panel icon needs PyGObject, GTK 3 and XApp: {error}"
+msgstr "A panelikonhoz PyGObject, GTK 3 és XApp szükséges: {error}"
+
+#: minttoys/tray/main.py
+msgid "The panel icon needs a desktop session."
+msgstr "A panelikonhoz asztali munkamenet szükséges."
+
+#: minttoys/tray/main.py
+msgid "The MintToys panel icon is already running."
+msgstr "A MintToys panelikonja már fut."
+
+#. TRANSLATORS: items of the panel icon's menu, each keeping the computer awake for
+#. that long.
+#: minttoys/tray/view.py
+#, python-brace-format
+msgid "For {count} minute"
+msgid_plural "For {count} minutes"
+msgstr[0] "{count} percre"
+msgstr[1] "{count} percre"
+
+#: minttoys/tray/view.py
+#, python-brace-format
+msgid "For {count} hour"
+msgid_plural "For {count} hours"
+msgstr[0] "{count} órára"
+msgstr[1] "{count} órára"
+
+#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+msgid "Power-user utilities"
+msgstr "Segédeszközök haladó felhasználóknak"
+
+#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+msgid "Switch MintToys' tools on and off, and set them up"
+msgstr "A MintToys eszközeinek be- és kikapcsolása, beállítása"
+
+#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+msgid "Awake;Sleep;Suspend;Screen;"
+msgstr ""
+"Awake;Ébren;Alvás;Felfüggesztés;Képernyő;Energiagazdálkodás;Sleep;Suspend;Screen;"
+
+#: data/autostart/io.github.konabe_studio.MintToys.Tray.desktop.in
+msgid "MintToys panel icon"
+msgstr "MintToys panelikon"
+
+#: data/autostart/io.github.konabe_studio.MintToys.Tray.desktop.in
+msgid "Keep the computer awake from the panel"
+msgstr "A számítógép ébren tartása a panelről"
+
+#: data/autostart/io.github.konabe_studio.MintToys.desktop.in
+msgid "The background service behind MintToys' tools"
+msgstr "A MintToys eszközeit működtető háttérszolgáltatás"

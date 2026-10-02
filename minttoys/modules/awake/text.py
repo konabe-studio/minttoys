@@ -13,6 +13,8 @@ def headline(state: dict, now: datetime) -> str:
     if state["mode"] == "indefinite":
         return _("Awake is on until you turn it off.")
     end = datetime.fromtimestamp(state["ends_at"], now.tzinfo)
+    # TRANSLATORS: {left} is the time left, such as "1 h 25 min", and {end} the time Awake
+    # ends, such as "18:00", with the date in front when that is more than a day away.
     return _("Awake is on for {left} more, until {end}.").format(
         left=format_minutes(timer.minutes_left(now, end)), end=format_end(end, now)
     )
