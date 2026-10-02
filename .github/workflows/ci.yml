@@ -39,7 +39,7 @@ jobs:
       - name: Install
         run: |
           sudo apt-get update
-          packages="python3-gi python3-pytest dbus gir1.2-gtk-3.0 gir1.2-xapp-1.0 xvfb xauth"
+          packages="python3-gi python3-pytest python3-xapp dbus gir1.2-gtk-3.0 gir1.2-xapp-1.0 xvfb xauth"
           sudo apt-get install --yes --no-install-recommends $packages
       - name: Test
         run: xvfb-run --auto-servernum dbus-run-session -- python3 -m pytest

@@ -163,3 +163,7 @@ def test_an_icon_not_installed_reaches_the_panel_as_a_file_it_can_load(name: str
     # Cinnamon's applet looks up anything with "symbolic" in it by name, path or not.
     assert "symbolic" not in str(path)
     assert path.read_bytes() == (app.CHECKOUT_ICONS / f"{name}.svg").read_bytes()
+
+
+def test_settings_is_on_the_menu_even_without_the_daemon(harness: Harness) -> None:
+    assert harness.item("Settings…").get_sensitive()

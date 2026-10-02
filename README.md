@@ -63,6 +63,7 @@ installed; until then, `scripts/dev-install.sh` links them into `~/.local/share`
 ```sh
 python3 -m minttoys.daemon
 python3 -m minttoys.tray
+python3 -m minttoys.settings
 python3 -m minttoys awake status
 ```
 

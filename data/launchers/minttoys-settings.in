@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+import sys
+
+sys.path.insert(0, "@LIBDIR@")
+
+from minttoys.settings.main import main
+
+raise SystemExit(main())

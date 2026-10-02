@@ -18,14 +18,15 @@ gi.require_version("XApp", "1.0")
 
 from gi.repository import Gio, GLib, Gtk, XApp  # noqa: E402
 
-from minttoys import BUS_NAME  # noqa: E402
+from minttoys import APP_ID, BUS_NAME  # noqa: E402
 from minttoys.api import AWAKE_INTERFACE, AWAKE_PATH, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.core import clock  # noqa: E402
 from minttoys.core.i18n import _  # noqa: E402
 from minttoys.tray import view  # noqa: E402
 
-# Where the icons are in a checkout, for running it before they are installed.
-CHECKOUT_ICONS = Path(__file__).parents[2] / "data" / "icons" / "hicolor" / "symbolic" / "apps"
+# The checkout this runs from, before MintToys is installed, and its icons.
+CHECKOUT = Path(__file__).parents[2]
+CHECKOUT_ICONS = CHECKOUT / "data" / "icons" / "hicolor" / "symbolic" / "apps"
 _hinted = False
 
 
@@ -169,8 +170,27 @@ class Tray:
         menu.append(Gtk.SeparatorMenuItem())
 
         self._turn_off = add(_("Turn off"), self._client.awake_stop)
+        menu.append(Gtk.SeparatorMenuItem())
+
+        # Always there, even without the daemon: the settings window says what is wrong.
+        settings = Gtk.MenuItem(label=_("Settings…"))
+        settings.connect("activate", lambda _item: self._open_settings())
+        menu.append(settings)
         menu.show_all()
         return menu
+
+    def _open_settings(self) -> None:
+        """Opens the settings window: the installed one, or from the checkout before then."""
+        installed = Gio.DesktopAppInfo.new(f"{APP_ID}.desktop")
+        try:
+            if installed is not None:
+                installed.launch([], None)
+                return
+            launcher = Gio.SubprocessLauncher.new(Gio.SubprocessFlags.NONE)
+            launcher.set_cwd(str(CHECKOUT))
+            launcher.spawnv([sys.executable, "-m", "minttoys.settings"])
+        except GLib.Error as error:
+            self._error(error.message)
 
     def _start(self, mode: str, minutes: int, until: str) -> None:
         keep_screen = bool(self._state and self._state["keep_screen"])
