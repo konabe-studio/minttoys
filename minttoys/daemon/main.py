@@ -3,6 +3,12 @@
 The bus name is the lock. A second daemon finds it taken and exits, leaving the first
 alone. SIGTERM, which is what ending the session sends, and SIGINT switch every module off
 before the process ends.
+
+The objects go on the bus, and the modules on, as soon as the connection is up and before
+the name is asked for. When D-Bus starts the daemon for a waiting call, it hands that call
+over the moment the name is taken; an object put up only then could miss it, and the
+caller would hear that it does not exist. A second daemon therefore switches its modules
+on for the moment it takes to find the name taken, which a module's enable() has to allow.
 """
 
 import logging
@@ -27,16 +33,19 @@ def main() -> int:
     owned = False
     status = 0
 
-    def on_name_acquired(connection: Gio.DBusConnection, name: str) -> None:
-        nonlocal owned, status
-        owned = True
-        log.info("running as %s", name)
+    def on_bus_acquired(connection: Gio.DBusConnection, name: str) -> None:
+        nonlocal status
         try:
             service.start(connection)
         except Exception:
             log.exception("could not start the modules")
             status = 1
             loop.quit()
+
+    def on_name_acquired(connection: Gio.DBusConnection, name: str) -> None:
+        nonlocal owned
+        owned = True
+        log.info("running as %s", name)
 
     def on_name_lost(connection: Gio.DBusConnection | None, name: str) -> None:
         nonlocal status
@@ -60,7 +69,7 @@ def main() -> int:
         Gio.BusType.SESSION,
         BUS_NAME,
         Gio.BusNameOwnerFlags.DO_NOT_QUEUE,
-        None,
+        on_bus_acquired,
         on_name_acquired,
         on_name_lost,
     )
