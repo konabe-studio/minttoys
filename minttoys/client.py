@@ -59,6 +59,13 @@ class Client:
     def awake_stop(self) -> None:
         self._call(AWAKE_PATH, AWAKE_INTERFACE, "Stop", None, None)
 
+    def awake_toggle(self) -> None:
+        self._call(AWAKE_PATH, AWAKE_INTERFACE, "Toggle", None, None)
+
+    def awake_set_keep_screen(self, keep_screen: bool) -> None:
+        arguments = GLib.Variant("(b)", (keep_screen,))
+        self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetKeepScreen", arguments, None)
+
     def _call(
         self,
         path: str,

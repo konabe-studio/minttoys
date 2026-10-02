@@ -12,7 +12,7 @@ from gi.repository import Gio, GLib
 
 from minttoys import BUS_NAME
 from minttoys.core import config
-from minttoys.daemon.host import ModuleHost, lazy
+from minttoys.daemon.host import lazy
 from minttoys.daemon.service import DaemonService
 from minttoys.modules import AVAILABLE
 
@@ -22,8 +22,8 @@ log = logging.getLogger("minttoysd")
 def main() -> int:
     logging.basicConfig(level=logging.INFO, format="minttoysd: %(levelname)s: %(message)s")
     loop = GLib.MainLoop()
-    host = ModuleHost({module_id: lazy(spec) for module_id, spec in AVAILABLE.items()})
-    service = DaemonService(host, config.default_path())
+    loaders = {module_id: lazy(spec) for module_id, spec in AVAILABLE.items()}
+    service = DaemonService(loaders, config.default_path())
     owned = False
     status = 0
 

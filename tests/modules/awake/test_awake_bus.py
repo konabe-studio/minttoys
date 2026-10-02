@@ -47,10 +47,23 @@ class Harness:
     now: datetime
     notices: list[tuple[str, str]] = field(default_factory=list)
     signals: list[dict] = field(default_factory=list)
+    saved: list[dict] = field(default_factory=list)
+    save_fails: bool = False
+
+    def save(self, changes: dict) -> None:
+        if self.save_fails:
+            raise OSError("disk full")
+        self.saved.append(dict(changes))
+
+    def reenable(self, settings: dict) -> None:
+        """Switches the module off and on again, as the daemon would with these settings."""
+        self.module.disable()
+        self.module.enable(Context(self.service, settings, self.save))
 
     def call(self, method: str, *arguments: Any) -> Any:  # noqa: ANN401
         """Calls a method over the bus; returns its result, or the GLib.Error it raised."""
-        parameters = GLib.Variant("(susb)", arguments) if method == "Start" else None
+        signature = {"Start": "(susb)", "SetKeepScreen": "(b)"}.get(method)
+        parameters = GLib.Variant(signature, arguments) if signature else None
         results: list = []
 
         def done(connection: Gio.DBusConnection, result: Gio.AsyncResult) -> None:
@@ -109,7 +122,7 @@ def awake(
         Gio.DBusSignalFlags.NONE,
         lambda *args: harness.signals.append(args[5].unpack()[0]),
     )
-    module.enable(Context(bus=service, settings={}))
+    module.enable(Context(service, {}, harness.save))
     yield harness
     module.disable()
 
@@ -248,3 +261,55 @@ def test_disable_releases_and_leaves_the_bus(awake: Harness) -> None:
     assert awake.inhibitor.calls[-1] == ("release",)
     assert remote_error(awake.call("GetState")) is not None
     awake.module.disable()  # a second time does no harm
+
+
+def test_toggle_starts_as_set_and_stops(awake: Harness) -> None:
+    awake.call("Toggle")
+    assert awake.state() == {"mode": "indefinite", "keep_screen": False, "ends_at": 0}
+    assert awake.inhibitor.calls == [("hold", Flags.SUSPEND)]
+    awake.call("Toggle")
+    assert awake.state() == OFF
+
+
+def test_toggle_follows_the_settings(awake: Harness) -> None:
+    awake.reenable({"default_mode": "duration", "default_minutes": 30, "keep_screen": True})
+    awake.call("Toggle")
+    assert awake.state() == {
+        "mode": "duration",
+        "keep_screen": True,
+        "ends_at": unix(2026, 6, 1, 8, 30),
+    }
+    assert awake.inhibitor.calls[-1] == ("hold", Flags.SUSPEND | Flags.IDLE)
+
+
+def test_while_off_the_state_carries_the_screen_setting(awake: Harness) -> None:
+    awake.reenable({"keep_screen": True})
+    assert awake.state() == {"mode": "off", "keep_screen": True, "ends_at": 0}
+
+
+def test_set_keep_screen_while_off_saves_it_and_says_so(awake: Harness) -> None:
+    assert awake.call("SetKeepScreen", True) == ()
+    assert awake.saved == [{"keep_screen": True}]
+    assert awake.state()["keep_screen"] is True
+    assert awake.inhibitor.calls == []
+    assert awake.pump(lambda: awake.signals and awake.signals[-1]["keep_screen"] is True)
+
+
+def test_set_keep_screen_while_on_applies_it_and_keeps_the_end(awake: Harness) -> None:
+    awake.call("Start", "duration", 90, "", False)
+    awake.call("SetKeepScreen", True)
+    assert awake.inhibitor.calls == [("hold", Flags.SUSPEND), ("hold", Flags.SUSPEND | Flags.IDLE)]
+    assert awake.state() == {
+        "mode": "duration",
+        "keep_screen": True,
+        "ends_at": unix(2026, 6, 1, 9, 30),
+    }
+
+
+def test_a_screen_setting_that_cannot_be_saved_changes_nothing(awake: Harness) -> None:
+    awake.call("Start", "indefinite", 0, "", False)
+    awake.save_fails = True
+    result = awake.call("SetKeepScreen", True)
+    assert remote_error(result) == "org.freedesktop.DBus.Error.Failed"
+    assert awake.state()["keep_screen"] is False
+    assert awake.inhibitor.calls == [("hold", Flags.SUSPEND)]

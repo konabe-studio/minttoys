@@ -7,15 +7,19 @@ Interface io.github.konabe_studio.MintToys.Awake at
 - Start(mode s, minutes u, until s, keep_screen b): mode is "indefinite", "duration" (reads
   minutes), "until" (reads until, as "18:00") or "off". A bad value is InvalidArgs.
 - Stop()
-- GetState() -> a{sv}: mode s, keep_screen b, ends_at x (unix time, 0 when not timed)
-- StateChanged(a{sv}): the same, whenever it changes
+- Toggle(): Stop when on; when off, Start with Awake's settings (see state.Defaults).
+- SetKeepScreen(keep_screen b): saves it as the setting, and applies it at once when on.
+- GetState() -> a{sv}: mode s, keep_screen b, ends_at x (unix time, 0 when not timed).
+  While off, keep_screen is the setting, the one the next Toggle uses.
+- StateChanged(a{sv}): the same, whenever any of it changes
 """
 
 import logging
 import math
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
+from dataclasses import replace
 from datetime import datetime, timedelta
-from typing import ClassVar, Protocol
+from typing import Any, ClassVar, Protocol
 
 from gi.repository import Gio, GLib
 
@@ -26,7 +30,7 @@ from minttoys.core import clock, notifications
 from minttoys.core.i18n import _
 from minttoys.modules.awake import state
 from minttoys.modules.awake.inhibit import Flags, Inhibitor
-from minttoys.modules.awake.state import OFF, Mode, State
+from minttoys.modules.awake.state import OFF, Defaults, Mode, State
 from minttoys.modules.base import Context, Module
 
 log = logging.getLogger(__name__)
@@ -41,6 +45,10 @@ INTERFACE_XML = f"""
       <arg name="keep_screen" type="b" direction="in"/>
     </method>
     <method name="Stop"/>
+    <method name="Toggle"/>
+    <method name="SetKeepScreen">
+      <arg name="keep_screen" type="b" direction="in"/>
+    </method>
     <method name="GetState">
       <arg name="state" type="a{{sv}}" direction="out"/>
     </method>
@@ -92,6 +100,8 @@ class Awake(Module):
         self._registration = 0
         self._timeout = 0
         self._state = OFF
+        self._defaults = Defaults()
+        self._save: Callable[[Mapping[str, Any]], None] = lambda changes: None
 
     @property
     def state(self) -> State:
@@ -99,6 +109,8 @@ class Awake(Module):
 
     def enable(self, context: Context) -> None:
         self._bus = context.bus
+        self._defaults = Defaults.read(context.settings)
+        self._save = context.save
         self._inhibitor = self._make_inhibitor(context.bus)
         node = Gio.DBusNodeInfo.new_for_xml(INTERFACE_XML)
         self._registration = context.bus.register_object(
@@ -142,6 +154,29 @@ class Awake(Module):
         self._state = OFF
         log.info("off")
         self._emit()
+
+    def toggle(self) -> None:
+        if self._state.mode is Mode.OFF:
+            self.start(self._defaults.start(self._now()))
+        else:
+            self.stop()
+
+    def set_keep_screen(self, keep_screen: bool) -> None:
+        """Saves the setting first, so that a config that cannot be written changes
+        nothing; then applies it to a running mode, keeping its end.
+        """
+        self._save({"keep_screen": keep_screen})
+        self._defaults = replace(self._defaults, keep_screen=keep_screen)
+        if self._state.mode is not Mode.OFF and self._state.keep_screen != keep_screen:
+            self.start(replace(self._state, keep_screen=keep_screen))
+        else:
+            self._emit()
+
+    def _reported(self) -> State:
+        """The state as GetState gives it: while off, with the keep_screen setting."""
+        if self._state.mode is Mode.OFF:
+            return replace(OFF, keep_screen=self._defaults.keep_screen)
+        return self._state
 
     def _expire(self) -> None:
         self.stop()
@@ -188,7 +223,7 @@ class Awake(Module):
     def _described(self) -> dict[str, GLib.Variant]:
         return {
             key: GLib.Variant(SIGNATURES[key], value)
-            for key, value in self._state.describe().items()
+            for key, value in self._reported().describe().items()
         }
 
     def _on_call(
@@ -208,6 +243,13 @@ class Awake(Module):
                 invocation.return_value(None)
             elif method == "Stop":
                 self.stop()
+                invocation.return_value(None)
+            elif method == "Toggle":
+                self.toggle()
+                invocation.return_value(None)
+            elif method == "SetKeepScreen":
+                (keep_screen,) = parameters.unpack()
+                self.set_keep_screen(keep_screen)
                 invocation.return_value(None)
             elif method == "GetState":
                 invocation.return_value(GLib.Variant("(a{sv})", (self._described(),)))

@@ -191,3 +191,11 @@ def test_describe_before_any_apply_shows_every_module_off(recorder: Recorder) ->
 
 def test_module_ids(recorder: Recorder) -> None:
     assert ModuleHost({"a": fake("a", recorder), "b": broken_import}).module_ids == ("a", "b")
+
+
+def test_a_module_saves_through_the_host_under_its_own_id(recorder: Recorder) -> None:
+    saved: list[tuple] = []
+    host = ModuleHost({"a": fake("a", recorder)}, save=lambda *call: saved.append(call))
+    host.apply(Config(), BUS)
+    recorder.contexts["a"].save({"x": 1})
+    assert saved == [("a", {"x": 1})]
