@@ -17,6 +17,7 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 from gi.repository import Gio, GLib
 
 from minttoys import BUS_NAME
+from minttoys.modules.awake import module as awake
 
 CHECKOUT = Path(__file__).parents[2]
 
@@ -101,3 +102,28 @@ def test_a_second_daemon_exits_and_leaves_the_first_alone(
     assert "already running" in second.communicate()[1]
     assert first.poll() is None
     assert owned(bus)
+
+
+def test_awake_answers_under_the_daemon_s_name(
+    bus: Gio.DBusConnection, start: Callable[[], subprocess.Popen[str]]
+) -> None:
+    start()
+
+    def awake_is_off() -> bool:
+        try:
+            (described,) = bus.call_sync(
+                BUS_NAME,
+                awake.OBJECT_PATH,
+                awake.INTERFACE,
+                "GetState",
+                None,
+                GLib.VariantType("(a{sv})"),
+                Gio.DBusCallFlags.NONE,
+                -1,
+                None,
+            ).unpack()
+        except GLib.Error:
+            return False  # not up yet
+        return described["mode"] == "off"
+
+    assert soon(awake_is_off), "Awake never answered under the daemon's name"
