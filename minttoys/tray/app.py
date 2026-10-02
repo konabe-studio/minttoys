@@ -5,6 +5,7 @@ stays on, and turns Awake off. The icon follows the daemon: it hears StateChange
 notices the daemon leaving and coming back.
 """
 
+import sys
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
@@ -25,6 +26,7 @@ from minttoys.tray import view  # noqa: E402
 
 # Where the icons are in a checkout, for running it before they are installed.
 CHECKOUT_ICONS = Path(__file__).parents[2] / "data" / "icons" / "hicolor" / "symbolic" / "apps"
+_hinted = False
 
 
 class Client(Protocol):
@@ -52,6 +54,14 @@ def icon(name: str) -> str:
     source = CHECKOUT_ICONS / f"{name}.svg"
     if not source.exists():
         return name
+    global _hinted
+    if not _hinted:
+        _hinted = True
+        print(
+            "minttoys tray: the panel icons are not installed, so the panel shows them"
+            " uncoloured and at full-colour size; sh scripts/dev-install.sh links them",
+            file=sys.stderr,
+        )
     copy = Path(GLib.get_user_runtime_dir()) / "minttoys" / f"{name.removesuffix('-symbolic')}.svg"
     content = source.read_bytes()
     if not copy.exists() or copy.read_bytes() != content:

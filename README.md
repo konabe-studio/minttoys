@@ -55,6 +55,17 @@ python3 -m venv .venv
 .venv/bin/ruff check && .venv/bin/ruff format --check && .venv/bin/pytest
 ```
 
+To run MintToys from a checkout, start the daemon and the panel icon from the checkout's
+folder, each in a terminal of its own. The panel finds the icons by name only once they are
+installed; until then, `scripts/dev-install.sh` links them into `~/.local/share`, and
+`scripts/dev-install.sh --remove` takes them out again.
+
+```sh
+python3 -m minttoys.daemon
+python3 -m minttoys.tray
+python3 -m minttoys awake status
+```
+
 ## Feedback
 
 Ideas and bug reports are welcome in the
