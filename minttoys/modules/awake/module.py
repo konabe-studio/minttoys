@@ -20,7 +20,8 @@ from typing import ClassVar, Protocol
 from gi.repository import Gio, GLib
 
 from minttoys import APP_ID
-from minttoys import OBJECT_PATH as APP_PATH
+from minttoys.api import AWAKE_INTERFACE as INTERFACE
+from minttoys.api import AWAKE_PATH as OBJECT_PATH
 from minttoys.core import clock, notifications
 from minttoys.core.i18n import _
 from minttoys.modules.awake import state
@@ -30,8 +31,6 @@ from minttoys.modules.base import Context, Module
 
 log = logging.getLogger(__name__)
 
-OBJECT_PATH = f"{APP_PATH}/modules/awake"
-INTERFACE = f"{APP_ID}.Awake"
 INTERFACE_XML = f"""
 <node>
   <interface name="{INTERFACE}">

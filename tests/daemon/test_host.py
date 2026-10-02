@@ -2,6 +2,7 @@ from typing import ClassVar
 
 import pytest
 
+from minttoys.api import ModuleInfo
 from minttoys.core.config import Config
 from minttoys.daemon.host import ModuleHost, ModuleLoader, State, lazy
 from minttoys.modules.base import Context, Module
@@ -168,3 +169,25 @@ def test_lazy_imports_only_when_called() -> None:
 
 def test_lazy_finds_the_class() -> None:
     assert lazy("minttoys.modules.base:Module")() is Module
+
+
+def test_describe_lists_every_module_with_its_state(recorder: Recorder) -> None:
+    host = ModuleHost(
+        {"a": fake("a", recorder), "b": fake("b", recorder, fail_enable=True), "c": broken_import}
+    )
+    host.apply(Config(), BUS)
+    assert host.describe() == [
+        ModuleInfo("a", "a", "", "on", ""),
+        ModuleInfo("b", "b", "", "failed", "RuntimeError: enable broke"),
+        ModuleInfo("c", "c", "", "failed", "ImportError: no typelib"),
+    ]
+
+
+def test_describe_before_any_apply_shows_every_module_off(recorder: Recorder) -> None:
+    host = ModuleHost({"a": fake("a", recorder)})
+    assert host.describe() == [ModuleInfo("a", "a", "", "off", "")]
+    assert recorder.calls == []
+
+
+def test_module_ids(recorder: Recorder) -> None:
+    assert ModuleHost({"a": fake("a", recorder), "b": broken_import}).module_ids == ("a", "b")
