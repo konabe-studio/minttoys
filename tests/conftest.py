@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 import time
@@ -6,6 +7,11 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+
+# The tests read the English text. Set before any test imports minttoys, which picks its
+# language once, so that a translation installed with the package or built by `make mo`
+# does not reach them on a desktop in another language.
+os.environ["LANGUAGE"] = "C"
 
 # A session bus with no service directories, so that nothing on it can be started on
 # demand: a call to a name nobody owns fails at once, instead of launching, say, a real

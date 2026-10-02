@@ -67,10 +67,24 @@ python3 -m minttoys.settings
 python3 -m minttoys awake status
 ```
 
+The translations are in `po/`: the template `minttoys.pot`, and a `.po` file for each
+language listed in `po/LINGUAS`. After a change to the text in the code, `make update-po`
+brings them up to date. A checkout shows a translation once `make mo` has compiled it into
+`build/locale`:
+
+```sh
+sudo apt install gettext make
+make mo
+LANGUAGE=hu python3 -m minttoys awake status
+```
+
+To add a language, copy the template to `po/<language>.po`, translate it, and add the
+language to `po/LINGUAS`.
+
 To build the Debian package, on LMDE or Linux Mint, from the checkout's folder:
 
 ```sh
-sudo apt install debhelper dh-python python3-pytest
+sudo apt install debhelper dh-python gettext python3-pytest
 dpkg-buildpackage --build=binary --no-sign
 ```
 
