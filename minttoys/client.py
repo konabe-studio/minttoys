@@ -4,12 +4,15 @@ Every call is synchronous and turns D-Bus errors into the exceptions in minttoys
 caller never has to look at a D-Bus error name.
 """
 
+from collections.abc import Mapping
+
 from gi.repository import Gio, GLib
 
 from minttoys import BUS_NAME, OBJECT_PATH
 from minttoys.api import (
     AWAKE_INTERFACE,
     AWAKE_PATH,
+    AWAKE_SETTINGS,
     DAEMON_INTERFACE,
     ModuleInfo,
     ModuleOff,
@@ -65,6 +68,23 @@ class Client:
     def awake_set_keep_screen(self, keep_screen: bool) -> None:
         arguments = GLib.Variant("(b)", (keep_screen,))
         self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetKeepScreen", arguments, None)
+
+    def awake_settings(self) -> dict:
+        (settings,) = self._call(AWAKE_PATH, AWAKE_INTERFACE, "GetSettings", None, "(a{sv})")
+        return settings
+
+    def awake_set_settings(self, changes: Mapping[str, object]) -> None:
+        """Saves some of Awake's settings. A key Awake does not know is Refused, as a value
+        of the wrong kind would be.
+        """
+        try:
+            variants = {
+                key: GLib.Variant(AWAKE_SETTINGS[key], value) for key, value in changes.items()
+            }
+        except (KeyError, TypeError, OverflowError) as error:
+            raise Refused(f"not an Awake setting: {error}") from error
+        arguments = GLib.Variant("(a{sv})", (variants,))
+        self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetSettings", arguments, None)
 
     def _call(
         self,

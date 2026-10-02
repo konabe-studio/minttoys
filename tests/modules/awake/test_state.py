@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from minttoys.modules.awake.state import (
+    MAX_MINUTES,
     OFF,
     Defaults,
     Mode,
@@ -136,3 +137,46 @@ class TestDefaults:
     )
     def test_a_value_of_the_wrong_kind_falls_back(self, settings: dict) -> None:
         assert Defaults.read(settings) == Defaults()
+
+
+class TestDefaultsUpdate:
+    def test_changes_only_what_is_given(self) -> None:
+        updated = Defaults().update({"default_minutes": 90, "keep_screen": True})
+        assert updated == Defaults(Mode.INDEFINITE, 90, "18:00", True)
+
+    def test_normalizes_the_time_of_day(self) -> None:
+        assert Defaults().update({"default_until": "7:05"}).until == "07:05"
+
+    def test_settings_is_the_config_form(self) -> None:
+        assert Defaults(Mode.UNTIL, 45, "07:30", True).settings() == {
+            "default_mode": "until",
+            "default_minutes": 45,
+            "default_until": "07:30",
+            "keep_screen": True,
+        }
+
+    def test_refuses_a_key_it_does_not_know(self) -> None:
+        with pytest.raises(ValueError, match="unknown setting: 'colour'"):
+            Defaults().update({"colour": "green"})
+
+    @pytest.mark.parametrize(
+        ("changes", "message"),
+        [
+            ({"default_mode": "off"}, "default_mode is indefinite, duration or until"),
+            ({"default_minutes": 0}, "default_minutes is 1 to 5999"),
+            ({"default_minutes": 6000}, "default_minutes is 1 to 5999"),
+            ({"default_minutes": True}, "default_minutes is 1 to 5999"),
+            ({"default_until": "25:00"}, "default_until is a time of day"),
+            ({"keep_screen": "yes"}, "keep_screen is true or false"),
+        ],
+    )
+    def test_refuses_a_value_its_key_does_not_take(self, changes: dict, message: str) -> None:
+        with pytest.raises(ValueError, match=message):
+            Defaults().update(changes)
+
+    def test_all_or_none(self) -> None:
+        with pytest.raises(ValueError, match="default_minutes"):
+            Defaults().update({"keep_screen": True, "default_minutes": 0})
+
+    def test_read_ignores_a_duration_too_long_for_the_settings_app(self) -> None:
+        assert Defaults.read({"default_minutes": MAX_MINUTES + 1}).minutes == 60
