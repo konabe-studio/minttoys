@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Compiled translations, built from po/ at package time
+*.mo
+
+# Debian packaging output
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.substvars
+debian/*.debhelper.log
+debian/minttoys/
+*.deb
+*.buildinfo
+*.changes
+
+# Maintainer-local checkout, never part of this repository
+/internal/
