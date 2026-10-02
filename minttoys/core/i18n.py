@@ -5,4 +5,6 @@ Until a package installs the compiled catalogues, every string stays in English.
 
 import gettext
 
-_ = gettext.translation("minttoys", fallback=True).gettext
+_translation = gettext.translation("minttoys", fallback=True)
+_ = _translation.gettext
+ngettext = _translation.ngettext
