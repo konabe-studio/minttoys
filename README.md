@@ -2,6 +2,7 @@
 
 **Power-user utilities for Linux Mint Cinnamon. One package, one settings window.**
 
+<a href="https://github.com/konabe-studio/minttoys/actions/workflows/ci.yml"><img src="https://github.com/konabe-studio/minttoys/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License: GPL-3.0-or-later"></a>
 
 ---
@@ -42,6 +43,17 @@ Everything planned after it, grouped into milestones, is in the [roadmap](ROADMA
 | **Package** | `.deb`. Several tools need system integration a Flatpak or Snap sandbox does not allow |
 | **Built with** | Python 3 and GTK 3, like Linux Mint's own XApps |
 | **Languages** | English and Hungarian from the first release |
+
+## Development
+
+The development tools are pinned in `requirements-dev.txt`. Install them into a virtual
+environment, then run the same checks CI runs:
+
+```sh
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/ruff check && .venv/bin/ruff format --check && .venv/bin/pytest
+```
 
 ## Feedback
 

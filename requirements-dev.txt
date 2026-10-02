@@ -1,0 +1,6 @@
+# Development tools, pinned so that every machine and CI lint and format alike.
+# Install them into a virtual environment: pip install -r requirements-dev.txt
+ruff==0.16.10
+pytest==9.1.1
+# Windows has no system time zone database for the tests to read; Linux has /usr/share/zoneinfo.
+tzdata==2026.4; sys_platform == "win32"
