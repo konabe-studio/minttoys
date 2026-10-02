@@ -19,6 +19,7 @@ Depends: gir1.2-glib-2.0,
          gir1.2-gtk-3.0,
          gir1.2-xapp-1.0,
          python3-gi,
+         python3-xapp,
          ${misc:Depends},
          ${python3:Depends},
 Description: power-user utilities for Linux Mint Cinnamon
@@ -28,4 +29,5 @@ Description: power-user utilities for Linux Mint Cinnamon
  .
  This release carries Awake, which keeps the computer from sleeping until it
  is turned off, for a set time, or until a time of day, without changing the
- power settings. It comes with a panel icon and the minttoys command.
+ power settings. It comes with a panel icon, a settings window and the minttoys
+ command.

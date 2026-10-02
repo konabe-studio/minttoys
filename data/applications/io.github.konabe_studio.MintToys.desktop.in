@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=MintToys
+GenericName=Power-user utilities
+Comment=Switch MintToys' tools on and off, and set them up
+Exec=minttoys-settings
+Icon=io.github.konabe_studio.MintToys
+Categories=Settings;DesktopSettings;
+Keywords=Awake;Sleep;Suspend;Screen;
+OnlyShowIn=X-Cinnamon;
+StartupNotify=true
