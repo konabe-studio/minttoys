@@ -1,0 +1,31 @@
+Source: minttoys
+Section: utils
+Priority: optional
+Maintainer: Kōnabe Studio <konabe@proton.me>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3:any,
+               python3-pytest <!nocheck>,
+               tzdata <!nocheck>,
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/konabe-studio/minttoys
+Vcs-Browser: https://github.com/konabe-studio/minttoys
+Vcs-Git: https://github.com/konabe-studio/minttoys.git
+
+Package: minttoys
+Architecture: all
+Depends: gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         gir1.2-xapp-1.0,
+         python3-gi,
+         ${misc:Depends},
+         ${python3:Depends},
+Description: power-user utilities for Linux Mint Cinnamon
+ MintToys is a set of small desktop tools for Linux Mint Cinnamon, inspired
+ by Microsoft PowerToys, each switched on or off in one place and built on
+ what Cinnamon already provides.
+ .
+ This release carries Awake, which keeps the computer from sleeping until it
+ is turned off, for a set time, or until a time of day, without changing the
+ power settings. It comes with a panel icon and the minttoys command.

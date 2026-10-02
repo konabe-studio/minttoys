@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3
+
+# The Python package is private to the application, in /usr/lib/minttoys, so
+# dh_python3 has to be told where to byte-compile it and what it depends on.
+override_dh_python3:
+	dh_python3 /usr/lib/minttoys
