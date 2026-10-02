@@ -1,0 +1,91 @@
+.TH MINTTOYS 1 2026-10-02 "MintToys" "User Commands"
+.SH NAME
+minttoys \- power-user utilities for Linux Mint Cinnamon
+.SH SYNOPSIS
+.B minttoys awake on
+.RB [ \-\-for
+.I DURATION
+|
+.B \-\-until
+.IR HH:MM ]
+.RB [ \-\-screen " | " \-\-no\-screen ]
+.br
+.B minttoys awake
+.RB { off | toggle | status }
+.br
+.B minttoys modules
+.RB [ list " | " enable
+.I MODULE
+|
+.B disable
+.IR MODULE ]
+.SH DESCRIPTION
+.B minttoys
+controls MintToys from a terminal or a script. It talks to the MintToys service of the
+current session, which starts on its own if it is not running yet.
+.SS Awake
+Awake keeps the computer from going to sleep, without changing the power settings. Every
+.B awake
+command prints the state it leaves Awake in.
+.TP
+.B on
+Keeps the computer awake until it is turned off, or for a time, or until a time of day.
+.TP
+.B off
+Lets the computer sleep again as the power settings say.
+.TP
+.B toggle
+Turns Awake off when it is on, and on as set in MintToys when it is off. This is the
+command to put on a keyboard shortcut.
+.TP
+.B status
+Prints whether Awake is on, and for how long.
+.SS Modules
+.TP
+.B list
+Lists the modules, and whether each is on, off, or failed and why. The default.
+.TP
+.BI enable " MODULE"
+Switches a module on, and keeps it on at the next login.
+.TP
+.BI disable " MODULE"
+Switches a module off, and keeps it off.
+.SH OPTIONS
+.TP
+.BI \-\-for " DURATION"
+Stays awake this long: minutes (\fB90\fR or \fB90m\fR), hours (\fB2h\fR), or both
+(\fB1h30m\fR).
+.TP
+.BI \-\-until " HH:MM"
+Stays awake until this time of day; a time already past today means tomorrow.
+.TP
+.BR \-\-screen ", " \-\-no\-screen
+Keeps the screen on as well, or lets it turn off while the computer stays awake. Without
+either, the setting from the panel icon applies.
+.SH EXIT STATUS
+.TP
+.B 0
+Done.
+.TP
+.B 1
+MintToys could not do it: it is not running, the module is switched off, or it refused
+the request. The reason is printed.
+.TP
+.B 2
+The command line is wrong.
+.SH FILES
+.TP
+.I ~/.config/minttoys/config.json
+The settings, one section per module.
+.SH EXAMPLES
+Stay awake for an hour and a half, with the screen on:
+.PP
+.RS
+minttoys awake on \-\-for 1h30m \-\-screen
+.RE
+.PP
+Stay awake until six in the evening:
+.PP
+.RS
+minttoys awake on \-\-until 18:00
+.RE

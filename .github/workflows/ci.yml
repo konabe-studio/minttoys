@@ -43,3 +43,38 @@ jobs:
           sudo apt-get install --yes --no-install-recommends $packages
       - name: Test
         run: xvfb-run --auto-servernum dbus-run-session -- python3 -m pytest
+
+  package:
+    # Builds the .deb, checks it with lintian, installs it, tries it, and purges it again,
+    # looking for anything it left behind. The .deb is kept, to install by hand on LMDE.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install the build tools
+        run: |
+          sudo apt-get update
+          packages="debhelper dh-python dpkg-dev lintian python3-pytest tzdata"
+          sudo apt-get install --yes --no-install-recommends $packages
+      - name: Build
+        run: |
+          dpkg-buildpackage --build=binary --no-sign
+          mkdir dist
+          mv ../minttoys_* dist/
+      - name: Lintian
+        run: lintian --fail-on error --display-info dist/*.changes
+      - name: Install, use and purge
+        run: |
+          sudo apt-get install --yes ./dist/minttoys_*_all.deb
+          dpkg -L minttoys > installed.txt
+          minttoys --help > /dev/null
+          # D-Bus starts the daemon on the first call, from the installed service file.
+          test "$(dbus-run-session -- minttoys awake status)" = "Awake is off."
+          sudo apt-get purge --yes minttoys
+          left=$(grep -E 'minttoys|konabe_studio' installed.txt | while read -r path; do
+            if [ -e "$path" ]; then echo "$path"; fi
+          done)
+          if [ -n "$left" ]; then echo "left behind after purge:"; echo "$left"; exit 1; fi
+      - uses: actions/upload-artifact@v7
+        with:
+          name: minttoys-deb
+          path: dist/minttoys_*_all.deb

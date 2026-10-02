@@ -66,6 +66,16 @@ python3 -m minttoys.tray
 python3 -m minttoys awake status
 ```
 
+To build the Debian package, on LMDE or Linux Mint, from the checkout's folder:
+
+```sh
+sudo apt install debhelper dh-python python3-pytest
+dpkg-buildpackage --build=binary --no-sign
+```
+
+The package lands next to the checkout's folder. CI builds the same package on every pull
+request, installs it, tries it and purges it again.
+
 ## Feedback
 
 Ideas and bug reports are welcome in the

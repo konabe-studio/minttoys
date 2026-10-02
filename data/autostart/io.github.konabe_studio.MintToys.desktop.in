@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MintToys
+Comment=The background service behind MintToys' tools
+Exec=@LIBEXECDIR@/minttoysd
+Icon=io.github.konabe_studio.MintToys-awake-off-symbolic
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
