@@ -53,8 +53,8 @@ To remove MintToys:
 sudo apt purge minttoys
 ```
 
-The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`,
-yours to keep or delete.
+The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`
+and `~/.local/state/minttoys/`, yours to keep or delete.
 
 ## Platform
 

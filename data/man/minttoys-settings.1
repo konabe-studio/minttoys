@@ -1,13 +1,14 @@
-.TH MINTTOYS-SETTINGS 1 2026-10-02 "MintToys" "User Commands"
+.TH MINTTOYS-SETTINGS 1 2026-10-09 "MintToys" "User Commands"
 .SH NAME
 minttoys-settings \- set up MintToys' tools
 .SH SYNOPSIS
 .B minttoys-settings
 .SH DESCRIPTION
 .B minttoys-settings
-opens the MintToys window, where each tool is switched on or off and set up: for Awake,
-what a click on the panel icon starts, and whether the screen stays on. Starting it again
-brings the open window to the front.
+opens the MintToys window. Its first page, the Overview, lists every tool with a switch
+to turn it on or off; each tool also has a page of its own in the sidebar, where it is set
+up: for Awake, what a click on the panel icon starts, and whether the screen stays on.
+Escape closes the window, and starting it again brings the open window to the front.
 .PP
 The settings are kept by the MintToys service of the session, which starts on its own if
 it is not running yet.
@@ -15,5 +16,8 @@ it is not running yet.
 .TP
 .I ~/.config/minttoys/config.json
 The settings, one section per module.
+.TP
+.I ~/.local/state/minttoys/settings-window.ini
+Whether the window has greeted you on its first open.
 .SH SEE ALSO
 .BR minttoys (1)

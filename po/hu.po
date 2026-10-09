@@ -33,7 +33,8 @@ msgstr "Az Awake ki van kapcsolva a MintToysban."
 msgid "Switch it on with: minttoys modules enable awake"
 msgstr "Így kapcsolhatja be: minttoys modules enable awake"
 
-#: minttoys/cli.py minttoys/settings/awake_page.py minttoys/tray/app.py
+#: minttoys/cli.py minttoys/settings/awake_page.py
+#: minttoys/settings/overview_page.py minttoys/tray/app.py
 #, python-brace-format
 msgid "MintToys refused: {reason}"
 msgstr "A MintToys nem teljesítette a kérést: {reason}"
@@ -161,7 +162,6 @@ msgid "'{text}' is not a time of day. Use hours and minutes, such as 18:00."
 msgstr "„{text}” nem időpont. Adja meg óra:perc alakban, például 18:00."
 
 #: minttoys/modules/awake/module.py minttoys/settings/awake_page.py
-#: minttoys/settings/window.py
 msgid "Awake"
 msgstr "Awake"
 
@@ -315,6 +315,12 @@ msgstr "Az Awake beállításai nem olvashatók be: {error}"
 msgid "Awake could not be switched on: {error}"
 msgstr "Az Awake bekapcsolása nem sikerült: {error}"
 
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools that
+#. deal with the computer as a whole, such as Awake.
+#: minttoys/settings/catalog.py
+msgid "System"
+msgstr "Rendszer"
+
 #: minttoys/settings/main.py
 #, python-brace-format
 msgid "The settings need PyGObject, GTK 3 and python3-xapp: {error}"
@@ -325,6 +331,24 @@ msgstr "A beállításokhoz PyGObject, GTK 3 és python3-xapp szükséges: {erro
 #: data/autostart/io.github.konabe_studio.MintToys.desktop.in
 msgid "MintToys"
 msgstr "MintToys"
+
+#. TRANSLATORS: under a tool's description in the Overview, when it failed.
+#: minttoys/settings/overview_page.py
+#, python-brace-format
+msgid "Could not be switched on: {error}"
+msgstr "Nem sikerült bekapcsolni: {error}"
+
+#: minttoys/settings/overview_page.py
+msgid ""
+"Welcome to MintToys. Switch on the tools you want to use. Each one has a "
+"page of its own in the sidebar."
+msgstr ""
+"Üdvözli a MintToys. Kapcsolja be azokat az eszközöket, amelyeket használni "
+"szeretne. Mindegyiknek saját oldala van az oldalsávon."
+
+#: minttoys/settings/overview_page.py
+msgid "Tools"
+msgstr "Eszközök"
 
 #: minttoys/settings/values.py minttoys/tray/app.py
 msgid "Until turned off"
@@ -337,6 +361,11 @@ msgstr "Adott ideig"
 #: minttoys/settings/values.py
 msgid "Until a time of day"
 msgstr "Egy adott időpontig"
+
+#. TRANSLATORS: the first page of the settings window, listing every tool.
+#: minttoys/settings/window.py
+msgid "Overview"
+msgstr "Áttekintés"
 
 #: minttoys/tray/app.py
 msgid "For a custom time…"
