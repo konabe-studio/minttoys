@@ -19,7 +19,10 @@ class Tool:
     icon: str
 
 
-TOOLS = (Tool("awake", "Awake", "system", f"{APP_ID}-awake-on-symbolic"),)
+TOOLS = (
+    Tool("awake", "Awake", "system", f"{APP_ID}-awake-on-symbolic"),
+    Tool("lightswitch", "Light Switch", "system", "weather-clear-night-symbolic"),
+)
 
 
 def headings() -> dict[str, str]:

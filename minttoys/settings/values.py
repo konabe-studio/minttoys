@@ -15,6 +15,24 @@ def modes() -> list[tuple[str, str]]:
     ]
 
 
+def day_modes() -> list[tuple[str, str]]:
+    """Light Switch's modes for the day, with the Themes window's names, as (day_mode, label)."""
+    return [
+        # TRANSLATORS: the Themes window's mode with light windows and a dark panel.
+        ("mixed", _("Mixed")),
+        # TRANSLATORS: the Themes window's mode with light windows and a light panel.
+        ("light", _("Light")),
+    ]
+
+
+def schedules() -> list[tuple[str, str]]:
+    """What decides when Light Switch goes dark, as (schedule, label)."""
+    return [
+        ("night-light", _("With Night Light's schedule")),
+        ("times", _("At set times")),
+    ]
+
+
 def split_minutes(total: int) -> tuple[int, int]:
     """A duration in minutes as the hours and minutes fields show it."""
     return divmod(total, 60)

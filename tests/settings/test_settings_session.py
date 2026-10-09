@@ -22,6 +22,7 @@ if not Gtk.init_check()[0]:
 
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from minttoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
 from minttoys.settings.window import SettingsWindow  # noqa: E402
 
@@ -30,6 +31,19 @@ SETTINGS = {
     "default_minutes": 60,
     "default_until": "18:00",
     "keep_screen": False,
+}
+LIGHT_SETTINGS = {
+    "day_mode": "",
+    "schedule": "night-light",
+    "dark_from": "20:00",
+    "dark_to": "06:00",
+}
+LIGHT_STATE = {
+    "dark": False,
+    "dark_from": "18:09",
+    "dark_to": "06:53",
+    "by_sun": True,
+    "problem": "",
 }
 
 
@@ -42,30 +56,55 @@ class FakeClient:
         self.fail: Exception | None = None
         self.settings_fail: Exception | None = None
         self.listed = True
+        # Light Switch, kept apart so that Awake's tests see only Awake's calls.
+        self.light_on = "on"
+        self.light_settings = dict(LIGHT_SETTINGS)
+        self.light_state = dict(LIGHT_STATE)
+        self.light_calls: list[tuple] = []
 
     def modules(self) -> list[ModuleInfo]:
         if isinstance(self.fail, NotRunning):
             raise self.fail
         if not self.listed:
             return []
-        return [ModuleInfo("awake", "Awake", "", self.state, self.error)]
+        return [
+            ModuleInfo("awake", "Awake", "", self.state, self.error),
+            ModuleInfo("lightswitch", "Light Switch", "", self.light_on, ""),
+        ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
+        if module_id == "lightswitch":
+            self.light_calls.append(("enabled", enabled))
+            self.light_on = "on" if enabled else "off"
+            return
         self.calls.append(("enabled", module_id, enabled))
         self.state = "on" if enabled else "off"
 
     def module_settings(self, module_id: str) -> dict:
-        assert module_id == "awake"
+        if module_id == "lightswitch":
+            return dict(self.light_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
 
     def set_module_settings(self, module_id: str, changes: Mapping[str, object]) -> None:
-        assert module_id == "awake"
         if self.fail:
             raise self.fail
+        if module_id == "lightswitch":
+            self.light_calls.append(("settings", dict(changes)))
+            self.light_settings.update(changes)
+            return
         self.calls.append(("settings", dict(changes)))
         self.settings.update(changes)
+
+    def lightswitch_state(self) -> dict:
+        if self.light_on != "on":
+            raise ModuleOff()
+        return dict(self.light_state)
+
+    def lightswitch_toggle(self) -> None:
+        self.light_calls.append(("toggle",))
+        self.light_state["dark"] = not self.light_state["dark"]
 
 
 @pytest.fixture
@@ -215,9 +254,10 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     window: SettingsWindow,
 ) -> None:
     rows = window.sidebar.get_children()
-    assert [row.page for row in rows] == ["overview", "awake"]
+    assert [row.page for row in rows] == ["overview", "awake", "lightswitch"]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
+    assert rows[2].get_header() is None
     assert window.stack.get_visible_child_name() == "overview"
 
 
@@ -269,3 +309,68 @@ def test_the_first_open_greets_once(
     second = SettingsWindow(None, bus, client, state)
     assert not second.overview.welcome.get_visible()
     second.destroy()
+
+
+def light_page(client: FakeClient, errors: list[str]) -> LightSwitchPage:
+    return LightSwitchPage(client, errors.append)
+
+
+def test_light_switch_shows_its_settings_and_hours(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    assert page.enabled.content_widget.get_active()
+    assert page.day.content_widget.get_active_id() == "mixed"  # not chosen yet
+    assert page.schedule.content_widget.get_active_id() == "night-light"
+    assert page.night_light_revealer.get_reveal_child()
+    assert not page.from_revealer.get_reveal_child()
+    assert page.hours.get_text() == "Dark from 18:09 to 06:53, sunset to sunrise."
+    assert client.light_calls == []
+
+
+def test_light_switch_set_times_show_their_fields(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    page.schedule.content_widget.set_active_id("times")
+    assert client.light_calls == [("settings", {"schedule": "times"})]
+    assert page.from_revealer.get_reveal_child()
+    assert page.to_revealer.get_reveal_child()
+    assert not page.night_light_revealer.get_reveal_child()
+
+
+def test_light_switch_day_mode_saves(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    page.day.content_widget.set_active_id("light")
+    assert client.light_calls == [("settings", {"day_mode": "light"})]
+
+
+def test_light_switch_times_save_once_the_fields_settle(
+    client: FakeClient, errors: list[str], pump: Callable[..., bool]
+) -> None:
+    client.light_settings["schedule"] = "times"
+    page = light_page(client, errors)
+    page.dark_from.hours.set_value(21)
+    assert pump(lambda: client.light_calls, seconds=SAVE_AFTER_MS / 1000 + 1)
+    assert client.light_calls == [("settings", {"dark_from": "21:00"})]
+
+
+def test_light_switch_switch_now(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    page.switch_now.content_widget.clicked()
+    assert client.light_calls == [("toggle",)]
+
+
+def test_light_switch_says_why_it_leaves_custom_themes(
+    client: FakeClient, errors: list[str]
+) -> None:
+    client.light_state["problem"] = "custom"
+    page = light_page(client, errors)
+    assert page.hours.get_text().endswith("so Light Switch leaves them alone.")
+
+
+def test_light_switch_off_waits(client: FakeClient, errors: list[str]) -> None:
+    client.light_on = "off"
+    page = light_page(client, errors)
+    assert not page.enabled.content_widget.get_active()
+    assert not page.modes.get_sensitive()
+    assert not page.now.get_sensitive()
+    page.enabled.content_widget.set_active(True)
+    assert client.light_calls == [("enabled", True)]
+    assert page.modes.get_sensitive()
