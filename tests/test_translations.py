@@ -42,6 +42,9 @@ def read_po(path: Path) -> dict[str, Entry]:
 
     def finish() -> None:
         if fields.get("msgid"):
+            if fields["msgid"] in entries:
+                # msgfmt refuses a catalogue with a message in it twice.
+                raise ValueError(f"{path.name}: {fields['msgid']!r} is there twice")
             forms = sorted(key for key in fields if key.startswith("msgstr"))
             entries[fields["msgid"]] = Entry(
                 fields["msgid"],
@@ -102,6 +105,11 @@ def placeholders(text: str) -> set[str]:
 
 def messages(entries: dict[str, Entry]) -> dict[str, str | None]:
     return {msgid: entry.plural for msgid, entry in entries.items()}
+
+
+@pytest.mark.parametrize("name", ["minttoys.pot", *(f"{lang}.po" for lang in LANGUAGES)])
+def test_no_message_is_there_twice(name: str) -> None:
+    read_po(PO / name)  # raises for a message that is
 
 
 def test_the_template_has_every_message_of_the_sources_and_no_other() -> None:
