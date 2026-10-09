@@ -226,3 +226,7 @@ def test_settings_reach_a_module_only_while_it_is_on(recorder: Recorder) -> None
     host.apply_settings("a", {"x": 2})
     host.apply_settings("b", {"x": 3})
     assert recorder.calls == ["enable a", "settings a {'x': 2}"]
+
+
+def test_a_module_is_off_unless_it_says_otherwise() -> None:
+    assert Module.enabled_by_default is False

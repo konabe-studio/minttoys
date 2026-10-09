@@ -85,6 +85,8 @@ class Awake(Module):
         "Keeps the computer awake until you turn it off, for a set time, or until a time of"
         " day, without changing your power settings."
     )
+    # On from the start: it does nothing until used.
+    enabled_by_default: ClassVar[bool] = True
     settings_types: ClassVar[Mapping[str, str]] = AWAKE_SETTINGS
 
     # The longest a timed mode goes without looking at the clock. It also looks at the end
