@@ -23,6 +23,13 @@ class FakeClient:
         self.state = OFF
         self.infos = [AWAKE]
         self.error: Exception | None = None
+        self.lightswitch = {
+            "dark": False,
+            "dark_from": "18:09",
+            "dark_to": "06:53",
+            "by_sun": True,
+            "problem": "",
+        }
 
     def _check(self) -> None:
         if self.error:
@@ -51,6 +58,15 @@ class FakeClient:
     def awake_toggle(self) -> None:
         self._check()
         self.calls.append(("awake_toggle",))
+
+    def lightswitch_state(self) -> dict:
+        self._check()
+        return self.lightswitch
+
+    def lightswitch_toggle(self) -> None:
+        self._check()
+        self.calls.append(("lightswitch_toggle",))
+        self.lightswitch = {**self.lightswitch, "dark": not self.lightswitch["dark"]}
 
 
 def run(client: FakeClient, *argv: str) -> tuple[int, str, str]:
@@ -189,3 +205,41 @@ class TestErrors:
         with pytest.raises(SystemExit) as exit_:
             cli.main([])
         assert exit_.value.code == 2
+
+
+class TestLightSwitch:
+    def test_status_is_the_default(self, client: FakeClient) -> None:
+        status, out, _ = run(client, "lightswitch")
+        assert status == 0
+        assert out.splitlines() == [
+            "The desktop is in its day mode now.",
+            "Dark from 18:09 to 06:53, sunset to sunrise.",
+        ]
+
+    def test_toggle(self, client: FakeClient) -> None:
+        out = run(client, "lightswitch", "toggle")[1]
+        assert client.calls == [("lightswitch_toggle",)]
+        assert out.splitlines()[0] == "The desktop is dark now."
+
+    def test_set_times_and_a_custom_theme(self, client: FakeClient) -> None:
+        client.lightswitch = {
+            "dark": False,
+            "dark_from": "20:00",
+            "dark_to": "06:00",
+            "by_sun": False,
+            "problem": "custom",
+        }
+        out = run(client, "lightswitch", "status")[1]
+        assert out.splitlines()[1:] == [
+            "Dark from 20:00 to 06:00.",
+            "Your themes are not one of Mint's styles, so Light Switch leaves them alone.",
+        ]
+
+    def test_switched_off_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.error = ModuleOff()
+        status, _, err = run(client, "lightswitch")
+        assert status == 1
+        assert err.splitlines() == [
+            "Light Switch is switched off in MintToys.",
+            "Switch it on with: minttoys modules enable lightswitch",
+        ]
