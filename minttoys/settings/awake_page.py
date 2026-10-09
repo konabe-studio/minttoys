@@ -147,15 +147,20 @@ class AwakePage(SettingsPage):
 
     def refresh(self) -> None:
         """Reads from the daemon whether Awake is on, and its settings, and shows them."""
+        # Every grey row says why: the switch above it, or the problem line.
+        info, settings, problem = None, None, ""
         try:
             info = next((info for info in self._client.modules() if info.id == "awake"), None)
-            settings = self._client.awake_settings() if info and info.state == "on" else None
+            if info is None:
+                problem = _("This version of MintToys has no Awake.")
+            elif info.state == "on":
+                settings = self._client.awake_settings()
         except NotRunning:
-            self._show(None, None, _("MintToys is not running."))
-            return
-        except ModuleOff:
-            info, settings = None, None
-        problem = ""
+            info, problem = None, _("MintToys is not running.")
+        except (ModuleOff, Refused) as error:
+            # Awake is listed as on, yet its settings do not answer: shown with the
+            # daemon's own words, since this should not happen.
+            problem = _("Could not read Awake's settings: {error}").format(error=error)
         if info and info.state == "failed":
             problem = _("Awake could not be switched on: {error}").format(error=info.error)
         self._show(info, settings, problem)

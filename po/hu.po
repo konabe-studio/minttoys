@@ -297,9 +297,18 @@ msgstr "Parancs"
 msgid "Open the Keyboard settings"
 msgstr "Billentyűzet-beállítások megnyitása"
 
+#: minttoys/settings/awake_page.py
+msgid "This version of MintToys has no Awake."
+msgstr "A MintToys ezen verziójában nincs Awake."
+
 #: minttoys/settings/awake_page.py minttoys/tray/app.py
 msgid "MintToys is not running."
 msgstr "A MintToys nem fut."
+
+#: minttoys/settings/awake_page.py
+#, python-brace-format
+msgid "Could not read Awake's settings: {error}"
+msgstr "Az Awake beállításai nem olvashatók be: {error}"
 
 #: minttoys/settings/awake_page.py
 #, python-brace-format
