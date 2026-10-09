@@ -2,7 +2,8 @@
 a display: xvfb in CI, the desktop otherwise.
 """
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
+from pathlib import Path
 
 import pytest
 
@@ -21,6 +22,7 @@ if not Gtk.init_check()[0]:
 
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from minttoys.settings.overview_page import OverviewPage  # noqa: E402
 from minttoys.settings.window import SettingsWindow  # noqa: E402
 
 SETTINGS = {
@@ -192,11 +194,78 @@ def test_a_refused_change_is_reported_and_undone(client: FakeClient, errors: lis
     assert not page.keep_screen.content_widget.get_active()
 
 
-def test_the_window_holds_the_awake_page(
-    private_bus: tuple[Gio.DBusConnection, Gio.DBusConnection], client: FakeClient
-) -> None:
+@pytest.fixture
+def window(
+    private_bus: tuple[Gio.DBusConnection, Gio.DBusConnection],
+    client: FakeClient,
+    tmp_path: Path,
+) -> Iterator[SettingsWindow]:
     _, bus = private_bus
-    window = SettingsWindow(None, bus, client)
+    shown = SettingsWindow(None, bus, client, tmp_path / "settings-window.ini")
+    yield shown
+    shown.destroy()
+
+
+def test_the_window_holds_the_awake_page(window: SettingsWindow) -> None:
     assert window.get_title() == "MintToys"
     assert window.awake.mode.content_widget.get_active_id() == "indefinite"
-    window.destroy()
+
+
+def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
+    window: SettingsWindow,
+) -> None:
+    rows = window.sidebar.get_children()
+    assert [row.page for row in rows] == ["overview", "awake"]
+    assert rows[0].get_header() is None
+    assert rows[1].get_header().get_text() == "System"
+    assert window.stack.get_visible_child_name() == "overview"
+
+
+def test_choosing_a_tool_shows_its_page(window: SettingsWindow) -> None:
+    window.show_page("awake")
+    assert window.stack.get_visible_child_name() == "awake"
+
+
+def test_the_overview_lists_every_tool_with_its_switch(window: SettingsWindow) -> None:
+    row = window.overview.rows["awake"]
+    assert row.name.get_text() == "Awake"
+    assert row.content_widget.get_active()
+
+
+def test_a_switch_on_the_overview_turns_the_tool_on_and_off(
+    window: SettingsWindow, client: FakeClient
+) -> None:
+    window.overview.rows["awake"].content_widget.set_active(False)
+    assert client.calls == [("enabled", "awake", False)]
+    assert client.state == "off"
+
+
+def test_the_overview_says_why_a_tool_failed(client: FakeClient, errors: list[str]) -> None:
+    client.state, client.error = "failed", "RuntimeError: no session manager"
+    page = OverviewPage(client, errors.append, welcome=False)
+    text = page.rows["awake"].description.get_text()
+    assert text.endswith("Could not be switched on: RuntimeError: no session manager")
+    assert not page.rows["awake"].content_widget.get_active()
+
+
+def test_without_the_daemon_the_overview_says_so(client: FakeClient, errors: list[str]) -> None:
+    page = OverviewPage(client, errors.append, welcome=False)
+    client.fail = NotRunning()
+    page.refresh()
+    assert page.problem.get_text() == "MintToys is not running."
+    assert not page.rows["awake"].get_sensitive()
+
+
+def test_the_first_open_greets_once(
+    private_bus: tuple[Gio.DBusConnection, Gio.DBusConnection],
+    client: FakeClient,
+    tmp_path: Path,
+) -> None:
+    _, bus = private_bus
+    state = tmp_path / "minttoys" / "settings-window.ini"
+    first = SettingsWindow(None, bus, client, state)
+    assert first.overview.welcome.get_visible()
+    first.destroy()
+    second = SettingsWindow(None, bus, client, state)
+    assert not second.overview.welcome.get_visible()
+    second.destroy()
