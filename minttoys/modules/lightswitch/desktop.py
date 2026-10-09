@@ -4,8 +4,9 @@ Themes window writes them, and Night Light's schedule.
 
 from pathlib import Path
 
-from gi.repository import Gio, GLib
+from gi.repository import GLib
 
+from minttoys.core.gsettings import settings as _settings
 from minttoys.modules.lightswitch import styles
 from minttoys.modules.lightswitch.schedule import NightLight
 from minttoys.modules.lightswitch.styles import Look, Style
@@ -14,15 +15,6 @@ INTERFACE = "org.cinnamon.desktop.interface"
 THEME = "org.cinnamon.theme"
 PORTAL = "org.x.apps.portal"
 COLOR = "org.cinnamon.settings-daemon.plugins.color"
-
-
-def _settings(schema: str) -> Gio.Settings:
-    # Gio.Settings.new aborts the whole process for a schema that is not installed, so ask
-    # first: outside Cinnamon this is an error for this module alone.
-    source = Gio.SettingsSchemaSource.get_default()
-    if source is None or source.lookup(schema, True) is None:
-        raise RuntimeError(f"Light Switch needs Cinnamon: no {schema} settings")
-    return Gio.Settings.new(schema)
 
 
 class CinnamonDesktop:
