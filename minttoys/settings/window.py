@@ -62,6 +62,8 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.sidebar = Gtk.ListBox(selection_mode=Gtk.SelectionMode.BROWSE)
         self.sidebar.get_style_context().add_class("sidebar")
         self.sidebar.set_header_func(self._header)
+        # A GtkListBox works out headers only while it is visible itself.
+        self.sidebar.show()
         self.sidebar.connect("row-selected", self._on_row_selected)
 
         self.overview = OverviewPage(client, self._error, welcome=welcome)
