@@ -125,8 +125,13 @@ class SettingsWindow(Gtk.ApplicationWindow):
         # Scrolls rather than grows when a translation makes the page longer.
         scroller = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER)
         scroller.add(widget)
+        # Shown before they are added: a GtkListBox gives no header to a hidden row, and a
+        # GtkStack does not switch to a hidden page.
+        scroller.show_all()
         self.stack.add_named(scroller, page)
-        self.sidebar.add(PageRow(page, name, icon, heading))
+        row = PageRow(page, name, icon, heading)
+        row.show_all()
+        self.sidebar.add(row)
 
     def _header(self, row: PageRow, before: PageRow | None) -> None:
         if row.heading and (before is None or before.heading != row.heading):
