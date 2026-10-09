@@ -51,7 +51,7 @@ class LightSwitchPage(SettingsPage):
 
         section = self.add_section(
             _("Light Switch"),
-            _("Switches between light and dark by the time of day, keeping your colour."),
+            _("Switches between light and dark by the time of day, keeping your color."),
         )
         self.enabled = Switch(_("Use Light Switch"))
         self.enabled.content_widget.connect("notify::active", self._on_enabled)

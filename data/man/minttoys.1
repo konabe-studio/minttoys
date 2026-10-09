@@ -1,4 +1,4 @@
-.TH MINTTOYS 1 2026-10-02 "MintToys" "User Commands"
+.TH MINTTOYS 1 2026-10-09 "MintToys" "User Commands"
 .SH NAME
 minttoys \- power-user utilities for Linux Mint Cinnamon
 .SH SYNOPSIS
@@ -12,6 +12,9 @@ minttoys \- power-user utilities for Linux Mint Cinnamon
 .br
 .B minttoys awake
 .RB { off | toggle | status }
+.br
+.B minttoys lightswitch
+.RB [ status " | " toggle ]
 .br
 .B minttoys modules
 .RB [ list " | " enable
@@ -40,6 +43,18 @@ command to put on a keyboard shortcut.
 .TP
 .B status
 Prints whether Awake is on, and for how long.
+.SS Light Switch
+Light Switch switches the desktop between Linux Mint's dark mode and its day mode (Mixed
+or Light), the way the Themes window does, by Night Light's schedule or at set times. Both
+commands print the mode the desktop is in and today's dark hours.
+.TP
+.B status
+Prints the mode and the dark hours, and why Light Switch cannot switch the desktop if it
+cannot. The default.
+.TP
+.B toggle
+Switches to dark now, or back to the day's mode, until the schedule next changes. This is
+the command to put on a keyboard shortcut.
 .SS Modules
 .TP
 .B list
@@ -88,4 +103,12 @@ Stay awake until six in the evening:
 .PP
 .RS
 minttoys awake on \-\-until 18:00
+.RE
+.PP
+Switch Light Switch on, then go dark now:
+.PP
+.RS
+minttoys modules enable lightswitch
+.br
+minttoys lightswitch toggle
 .RE

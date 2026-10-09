@@ -452,3 +452,148 @@ msgstr "A számítógép ébren tartása a panelről"
 #: data/autostart/io.github.konabe_studio.MintToys.desktop.in
 msgid "The background service behind MintToys' tools"
 msgstr "A MintToys eszközeit működtető háttérszolgáltatás"
+
+#: minttoys/cli.py
+msgid "switch between light and dark"
+msgstr "váltás a világos és a sötét között"
+
+#: minttoys/cli.py
+msgid "Switch the desktop between light and dark, or show when it is dark."
+msgstr ""
+"Az asztal váltása a világos és a sötét között, vagy a sötét órák "
+"megjelenítése."
+
+#: minttoys/cli.py
+msgid "show the mode and the dark hours (the default)"
+msgstr "a mód és a sötét órák megjelenítése (alapértelmezés)"
+
+#: minttoys/cli.py
+msgid "switch to dark, or back to the day's mode, until the schedule changes"
+msgstr ""
+"váltás sötétre, vagy vissza a nappali módra, az ütemezés következő váltásáig"
+
+#: minttoys/cli.py
+msgid "Light Switch is switched off in MintToys."
+msgstr "A Light Switch ki van kapcsolva a MintToysban."
+
+#: minttoys/cli.py
+msgid "Switch it on with: minttoys modules enable lightswitch"
+msgstr "Így kapcsolhatja be: minttoys modules enable lightswitch"
+
+#: minttoys/modules/lightswitch/module.py minttoys/settings/lightswitch_page.py
+msgid "Light Switch"
+msgstr "Light Switch"
+
+#: minttoys/modules/lightswitch/module.py
+msgid ""
+"Switches between light and dark by the time of day, the way the Themes "
+"window does."
+msgstr ""
+"Napszak szerint vált a világos és a sötét között, ahogy a Témák ablak is."
+
+#. TRANSLATORS: Light Switch's dark hours by the sun; {start} and {end} are times of
+#. day such as 18:09 and 06:53.
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Dark from {start} to {end}, sunset to sunrise."
+msgstr "Sötét {start} és {end} között, napnyugtától napkeltéig."
+
+#. TRANSLATORS: Light Switch's dark hours at set times, such as 20:00 and 06:00.
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Dark from {start} to {end}."
+msgstr "Sötét {start} és {end} között."
+
+#: minttoys/modules/lightswitch/text.py
+msgid ""
+"Your themes are not one of Mint's styles, so Light Switch leaves them alone."
+msgstr ""
+"A témái nem tartoznak a Mint stílusai közé, ezért a Light Switch nem "
+"változtat rajtuk."
+
+#: minttoys/modules/lightswitch/text.py
+msgid "Your style has no mode to switch to."
+msgstr "A stílusának nincs olyan módja, amelyre váltani lehetne."
+
+#: minttoys/modules/lightswitch/text.py
+msgid "The desktop is dark now."
+msgstr "Az asztal most sötét."
+
+#: minttoys/modules/lightswitch/text.py
+msgid "The desktop is in its day mode now."
+msgstr "Az asztal most nappali módban van."
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Switches between light and dark by the time of day, keeping your color."
+msgstr "Napszak szerint vált a világos és a sötét között, a színt megtartva."
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Use Light Switch"
+msgstr "Light Switch használata"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Light and dark"
+msgstr "Világos és sötét"
+
+#. TRANSLATORS: the label of the choice between the Themes window's Mixed and Light.
+#: minttoys/settings/lightswitch_page.py
+msgid "During the day"
+msgstr "Nappal"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Dark"
+msgstr "Sötét"
+
+#. TRANSLATORS: the labels in front of the times dark starts and ends.
+#: minttoys/settings/lightswitch_page.py
+msgid "From"
+msgstr "Kezdete"
+
+#. TRANSLATORS: the labels in front of the times dark starts and ends.
+#: minttoys/settings/lightswitch_page.py
+msgid "To"
+msgstr "Vége"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Open the Night Light settings"
+msgstr "Az Éjszakai fény beállításainak megnyitása"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Right now"
+msgstr "Most"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Switch now"
+msgstr "Váltás most"
+
+#: minttoys/settings/lightswitch_page.py
+msgid "This version of MintToys has no Light Switch."
+msgstr "A MintToys ezen verziójában nincs Light Switch."
+
+#: minttoys/settings/lightswitch_page.py
+#, python-brace-format
+msgid "Light Switch could not be switched on: {error}"
+msgstr "A Light Switch bekapcsolása nem sikerült: {error}"
+
+#: minttoys/settings/lightswitch_page.py
+#, python-brace-format
+msgid "Could not read Light Switch's settings: {error}"
+msgstr "A Light Switch beállításai nem olvashatók be: {error}"
+
+#. TRANSLATORS: the Themes window's mode with light windows and a dark panel.
+#: minttoys/settings/values.py
+msgid "Mixed"
+msgstr "Vegyes"
+
+#. TRANSLATORS: the Themes window's mode with light windows and a light panel.
+#: minttoys/settings/values.py
+msgid "Light"
+msgstr "Világos"
+
+#: minttoys/settings/values.py
+msgid "With Night Light's schedule"
+msgstr "Az Éjszakai fény ütemezése szerint"
+
+#: minttoys/settings/values.py
+msgid "At set times"
+msgstr "Megadott időpontokban"
