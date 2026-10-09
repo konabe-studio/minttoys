@@ -52,12 +52,14 @@ class FakeClient:
         self.calls.append(("enabled", module_id, enabled))
         self.state = "on" if enabled else "off"
 
-    def awake_settings(self) -> dict:
+    def module_settings(self, module_id: str) -> dict:
+        assert module_id == "awake"
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
 
-    def awake_set_settings(self, changes: Mapping[str, object]) -> None:
+    def set_module_settings(self, module_id: str, changes: Mapping[str, object]) -> None:
+        assert module_id == "awake"
         if self.fail:
             raise self.fail
         self.calls.append(("settings", dict(changes)))
@@ -163,11 +165,11 @@ def test_without_the_daemon_it_says_so(client: FakeClient, errors: list[str]) ->
 
 
 def test_unreadable_settings_say_why(client: FakeClient, errors: list[str]) -> None:
-    client.settings_fail = ModuleOff("No such method 'GetSettings'")
+    client.settings_fail = ModuleOff("No such method 'GetModuleSettings'")
     page = page_for(client, errors)
     assert page.problem.get_visible()
     assert page.problem.get_text() == (
-        "Could not read Awake's settings: No such method 'GetSettings'"
+        "Could not read Awake's settings: No such method 'GetModuleSettings'"
     )
     assert page.enabled.get_sensitive()  # switching Awake off and on again may help
     assert page.enabled.content_widget.get_active()

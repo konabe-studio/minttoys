@@ -84,7 +84,7 @@ class Defaults:
         return replace(self, **fields)
 
     def settings(self) -> dict[str, str | int | bool]:
-        """As the config and GetSettings have them."""
+        """As the config and GetModuleSettings have them."""
         return {
             "default_mode": str(self.mode),
             "default_minutes": self.minutes,

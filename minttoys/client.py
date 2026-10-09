@@ -1,4 +1,4 @@
-"""Talks to the daemon over the session bus: the command line now, the settings app later.
+"""Talks to the daemon over the session bus, for the command line and the settings app.
 
 Every call is synchronous and turns D-Bus errors into the exceptions in minttoys.api, so a
 caller never has to look at a D-Bus error name.
@@ -12,8 +12,8 @@ from minttoys import BUS_NAME, OBJECT_PATH
 from minttoys.api import (
     AWAKE_INTERFACE,
     AWAKE_PATH,
-    AWAKE_SETTINGS,
     DAEMON_INTERFACE,
+    MODULE_SETTINGS,
     ModuleInfo,
     ModuleOff,
     NotRunning,
@@ -51,6 +51,26 @@ class Client:
         arguments = GLib.Variant("(sb)", (module_id, enabled))
         self._call(OBJECT_PATH, DAEMON_INTERFACE, "SetModuleEnabled", arguments, None)
 
+    def module_settings(self, module_id: str) -> dict:
+        """Every setting of a module, whether it is on or off."""
+        arguments = GLib.Variant("(s)", (module_id,))
+        (settings,) = self._call(
+            OBJECT_PATH, DAEMON_INTERFACE, "GetModuleSettings", arguments, "(a{sv})"
+        )
+        return settings
+
+    def set_module_settings(self, module_id: str, changes: Mapping[str, object]) -> None:
+        """Saves some of a module's settings. A key the module does not know is Refused, as
+        a value of the wrong kind would be.
+        """
+        try:
+            types = MODULE_SETTINGS[module_id]
+            variants = {key: GLib.Variant(types[key], value) for key, value in changes.items()}
+        except (KeyError, TypeError, OverflowError) as error:
+            raise Refused(f"not a setting of {module_id}: {error}") from error
+        arguments = GLib.Variant("(sa{sv})", (module_id, variants))
+        self._call(OBJECT_PATH, DAEMON_INTERFACE, "SetModuleSettings", arguments, None)
+
     def awake_state(self) -> dict:
         (state,) = self._call(AWAKE_PATH, AWAKE_INTERFACE, "GetState", None, "(a{sv})")
         return state
@@ -68,23 +88,6 @@ class Client:
     def awake_set_keep_screen(self, keep_screen: bool) -> None:
         arguments = GLib.Variant("(b)", (keep_screen,))
         self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetKeepScreen", arguments, None)
-
-    def awake_settings(self) -> dict:
-        (settings,) = self._call(AWAKE_PATH, AWAKE_INTERFACE, "GetSettings", None, "(a{sv})")
-        return settings
-
-    def awake_set_settings(self, changes: Mapping[str, object]) -> None:
-        """Saves some of Awake's settings. A key Awake does not know is Refused, as a value
-        of the wrong kind would be.
-        """
-        try:
-            variants = {
-                key: GLib.Variant(AWAKE_SETTINGS[key], value) for key, value in changes.items()
-            }
-        except (KeyError, TypeError, OverflowError) as error:
-            raise Refused(f"not an Awake setting: {error}") from error
-        arguments = GLib.Variant("(a{sv})", (variants,))
-        self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetSettings", arguments, None)
 
     def _call(
         self,

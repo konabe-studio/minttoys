@@ -18,8 +18,8 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys import BUS_NAME
-from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
+from minttoys import BUS_NAME, OBJECT_PATH
+from minttoys.api import DAEMON_INTERFACE, ModuleInfo, ModuleOff, NotRunning, Refused
 from minttoys.client import Client
 from minttoys.daemon.service import DaemonService
 from minttoys.modules.awake.inhibit import Flags
@@ -157,6 +157,100 @@ def test_toggle(remote: Remote) -> None:
     assert remote(lambda client: client.awake_state())["mode"] == "indefinite"
     remote(lambda client: client.awake_toggle())
     assert remote(lambda client: client.awake_state())["mode"] == "off"
+
+
+DEFAULT_SETTINGS = {
+    "default_mode": "indefinite",
+    "default_minutes": 60,
+    "default_until": "18:00",
+    "keep_screen": False,
+}
+
+
+def test_module_settings(remote: Remote) -> None:
+    assert remote(lambda client: client.module_settings("awake")) == DEFAULT_SETTINGS
+
+
+def test_settings_are_there_while_the_module_is_off(remote: Remote) -> None:
+    remote(lambda client: client.set_module_enabled("awake", False))
+    remote(lambda client: client.set_module_settings("awake", {"default_minutes": 45}))
+    settings = remote(lambda client: client.module_settings("awake"))
+    assert settings == {**DEFAULT_SETTINGS, "default_minutes": 45}
+
+
+def test_set_module_settings_saves_only_what_changed(remote: Remote, config_path: Path) -> None:
+    changes = {"default_mode": "duration", "default_minutes": 45}
+    remote(lambda client: client.set_module_settings("awake", changes))
+    assert json.loads(config_path.read_text(encoding="utf-8")) == {"modules": {"awake": changes}}
+
+
+def test_set_module_settings_reach_the_running_module(remote: Remote) -> None:
+    remote(lambda client: client.set_module_settings("awake", {"default_mode": "until"}))
+    remote(lambda client: client.awake_toggle())
+    assert remote(lambda client: client.awake_state())["mode"] == "until"
+
+
+def test_a_bad_setting_is_refused_and_changes_nothing(remote: Remote, config_path: Path) -> None:
+    with pytest.raises(Refused, match="default_minutes"):
+        remote(
+            lambda client: client.set_module_settings(
+                "awake", {"keep_screen": True, "default_minutes": 0}
+            )
+        )
+    assert not config_path.exists()
+    assert remote(lambda client: client.module_settings("awake")) == DEFAULT_SETTINGS
+
+
+def test_a_setting_the_module_does_not_have_is_refused_before_sending(remote: Remote) -> None:
+    with pytest.raises(Refused, match="colour"):
+        remote(lambda client: client.set_module_settings("awake", {"colour": "green"}))
+
+
+def test_settings_of_an_unknown_module_are_refused(remote: Remote) -> None:
+    with pytest.raises(Refused, match=r"^unknown module: 'nope'$"):
+        remote(lambda client: client.module_settings("nope"))
+
+
+def test_settings_of_a_module_that_did_not_load_are_refused(remote: Remote) -> None:
+    with pytest.raises(Refused, match="could not be loaded"):
+        remote(lambda client: client.module_settings("broken"))
+
+
+def subscribe(bus: Gio.DBusConnection, signal: str, into: list) -> None:
+    bus.signal_subscribe(
+        None,
+        DAEMON_INTERFACE,
+        signal,
+        OBJECT_PATH,
+        None,
+        Gio.DBusSignalFlags.NONE,
+        lambda *arguments: into.append(arguments[5].unpack()),
+    )
+
+
+def test_a_settings_change_is_signalled_with_every_setting(
+    remote: Remote,
+    private_bus: tuple[Gio.DBusConnection, Gio.DBusConnection],
+    pump: Callable[..., bool],
+) -> None:
+    heard: list = []
+    subscribe(private_bus[1], "ModuleSettingsChanged", heard)
+    remote(lambda client: client.awake_set_keep_screen(True))
+    assert pump(lambda: heard)
+    assert heard == [("awake", {**DEFAULT_SETTINGS, "keep_screen": True})]
+
+
+def test_switching_a_module_is_signalled_with_the_new_list(
+    remote: Remote,
+    private_bus: tuple[Gio.DBusConnection, Gio.DBusConnection],
+    pump: Callable[..., bool],
+) -> None:
+    heard: list = []
+    subscribe(private_bus[1], "ModulesChanged", heard)
+    remote(lambda client: client.set_module_enabled("awake", False))
+    assert pump(lambda: heard)
+    ((rows,),) = heard
+    assert rows[0][:4] == ("awake", "Awake", rows[0][2], "off")
 
 
 def test_an_unknown_module_is_refused_with_the_reason(remote: Remote) -> None:

@@ -36,7 +36,7 @@ class State(StrEnum):
     FAILED = "failed"
 
 
-type SettingsSaver = Callable[[str, Mapping[str, Any]], None]
+type SettingsSetter = Callable[[str, Mapping[str, Any]], None]
 
 
 def _discard(module_id: str, changes: Mapping[str, Any]) -> None:
@@ -44,10 +44,12 @@ def _discard(module_id: str, changes: Mapping[str, Any]) -> None:
 
 
 class ModuleHost:
-    def __init__(self, loaders: Mapping[str, ModuleLoader], save: SettingsSaver = _discard) -> None:
-        """`save(module_id, changes)` is what a module's Context.save calls."""
+    def __init__(
+        self, loaders: Mapping[str, ModuleLoader], set_settings: SettingsSetter = _discard
+    ) -> None:
+        """`set_settings(module_id, changes)` is what a module's Context.set_settings calls."""
         self._loaders = loaders
-        self._save = save
+        self._set_settings = set_settings
         self._classes: dict[str, type[Module] | None] = {}
         # In the order they were switched on, so they go off in reverse.
         self._running: dict[str, Module] = {}
@@ -63,12 +65,16 @@ class ModuleHost:
             module_class = self._class(module_id)
             if module_class is None:
                 continue
-            settings = config.module(module_id)
-            wanted = settings.get("enabled")
+            section = config.module(module_id)
+            wanted = section.get("enabled")
             if not isinstance(wanted, bool):
                 wanted = module_class.enabled_by_default
             if wanted and module_id not in self._running:
-                context = Context(bus, settings, partial(self._save, module_id))
+                context = Context(
+                    bus,
+                    module_class.read_settings(section),
+                    partial(self._set_settings, module_id),
+                )
                 self._enable(module_id, module_class, context)
             elif not wanted and module_id in self._running:
                 self._disable(module_id)
@@ -81,6 +87,26 @@ class ModuleHost:
     @property
     def module_ids(self) -> tuple[str, ...]:
         return tuple(self._loaders)
+
+    def module_class(self, module_id: str) -> type[Module]:
+        """The module's class, loading it if need be. ValueError for an id MintToys does
+        not have, RuntimeError for a module that could not be loaded.
+        """
+        if module_id not in self._loaders:
+            raise ValueError(f"unknown module: {module_id!r}")
+        module_class = self._class(module_id)
+        if module_class is None:
+            raise RuntimeError(f"module {module_id} could not be loaded: {self.errors[module_id]}")
+        return module_class
+
+    def apply_settings(self, module_id: str, settings: Mapping[str, Any]) -> None:
+        """Hands saved settings to the module, if it is on. Its error, if any, goes to the
+        caller: the settings are saved by then, and the caller says that they did not all
+        take effect.
+        """
+        module = self._running.get(module_id)
+        if module is not None:
+            module.apply_settings(settings)
 
     def describe(self) -> list[ModuleInfo]:
         """Every module with its state, as ListModules reports it. A module that could not
