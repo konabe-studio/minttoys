@@ -148,4 +148,5 @@ def test_the_command_line_talks_to_the_daemon(
     assert command("awake", "status").stdout == "Awake is off.\n"
     listing = command("modules")
     assert listing.returncode == 0
-    assert listing.stdout.startswith("awake  on")
+    rows = [line.split(maxsplit=2) for line in listing.stdout.splitlines()]
+    assert rows[:2] == [["awake", "on", "Awake"], ["lightswitch", "off", "Light Switch"]]
