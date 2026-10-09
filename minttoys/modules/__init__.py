@@ -4,4 +4,5 @@
 # each one only when it gets to it, so a module that fails to import fails alone.
 AVAILABLE: dict[str, str] = {
     "awake": "minttoys.modules.awake.module:Awake",
+    "lightswitch": "minttoys.modules.lightswitch.module:LightSwitch",
 }

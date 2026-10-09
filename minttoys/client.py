@@ -13,6 +13,8 @@ from minttoys.api import (
     AWAKE_INTERFACE,
     AWAKE_PATH,
     DAEMON_INTERFACE,
+    LIGHTSWITCH_INTERFACE,
+    LIGHTSWITCH_PATH,
     MODULE_SETTINGS,
     ModuleInfo,
     ModuleOff,
@@ -88,6 +90,13 @@ class Client:
     def awake_set_keep_screen(self, keep_screen: bool) -> None:
         arguments = GLib.Variant("(b)", (keep_screen,))
         self._call(AWAKE_PATH, AWAKE_INTERFACE, "SetKeepScreen", arguments, None)
+
+    def lightswitch_state(self) -> dict:
+        (state,) = self._call(LIGHTSWITCH_PATH, LIGHTSWITCH_INTERFACE, "GetState", None, "(a{sv})")
+        return state
+
+    def lightswitch_toggle(self) -> None:
+        self._call(LIGHTSWITCH_PATH, LIGHTSWITCH_INTERFACE, "Toggle", None, None)
 
     def _call(
         self,

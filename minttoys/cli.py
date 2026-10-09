@@ -1,9 +1,10 @@
-"""The minttoys command: Awake and the modules, from a terminal or a script.
+"""The minttoys command: the tools and the modules, from a terminal or a script.
 
     minttoys awake on [--for 90m | --until 18:00] [--screen | --no-screen]
     minttoys awake off
     minttoys awake toggle
     minttoys awake status
+    minttoys lightswitch [status | toggle]
     minttoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when MintToys could not do it, 2 when the command line is wrong.
@@ -19,6 +20,7 @@ from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
 from minttoys.core import clock
 from minttoys.core.i18n import _
 from minttoys.modules.awake import text, timer
+from minttoys.modules.lightswitch import text as lightswitch_text
 
 
 class Client(Protocol):
@@ -30,6 +32,8 @@ class Client(Protocol):
     def awake_start(self, mode: str, minutes: int, until: str, keep_screen: bool) -> None: ...
     def awake_stop(self) -> None: ...
     def awake_toggle(self) -> None: ...
+    def lightswitch_state(self) -> dict: ...
+    def lightswitch_toggle(self) -> None: ...
 
 
 def main(
@@ -46,6 +50,8 @@ def main(
         client = (connect or _connect)()
         if args.command == "awake":
             run_awake(client, args, now(), out)
+        elif args.command == "lightswitch":
+            run_lightswitch(client, args, out)
         else:
             run_modules(client, args, out)
     except ImportError:
@@ -55,8 +61,12 @@ def main(
         print(_("MintToys is not running in this session."), file=err)
         return 1
     except ModuleOff:
-        print(_("Awake is switched off in MintToys."), file=err)
-        print(_("Switch it on with: minttoys modules enable awake"), file=err)
+        if args.command == "lightswitch":
+            print(_("Light Switch is switched off in MintToys."), file=err)
+            print(_("Switch it on with: minttoys modules enable lightswitch"), file=err)
+        else:
+            print(_("Awake is switched off in MintToys."), file=err)
+            print(_("Switch it on with: minttoys modules enable awake"), file=err)
         return 1
     except Refused as error:
         print(_("MintToys refused: {reason}").format(reason=error), file=err)
@@ -81,6 +91,12 @@ def run_awake(client: Client, args: argparse.Namespace, now: datetime, out: Text
     elif args.action == "toggle":
         client.awake_toggle()
     print(text.describe(client.awake_state(), now), file=out)
+
+
+def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> None:
+    if args.action == "toggle":
+        client.lightswitch_toggle()
+    print(lightswitch_text.describe(client.lightswitch_state()), file=out)
 
 
 def run_modules(client: Client, args: argparse.Namespace, out: TextIO) -> None:
@@ -148,6 +164,18 @@ def parser() -> argparse.ArgumentParser:
         help=_("switch Awake off when on, or on as set in MintToys; good for a shortcut"),
     )
     actions.add_parser("status", help=_("show whether Awake is on, and for how long"))
+
+    lightswitch = commands.add_parser(
+        "lightswitch",
+        help=_("switch between light and dark"),
+        description=_("Switch the desktop between light and dark, or show when it is dark."),
+    )
+    switches = lightswitch.add_subparsers(dest="action", metavar=_("ACTION"))
+    switches.add_parser("status", help=_("show the mode and the dark hours (the default)"))
+    switches.add_parser(
+        "toggle",
+        help=_("switch to dark, or back to the day's mode, until the schedule changes"),
+    )
 
     modules = commands.add_parser(
         "modules",

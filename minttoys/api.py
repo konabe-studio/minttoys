@@ -8,6 +8,9 @@ app later), with no PyGObject in it.
   minttoys/daemon/service.py.
 - io.github.konabe_studio.MintToys.Awake at /io/github/konabe_studio/MintToys/modules/awake:
   see minttoys/modules/awake/module.py.
+- io.github.konabe_studio.MintToys.LightSwitch at
+  /io/github/konabe_studio/MintToys/modules/lightswitch: see
+  minttoys/modules/lightswitch/module.py.
 """
 
 from typing import NamedTuple
@@ -24,9 +27,18 @@ AWAKE_SETTINGS = {
     "default_until": "s",
     "keep_screen": "b",
 }
+LIGHTSWITCH_PATH = f"{OBJECT_PATH}/modules/lightswitch"
+LIGHTSWITCH_INTERFACE = f"{APP_ID}.LightSwitch"
+LIGHTSWITCH_SETTINGS = {
+    "day_mode": "s",
+    "schedule": "s",
+    "dark_from": "s",
+    "dark_to": "s",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
+    "lightswitch": LIGHTSWITCH_SETTINGS,
 }
 
 
