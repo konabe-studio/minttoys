@@ -1,4 +1,5 @@
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -30,6 +31,19 @@ class TestPresent:
         shown = view.present({"mode": "duration", "keep_screen": False, "ends_at": end}, NOW)
         assert shown.status == "Awake is on for 30 min more, until 10:30."
 
+    @pytest.mark.parametrize(
+        ("mode", "icon"),
+        [
+            ("indefinite", view.ICON_ON),
+            ("duration", view.ICON_DURATION),
+            ("until", view.ICON_UNTIL),
+        ],
+    )
+    def test_the_icon_tells_the_mode(self, mode: str, icon: str) -> None:
+        end = 0 if mode == "indefinite" else unix(datetime(2026, 6, 1, 8, 30, tzinfo=UTC))
+        shown = view.present({"mode": mode, "keep_screen": False, "ends_at": end}, NOW)
+        assert shown.icon == icon
+
     def test_no_state_shows_the_problem(self) -> None:
         shown = view.present(None, NOW, "MintToys is not running.")
         assert shown == view.View(view.ICON_OFF, "MintToys is not running.", False, False, False)
@@ -38,6 +52,12 @@ class TestPresent:
 def test_icon_names_carry_the_app_id() -> None:
     assert view.ICON_ON == "io.github.konabe_studio.MintToys-awake-on-symbolic"
     assert view.ICON_OFF == "io.github.konabe_studio.MintToys-awake-off-symbolic"
+
+
+def test_every_icon_is_in_the_checkout() -> None:
+    icons = Path(__file__).parents[2] / "data" / "icons" / "hicolor" / "symbolic" / "apps"
+    for name in (view.ICON_OFF, *view.ICONS.values()):
+        assert (icons / f"{name}.svg").is_file(), name
 
 
 @pytest.mark.parametrize(

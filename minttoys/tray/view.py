@@ -9,6 +9,11 @@ from minttoys.modules.awake import text, timer
 
 ICON_ON = f"{APP_ID}-awake-on-symbolic"
 ICON_OFF = f"{APP_ID}-awake-off-symbolic"
+# A timed mode keeps one plume of steam and shows what it waits for in its place: an
+# hourglass for a set time, a clock for a time of day.
+ICON_DURATION = f"{APP_ID}-awake-duration-symbolic"
+ICON_UNTIL = f"{APP_ID}-awake-until-symbolic"
+ICONS = {"indefinite": ICON_ON, "duration": ICON_DURATION, "until": ICON_UNTIL}
 
 # The durations the menu offers with one click.
 QUICK_MINUTES = (30, 60, 120)
@@ -34,7 +39,7 @@ def present(state: dict | None, now: datetime, problem: str = "") -> View:
         return View(ICON_OFF, problem, available=False, on=False, keep_screen=False)
     on = state["mode"] != "off"
     return View(
-        ICON_ON if on else ICON_OFF,
+        ICONS.get(state["mode"], ICON_OFF),
         text.headline(state, now),
         available=True,
         on=on,
