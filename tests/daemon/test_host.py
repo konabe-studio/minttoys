@@ -51,6 +51,9 @@ def fake(
         def apply_settings(self, settings: Mapping[str, Any]) -> None:
             recorder.calls.append(f"settings {module_id} {dict(settings)}")
 
+        def switched_off(self) -> None:
+            recorder.calls.append(f"switched off {module_id}")
+
     return lambda: Fake
 
 
@@ -114,7 +117,7 @@ def test_switches_off_a_module_the_config_turned_off(recorder: Recorder) -> None
     host = ModuleHost({"a": fake("a", recorder)})
     host.apply(Config(), BUS)
     host.apply(settings(a={"enabled": False}), BUS)
-    assert recorder.calls == ["enable a", "disable a"]
+    assert recorder.calls == ["enable a", "switched off a", "disable a"]
     assert host.states == {"a": State.OFF}
 
 
@@ -230,3 +233,10 @@ def test_settings_reach_a_module_only_while_it_is_on(recorder: Recorder) -> None
 
 def test_a_module_is_off_unless_it_says_otherwise() -> None:
     assert Module.enabled_by_default is False
+
+
+def test_stopping_does_not_count_as_switching_off(recorder: Recorder) -> None:
+    host = ModuleHost({"a": fake("a", recorder)})
+    host.apply(Config(), BUS)
+    host.stop_all()
+    assert recorder.calls == ["enable a", "disable a"]

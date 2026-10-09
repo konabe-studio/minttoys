@@ -72,5 +72,11 @@ class Module(ABC):
         windows, objects on the bus. Calling it twice does no harm.
         """
 
+    def switched_off(self) -> None:  # noqa: B027
+        """Called when the user switches the module off, just before disable(); not when the
+        daemon stops at the end of a session. For what is set up once and kept across
+        sessions, such as a keyboard shortcut, and taken away only on the user's word.
+        """
+
     def apply_settings(self, settings: Mapping[str, Any]) -> None:  # noqa: B027
         """Takes on changed settings while on; `settings` is all of them, already saved."""
