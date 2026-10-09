@@ -279,8 +279,17 @@ msgstr ""
 msgid "Open the Keyboard settings"
 msgstr ""
 
+#: minttoys/settings/awake_page.py
+msgid "This version of MintToys has no Awake."
+msgstr ""
+
 #: minttoys/settings/awake_page.py minttoys/tray/app.py
 msgid "MintToys is not running."
+msgstr ""
+
+#: minttoys/settings/awake_page.py
+#, python-brace-format
+msgid "Could not read Awake's settings: {error}"
 msgstr ""
 
 #: minttoys/settings/awake_page.py

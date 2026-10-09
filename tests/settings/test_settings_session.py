@@ -19,7 +19,7 @@ from gi.repository import Gio, Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.api import ModuleInfo, NotRunning, Refused  # noqa: E402
+from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from minttoys.settings.window import SettingsWindow  # noqa: E402
 
@@ -38,10 +38,14 @@ class FakeClient:
         self.error = ""
         self.settings = dict(SETTINGS)
         self.fail: Exception | None = None
+        self.settings_fail: Exception | None = None
+        self.listed = True
 
     def modules(self) -> list[ModuleInfo]:
         if isinstance(self.fail, NotRunning):
             raise self.fail
+        if not self.listed:
+            return []
         return [ModuleInfo("awake", "Awake", "", self.state, self.error)]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -49,6 +53,8 @@ class FakeClient:
         self.state = "on" if enabled else "off"
 
     def awake_settings(self) -> dict:
+        if self.settings_fail:
+            raise self.settings_fail
         return dict(self.settings)
 
     def awake_set_settings(self, changes: Mapping[str, object]) -> None:
@@ -152,6 +158,26 @@ def test_without_the_daemon_it_says_so(client: FakeClient, errors: list[str]) ->
     client.fail = NotRunning()
     page = page_for(client, errors)
     assert page.problem.get_text() == "MintToys is not running."
+    assert not page.enabled.get_sensitive()
+    assert not page.click.get_sensitive()
+
+
+def test_unreadable_settings_say_why(client: FakeClient, errors: list[str]) -> None:
+    client.settings_fail = ModuleOff("No such method 'GetSettings'")
+    page = page_for(client, errors)
+    assert page.problem.get_visible()
+    assert page.problem.get_text() == (
+        "Could not read Awake's settings: No such method 'GetSettings'"
+    )
+    assert page.enabled.get_sensitive()  # switching Awake off and on again may help
+    assert page.enabled.content_widget.get_active()
+    assert not page.click.get_sensitive()
+
+
+def test_a_missing_awake_says_so(client: FakeClient, errors: list[str]) -> None:
+    client.listed = False
+    page = page_for(client, errors)
+    assert page.problem.get_text() == "This version of MintToys has no Awake."
     assert not page.enabled.get_sensitive()
     assert not page.click.get_sensitive()
 
