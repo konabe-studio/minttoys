@@ -46,7 +46,14 @@ Prints whether Awake is on, and for how long.
 .SS Light Switch
 Light Switch switches the desktop between Linux Mint's dark mode and its day mode (Mixed
 or Light), the way the Themes window does, by Night Light's schedule or at set times. Both
-commands print the mode the desktop is in and today's dark hours.
+commands print the mode the desktop is in, today's dark hours and its keyboard shortcut.
+.PP
+When it comes on, Light Switch adds a custom keyboard shortcut to Cinnamon,
+.BR Super+Ctrl+Shift+D ,
+named
+.BR "MintToys: Light Switch" ,
+unless those keys are in use already. Its keys can be changed in the Keyboard settings.
+It is taken away when Light Switch, or its shortcut, is switched off in MintToys.
 .TP
 .B status
 Prints the mode and the dark hours, and why Light Switch cannot switch the desktop if it
@@ -92,6 +99,10 @@ The command line is wrong.
 .TP
 .I ~/.config/minttoys/config.json
 The settings, one section per module.
+.SH NOTES
+Removing the package cannot reach into a user's own settings: a keyboard shortcut a tool
+added stays in Cinnamon's custom shortcuts until the tool is switched off first, or the
+shortcut is removed in the Keyboard settings.
 .SH EXAMPLES
 Stay awake for an hour and a half, with the screen on:
 .PP

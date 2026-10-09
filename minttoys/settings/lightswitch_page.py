@@ -18,7 +18,7 @@ from minttoys.core.i18n import _  # noqa: E402
 from minttoys.modules.lightswitch import text  # noqa: E402
 from minttoys.settings import values  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS  # noqa: E402
-from minttoys.settings.widgets import CommandRow, TimeRow, open_keyboard_settings  # noqa: E402
+from minttoys.settings.widgets import TimeRow, open_keyboard_settings  # noqa: E402
 
 
 class Client(Protocol):
@@ -83,12 +83,17 @@ class LightSwitchPage(SettingsPage):
         self.switch_now = Button(_("Switch now"), self._on_switch_now)
         self.now.add_row(self.switch_now)
 
-        shortcut = self.add_section(
+        self.shortcut_section = self.add_section(
             _("Keyboard shortcut"),
-            _("Add a custom shortcut in the Keyboard settings with this command."),
+            _("Change its keys in the Keyboard settings, under MintToys: Light Switch."),
         )
-        shortcut.add_row(CommandRow(_("Command"), "minttoys lightswitch toggle"))
-        shortcut.add_row(Button(_("Open the Keyboard settings"), self._open_keyboard))
+        self.shortcut = Switch(_("Switch now with a keyboard shortcut"))
+        self.shortcut.content_widget.connect("notify::active", self._on_shortcut)
+        self.shortcut_section.add_row(self.shortcut)
+        keys = Text("")
+        self.keys = keys.content_widget
+        self.shortcut_section.add_row(keys)
+        self.shortcut_section.add_row(Button(_("Open the Keyboard settings"), self._open_keyboard))
 
         self.refresh()
 
@@ -121,12 +126,14 @@ class LightSwitchPage(SettingsPage):
             self.schedule.content_widget.set_active_id(schedule)
             self.dark_from.set(*values.split_time(str(settings["dark_from"])))
             self.dark_to.set(*values.split_time(str(settings["dark_to"])))
+            self.shortcut.content_widget.set_active(bool(settings["shortcut"]))
             self._reveal(schedule)
         finally:
             self._loading = False
 
     def show_state(self, state: Mapping[str, object] | None) -> None:
         """Shows the dark hours and why Light Switch cannot switch, if it cannot."""
+        self.keys.set_text("" if state is None else self._keys_text(state))
         if state is None:
             self.hours.set_text("")
             return
@@ -154,6 +161,7 @@ class LightSwitchPage(SettingsPage):
         on = state is not None
         self.modes.set_sensitive(on)
         self.now.set_sensitive(on)
+        self.shortcut_section.set_sensitive(on)
         self.show_state(state)
         self.problem.set_text(problem)
         self.problem.set_visible(bool(problem))
@@ -213,6 +221,22 @@ class LightSwitchPage(SettingsPage):
         else:
             self.refresh()  # puts back what the daemon has
         return GLib.SOURCE_REMOVE
+
+    def _on_shortcut(self, switch: Gtk.Switch, _spec: object) -> None:
+        if self._loading:
+            return
+        self._save({"shortcut": switch.get_active()})
+        self.refresh()
+
+    @staticmethod
+    def _keys_text(state: Mapping[str, object]) -> str:
+        """The keys as Cinnamon's Keyboard settings name them, or why there are none."""
+        keys = str(state.get("shortcut", ""))
+        if keys:
+            key, mods = Gtk.accelerator_parse(keys)
+            if key:
+                return Gtk.accelerator_get_label(key, mods)
+        return text.shortcut(state)
 
     def _on_switch_now(self, _button: object) -> None:
         if self._call(self._client.lightswitch_toggle):

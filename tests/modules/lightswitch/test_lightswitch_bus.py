@@ -65,9 +65,44 @@ class FakeDesktop:
 
 
 @dataclass
+class FakeShortcut:
+    path: str
+    name: str
+    command: str
+    binding: list[str]
+
+
+@dataclass
+class FakeKeybindings:
+    customs: list[FakeShortcut] = field(default_factory=list)
+    # Keys Cinnamon or the user use already.
+    taken: dict[str, list[str]] = field(default_factory=dict)
+
+    def find(self, name: str, command: str) -> FakeShortcut | None:
+        for custom in self.customs:
+            if (custom.name, custom.command) == (name, command):
+                return custom
+        return None
+
+    def taken_by(self, keys: str) -> list[str]:
+        return self.taken.get(keys, [])
+
+    def add(self, name: str, command: str, keys: str) -> None:
+        self.customs.append(FakeShortcut(f"custom{len(self.customs)}", name, command, [keys]))
+
+    def remove(self, path: str) -> None:
+        self.customs = [custom for custom in self.customs if custom.path != path]
+
+
+OURS = ("MintToys: Light Switch", "minttoys lightswitch toggle")
+KEYS = "<Primary><Shift><Super>d"
+
+
+@dataclass
 class Harness:
     module: LightSwitch
     desktop: FakeDesktop
+    keybindings: FakeKeybindings
     service: Gio.DBusConnection
     client: Gio.DBusConnection
     pump: Callable[..., bool]
@@ -129,9 +164,14 @@ def harness(
 ) -> Iterator[Harness]:
     service, client = private_bus
     desktop = FakeDesktop()
+    keybindings = FakeKeybindings()
     shown: Harness
-    module = LightSwitch(make_desktop=lambda: desktop, now=lambda: shown.now)
-    shown = Harness(module, desktop, service, client, pump)
+    module = LightSwitch(
+        make_desktop=lambda: desktop,
+        now=lambda: shown.now,
+        make_keybindings=lambda: keybindings,
+    )
+    shown = Harness(module, desktop, keybindings, service, client, pump)
     client.signal_subscribe(
         service.get_unique_name(),
         INTERFACE,
@@ -154,6 +194,8 @@ def test_on_in_the_day_changes_nothing(harness: Harness) -> None:
         "dark_to": "06:00",
         "by_sun": False,
         "problem": "",
+        "shortcut": KEYS,
+        "shortcut_problem": "",
     }
 
 
@@ -263,3 +305,60 @@ def test_switching_off_leaves_the_desktop_and_the_bus(harness: Harness) -> None:
     assert harness.desktop.current == DARK
     assert isinstance(harness.call("GetState"), GLib.Error)
     harness.module.disable()  # a second time does no harm
+
+
+def shortcuts(harness: Harness) -> list[tuple]:
+    return [(c.name, c.command, c.binding) for c in harness.keybindings.customs]
+
+
+def test_on_adds_the_shortcut(harness: Harness) -> None:
+    harness.enable()
+    assert shortcuts(harness) == [(*OURS, [KEYS])]
+
+
+def test_a_shortcut_already_there_is_kept_as_it_is(harness: Harness) -> None:
+    harness.keybindings.add(*OURS, "<Super>F9")  # the user changed the keys
+    harness.enable()
+    assert shortcuts(harness) == [(*OURS, ["<Super>F9"])]
+    assert harness.state()["shortcut"] == "<Super>F9"
+
+
+def test_taken_keys_give_no_shortcut_and_say_so(harness: Harness) -> None:
+    harness.keybindings.taken[KEYS] = ["My script"]
+    harness.enable()
+    assert shortcuts(harness) == []
+    state = harness.state()
+    assert (state["shortcut"], state["shortcut_problem"]) == ("", "taken")
+
+
+def test_a_shortcut_of_the_users_own_is_not_ours(harness: Harness) -> None:
+    harness.keybindings.add("Dark mode", "minttoys lightswitch toggle", "<Super>F8")
+    harness.enable()
+    assert len(shortcuts(harness)) == 2
+    harness.module.switched_off()
+    assert shortcuts(harness) == [("Dark mode", "minttoys lightswitch toggle", ["<Super>F8"])]
+
+
+def test_the_end_of_a_session_keeps_the_shortcut(harness: Harness) -> None:
+    harness.enable()
+    harness.module.disable()
+    assert shortcuts(harness) == [(*OURS, [KEYS])]
+
+
+def test_switching_off_takes_the_shortcut_away(harness: Harness) -> None:
+    harness.enable()
+    harness.module.switched_off()
+    assert shortcuts(harness) == []
+
+
+def test_the_shortcut_setting_takes_it_away_and_back(harness: Harness) -> None:
+    harness.enable()
+    harness.set_settings({"shortcut": False})
+    assert shortcuts(harness) == []
+    harness.set_settings({"shortcut": True})
+    assert shortcuts(harness) == [(*OURS, [KEYS])]
+
+
+def test_no_shortcut_when_it_is_set_off(harness: Harness) -> None:
+    harness.enable({**TIMES, "shortcut": False})
+    assert shortcuts(harness) == []

@@ -570,3 +570,22 @@ msgstr ""
 #: minttoys/settings/values.py
 msgid "At set times"
 msgstr ""
+
+#. TRANSLATORS: {keys} is a keyboard shortcut such as Shift+Ctrl+Super+D.
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Keyboard shortcut: {keys}"
+msgstr ""
+
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Its keyboard shortcut, {keys}, is in use already, so it has none."
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Change its keys in the Keyboard settings, under MintToys: Light Switch."
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Switch now with a keyboard shortcut"
+msgstr ""

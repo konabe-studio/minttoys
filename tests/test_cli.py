@@ -29,6 +29,8 @@ class FakeClient:
             "dark_to": "06:53",
             "by_sun": True,
             "problem": "",
+            "shortcut": "<Primary><Shift><Super>d",
+            "shortcut_problem": "",
         }
 
     def _check(self) -> None:
@@ -214,6 +216,7 @@ class TestLightSwitch:
         assert out.splitlines() == [
             "The desktop is in its day mode now.",
             "Dark from 18:09 to 06:53, sunset to sunrise.",
+            "Keyboard shortcut: Shift+Ctrl+Super+D",
         ]
 
     def test_toggle(self, client: FakeClient) -> None:
@@ -228,11 +231,14 @@ class TestLightSwitch:
             "dark_to": "06:00",
             "by_sun": False,
             "problem": "custom",
+            "shortcut": "",
+            "shortcut_problem": "taken",
         }
         out = run(client, "lightswitch", "status")[1]
         assert out.splitlines()[1:] == [
             "Dark from 20:00 to 06:00.",
             "Your themes are not one of Mint's styles, so Light Switch leaves them alone.",
+            "Its keyboard shortcut, Shift+Ctrl+Super+D, is in use already, so it has none.",
         ]
 
     def test_switched_off_says_how_to_switch_it_on(self, client: FakeClient) -> None:

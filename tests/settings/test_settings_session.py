@@ -37,6 +37,7 @@ LIGHT_SETTINGS = {
     "schedule": "night-light",
     "dark_from": "20:00",
     "dark_to": "06:00",
+    "shortcut": True,
 }
 LIGHT_STATE = {
     "dark": False,
@@ -44,6 +45,8 @@ LIGHT_STATE = {
     "dark_to": "06:53",
     "by_sun": True,
     "problem": "",
+    "shortcut": "<Primary><Shift><Super>d",
+    "shortcut_problem": "",
 }
 
 
@@ -374,3 +377,23 @@ def test_light_switch_off_waits(client: FakeClient, errors: list[str]) -> None:
     page.enabled.content_widget.set_active(True)
     assert client.light_calls == [("enabled", True)]
     assert page.modes.get_sensitive()
+
+
+def test_light_switch_shows_its_shortcut(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    assert page.shortcut.content_widget.get_active()
+    assert page.keys.get_text() == "Shift+Ctrl+Super+D"
+
+
+def test_light_switch_shortcut_can_be_switched_off(client: FakeClient, errors: list[str]) -> None:
+    page = light_page(client, errors)
+    page.shortcut.content_widget.set_active(False)
+    assert client.light_calls == [("settings", {"shortcut": False})]
+
+
+def test_light_switch_says_its_shortcut_was_taken(client: FakeClient, errors: list[str]) -> None:
+    client.light_state.update(shortcut="", shortcut_problem="taken")
+    page = light_page(client, errors)
+    assert page.keys.get_text() == (
+        "Its keyboard shortcut, Shift+Ctrl+Super+D, is in use already, so it has none."
+    )

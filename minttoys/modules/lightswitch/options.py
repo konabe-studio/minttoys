@@ -14,6 +14,11 @@ from minttoys.modules.awake import timer
 DAY_MODES = ("mixed", "light")
 # What decides when it is dark: Night Light's schedule, or the two set times.
 SCHEDULES = ("night-light", "times")
+# The keyboard shortcut Light Switch adds to Cinnamon's custom shortcuts, as PowerToys'
+# Win+Ctrl+Shift+D; the user can change the keys in Cinnamon's Keyboard settings.
+SHORTCUT_KEYS = "<Primary><Shift><Super>d"
+SHORTCUT_NAME = "MintToys: Light Switch"
+SHORTCUT_COMMAND = "minttoys lightswitch toggle"
 
 
 @dataclass(frozen=True)
@@ -24,6 +29,8 @@ class Options:
     schedule: str = "night-light"
     dark_from: str = "20:00"
     dark_to: str = "06:00"
+    # Whether Light Switch keeps a keyboard shortcut in Cinnamon's custom shortcuts.
+    shortcut: bool = True
 
     @classmethod
     def read(cls, settings: Mapping[str, Any]) -> "Options":
@@ -48,12 +55,13 @@ class Options:
             fields[key] = _CHECKS[key](value)
         return replace(self, **fields)
 
-    def settings(self) -> dict[str, str]:
+    def settings(self) -> dict[str, str | bool]:
         return {
             "day_mode": self.day_mode,
             "schedule": self.schedule,
             "dark_from": self.dark_from,
             "dark_to": self.dark_to,
+            "shortcut": self.shortcut,
         }
 
     @property
@@ -86,9 +94,16 @@ def _clock(key: str) -> Callable[[object], str]:
     return check
 
 
-_CHECKS: dict[str, Callable[[object], str]] = {
+def _shortcut(value: object) -> bool:
+    if not isinstance(value, bool):
+        raise ValueError(f"shortcut is true or false, not {value!r}")
+    return value
+
+
+_CHECKS: dict[str, Callable[[object], object]] = {
     "day_mode": _day_mode,
     "schedule": _schedule,
     "dark_from": _clock("dark_from"),
     "dark_to": _clock("dark_to"),
+    "shortcut": _shortcut,
 }

@@ -2,7 +2,13 @@ import pytest
 
 from minttoys.modules.lightswitch.options import Options
 
-DEFAULTS = {"day_mode": "", "schedule": "night-light", "dark_from": "20:00", "dark_to": "06:00"}
+DEFAULTS = {
+    "day_mode": "",
+    "schedule": "night-light",
+    "dark_from": "20:00",
+    "dark_to": "06:00",
+    "shortcut": True,
+}
 
 
 def test_defaults() -> None:
@@ -35,6 +41,7 @@ def test_update_all_or_none() -> None:
         ({"day_mode": ""}, "day_mode is mixed or light"),
         ({"schedule": "sun"}, "schedule is night-light or times"),
         ({"dark_from": 20}, "dark_from is a time of day"),
+        ({"shortcut": "yes"}, "shortcut is true or false"),
         ({"colour": "green"}, "unknown setting"),
     ],
 )
