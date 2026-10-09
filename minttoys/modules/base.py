@@ -32,7 +32,9 @@ class Module(ABC):
     id: ClassVar[str]
     name: ClassVar[str]
     description: ClassVar[str]
-    enabled_by_default: ClassVar[bool] = True
+    # Off unless the module is harmless until used: after installing, nothing on the
+    # system changes until the user picks a tool.
+    enabled_by_default: ClassVar[bool] = False
     # Each setting's D-Bus type, by key. The settings live in the module's section of the
     # config, and the daemon serves them whether the module is on or off.
     settings_types: ClassVar[Mapping[str, str]] = {}
