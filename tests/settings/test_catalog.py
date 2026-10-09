@@ -15,7 +15,7 @@ def test_tool_ids_are_unique() -> None:
 def test_grouped_keeps_the_order_and_leaves_out_empty_headings() -> None:
     groups = catalog.grouped()
     assert [heading for heading, _ in groups] == ["System"]
-    assert [tool.id for _, tools in groups for tool in tools] == ["awake"]
+    assert [tool.id for _, tools in groups for tool in tools] == ["awake", "lightswitch"]
 
 
 def test_every_module_the_daemon_has_is_listed() -> None:

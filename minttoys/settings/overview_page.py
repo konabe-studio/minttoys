@@ -14,7 +14,7 @@ from xapp.SettingsWidgets import SettingsPage, SettingsWidget  # noqa: E402
 
 from minttoys.api import ModuleInfo, NotRunning, Refused  # noqa: E402
 from minttoys.core.i18n import _  # noqa: E402
-from minttoys.settings.awake_page import Client  # noqa: E402
+from minttoys.settings.lightswitch_page import Client  # noqa: E402
 
 
 class ToolRow(SettingsWidget):

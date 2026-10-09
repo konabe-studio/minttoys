@@ -16,10 +16,15 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gio, Gtk  # noqa: E402
 
 from minttoys import APP_ID, BUS_NAME, OBJECT_PATH  # noqa: E402
-from minttoys.api import DAEMON_INTERFACE  # noqa: E402
+from minttoys.api import (  # noqa: E402
+    DAEMON_INTERFACE,
+    LIGHTSWITCH_INTERFACE,
+    LIGHTSWITCH_PATH,
+)
 from minttoys.core.i18n import _  # noqa: E402
 from minttoys.settings import catalog, first_run  # noqa: E402
-from minttoys.settings.awake_page import AwakePage, Client  # noqa: E402
+from minttoys.settings.awake_page import AwakePage  # noqa: E402
+from minttoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
 
 SIDEBAR_WIDTH = 200
@@ -70,7 +75,9 @@ class SettingsWindow(Gtk.ApplicationWindow):
         # TRANSLATORS: the first page of the settings window, listing every tool.
         self._add_page("overview", _("Overview"), "go-home-symbolic", "", self.overview)
         self.awake = AwakePage(client, self._error)
-        pages = {"awake": self.awake}
+        self.lightswitch = LightSwitchPage(client, self._error)
+        self.pages = {"awake": self.awake, "lightswitch": self.lightswitch}
+        pages = self.pages
         for heading, tools in catalog.grouped():
             for tool in tools:
                 self._add_page(tool.id, tool.name, tool.icon, heading, pages[tool.id])
@@ -90,9 +97,18 @@ class SettingsWindow(Gtk.ApplicationWindow):
             DAEMON_INTERFACE,
             "ModuleSettingsChanged",
             OBJECT_PATH,
-            "awake",
+            None,
             Gio.DBusSignalFlags.NONE,
-            lambda *arguments: self.awake.show_settings(arguments[5].unpack()[1]),
+            lambda *arguments: self._on_settings_changed(*arguments[5].unpack()),
+        )
+        bus.signal_subscribe(
+            BUS_NAME,
+            LIGHTSWITCH_INTERFACE,
+            "StateChanged",
+            LIGHTSWITCH_PATH,
+            None,
+            Gio.DBusSignalFlags.NONE,
+            lambda *arguments: self.lightswitch.show_state(arguments[5].unpack()[0]),
         )
         # A module switched on or off elsewhere, from the command line for one.
         bus.signal_subscribe(
@@ -116,7 +132,13 @@ class SettingsWindow(Gtk.ApplicationWindow):
 
     def refresh(self) -> None:
         self.overview.refresh()
-        self.awake.refresh()
+        for page in self.pages.values():
+            page.refresh()
+
+    def _on_settings_changed(self, module_id: str, settings: dict) -> None:
+        page = self.pages.get(module_id)
+        if page is not None:
+            page.show_settings(settings)
 
     def show_page(self, page: str) -> None:
         for row in self.sidebar.get_children():
