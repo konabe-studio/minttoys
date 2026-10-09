@@ -41,12 +41,12 @@ msgstr "A MintToys nem teljesítette a kérést: {reason}"
 #. TRANSLATORS: a module's state in the list `minttoys modules` prints.
 #: minttoys/cli.py
 msgid "on"
-msgstr "be"
+msgstr "bekapcsolva"
 
 #. TRANSLATORS: a module's state in the list `minttoys modules` prints.
 #: minttoys/cli.py
 msgid "off"
-msgstr "ki"
+msgstr "kikapcsolva"
 
 #. TRANSLATORS: a module's state in the list `minttoys modules` prints.
 #: minttoys/cli.py

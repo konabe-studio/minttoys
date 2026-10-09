@@ -143,12 +143,12 @@ class TestModules:
     def test_list_is_the_default(self, client: FakeClient) -> None:
         status, out, _ = run(client, "modules")
         assert status == 0
-        assert out == "awake  on        Awake\n"
+        assert out == "awake  on      Awake\n"
 
     def test_a_failed_module_shows_why(self, client: FakeClient) -> None:
         client.infos = [ModuleInfo("awake", "Awake", "", "failed", "RuntimeError: no bus")]
         out = run(client, "modules", "list")[1]
-        assert out == "awake  failed    Awake\n       RuntimeError: no bus\n"
+        assert out == "awake  failed  Awake\n       RuntimeError: no bus\n"
 
     @pytest.mark.parametrize(("action", "enabled"), [("enable", True), ("disable", False)])
     def test_enable_and_disable(self, client: FakeClient, action: str, enabled: bool) -> None:

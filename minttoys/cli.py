@@ -96,9 +96,11 @@ def describe_modules(infos: list[ModuleInfo]) -> str:
     # TRANSLATORS: a module's state in the list `minttoys modules` prints.
     states = {"on": _("on"), "off": _("off"), "failed": _("failed")}
     width = max((len(info.id) for info in infos), default=0)
+    state_width = max(len(label) for label in states.values())
     lines = []
     for info in infos:
-        lines.append(f"{info.id:<{width}}  {states.get(info.state, info.state):<8}  {info.name}")
+        state = states.get(info.state, info.state)
+        lines.append(f"{info.id:<{width}}  {state:<{state_width}}  {info.name}")
         if info.error:
             lines.append(f"{'':<{width}}  {info.error}")
     return "\n".join(lines)
