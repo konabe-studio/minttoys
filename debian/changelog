@@ -1,7 +1,8 @@
-minttoys (0.1.0~dev) UNRELEASED; urgency=medium
+minttoys (0.1.0) unstable; urgency=medium
 
-  * Development build: Awake with its panel icon, the settings window, the
-    command line, and the background service behind them, in English and
-    Hungarian.
+  * First release: Awake keeps the computer awake until it is turned off,
+    for a set time, or until a time of day, without changing the power
+    settings. With a panel icon, a settings window and the minttoys
+    command, in English and Hungarian.
 
- -- Kōnabe Studio <konabe@proton.me>  Fri, 02 Oct 2026 14:45:00 +0200
+ -- Kōnabe Studio <konabe@proton.me>  Fri, 09 Oct 2026 13:20:00 +0200
