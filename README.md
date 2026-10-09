@@ -15,8 +15,8 @@ so it follows your theme and behaves like the rest of the system. Where Cinnamon
 does something well, MintToys leaves it alone, and each tool says what it adds over the
 built-in one.
 
-> **Status: early development.** There is nothing to install yet. The first release
-> carries a single tool, Awake, together with the groundwork every later tool builds on.
+> **Status: early development.** The first release, 0.1.0, carries a single tool, Awake,
+> together with the groundwork every later tool builds on.
 
 ## The first tool: Awake
 
@@ -33,6 +33,28 @@ without touching your power settings.
   any reason, your usual power settings apply again within seconds.
 
 Everything planned after it, grouped into milestones, is in the [roadmap](ROADMAP.md).
+
+## Install
+
+Download `minttoys_0.1.0_all.deb` from the
+[latest release](https://github.com/konabe-studio/minttoys/releases/latest) and
+double-click it, or install it from a terminal in the folder you downloaded it to:
+
+```sh
+sudo apt install ./minttoys_0.1.0_all.deb
+```
+
+Then log out and back in. The coffee cup appears in the panel, and MintToys is in the
+menu.
+
+To remove MintToys:
+
+```sh
+sudo apt purge minttoys
+```
+
+The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`,
+yours to keep or delete.
 
 ## Platform
 
