@@ -77,6 +77,7 @@ class ModuleHost:
                 )
                 self._enable(module_id, module_class, context)
             elif not wanted and module_id in self._running:
+                self._switched_off(module_id)
                 self._disable(module_id)
 
     def stop_all(self) -> None:
@@ -154,6 +155,15 @@ class ModuleHost:
         self.states[module_id] = State.ON
         self.errors.pop(module_id, None)
         log.info("module %s is on", module_id)
+
+    def _switched_off(self, module_id: str) -> None:
+        """Tells a running module the user switched it off, before it goes off. Its error
+        is logged and does not keep it from going off.
+        """
+        try:
+            self._running[module_id].switched_off()
+        except Exception:
+            log.exception("module %s could not tidy up on being switched off", module_id)
 
     def _disable(self, module_id: str) -> None:
         module = self._running.pop(module_id)
