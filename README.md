@@ -54,7 +54,9 @@ sudo apt purge minttoys
 ```
 
 The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`
-and `~/.local/state/minttoys/`, yours to keep or delete.
+and `~/.local/state/minttoys/`, yours to keep or delete. A keyboard shortcut a tool added
+to Cinnamon, such as Light Switch's, stays in the Keyboard settings too: switch the tool
+off in MintToys before removing the package, or delete the shortcut there.
 
 ## Platform
 

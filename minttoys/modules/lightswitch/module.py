@@ -9,11 +9,18 @@ Interface io.github.konabe_studio.MintToys.LightSwitch at
 - GetState() -> a{sv}: dark b (the desktop is in Mint's dark mode now), dark_from s and
   dark_to s (today's dark hours as "HH:MM"), by_sun b (they are sunset and sunrise), problem
   s ("" when the desktop can be switched, "custom" for themes that are none of Mint's
-  styles, "no-mode" for a style without the mode to switch to)
+  styles, "no-mode" for a style without the mode to switch to), shortcut s (the keys of its
+  keyboard shortcut, "" for none), shortcut_problem s ("taken" when its keys were in use
+  already, so it has none)
 - StateChanged(a{sv}): the same, whenever any of it changes
 
-The settings (day_mode, schedule, dark_from, dark_to; see options.Options) go through the
-daemon's GetModuleSettings and SetModuleSettings.
+The settings (day_mode, schedule, dark_from, dark_to, shortcut; see options.Options) go
+through the daemon's GetModuleSettings and SetModuleSettings.
+
+The keyboard shortcut is a custom shortcut in Cinnamon, "MintToys: Light Switch", which
+the user can change in the Keyboard settings. It is added when Light Switch comes on
+without one, unless its keys are taken, and taken away only when the user switches Light
+Switch or its shortcut off: not at the end of a session, so keys changed there stay.
 
 It switches only when the schedule moves from day to night or back, and only from the other
 mode: a desktop already dark at nightfall, or already light or mixed at daybreak, is left
@@ -34,7 +41,12 @@ from minttoys.core import clock
 from minttoys.core.i18n import _
 from minttoys.modules.base import Context, Module
 from minttoys.modules.lightswitch import schedule, styles
-from minttoys.modules.lightswitch.options import Options
+from minttoys.modules.lightswitch.options import (
+    SHORTCUT_COMMAND,
+    SHORTCUT_KEYS,
+    SHORTCUT_NAME,
+    Options,
+)
 from minttoys.modules.lightswitch.schedule import Dark, NightLight
 from minttoys.modules.lightswitch.styles import Look, Style
 
@@ -53,7 +65,15 @@ INTERFACE_XML = f"""
   </interface>
 </node>
 """
-SIGNATURES = {"dark": "b", "dark_from": "s", "dark_to": "s", "by_sun": "b", "problem": "s"}
+SIGNATURES = {
+    "dark": "b",
+    "dark_from": "s",
+    "dark_to": "s",
+    "by_sun": "b",
+    "problem": "s",
+    "shortcut": "s",
+    "shortcut_problem": "s",
+}
 # How often it looks at the clock. A minute late at most, after a suspend or a clock change.
 CHECK_EVERY_SECONDS = 60
 
@@ -65,6 +85,26 @@ class Desktop(Protocol):
     def styles(self) -> list[Style]: ...
     def write(self, mode: str, look: Look) -> None: ...
     def night_light(self) -> NightLight: ...
+
+
+class Shortcut(Protocol):
+    path: str
+    binding: list[str]
+
+
+class Keybindings(Protocol):
+    """Cinnamon's custom shortcuts; core.keybindings.CinnamonKeybindings is the real one."""
+
+    def find(self, name: str, command: str) -> Shortcut | None: ...
+    def taken_by(self, keys: str) -> list[str]: ...
+    def add(self, name: str, command: str, keys: str) -> None: ...
+    def remove(self, path: str) -> None: ...
+
+
+def cinnamon_keybindings() -> Keybindings:
+    from minttoys.core.keybindings import CinnamonKeybindings
+
+    return CinnamonKeybindings()
 
 
 def cinnamon_desktop() -> Desktop:
@@ -85,9 +125,13 @@ class LightSwitch(Module):
         self,
         make_desktop: Callable[[], Desktop] = cinnamon_desktop,
         now: Callable[[], datetime] = clock.now,
+        make_keybindings: Callable[[], Keybindings] = cinnamon_keybindings,
     ) -> None:
-        """The daemon uses the defaults; the tests hand in stand-ins for both."""
+        """The daemon uses the defaults; the tests hand in stand-ins for all three."""
         self._make_desktop = make_desktop
+        self._make_keybindings = make_keybindings
+        self._keybindings: Keybindings | None = None
+        self._shortcut_problem = ""
         self._now = now
         self._desktop: Desktop | None = None
         self._bus: Gio.DBusConnection | None = None
@@ -124,6 +168,12 @@ class LightSwitch(Module):
                 context.set_settings({"day_mode": self._options.day_mode})
             except Exception:
                 log.exception("the day's mode could not be saved")
+        try:
+            self._keybindings = self._make_keybindings()
+        except Exception:
+            log.exception("no keyboard shortcut: Cinnamon's custom shortcuts are not there")
+        if self._options.shortcut:
+            self._keep_shortcut()
         node = Gio.DBusNodeInfo.new_for_xml(INTERFACE_XML)
         self._registration = context.bus.register_object(
             OBJECT_PATH, node.interfaces[0], self._on_call, None, None
@@ -139,12 +189,20 @@ class LightSwitch(Module):
             self._bus.unregister_object(self._registration)
         self._registration = 0
         self._desktop = None
+        self._keybindings = None
         self._styles = []
         self._scheduled_dark = None
         self._reported = {}
 
+    def switched_off(self) -> None:
+        self._drop_shortcut()
+
     def apply_settings(self, settings: Mapping[str, Any]) -> None:
         self._options = Options.read(settings)
+        if self._options.shortcut:
+            self._keep_shortcut()
+        else:
+            self._drop_shortcut()
         self._follow_schedule()
 
     def toggle(self) -> None:
@@ -165,7 +223,36 @@ class LightSwitch(Module):
             "dark_to": schedule.clock(dark.end),
             "by_sun": dark.by_sun,
             "problem": "custom" if found is None else self._problem,
+            "shortcut": self._shortcut_keys(),
+            "shortcut_problem": self._shortcut_problem,
         }
+
+    def _ours(self) -> Shortcut | None:
+        if self._keybindings is None:
+            return None
+        return self._keybindings.find(SHORTCUT_NAME, SHORTCUT_COMMAND)
+
+    def _shortcut_keys(self) -> str:
+        ours = self._ours()
+        return ours.binding[0] if ours is not None and ours.binding else ""
+
+    def _keep_shortcut(self) -> None:
+        """Adds the shortcut if it is not there, unless its keys are taken."""
+        if self._keybindings is None or self._ours() is not None:
+            return
+        taken = self._keybindings.taken_by(SHORTCUT_KEYS)
+        if taken:
+            log.info("no keyboard shortcut: %s is taken by %s", SHORTCUT_KEYS, ", ".join(taken))
+            self._shortcut_problem = "taken"
+            return
+        self._shortcut_problem = ""
+        self._keybindings.add(SHORTCUT_NAME, SHORTCUT_COMMAND, SHORTCUT_KEYS)
+
+    def _drop_shortcut(self) -> None:
+        self._shortcut_problem = ""
+        ours = self._ours()
+        if self._keybindings is not None and ours is not None:
+            self._keybindings.remove(ours.path)
 
     def _follow_schedule(self) -> None:
         """Switches when the schedule has moved to the other side since the last time."""

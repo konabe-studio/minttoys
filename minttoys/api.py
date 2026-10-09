@@ -34,6 +34,7 @@ LIGHTSWITCH_SETTINGS = {
     "schedule": "s",
     "dark_from": "s",
     "dark_to": "s",
+    "shortcut": "b",
 }
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
