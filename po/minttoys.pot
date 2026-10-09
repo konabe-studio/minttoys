@@ -431,3 +431,142 @@ msgstr ""
 #: data/autostart/io.github.konabe_studio.MintToys.desktop.in
 msgid "The background service behind MintToys' tools"
 msgstr ""
+
+#: minttoys/cli.py
+msgid "switch between light and dark"
+msgstr ""
+
+#: minttoys/cli.py
+msgid "Switch the desktop between light and dark, or show when it is dark."
+msgstr ""
+
+#: minttoys/cli.py
+msgid "show the mode and the dark hours (the default)"
+msgstr ""
+
+#: minttoys/cli.py
+msgid "switch to dark, or back to the day's mode, until the schedule changes"
+msgstr ""
+
+#: minttoys/cli.py
+msgid "Light Switch is switched off in MintToys."
+msgstr ""
+
+#: minttoys/cli.py
+msgid "Switch it on with: minttoys modules enable lightswitch"
+msgstr ""
+
+#: minttoys/modules/lightswitch/module.py minttoys/settings/lightswitch_page.py
+msgid "Light Switch"
+msgstr ""
+
+#: minttoys/modules/lightswitch/module.py
+msgid ""
+"Switches between light and dark by the time of day, the way the Themes "
+"window does."
+msgstr ""
+
+#. TRANSLATORS: Light Switch's dark hours by the sun; {start} and {end} are times of
+#. day such as 18:09 and 06:53.
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Dark from {start} to {end}, sunset to sunrise."
+msgstr ""
+
+#. TRANSLATORS: Light Switch's dark hours at set times, such as 20:00 and 06:00.
+#: minttoys/modules/lightswitch/text.py
+#, python-brace-format
+msgid "Dark from {start} to {end}."
+msgstr ""
+
+#: minttoys/modules/lightswitch/text.py
+msgid ""
+"Your themes are not one of Mint's styles, so Light Switch leaves them alone."
+msgstr ""
+
+#: minttoys/modules/lightswitch/text.py
+msgid "Your style has no mode to switch to."
+msgstr ""
+
+#: minttoys/modules/lightswitch/text.py
+msgid "The desktop is dark now."
+msgstr ""
+
+#: minttoys/modules/lightswitch/text.py
+msgid "The desktop is in its day mode now."
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Switches between light and dark by the time of day, keeping your color."
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Use Light Switch"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Light and dark"
+msgstr ""
+
+#. TRANSLATORS: the label of the choice between the Themes window's Mixed and Light.
+#: minttoys/settings/lightswitch_page.py
+msgid "During the day"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Dark"
+msgstr ""
+
+#. TRANSLATORS: the labels in front of the times dark starts and ends.
+#: minttoys/settings/lightswitch_page.py
+msgid "From"
+msgstr ""
+
+#. TRANSLATORS: the labels in front of the times dark starts and ends.
+#: minttoys/settings/lightswitch_page.py
+msgid "To"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Open the Night Light settings"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Right now"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "Switch now"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+msgid "This version of MintToys has no Light Switch."
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+#, python-brace-format
+msgid "Light Switch could not be switched on: {error}"
+msgstr ""
+
+#: minttoys/settings/lightswitch_page.py
+#, python-brace-format
+msgid "Could not read Light Switch's settings: {error}"
+msgstr ""
+
+#. TRANSLATORS: the Themes window's mode with light windows and a dark panel.
+#: minttoys/settings/values.py
+msgid "Mixed"
+msgstr ""
+
+#. TRANSLATORS: the Themes window's mode with light windows and a light panel.
+#: minttoys/settings/values.py
+msgid "Light"
+msgstr ""
+
+#: minttoys/settings/values.py
+msgid "With Night Light's schedule"
+msgstr ""
+
+#: minttoys/settings/values.py
+msgid "At set times"
+msgstr ""
