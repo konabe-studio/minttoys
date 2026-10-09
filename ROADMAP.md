@@ -7,7 +7,7 @@ criteria. There are no dates.
 Tools carry the names of their PowerToys counterparts for now, so the two lists are easy
 to compare. Final names may differ.
 
-## M0: groundwork and Awake (in progress)
+## M0: groundwork and Awake (done, released as 0.1.0)
 
 The settings app, the background service, the panel icon, configuration, the `.deb`
 package and translations, built end to end around a single tool.
