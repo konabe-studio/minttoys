@@ -1,4 +1,5 @@
-from typing import ClassVar
+from collections.abc import Mapping
+from typing import Any, ClassVar
 
 import pytest
 
@@ -43,6 +44,13 @@ def fake(
             if fail_disable:
                 raise RuntimeError("disable broke")
 
+        @classmethod
+        def read_settings(cls, section: Mapping[str, Any]) -> dict[str, Any]:
+            return {"x": int(section["x"])} if "x" in section else {}
+
+        def apply_settings(self, settings: Mapping[str, Any]) -> None:
+            recorder.calls.append(f"settings {module_id} {dict(settings)}")
+
     return lambda: Fake
 
 
@@ -85,12 +93,14 @@ def test_a_value_that_is_not_true_or_false_means_the_default(recorder: Recorder)
     assert host.states == {"a": State.ON}
 
 
-def test_hands_each_module_the_bus_and_its_own_settings(recorder: Recorder) -> None:
+def test_hands_each_module_the_bus_and_its_own_settings_as_it_reads_them(
+    recorder: Recorder,
+) -> None:
     host = ModuleHost({"a": fake("a", recorder), "b": fake("b", recorder)})
-    host.apply(settings(a={"minutes": 30}, b={"minutes": 90}), BUS)
+    host.apply(settings(a={"x": "30", "enabled": True}, b={"x": 90}), BUS)
     assert recorder.contexts["a"].bus is BUS
-    assert recorder.contexts["a"].settings == {"minutes": 30}
-    assert recorder.contexts["b"].settings == {"minutes": 90}
+    assert recorder.contexts["a"].settings == {"x": 30}
+    assert recorder.contexts["b"].settings == {"x": 90}
 
 
 def test_applying_the_same_config_again_changes_nothing(recorder: Recorder) -> None:
@@ -193,9 +203,26 @@ def test_module_ids(recorder: Recorder) -> None:
     assert ModuleHost({"a": fake("a", recorder), "b": broken_import}).module_ids == ("a", "b")
 
 
-def test_a_module_saves_through_the_host_under_its_own_id(recorder: Recorder) -> None:
-    saved: list[tuple] = []
-    host = ModuleHost({"a": fake("a", recorder)}, save=lambda *call: saved.append(call))
+def test_a_module_sets_its_settings_through_the_host_under_its_own_id(recorder: Recorder) -> None:
+    calls: list[tuple] = []
+    host = ModuleHost({"a": fake("a", recorder)}, set_settings=lambda *call: calls.append(call))
     host.apply(Config(), BUS)
-    recorder.contexts["a"].save({"x": 1})
-    assert saved == [("a", {"x": 1})]
+    recorder.contexts["a"].set_settings({"x": 1})
+    assert calls == [("a", {"x": 1})]
+
+
+def test_module_class(recorder: Recorder) -> None:
+    host = ModuleHost({"a": fake("a", recorder), "b": broken_import})
+    assert host.module_class("a").id == "a"
+    with pytest.raises(ValueError, match="unknown module"):
+        host.module_class("nope")
+    with pytest.raises(RuntimeError, match="ImportError: no typelib"):
+        host.module_class("b")
+
+
+def test_settings_reach_a_module_only_while_it_is_on(recorder: Recorder) -> None:
+    host = ModuleHost({"a": fake("a", recorder), "b": fake("b", recorder, default=False)})
+    host.apply(Config(), BUS)
+    host.apply_settings("a", {"x": 2})
+    host.apply_settings("b", {"x": 3})
+    assert recorder.calls == ["enable a", "settings a {'x': 2}"]

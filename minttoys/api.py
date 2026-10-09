@@ -3,9 +3,9 @@
 Shared by the daemon and its clients (the command line now, the panel icon and the settings
 app later), with no PyGObject in it.
 
-- io.github.konabe_studio.MintToys at /io/github/konabe_studio/MintToys:
-  ListModules() -> a(sssss), one ModuleInfo per module; SetModuleEnabled(id s, enabled b),
-  saved in the config and applied at once.
+- io.github.konabe_studio.MintToys at /io/github/konabe_studio/MintToys: the modules,
+  switching them on and off, and every module's settings; see
+  minttoys/daemon/service.py.
 - io.github.konabe_studio.MintToys.Awake at /io/github/konabe_studio/MintToys/modules/awake:
   see minttoys/modules/awake/module.py.
 """
@@ -23,6 +23,10 @@ AWAKE_SETTINGS = {
     "default_minutes": "u",
     "default_until": "s",
     "keep_screen": "b",
+}
+# Every module's settings types, by module id, for clients that send settings.
+MODULE_SETTINGS = {
+    "awake": AWAKE_SETTINGS,
 }
 
 

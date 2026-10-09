@@ -36,8 +36,8 @@ class Client(Protocol):
 
     def modules(self) -> list[ModuleInfo]: ...
     def set_module_enabled(self, module_id: str, enabled: bool) -> None: ...
-    def awake_settings(self) -> dict: ...
-    def awake_set_settings(self, changes: Mapping[str, object]) -> None: ...
+    def module_settings(self, module_id: str) -> dict: ...
+    def set_module_settings(self, module_id: str, changes: Mapping[str, object]) -> None: ...
 
 
 class TimeRow(SettingsWidget):
@@ -154,7 +154,7 @@ class AwakePage(SettingsPage):
             if info is None:
                 problem = _("This version of MintToys has no Awake.")
             elif info.state == "on":
-                settings = self._client.awake_settings()
+                settings = self._client.module_settings("awake")
         except NotRunning:
             info, problem = None, _("MintToys is not running.")
         except (ModuleOff, Refused) as error:
@@ -245,7 +245,7 @@ class AwakePage(SettingsPage):
         changes, self._pending = self._pending, {}
         if not changes:
             return GLib.SOURCE_REMOVE
-        if self._call(lambda: self._client.awake_set_settings(changes)):
+        if self._call(lambda: self._client.set_module_settings("awake", changes)):
             self._shown.update(changes)
         else:
             self.refresh()  # puts back what the daemon has

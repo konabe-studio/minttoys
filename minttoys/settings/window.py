@@ -9,8 +9,8 @@ gi.require_version("XApp", "1.0")
 
 from gi.repository import Gio, Gtk, XApp  # noqa: E402
 
-from minttoys import APP_ID, BUS_NAME  # noqa: E402
-from minttoys.api import AWAKE_INTERFACE, AWAKE_PATH  # noqa: E402
+from minttoys import APP_ID, BUS_NAME, OBJECT_PATH  # noqa: E402
+from minttoys.api import DAEMON_INTERFACE  # noqa: E402
 from minttoys.core.i18n import _  # noqa: E402
 from minttoys.settings.awake_page import AwakePage, Client  # noqa: E402
 
@@ -31,12 +31,22 @@ class SettingsWindow(XApp.PreferencesWindow):
 
         bus.signal_subscribe(
             BUS_NAME,
-            AWAKE_INTERFACE,
-            "SettingsChanged",
-            AWAKE_PATH,
+            DAEMON_INTERFACE,
+            "ModuleSettingsChanged",
+            OBJECT_PATH,
+            "awake",
+            Gio.DBusSignalFlags.NONE,
+            lambda *arguments: self.awake.show_settings(arguments[5].unpack()[1]),
+        )
+        # A module switched on or off elsewhere, from the command line for one.
+        bus.signal_subscribe(
+            BUS_NAME,
+            DAEMON_INTERFACE,
+            "ModulesChanged",
+            OBJECT_PATH,
             None,
             Gio.DBusSignalFlags.NONE,
-            lambda *arguments: self.awake.show_settings(arguments[5].unpack()[0]),
+            lambda *_: self.awake.refresh(),
         )
         # Follows the daemon leaving and coming back, so the page never shows settings
         # that are not there any more.

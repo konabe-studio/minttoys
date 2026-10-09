@@ -47,25 +47,35 @@ class Harness:
     now: datetime
     notices: list[tuple[str, str]] = field(default_factory=list)
     signals: list[dict] = field(default_factory=list)
-    settings_signals: list[dict] = field(default_factory=list)
+    # Awake's section of the config, and every change saved to it.
+    config: dict = field(default_factory=dict)
     saved: list[dict] = field(default_factory=list)
     save_fails: bool = False
 
-    def save(self, changes: dict) -> None:
+    def set_settings(self, changes: dict) -> None:
+        """What the daemon does for Context.set_settings: check, save, hand back."""
+        updated = Awake.check_settings(Awake.read_settings(self.config), changes)
         if self.save_fails:
             raise OSError("disk full")
-        self.saved.append(dict(changes))
+        saved = {key: updated[key] for key in changes}
+        self.config.update(saved)
+        self.saved.append(saved)
+        self.module.apply_settings(updated)
+
+    def enable(self) -> None:
+        self.module.enable(
+            Context(self.service, Awake.read_settings(self.config), self.set_settings)
+        )
 
     def reenable(self, settings: dict) -> None:
         """Switches the module off and on again, as the daemon would with these settings."""
         self.module.disable()
-        self.module.enable(Context(self.service, settings, self.save))
+        self.config = dict(settings)
+        self.enable()
 
     def call(self, method: str, *arguments: Any) -> Any:  # noqa: ANN401
         """Calls a method over the bus; returns its result, or the GLib.Error it raised."""
-        signature = {"Start": "(susb)", "SetKeepScreen": "(b)", "SetSettings": "(a{sv})"}.get(
-            method
-        )
+        signature = {"Start": "(susb)", "SetKeepScreen": "(b)"}.get(method)
         parameters = GLib.Variant(signature, arguments) if signature else None
         results: list = []
 
@@ -125,16 +135,7 @@ def awake(
         Gio.DBusSignalFlags.NONE,
         lambda *args: harness.signals.append(args[5].unpack()[0]),
     )
-    client.signal_subscribe(
-        service.get_unique_name(),
-        INTERFACE,
-        "SettingsChanged",
-        OBJECT_PATH,
-        None,
-        Gio.DBusSignalFlags.NONE,
-        lambda *args: harness.settings_signals.append(args[5].unpack()[0]),
-    )
-    module.enable(Context(service, {}, harness.save))
+    harness.enable()
     yield harness
     module.disable()
 
@@ -327,33 +328,28 @@ def test_a_screen_setting_that_cannot_be_saved_changes_nothing(awake: Harness) -
     assert awake.inhibitor.calls == [("hold", Flags.SUSPEND)]
 
 
-DEFAULT_SETTINGS = {
-    "default_mode": "indefinite",
-    "default_minutes": 60,
-    "default_until": "18:00",
-    "keep_screen": False,
-}
+def test_settings_from_a_config_edited_by_hand_fall_back_to_their_defaults() -> None:
+    assert Awake.read_settings({"default_minutes": "lots", "keep_screen": True}) == {
+        "default_mode": "indefinite",
+        "default_minutes": 60,
+        "default_until": "18:00",
+        "keep_screen": True,
+    }
 
 
-def variants(**settings: object) -> dict[str, GLib.Variant]:
-    kinds = {"default_mode": "s", "default_minutes": "u", "default_until": "s", "keep_screen": "b"}
-    return {key: GLib.Variant(kinds[key], value) for key, value in settings.items()}
+def test_checked_settings_come_back_whole_and_normalized() -> None:
+    settings = Awake.read_settings({})
+    updated = Awake.check_settings(settings, {"default_until": "8:05"})
+    assert updated == {**settings, "default_until": "08:05"}
 
 
-def test_get_settings(awake: Harness) -> None:
-    assert awake.call("GetSettings") == (DEFAULT_SETTINGS,)
+def test_a_bad_setting_is_refused_whole() -> None:
+    with pytest.raises(ValueError, match="default_minutes"):
+        Awake.check_settings(Awake.read_settings({}), {"keep_screen": True, "default_minutes": 0})
 
 
-def test_set_settings_saves_what_changed_and_says_so(awake: Harness) -> None:
-    awake.call("SetSettings", variants(default_mode="duration", default_minutes=45))
-    assert awake.saved == [{"default_mode": "duration", "default_minutes": 45}]
-    expected = {**DEFAULT_SETTINGS, "default_mode": "duration", "default_minutes": 45}
-    assert awake.call("GetSettings") == (expected,)
-    assert awake.pump(lambda: awake.settings_signals == [expected])
-
-
-def test_toggle_follows_settings_set_over_the_bus(awake: Harness) -> None:
-    awake.call("SetSettings", variants(default_mode="until", default_until="18:00"))
+def test_apply_settings_while_off_changes_what_toggle_starts(awake: Harness) -> None:
+    awake.set_settings({"default_mode": "until", "default_until": "18:00"})
     awake.call("Toggle")
     assert awake.state() == {
         "mode": "until",
@@ -362,21 +358,15 @@ def test_toggle_follows_settings_set_over_the_bus(awake: Harness) -> None:
     }
 
 
-def test_a_bad_setting_is_invalid_args_and_changes_nothing(awake: Harness) -> None:
-    result = awake.call("SetSettings", variants(keep_screen=True, default_minutes=0))
-    assert remote_error(result) == "org.freedesktop.DBus.Error.InvalidArgs"
-    assert "default_minutes" in result.message
-    assert awake.saved == []
-    assert awake.call("GetSettings") == (DEFAULT_SETTINGS,)
-
-
-def test_an_unknown_setting_is_invalid_args(awake: Harness) -> None:
-    result = awake.call("SetSettings", {"colour": GLib.Variant("s", "green")})
-    assert remote_error(result) == "org.freedesktop.DBus.Error.InvalidArgs"
-
-
-def test_set_settings_applies_the_screen_to_a_running_mode(awake: Harness) -> None:
+def test_apply_settings_while_on_takes_the_screen_at_once(awake: Harness) -> None:
     awake.call("Start", "indefinite", 0, "", False)
-    awake.call("SetSettings", variants(keep_screen=True))
+    awake.set_settings({"keep_screen": True})
     assert awake.inhibitor.calls[-1] == ("hold", Flags.SUSPEND | Flags.IDLE)
     assert awake.state()["keep_screen"] is True
+
+
+def test_settings_other_than_the_screen_leave_a_running_mode_alone(awake: Harness) -> None:
+    awake.call("Start", "indefinite", 0, "", False)
+    awake.set_settings({"default_minutes": 30})
+    assert awake.inhibitor.calls == [("hold", Flags.SUSPEND)]
+    assert not awake.pump(lambda: len(awake.signals) > 1, seconds=0.1)

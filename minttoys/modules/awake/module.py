@@ -8,15 +8,15 @@ Interface io.github.konabe_studio.MintToys.Awake at
   minutes), "until" (reads until, as "18:00") or "off". A bad value is InvalidArgs.
 - Stop()
 - Toggle(): Stop when on; when off, Start with Awake's settings (see state.Defaults).
-- SetKeepScreen(keep_screen b): SetSettings with keep_screen alone.
-- GetSettings() -> a{sv}: default_mode s, default_minutes u, default_until s, keep_screen b
-  (see state.Defaults).
-- SetSettings(a{sv}): saves the settings given, the rest stay. An unknown key or a bad
-  value is InvalidArgs, and then nothing changes. keep_screen applies at once when on.
+- SetKeepScreen(keep_screen b): the daemon's SetModuleSettings with keep_screen alone,
+  which applies at once to a running mode.
 - GetState() -> a{sv}: mode s, keep_screen b, ends_at x (unix time, 0 when not timed).
   While off, keep_screen is the setting, the one the next Toggle uses.
 - StateChanged(a{sv}): the same, whenever any of it changes
-- SettingsChanged(a{sv}): every setting, whenever one changes
+
+The settings themselves (default_mode s, default_minutes u, default_until s, keep_screen b;
+see state.Defaults) go through the daemon's GetModuleSettings and SetModuleSettings, like
+every module's.
 """
 
 import logging
@@ -55,26 +55,16 @@ INTERFACE_XML = f"""
     <method name="SetKeepScreen">
       <arg name="keep_screen" type="b" direction="in"/>
     </method>
-    <method name="GetSettings">
-      <arg name="settings" type="a{{sv}}" direction="out"/>
-    </method>
-    <method name="SetSettings">
-      <arg name="settings" type="a{{sv}}" direction="in"/>
-    </method>
     <method name="GetState">
       <arg name="state" type="a{{sv}}" direction="out"/>
     </method>
     <signal name="StateChanged">
       <arg name="state" type="a{{sv}}"/>
     </signal>
-    <signal name="SettingsChanged">
-      <arg name="settings" type="a{{sv}}"/>
-    </signal>
   </interface>
 </node>
 """
 SIGNATURES = {"mode": "s", "keep_screen": "b", "ends_at": "x"}
-SETTING_SIGNATURES = AWAKE_SETTINGS
 
 
 class Holder(Protocol):
@@ -95,6 +85,7 @@ class Awake(Module):
         "Keeps the computer awake until you turn it off, for a set time, or until a time of"
         " day, without changing your power settings."
     )
+    settings_types: ClassVar[Mapping[str, str]] = AWAKE_SETTINGS
 
     # The longest a timed mode goes without looking at the clock. It also looks at the end
     # time itself, so this only bounds how late it notices the end after a suspend or a
@@ -117,7 +108,7 @@ class Awake(Module):
         self._timeout = 0
         self._state = OFF
         self._defaults = Defaults()
-        self._save: Callable[[Mapping[str, Any]], None] = lambda changes: None
+        self._set_settings: Callable[[Mapping[str, Any]], None] = lambda changes: None
 
     @property
     def state(self) -> State:
@@ -126,7 +117,7 @@ class Awake(Module):
     def enable(self, context: Context) -> None:
         self._bus = context.bus
         self._defaults = Defaults.read(context.settings)
-        self._save = context.save
+        self._set_settings = context.set_settings
         self._inhibitor = self._make_inhibitor(context.bus)
         node = Gio.DBusNodeInfo.new_for_xml(INTERFACE_XML)
         self._registration = context.bus.register_object(
@@ -181,18 +172,26 @@ class Awake(Module):
     def defaults(self) -> Defaults:
         return self._defaults
 
-    def set_settings(self, changes: Mapping[str, Any]) -> None:
-        """Checks every change, saves them, then applies them; a bad value or a config that
-        cannot be written changes nothing. keep_screen applies to a running mode at once,
-        keeping its end.
+    @classmethod
+    def read_settings(cls, section: Mapping[str, Any]) -> dict[str, Any]:
+        return Defaults.read(section).settings()
+
+    @classmethod
+    def check_settings(
+        cls, settings: Mapping[str, Any], changes: Mapping[str, Any]
+    ) -> dict[str, Any]:
+        return Defaults.read(settings).update(changes).settings()
+
+    def apply_settings(self, settings: Mapping[str, Any]) -> None:
+        """keep_screen applies to a running mode at once, keeping its end; the rest wait for
+        the next Toggle.
         """
-        updated = self._defaults.update(changes)
-        self._save({key: updated.settings()[key] for key in changes})
+        updated = Defaults.read(settings)
+        changed_screen = updated.keep_screen != self._defaults.keep_screen
         self._defaults = updated
-        self._emit_settings()
         if self._state.mode is not Mode.OFF and self._state.keep_screen != updated.keep_screen:
             self.start(replace(self._state, keep_screen=updated.keep_screen))
-        elif "keep_screen" in changes:
+        elif changed_screen:
             self._emit()  # while off, the state reports the setting
 
     def _reported(self) -> State:
@@ -243,22 +242,6 @@ class Awake(Module):
                 GLib.Variant("(a{sv})", (self._described(),)),
             )
 
-    def _emit_settings(self) -> None:
-        if self._bus is not None and self._registration:
-            self._bus.emit_signal(
-                None,
-                OBJECT_PATH,
-                INTERFACE,
-                "SettingsChanged",
-                GLib.Variant("(a{sv})", (self._settings(),)),
-            )
-
-    def _settings(self) -> dict[str, GLib.Variant]:
-        return {
-            key: GLib.Variant(SETTING_SIGNATURES[key], value)
-            for key, value in self._defaults.settings().items()
-        }
-
     def _described(self) -> dict[str, GLib.Variant]:
         return {
             key: GLib.Variant(SIGNATURES[key], value)
@@ -288,13 +271,7 @@ class Awake(Module):
                 invocation.return_value(None)
             elif method == "SetKeepScreen":
                 (keep_screen,) = parameters.unpack()
-                self.set_settings({"keep_screen": keep_screen})
-                invocation.return_value(None)
-            elif method == "GetSettings":
-                invocation.return_value(GLib.Variant("(a{sv})", (self._settings(),)))
-            elif method == "SetSettings":
-                (changes,) = parameters.unpack()
-                self.set_settings(changes)
+                self._set_settings({"keep_screen": keep_screen})
                 invocation.return_value(None)
             elif method == "GetState":
                 invocation.return_value(GLib.Variant("(a{sv})", (self._described(),)))
