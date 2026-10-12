@@ -15,33 +15,66 @@ so it follows your theme and behaves like the rest of the system. Where Cinnamon
 does something well, MintToys leaves it alone, and each tool says what it adds over the
 built-in one.
 
-> **Status: early development.** The first release, 0.1.0, carries a single tool, Awake,
-> together with the groundwork every later tool builds on.
+> **Status: early development.** Release 0.2.0 carries five tools: Awake, and the first
+> milestone's Light Switch, Always on Top, File Locksmith and New+.
 
-## The first tool: Awake
+## The tools
 
-Awake keeps your computer from going to sleep while a long download, backup or render runs,
+### Awake
+
+Keeps your computer from going to sleep while a long download, backup or render runs,
 without touching your power settings.
 
 - **Until you turn it off**, **for a set time** (30 minutes, 1 hour, 2 hours or your own),
   or **until a time of day**, even one past midnight.
 - **Keep the screen on, or not.** With the screen allowed to turn off, Awake only stops the
   computer from sleeping.
-- **From the panel.** One click turns it on or off, the tooltip shows the time left, and a
-  notification tells you when a timer runs out.
+- **From the panel.** One click turns it on or off, the icon shows the mode, the tooltip
+  shows the time left, and a notification tells you when a timer runs out.
 - **Nothing left behind.** Awake starts off after every login, and if MintToys stops for
   any reason, your usual power settings apply again within seconds.
 
-Everything planned after it, grouped into milestones, is in the [roadmap](ROADMAP.md).
+### Light Switch
+
+Switches the desktop between Linux Mint's dark mode and its day mode (Mixed or Light),
+the same way the Themes window does.
+
+- **On a schedule:** Night Light's, sunset to sunrise included, or hours of your own.
+- **Right now:** Super+Ctrl+Shift+D switches until the schedule next changes.
+
+### Always on Top
+
+Keeps a window above all the others, with Muffin's own Super+Ctrl+T.
+
+- **A frame** around every pinned window, in your theme's accent color or a color of your
+  own, with its width, opacity and rounded corners to set.
+- **Opacity:** Super+Ctrl+Page Up and Page Down make a pinned window more or less opaque.
+- **A sound** on pinning and letting go, if you want one, and **applications to leave
+  out**, which are never kept on top.
+
+### File Locksmith
+
+Right-click a file or folder in Nemo and choose **What is using this?** to see which of
+your processes hold it open, and end them if you need to.
+
+### New+
+
+Manages your own templates, the files Nemo offers under **Create New Document**: add,
+rename and remove them in the settings window, or right-click a file in Nemo and choose
+**Save as template**.
+
+Every tool except Awake starts switched off, so nothing on your desktop changes until you
+pick it. Everything planned next, grouped into milestones, is in the
+[roadmap](ROADMAP.md).
 
 ## Install
 
-Download `minttoys_0.1.0_all.deb` from the
+Download `minttoys_0.2.0_all.deb` from the
 [latest release](https://github.com/konabe-studio/minttoys/releases/latest) and
 double-click it, or install it from a terminal in the folder you downloaded it to:
 
 ```sh
-sudo apt install ./minttoys_0.1.0_all.deb
+sudo apt install ./minttoys_0.2.0_all.deb
 ```
 
 Then log out and back in. The coffee cup appears in the panel, and MintToys is in the
@@ -55,7 +88,7 @@ sudo apt purge minttoys
 
 The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`
 and `~/.local/state/minttoys/`, yours to keep or delete. A keyboard shortcut a tool added
-to Cinnamon, such as Light Switch's, stays in the Keyboard settings too: switch the tool
+to Cinnamon, such as Light Switch's or Always on Top's, stays in the Keyboard settings too: switch the tool
 off in MintToys before removing the package, or delete the shortcut there.
 
 ## Platform
