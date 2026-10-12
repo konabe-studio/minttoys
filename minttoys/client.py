@@ -10,6 +10,8 @@ from gi.repository import Gio, GLib
 
 from minttoys import BUS_NAME, OBJECT_PATH
 from minttoys.api import (
+    ALWAYSONTOP_INTERFACE,
+    ALWAYSONTOP_PATH,
     AWAKE_INTERFACE,
     AWAKE_PATH,
     DAEMON_INTERFACE,
@@ -93,6 +95,10 @@ class Client:
 
     def lightswitch_state(self) -> dict:
         (state,) = self._call(LIGHTSWITCH_PATH, LIGHTSWITCH_INTERFACE, "GetState", None, "(a{sv})")
+        return state
+
+    def alwaysontop_state(self) -> dict:
+        (state,) = self._call(ALWAYSONTOP_PATH, ALWAYSONTOP_INTERFACE, "GetState", None, "(a{sv})")
         return state
 
     def lightswitch_toggle(self) -> None:

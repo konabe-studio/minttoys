@@ -17,6 +17,8 @@ PARENT = "org.cinnamon.desktop.keybindings"
 CUSTOM = "org.cinnamon.desktop.keybindings.custom-keybinding"
 BASE = "/org/cinnamon/desktop/keybindings/custom-keybindings"
 DUMMY = "__dummy__"
+# Muffin's own actions, such as toggle-above, each with its list of keys.
+WM = "org.cinnamon.desktop.keybindings.wm"
 # Where Cinnamon's own shortcuts are, to check a new one against.
 BUILT_IN = (
     PARENT,
@@ -62,6 +64,16 @@ class CinnamonKeybindings:
             if any(accel.same(entry, keys) for entry in custom.binding):
                 found.append(custom.name)
         return found
+
+    def wm_keys(self, action: str) -> list[str]:
+        """The keys of one of Muffin's own actions, such as toggle-above."""
+        return list(gsettings.settings(WM).get_strv(action))
+
+    def set_wm_keys(self, action: str, keys: list[str]) -> None:
+        """Sets the keys of one of Muffin's own actions; Muffin takes them on at once, and
+        the Keyboard settings show them.
+        """
+        gsettings.settings(WM).set_strv(action, keys)
 
     def add(self, name: str, command: str, keys: str) -> None:
         """Adds a custom shortcut at the lowest free customN, as Cinnamon numbers them."""

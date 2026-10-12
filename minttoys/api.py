@@ -36,10 +36,19 @@ LIGHTSWITCH_SETTINGS = {
     "dark_to": "s",
     "shortcut": "b",
 }
+ALWAYSONTOP_PATH = f"{OBJECT_PATH}/modules/alwaysontop"
+ALWAYSONTOP_INTERFACE = f"{APP_ID}.AlwaysOnTop"
+ALWAYSONTOP_SETTINGS = {
+    "shortcut": "b",
+    "border": "b",
+    "border_color": "s",
+    "border_width": "u",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
     "lightswitch": LIGHTSWITCH_SETTINGS,
+    "alwaysontop": ALWAYSONTOP_SETTINGS,
 }
 
 
