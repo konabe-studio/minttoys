@@ -49,11 +49,16 @@ ALWAYSONTOP_SETTINGS = {
     "sound": "b",
     "excluded": "s",
 }
+NEWPLUS_SETTINGS = {
+    "replace_variables": "b",
+    "hide_digits": "b",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
     "lightswitch": LIGHTSWITCH_SETTINGS,
     "alwaysontop": ALWAYSONTOP_SETTINGS,
+    "newplus": NEWPLUS_SETTINGS,
 }
 
 
