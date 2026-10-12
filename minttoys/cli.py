@@ -110,9 +110,12 @@ def run_alwaysontop(args: argparse.Namespace, err: TextIO) -> int:
         print(_("This needs python3-xlib: sudo apt install python3-xlib"), file=err)
         return 1
     try:
-        step_active_opacity(args.direction == "up")
+        stepped = step_active_opacity(args.direction == "up")
     except Exception as error:  # Xlib raises its own, display errors among them
         print(_("Could not change the window's opacity: {error}").format(error=error), file=err)
+        return 1
+    if not stepped:
+        print(_("The active window is not kept on top, so its opacity stays as it is."), file=err)
         return 1
     return 0
 

@@ -258,11 +258,26 @@ class TestAlwaysOnTop:
         from minttoys.platform import x11
 
         steps: list[bool] = []
-        monkeypatch.setattr(x11, "step_active_opacity", steps.append)
+
+        def step(up: bool) -> bool:
+            steps.append(up)
+            return True
+
+        monkeypatch.setattr(x11, "step_active_opacity", step)
         status, _, _ = run(client, "alwaysontop", "opacity", "down")
         assert status == 0
         assert steps == [False]
         assert client.calls == []  # no daemon needed
+
+    def test_a_window_not_pinned_is_said(
+        self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from minttoys.platform import x11
+
+        monkeypatch.setattr(x11, "step_active_opacity", lambda up: False)
+        status, _, err = run(client, "alwaysontop", "opacity", "down")
+        assert status == 1
+        assert err.startswith("The active window is not kept on top")
 
     def test_an_x11_error_is_said(
         self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
