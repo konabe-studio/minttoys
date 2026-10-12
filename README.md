@@ -59,9 +59,17 @@ your processes hold it open, and end them if you need to.
 
 ### New+
 
-Manages your own templates, the files Nemo offers under **Create New Document**: add,
-rename and remove them in the settings window, or right-click a file in Nemo and choose
-**Save as template**.
+Makes files and folders from your own templates. Right-click inside a folder in Nemo and
+choose **New from template…**, pick a template and give the new item its name.
+
+- **Folder templates**, copied whole, such as a project skeleton.
+- **Variables in names**, if you want them: `$YYYY-$MM-$DD Notes.txt` becomes
+  `2026-10-12 Notes.txt`. The date and time, the folder an item lands in, and environment
+  variables such as `%USER%` are there.
+- **Your order:** start the names with numbers, `1. Letter.odt`, and leave the numbers out
+  of the names shown and made.
+- **Manage them** in the settings window, or right-click a file in Nemo and choose **Save
+  as template**. Nemo's own **Create New Document** keeps offering your file templates.
 
 Every tool except Awake starts switched off, so nothing on your desktop changes until you
 pick it. Everything planned next, grouped into milestones, is in the
