@@ -66,7 +66,8 @@ class PercentRow(SettingsWidget):
         self.label = SettingsLabel(label)
         self.content_widget = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, least, 100, 5)
         self.content_widget.set_digits(0)
-        self.content_widget.set_value_pos(Gtk.PositionType.RIGHT)
+        # The value before the slider: after it, it would stick out past the rows above.
+        self.content_widget.set_value_pos(Gtk.PositionType.LEFT)
         self.content_widget.set_size_request(200, -1)
         self.pack_start(self.label, False, False, 0)
         self.pack_end(self.content_widget, False, False, 0)

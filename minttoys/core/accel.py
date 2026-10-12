@@ -53,12 +53,12 @@ def same(first: str, second: str) -> bool:
 
 
 def label(accel: str) -> str:
-    """A shortcut as people write it: "Shift+Ctrl+Super+D". The text itself for one that
-    does not parse.
+    """A shortcut as people write it: "Shift+Ctrl+Super+D", "Ctrl+Super+Page Up". The text
+    itself for one that does not parse.
     """
     parsed = parse(accel)
     if parsed is None:
         return accel
     modifiers, key = parsed
     named = [modifier for modifier in _ORDER if modifier in modifiers]
-    return "+".join([*named, key.upper() if len(key) == 1 else key])
+    return "+".join([*named, key.upper() if len(key) == 1 else key.replace("_", " ")])
