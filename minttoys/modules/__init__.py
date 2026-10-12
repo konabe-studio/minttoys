@@ -7,4 +7,5 @@ AVAILABLE: dict[str, str] = {
     "lightswitch": "minttoys.modules.lightswitch.module:LightSwitch",
     "locksmith": "minttoys.modules.locksmith.module:FileLocksmith",
     "newplus": "minttoys.modules.newplus.module:NewPlus",
+    "alwaysontop": "minttoys.modules.alwaysontop.module:AlwaysOnTop",
 }
