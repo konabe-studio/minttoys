@@ -1,3 +1,9 @@
+minttoys (0.3.0~dev) UNRELEASED; urgency=medium
+
+  * Development build, nothing new yet.
+
+ -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:23:10 +0200
+
 minttoys (0.2.0) unstable; urgency=medium
 
   * Four new tools: Light Switch switches the desktop between Linux Mint's
