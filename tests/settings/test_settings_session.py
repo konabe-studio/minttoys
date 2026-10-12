@@ -582,7 +582,7 @@ def test_always_on_top_shows_the_rest(client: FakeClient, errors: list[str]) -> 
     assert page.opacity_shortcuts.content_widget.get_active()
     assert "Page Up" in page.opacity_keys.get_text()
     assert page.opacity.content_widget.get_value() == 100
-    assert page.radius.content_widget.get_value_as_int() == 8
+    assert page.radius.content_widget.get_value() == 8
     assert not page.sound.content_widget.get_active()
     assert page.excluded.text == "vlc"
     assert client.pin_calls == []
