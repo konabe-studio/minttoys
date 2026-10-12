@@ -47,6 +47,7 @@ def test_a_key_alone() -> None:
         ("<Primary><Shift><Super>d", "Shift+Ctrl+Super+D"),
         ("<Super>Left", "Super+Left"),
         ("<Alt>F4", "Alt+F4"),
+        ("<Primary><Super>Page_Up", "Ctrl+Super+Page Up"),
         ("not <a> shortcut", "not <a> shortcut"),
     ],
 )
