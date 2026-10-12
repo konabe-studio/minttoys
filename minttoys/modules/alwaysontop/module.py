@@ -13,7 +13,12 @@ Interface io.github.konabe_studio.MintToys.AlwaysOnTop at
 /io/github/konabe_studio/MintToys/modules/alwaysontop:
 
 - GetState() -> a{sv}: shortcut s (toggle-above's keys, "" for none), shortcut_problem s
-  ("taken" when Super+Ctrl+T was in use already)
+  ("taken" when Super+Ctrl+T was in use already), opacity_problem s ("taken" when the
+  opacity shortcuts' keys were)
+
+The opacity shortcuts, Super+Ctrl+Page Up and Page Down, are custom shortcuts in Cinnamon
+running `minttoys alwaysontop opacity up` and `down`, kept the way Light Switch keeps its
+own: added when missing unless their keys are taken, taken away only on the user's word.
 - StateChanged(a{sv}): the same, whenever it changes
 """
 
@@ -33,13 +38,33 @@ from minttoys.api import ALWAYSONTOP_SETTINGS
 from minttoys.core import accel
 from minttoys.core.i18n import _
 from minttoys.core.nemo_action import INSTALLED_ROOT, LIBEXEC, PACKAGE_ROOT
-from minttoys.modules.alwaysontop.options import SHORTCUT_KEYS, Options
+from minttoys.modules.alwaysontop.options import (
+    LESS_OPAQUE_KEYS,
+    MORE_OPAQUE_KEYS,
+    SHORTCUT_KEYS,
+    Options,
+)
 from minttoys.modules.base import Context, Module
 
 log = logging.getLogger(__name__)
 
 ACTION = "toggle-above"
 HELPER = "minttoys-always-on-top"
+# The opacity shortcuts: their names in the Keyboard settings, commands and keys.
+OPACITY_SHORTCUTS = (
+    ("MintToys: Always on Top, more opaque", "minttoys alwaysontop opacity up", MORE_OPAQUE_KEYS),
+    ("MintToys: Always on Top, less opaque", "minttoys alwaysontop opacity down", LESS_OPAQUE_KEYS),
+)
+# The settings the frame helper is started with.
+FRAME = (
+    "border",
+    "border_color",
+    "border_width",
+    "border_opacity",
+    "border_radius",
+    "sound",
+    "excluded",
+)
 INTERFACE_XML = f"""
 <node>
   <interface name="{INTERFACE}">
@@ -60,6 +85,9 @@ class Keybindings(Protocol):
     def wm_keys(self, action: str) -> list[str]: ...
     def set_wm_keys(self, action: str, keys: list[str]) -> None: ...
     def taken_by(self, keys: str) -> list[str]: ...
+    def find(self, name: str, command: str) -> Any: ...  # noqa: ANN401, a Custom or None
+    def add(self, name: str, command: str, keys: str) -> None: ...
+    def remove(self, path: str) -> None: ...
 
 
 def cinnamon_keybindings() -> Keybindings:
@@ -70,9 +98,20 @@ def cinnamon_keybindings() -> Keybindings:
 
 def helper_command(options: Options, package_root: Path = PACKAGE_ROOT) -> list[str]:
     """The frame helper's command line: the installed launcher, or the checkout's module."""
-    arguments = ["--width", str(options.border_width)]
+    arguments = [
+        "--width",
+        str(options.border_width),
+        "--opacity",
+        str(options.border_opacity),
+        "--radius",
+        str(options.border_radius),
+    ]
     if options.border_color:
         arguments += ["--color", options.border_color]
+    if options.sound:
+        arguments.append("--sound")
+    for app in options.excluded_apps:
+        arguments += ["--exclude", app]
     installed = LIBEXEC / HELPER
     if package_root == INSTALLED_ROOT and installed.exists():
         return [str(installed), *arguments]
@@ -110,6 +149,7 @@ class AlwaysOnTop(Module):
         self._helper: Helper | None = None
         self._options = Options()
         self._shortcut_problem = ""
+        self._opacity_problem = ""
         self._bus: Gio.DBusConnection | None = None
         self._registration = 0
         self._reported: dict[str, Any] = {}
@@ -133,6 +173,8 @@ class AlwaysOnTop(Module):
             log.exception("no shortcut: Muffin's keybindings are not there")
         if self._options.shortcut:
             self._keep_shortcut()
+        if self._options.opacity_shortcuts:
+            self._keep_opacity_shortcuts()
         self._run_helper()
         node = Gio.DBusNodeInfo.new_for_xml(INTERFACE_XML)
         self._registration = context.bus.register_object(
@@ -149,6 +191,7 @@ class AlwaysOnTop(Module):
 
     def switched_off(self) -> None:
         self._drop_shortcut()
+        self._drop_opacity_shortcuts()
 
     def apply_settings(self, settings: Mapping[str, Any]) -> None:
         old = self._options
@@ -157,14 +200,21 @@ class AlwaysOnTop(Module):
             self._keep_shortcut()
         else:
             self._drop_shortcut()
-        frame = ("border", "border_color", "border_width")
-        if any(getattr(old, key) != getattr(self._options, key) for key in frame):
+        if self._options.opacity_shortcuts:
+            self._keep_opacity_shortcuts()
+        else:
+            self._drop_opacity_shortcuts()
+        if any(getattr(old, key) != getattr(self._options, key) for key in FRAME):
             self._run_helper()
         self._emit()
 
     def state(self) -> dict[str, Any]:
         keys = self._keybindings.wm_keys(ACTION) if self._keybindings is not None else []
-        return {"shortcut": keys[0] if keys else "", "shortcut_problem": self._shortcut_problem}
+        return {
+            "shortcut": keys[0] if keys else "",
+            "shortcut_problem": self._shortcut_problem,
+            "opacity_problem": self._opacity_problem,
+        }
 
     def _keep_shortcut(self) -> None:
         """Gives toggle-above Super+Ctrl+T, unless it has keys already or they are taken."""
@@ -186,6 +236,30 @@ class AlwaysOnTop(Module):
         keys = self._keybindings.wm_keys(ACTION)
         if len(keys) == 1 and accel.same(keys[0], SHORTCUT_KEYS):
             self._keybindings.set_wm_keys(ACTION, [])
+
+    def _keep_opacity_shortcuts(self) -> None:
+        """Adds the opacity shortcuts that are missing, unless their keys are taken."""
+        if self._keybindings is None:
+            return
+        self._opacity_problem = ""
+        for name, command, keys in OPACITY_SHORTCUTS:
+            if self._keybindings.find(name, command) is not None:
+                continue
+            taken = self._keybindings.taken_by(keys)
+            if taken:
+                log.info("no shortcut: %s is taken by %s", keys, ", ".join(taken))
+                self._opacity_problem = "taken"
+                continue
+            self._keybindings.add(name, command, keys)
+
+    def _drop_opacity_shortcuts(self) -> None:
+        self._opacity_problem = ""
+        if self._keybindings is None:
+            return
+        for name, command, _keys in OPACITY_SHORTCUTS:
+            ours = self._keybindings.find(name, command)
+            if ours is not None:
+                self._keybindings.remove(ours.path)
 
     def _run_helper(self) -> None:
         self._stop_helper()

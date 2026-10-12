@@ -5,6 +5,7 @@
     minttoys awake toggle
     minttoys awake status
     minttoys lightswitch [status | toggle]
+    minttoys alwaysontop opacity {up | down}
     minttoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when MintToys could not do it, 2 when the command line is wrong.
@@ -46,6 +47,8 @@ def main(
     """Runs one command. The tests hand in a client, a clock and streams of their own."""
     out, err = out or sys.stdout, err or sys.stderr
     args = parser().parse_args(argv)
+    if args.command == "alwaysontop":
+        return run_alwaysontop(args, err)
     try:
         client = (connect or _connect)()
         if args.command == "awake":
@@ -97,6 +100,21 @@ def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> No
     if args.action == "toggle":
         client.lightswitch_toggle()
     print(lightswitch_text.describe(client.lightswitch_state()), file=out)
+
+
+def run_alwaysontop(args: argparse.Namespace, err: TextIO) -> int:
+    """Steps the active window's opacity, if it is pinned. Straight to X11: no daemon."""
+    try:
+        from minttoys.platform.x11 import step_active_opacity
+    except ImportError:
+        print(_("This needs python3-xlib: sudo apt install python3-xlib"), file=err)
+        return 1
+    try:
+        step_active_opacity(args.direction == "up")
+    except Exception as error:  # Xlib raises its own, display errors among them
+        print(_("Could not change the window's opacity: {error}").format(error=error), file=err)
+        return 1
+    return 0
 
 
 def run_modules(client: Client, args: argparse.Namespace, out: TextIO) -> None:
@@ -176,6 +194,15 @@ def parser() -> argparse.ArgumentParser:
         "toggle",
         help=_("switch to dark, or back to the day's mode, until the schedule changes"),
     )
+
+    alwaysontop = commands.add_parser(
+        "alwaysontop",
+        help=_("change a pinned window's opacity"),
+        description=_("Make the active window more or less opaque, if it is pinned on top."),
+    )
+    pinned = alwaysontop.add_subparsers(dest="action", required=True, metavar=_("ACTION"))
+    opacity = pinned.add_parser("opacity", help=_("one step more or less opaque"))
+    opacity.add_argument("direction", choices=("up", "down"))
 
     modules = commands.add_parser(
         "modules",

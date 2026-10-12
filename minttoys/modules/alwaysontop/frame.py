@@ -1,6 +1,12 @@
-"""Where the frame around a pinned window goes. Free of GTK."""
+"""Where the frame around a pinned window goes, and the opacity steps. Free of GTK."""
 
 from dataclasses import dataclass
+
+# X11's _NET_WM_WINDOW_OPACITY: 0 is clear, this is opaque.
+OPAQUE = 0xFFFFFFFF
+# One press of the opacity shortcuts, in percent, and the least a window goes to.
+OPACITY_STEP = 10
+LEAST_WINDOW_OPACITY = 20
 
 
 @dataclass(frozen=True)
@@ -25,3 +31,13 @@ def hex_to_rgb(color: str) -> tuple[float, float, float]:
     value = color.lstrip("#")
     red, green, blue = (int(value[i : i + 2], 16) / 255 for i in (0, 2, 4))
     return red, green, blue
+
+
+def step_opacity(current: int | None, up: bool) -> int:
+    """The next _NET_WM_WINDOW_OPACITY: one step up or down in percent, from opaque when
+    the window has none set, kept between LEAST_WINDOW_OPACITY and opaque.
+    """
+    percent = round((OPAQUE if current is None else current) * 100 / OPAQUE)
+    percent = percent + OPACITY_STEP if up else percent - OPACITY_STEP
+    percent = max(LEAST_WINDOW_OPACITY, min(100, percent))
+    return OPAQUE if percent == 100 else round(percent * OPAQUE / 100)

@@ -40,9 +40,14 @@ ALWAYSONTOP_PATH = f"{OBJECT_PATH}/modules/alwaysontop"
 ALWAYSONTOP_INTERFACE = f"{APP_ID}.AlwaysOnTop"
 ALWAYSONTOP_SETTINGS = {
     "shortcut": "b",
+    "opacity_shortcuts": "b",
     "border": "b",
     "border_color": "s",
     "border_width": "u",
+    "border_opacity": "u",
+    "border_radius": "u",
+    "sound": "b",
+    "excluded": "s",
 }
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {

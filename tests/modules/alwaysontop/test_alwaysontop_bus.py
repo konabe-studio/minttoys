@@ -20,9 +20,27 @@ KEYS = "<Primary><Super>t"
 
 
 @dataclass
+class Custom:
+    path: str
+    name: str
+    command: str
+    binding: list[str]
+
+
+@dataclass
 class FakeKeybindings:
     wm: dict[str, list[str]] = field(default_factory=lambda: {"toggle-above": []})
     taken: dict[str, list[str]] = field(default_factory=dict)
+    customs: list[Custom] = field(default_factory=list)
+
+    def find(self, name: str, command: str) -> Custom | None:
+        return next((c for c in self.customs if (c.name, c.command) == (name, command)), None)
+
+    def add(self, name: str, command: str, keys: str) -> None:
+        self.customs.append(Custom(f"custom{len(self.customs)}", name, command, [keys]))
+
+    def remove(self, path: str) -> None:
+        self.customs = [c for c in self.customs if c.path != path]
 
     def wm_keys(self, action: str) -> list[str]:
         return list(self.wm[action])
@@ -89,7 +107,11 @@ def test_on_gives_toggle_above_its_keys_and_starts_the_frame(harness: Harness) -
     harness.enable()
     assert harness.keys.wm["toggle-above"] == [KEYS]
     assert len(harness.running()) == 1
-    assert harness.module.state() == {"shortcut": KEYS, "shortcut_problem": ""}
+    assert harness.module.state() == {
+        "shortcut": KEYS,
+        "shortcut_problem": "",
+        "opacity_problem": "",
+    }
 
 
 def test_keys_of_the_users_own_are_kept(harness: Harness) -> None:
@@ -134,9 +156,19 @@ def test_no_border_no_helper(harness: Harness) -> None:
 
 def test_a_new_frame_restarts_the_helper(harness: Harness) -> None:
     harness.enable()
-    harness.set_settings({"border_color": "#ff8000", "border_width": 6})
+    harness.set_settings({"border_color": "#ff8000", "border_width": 6, "sound": True})
     (helper,) = harness.running()
-    assert helper.command[-4:] == ["--width", "6", "--color", "#ff8000"]
+    assert helper.command[3:] == [
+        "--width",
+        "6",
+        "--opacity",
+        "100",
+        "--radius",
+        "8",
+        "--color",
+        "#ff8000",
+        "--sound",
+    ]
     assert len(harness.started) == 2
 
 
@@ -147,5 +179,53 @@ def test_other_settings_leave_the_helper_alone(harness: Harness) -> None:
 
 
 def test_a_checkout_runs_the_helper_as_a_module(tmp_path: Path) -> None:
-    command = helper_command(Options(), tmp_path)
-    assert command[1:] == ["-m", "minttoys.alwaysontop", "--width", "4"]
+    command = helper_command(Options(excluded="firefox\nvlc"), tmp_path)
+    assert command[1:] == [
+        "-m",
+        "minttoys.alwaysontop",
+        "--width",
+        "4",
+        "--opacity",
+        "100",
+        "--radius",
+        "8",
+        "--exclude",
+        "firefox",
+        "--exclude",
+        "vlc",
+    ]
+
+
+def opacity_shortcuts(harness: Harness) -> list[tuple[str, list[str]]]:
+    return [(custom.command, custom.binding) for custom in harness.keys.customs]
+
+
+def test_on_adds_the_opacity_shortcuts(harness: Harness) -> None:
+    harness.enable()
+    assert opacity_shortcuts(harness) == [
+        ("minttoys alwaysontop opacity up", ["<Primary><Super>Page_Up"]),
+        ("minttoys alwaysontop opacity down", ["<Primary><Super>Page_Down"]),
+    ]
+
+
+def test_taken_opacity_keys_say_so(harness: Harness) -> None:
+    harness.keys.taken["<Primary><Super>Page_Up"] = ["My script"]
+    harness.enable()
+    assert [command for command, _ in opacity_shortcuts(harness)] == [
+        "minttoys alwaysontop opacity down"
+    ]
+    assert harness.module.state()["opacity_problem"] == "taken"
+
+
+def test_switching_off_takes_the_opacity_shortcuts_away(harness: Harness) -> None:
+    harness.enable()
+    harness.module.switched_off()
+    assert opacity_shortcuts(harness) == []
+
+
+def test_the_opacity_shortcuts_setting(harness: Harness) -> None:
+    harness.enable()
+    harness.set_settings({"opacity_shortcuts": False})
+    assert opacity_shortcuts(harness) == []
+    harness.set_settings({"opacity_shortcuts": True})
+    assert len(opacity_shortcuts(harness)) == 2
