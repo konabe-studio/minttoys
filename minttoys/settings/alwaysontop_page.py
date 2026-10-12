@@ -1,5 +1,5 @@
-"""Always on Top's page: whether it is on, its shortcut, and the frame around a pinned
-window.
+"""Always on Top's page: whether it is on, its shortcuts, the frame around a pinned window,
+its sound, and the applications it leaves alone.
 """
 
 from collections.abc import Callable, Mapping
@@ -16,7 +16,14 @@ from xapp.SettingsWidgets import Button, SettingsLabel, SettingsWidget, Switch, 
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.core import accel  # noqa: E402
 from minttoys.core.i18n import _  # noqa: E402
-from minttoys.modules.alwaysontop.options import MOST_WIDTH, SHORTCUT_KEYS  # noqa: E402
+from minttoys.modules.alwaysontop.options import (  # noqa: E402
+    LEAST_OPACITY,
+    LESS_OPAQUE_KEYS,
+    MORE_OPAQUE_KEYS,
+    MOST_RADIUS,
+    MOST_WIDTH,
+    SHORTCUT_KEYS,
+)
 from minttoys.settings.awake_page import SAVE_AFTER_MS  # noqa: E402
 from minttoys.settings.simple_page import SimplePage  # noqa: E402
 from minttoys.settings.widgets import open_keyboard_settings  # noqa: E402
@@ -39,15 +46,54 @@ class ColorRow(SettingsWidget):
         self.pack_end(self.content_widget, False, False, 0)
 
 
-class WidthRow(SettingsWidget):
-    def __init__(self, label: str) -> None:
+class NumberRow(SettingsWidget):
+    """A label, and a spin button with its unit after it."""
+
+    def __init__(self, label: str, least: int, most: int, unit: str) -> None:
         super().__init__()
         self.label = SettingsLabel(label)
-        self.content_widget = Gtk.SpinButton.new_with_range(1, MOST_WIDTH, 1)
+        self.content_widget = Gtk.SpinButton.new_with_range(least, most, 1)
         self.pack_start(self.label, False, False, 0)
-        # TRANSLATORS: the unit after the frame's width.
-        self.pack_end(Gtk.Label(label=_("px")), False, False, 0)
+        self.pack_end(Gtk.Label(label=unit), False, False, 0)
         self.pack_end(self.content_widget, False, False, 0)
+
+
+class PercentRow(SettingsWidget):
+    """A label, and a slider in percent."""
+
+    def __init__(self, label: str, least: int) -> None:
+        super().__init__()
+        self.label = SettingsLabel(label)
+        self.content_widget = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, least, 100, 5)
+        self.content_widget.set_digits(0)
+        self.content_widget.set_value_pos(Gtk.PositionType.RIGHT)
+        self.content_widget.set_size_request(200, -1)
+        self.pack_start(self.label, False, False, 0)
+        self.pack_end(self.content_widget, False, False, 0)
+
+
+class AppsRow(SettingsWidget):
+    """Application names, one on each line."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.content_widget = Gtk.TextView(accepts_tab=False)
+        self.content_widget.set_monospace(True)
+        self.content_widget.set_left_margin(6)
+        self.content_widget.set_top_margin(4)
+        scroller = Gtk.ScrolledWindow(shadow_type=Gtk.ShadowType.IN)
+        scroller.set_size_request(-1, 90)
+        scroller.add(self.content_widget)
+        self.pack_start(scroller, True, True, 0)
+
+    @property
+    def text(self) -> str:
+        buffer = self.content_widget.get_buffer()
+        return buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), False)
+
+    @text.setter
+    def text(self, value: str) -> None:
+        self.content_widget.get_buffer().set_text(value)
 
 
 class AlwaysOnTopPage(SimplePage):
@@ -70,8 +116,8 @@ class AlwaysOnTopPage(SimplePage):
             ],
         )
         self.shortcut_section = self.add_section(
-            _("Keyboard shortcut"),
-            _("Change its keys in the Keyboard settings, under Windows."),
+            _("Keyboard shortcuts"),
+            _("Change their keys in the Keyboard settings."),
         )
         self.shortcut = Switch(_("Pin a window with a keyboard shortcut"))
         self.shortcut.content_widget.connect("notify::active", self._on_flag, "shortcut")
@@ -79,6 +125,14 @@ class AlwaysOnTopPage(SimplePage):
         keys = Text("")
         self.keys = keys.content_widget
         self.shortcut_section.add_row(keys)
+        self.opacity_shortcuts = Switch(_("Change a pinned window's opacity with the keyboard"))
+        self.opacity_shortcuts.content_widget.connect(
+            "notify::active", self._on_flag, "opacity_shortcuts"
+        )
+        self.shortcut_section.add_row(self.opacity_shortcuts)
+        opacity_keys = Text("")
+        self.opacity_keys = opacity_keys.content_widget
+        self.shortcut_section.add_row(opacity_keys)
         self.shortcut_section.add_row(
             Button(_("Open the Keyboard settings"), lambda _b: open_keyboard_settings(show_error))
         )
@@ -93,9 +147,37 @@ class AlwaysOnTopPage(SimplePage):
         self.color = ColorRow(_("Color"))
         self.color.content_widget.connect("color-set", self._on_color)
         self.color_revealer = self.frame_section.add_reveal_row(self.color)
-        self.width = WidthRow(_("Width"))
-        self.width.content_widget.connect("value-changed", self._on_width)
+        # TRANSLATORS: the unit after the frame's width and its corners' radius.
+        pixels = _("px")
+        self.width = NumberRow(_("Width"), 1, MOST_WIDTH, pixels)
+        self.width.content_widget.connect("value-changed", self._on_number, "border_width")
         self.frame_section.add_row(self.width)
+        self.opacity = PercentRow(_("Opacity (%)"), LEAST_OPACITY)
+        self.opacity.content_widget.connect("value-changed", self._on_opacity)
+        self.frame_section.add_row(self.opacity)
+        self.radius = NumberRow(_("Rounded corners"), 0, MOST_RADIUS, pixels)
+        self.radius.set_tooltip_text(_("0 for square corners."))
+        self.radius.content_widget.connect("value-changed", self._on_number, "border_radius")
+        self.frame_section.add_row(self.radius)
+
+        self.sound_section = self.add_section(_("Sound"))
+        self.sound = Switch(_("Play a sound on pinning and letting go"))
+        self.sound.set_tooltip_text(
+            _("The Sound settings' sounds for maximizing and unmaximizing windows.")
+        )
+        self.sound.content_widget.connect("notify::active", self._on_flag, "sound")
+        self.sound_section.add_row(self.sound)
+
+        self.excluded_section = self.add_section(
+            _("Excluded applications"),
+            _(
+                "Never kept on top. One on each line, by the name X11 knows it by"
+                " (its WM_CLASS), for example firefox."
+            ),
+        )
+        self.excluded = AppsRow()
+        self.excluded.content_widget.get_buffer().connect("changed", self._on_excluded)
+        self.excluded_section.add_row(self.excluded)
         self.refresh()
 
     def refresh(self) -> None:
@@ -108,11 +190,16 @@ class AlwaysOnTopPage(SimplePage):
                 state = self._client.alwaysontop_state()
         except (NotRunning, ModuleOff, Refused):
             pass
-        if hasattr(self, "frame_section"):
+        if hasattr(self, "excluded_section"):
             if settings is not None:
                 self.show_settings(settings)
-            self.shortcut_section.set_sensitive(on)
-            self.frame_section.set_sensitive(on)
+            for section in (
+                self.shortcut_section,
+                self.frame_section,
+                self.sound_section,
+                self.excluded_section,
+            ):
+                section.set_sensitive(on)
             self.show_state(state)
 
     def show_settings(self, settings: object) -> None:
@@ -122,6 +209,7 @@ class AlwaysOnTopPage(SimplePage):
         self._loading = True
         try:
             self.shortcut.content_widget.set_active(bool(settings["shortcut"]))
+            self.opacity_shortcuts.content_widget.set_active(bool(settings["opacity_shortcuts"]))
             self.border.content_widget.set_active(bool(settings["border"]))
             color = str(settings["border_color"])
             self.accent.content_widget.set_active(not color)
@@ -131,12 +219,20 @@ class AlwaysOnTopPage(SimplePage):
                 self.color.content_widget.set_rgba(rgba)
             self.color_revealer.set_reveal_child(bool(color))
             self.width.content_widget.set_value(int(settings["border_width"]))
+            self.opacity.content_widget.set_value(int(settings["border_opacity"]))
+            self.radius.content_widget.set_value(int(settings["border_radius"]))
+            self.sound.content_widget.set_active(bool(settings["sound"]))
+            excluded = str(settings["excluded"])
+            # Not while it is being typed in: the cursor would jump.
+            if not self.excluded.content_widget.has_focus() and self.excluded.text != excluded:
+                self.excluded.text = excluded
         finally:
             self._loading = False
 
     def show_state(self, state: Mapping[str, object] | None) -> None:
         if state is None:
             self.keys.set_text("")
+            self.opacity_keys.set_text("")
             return
         keys = str(state.get("shortcut", ""))
         if keys:
@@ -150,6 +246,20 @@ class AlwaysOnTopPage(SimplePage):
             )
         else:
             self.keys.set_text("")
+        if state.get("opacity_problem") == "taken":
+            self.opacity_keys.set_text(
+                _("{more} or {less} is in use already, so that shortcut is missing.").format(
+                    more=accel.label(MORE_OPAQUE_KEYS), less=accel.label(LESS_OPAQUE_KEYS)
+                )
+            )
+        elif self._shown.get("opacity_shortcuts"):
+            self.opacity_keys.set_text(
+                _("{more} more opaque, {less} less").format(
+                    more=accel.label(MORE_OPAQUE_KEYS), less=accel.label(LESS_OPAQUE_KEYS)
+                )
+            )
+        else:
+            self.opacity_keys.set_text("")
 
     def _on_flag(self, switch: Gtk.Switch, _spec: object, key: str) -> None:
         self._save({key: switch.get_active()})
@@ -168,8 +278,14 @@ class AlwaysOnTopPage(SimplePage):
         red, green, blue = (round(part * 255) for part in (rgba.red, rgba.green, rgba.blue))
         self._save({"border_color": f"#{red:02x}{green:02x}{blue:02x}"})
 
-    def _on_width(self, field: Gtk.SpinButton) -> None:
-        self._save({"border_width": field.get_value_as_int()}, later=True)
+    def _on_number(self, field: Gtk.SpinButton, key: str) -> None:
+        self._save({key: field.get_value_as_int()}, later=True)
+
+    def _on_opacity(self, scale: Gtk.Scale) -> None:
+        self._save({"border_opacity": round(scale.get_value())}, later=True)
+
+    def _on_excluded(self, _buffer: Gtk.TextBuffer) -> None:
+        self._save({"excluded": self.excluded.text}, later=True)
 
     def _save(self, changes: Mapping[str, object], *, later: bool = False) -> None:
         if self._loading:
