@@ -80,7 +80,7 @@ def source_messages() -> dict[str, str | None]:
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)):
                 continue
-            count = {"_": 1, "ngettext": 2}.get(node.func.id)
+            count = {"_": 1, "N_": 1, "ngettext": 2}.get(node.func.id)
             if count is None:
                 continue
             texts = [
