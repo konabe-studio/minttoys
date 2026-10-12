@@ -34,17 +34,19 @@ def actions_dir(environ: Mapping[str, str] = os.environ) -> Path:
     return root / "nemo" / "actions"
 
 
-def program(package_root: Path, launcher: str, module: str) -> tuple[str, str]:
+def program(
+    package_root: Path, launcher: str, module: str, arguments: str = "%F"
+) -> tuple[str, str]:
     """The command an action runs, and the file it depends on: the installed launcher, or
-    the checkout's module when MintToys runs from a checkout.
+    the checkout's module when MintToys runs from a checkout. `arguments` follow it.
     """
     installed = LIBEXEC / launcher
     if package_root == INSTALLED_ROOT and installed.exists():
-        return f"{installed} %F", str(installed)
+        return f"{installed} {arguments}", str(installed)
     main = package_root / Path(*module.split(".")) / "__main__.py"
     command = (
         f"env PYTHONPATH={shlex.quote(str(package_root))} "
-        f"{shlex.quote(sys.executable)} -m {module} %F"
+        f"{shlex.quote(sys.executable)} -m {module} {arguments}"
     )
     return command, str(main)
 
@@ -56,9 +58,10 @@ def render(
     dependency: str,
     icon: str,
     extensions: str = "any;",
+    selection: str = "notnone",
 ) -> str:
     """An action file. `names` and `comments` map a language code to the text, "" to the
-    English one. It is offered on one or more chosen files or folders.
+    English one. By default it is offered on one or more chosen files or folders.
     """
     lines = ["[Nemo Action]"]
     for key, texts in (("Name", names), ("Comment", comments)):
@@ -67,7 +70,7 @@ def render(
     lines += [
         f"Exec={command}",
         f"Icon-Name={icon}",
-        "Selection=notnone",
+        f"Selection={selection}",
         f"Extensions={extensions}",
         "Quote=double",
         f"Dependencies={dependency};",
@@ -86,6 +89,11 @@ class NemoAction:
     module: str  # python3 -m this, from a checkout
     icon: str
     extensions: str = "any;"
+    # Nemo's Selection: notnone, any, none, s or m.
+    selection: str = "notnone"
+    # What follows the program: Nemo's %F (the chosen files), %P (the folder shown), and
+    # options of the tool's own.
+    arguments: str = "%F"
     folder: Callable[[], Path] = actions_dir
     package_root: Path = field(default=PACKAGE_ROOT)
 
@@ -95,7 +103,7 @@ class NemoAction:
 
     def write(self) -> None:
         """Puts the action in place, in one step so Nemo never reads half of it."""
-        command, dependency = program(self.package_root, self.launcher, self.module)
+        command, dependency = program(self.package_root, self.launcher, self.module, self.arguments)
         text = render(
             {"": self.name, **in_every_language(self.name)},
             {"": self.comment, **in_every_language(self.comment)},
@@ -103,6 +111,7 @@ class NemoAction:
             dependency,
             self.icon,
             self.extensions,
+            self.selection,
         )
         folder = self.path.parent
         folder.mkdir(parents=True, exist_ok=True)
