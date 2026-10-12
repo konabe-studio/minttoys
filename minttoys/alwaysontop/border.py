@@ -103,7 +103,12 @@ class Sounds:
         for event, key in (("pin", "maximize-file"), ("unpin", "unmaximize-file")):
             if settings is not None and schema.has_key(key):
                 self._files[event] = settings.get_string(key)
-        self._player = shutil.which("canberra-gtk-play") or shutil.which("paplay")
+        # PipeWire's or PulseAudio's player first: canberra-gtk-play stays silent while the
+        # desktop's event sounds are off, and these sounds were asked for on their own.
+        self._player = next(
+            filter(None, map(shutil.which, ("pw-play", "paplay", "canberra-gtk-play"))), None
+        )
+        log.info("sounds from %s, played with %s", self._files, self._player)
 
     def play(self, event: str) -> None:
         sound = self._files.get(event)
