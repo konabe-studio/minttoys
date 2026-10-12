@@ -18,7 +18,9 @@ from minttoys.settings.lightswitch_page import Client  # noqa: E402
 
 
 class ToolRow(SettingsWidget):
-    """A tool's name and what it does, with the switch that turns it on or off."""
+    """A tool's name and what it does, with the switch that turns it on or off, and an
+    arrow saying the row leads to the tool's page.
+    """
 
     def __init__(self) -> None:
         super().__init__()
@@ -29,7 +31,10 @@ class ToolRow(SettingsWidget):
         texts.pack_start(self.name, False, False, 0)
         texts.pack_start(self.description, False, False, 0)
         self.content_widget = Gtk.Switch(valign=Gtk.Align.CENTER)
+        arrow = Gtk.Image.new_from_icon_name("go-next-symbolic", Gtk.IconSize.MENU)
+        arrow.get_style_context().add_class("dim-label")
         self.pack_start(texts, True, True, 0)
+        self.pack_end(arrow, False, False, 0)
         self.pack_end(self.content_widget, False, False, 0)
 
     def show_info(self, info: ModuleInfo) -> None:
@@ -43,10 +48,21 @@ class ToolRow(SettingsWidget):
 
 
 class OverviewPage(SettingsPage):
-    def __init__(self, client: Client, show_error: Callable[[str], None], *, welcome: bool) -> None:
+    def __init__(
+        self,
+        client: Client,
+        show_error: Callable[[str], None],
+        *,
+        welcome: bool,
+        open_page: Callable[[str], None] = lambda module_id: None,
+    ) -> None:
+        """`open_page` shows a tool's page, for a click on its row; the switch itself only
+        switches.
+        """
         super().__init__()
         self._client = client
         self._show_error = show_error
+        self._open_page = open_page
         self._loading = False
         self.rows: dict[str, ToolRow] = {}
 
@@ -93,6 +109,11 @@ class OverviewPage(SettingsPage):
                     row = self.rows[info.id] = ToolRow()
                     row.content_widget.connect("notify::active", self._on_switch, info.id)
                     self.tools.add_row(row)
+                    # add_row puts each row in a GtkListBox of its own; a click on the row,
+                    # but not on its switch, which takes its own clicks, activates it.
+                    row.get_parent().get_parent().connect(
+                        "row-activated", lambda _box, _row, m=info.id: self._open_page(m)
+                    )
                     row.show_all()
                 row.show_info(info)
                 row.set_sensitive(True)

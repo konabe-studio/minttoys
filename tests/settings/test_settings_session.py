@@ -483,3 +483,26 @@ def test_new_plus_without_a_folder_offers_to_make_one(
     assert page.where.content_widget.get_text() == "You have no templates folder."
     assert page.make_button.get_parent().get_visible()
     assert not page.add_button.get_parent().get_visible()
+
+
+def activate(row: Gtk.Widget) -> None:
+    """A click on the row, as GTK reports it: the row's own list box activates it."""
+    list_row = row.get_parent()
+    list_row.get_parent().emit("row-activated", list_row)
+
+
+def test_a_click_on_an_overview_row_opens_the_tool(
+    window: SettingsWindow, client: FakeClient
+) -> None:
+    activate(window.overview.rows["lightswitch"])
+    assert window.stack.get_visible_child_name() == "lightswitch"
+    assert client.calls == []
+    assert client.light_calls == []
+
+
+def test_the_switch_on_an_overview_row_only_switches(
+    window: SettingsWindow, client: FakeClient
+) -> None:
+    window.overview.rows["awake"].content_widget.set_active(False)
+    assert client.calls == [("enabled", "awake", False)]
+    assert window.stack.get_visible_child_name() == "overview"

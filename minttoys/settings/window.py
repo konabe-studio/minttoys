@@ -73,7 +73,9 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.sidebar.show()
         self.sidebar.connect("row-selected", self._on_row_selected)
 
-        self.overview = OverviewPage(client, self._error, welcome=welcome)
+        self.overview = OverviewPage(
+            client, self._error, welcome=welcome, open_page=lambda page: self.show_page(page)
+        )
         # TRANSLATORS: the first page of the settings window, listing every tool.
         self._add_page("overview", _("Overview"), "go-home-symbolic", "", self.overview)
         self.awake = AwakePage(client, self._error)
