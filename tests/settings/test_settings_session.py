@@ -15,12 +15,13 @@ except ValueError as error:
     pytest.skip(f"GTK 3 or XApp is missing: {error}", allow_module_level=True)
 pytest.importorskip("xapp.SettingsWidgets", reason="python3-xapp is not installed")
 
-from gi.repository import Gio, Gtk  # noqa: E402
+from gi.repository import Gdk, Gio, Gtk  # noqa: E402
 
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
+from minttoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from minttoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
@@ -66,6 +67,15 @@ class FakeClient:
         self.light_state = dict(LIGHT_STATE)
         self.light_calls: list[tuple] = []
         self.locksmith_on = "off"
+        self.pin_on = "on"
+        self.pin_settings = {
+            "shortcut": True,
+            "border": True,
+            "border_color": "",
+            "border_width": 4,
+        }
+        self.pin_state = {"shortcut": "<Primary><Super>t", "shortcut_problem": ""}
+        self.pin_calls: list[dict] = []
 
     def modules(self) -> list[ModuleInfo]:
         if isinstance(self.fail, NotRunning):
@@ -76,6 +86,7 @@ class FakeClient:
             ModuleInfo("awake", "Awake", "", self.state, self.error),
             ModuleInfo("lightswitch", "Light Switch", "", self.light_on, ""),
             ModuleInfo("locksmith", "File Locksmith", "", self.locksmith_on, ""),
+            ModuleInfo("alwaysontop", "Always on Top", "", self.pin_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -93,6 +104,8 @@ class FakeClient:
     def module_settings(self, module_id: str) -> dict:
         if module_id == "lightswitch":
             return dict(self.light_settings)
+        if module_id == "alwaysontop":
+            return dict(self.pin_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -104,8 +117,15 @@ class FakeClient:
             self.light_calls.append(("settings", dict(changes)))
             self.light_settings.update(changes)
             return
+        if module_id == "alwaysontop":
+            self.pin_calls.append(dict(changes))
+            self.pin_settings.update(changes)
+            return
         self.calls.append(("settings", dict(changes)))
         self.settings.update(changes)
+
+    def alwaysontop_state(self) -> dict:
+        return dict(self.pin_state)
 
     def lightswitch_state(self) -> dict:
         if self.light_on != "on":
@@ -268,13 +288,15 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "overview",
         "awake",
         "lightswitch",
+        "alwaysontop",
         "locksmith",
         "newplus",
     ]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
     assert rows[2].get_header() is None
-    assert rows[3].get_header().get_text() == "Files"
+    assert rows[3].get_header().get_text() == "Windows"
+    assert rows[4].get_header().get_text() == "Files"
     assert window.stack.get_visible_child_name() == "overview"
 
 
@@ -506,3 +528,41 @@ def test_the_switch_on_an_overview_row_only_switches(
     window.overview.rows["awake"].content_widget.set_active(False)
     assert client.calls == [("enabled", "awake", False)]
     assert window.stack.get_visible_child_name() == "overview"
+
+
+def pin_page(client: FakeClient, errors: list[str]) -> AlwaysOnTopPage:
+    return AlwaysOnTopPage(client, errors.append)
+
+
+def test_always_on_top_shows_its_settings_and_keys(client: FakeClient, errors: list[str]) -> None:
+    page = pin_page(client, errors)
+    assert page.enabled.content_widget.get_active()
+    assert page.shortcut.content_widget.get_active()
+    assert page.keys.get_text() == "Ctrl+Super+T"
+    assert page.accent.content_widget.get_active()
+    assert not page.color_revealer.get_reveal_child()
+    assert page.width.content_widget.get_value_as_int() == 4
+    assert client.pin_calls == []
+
+
+def test_always_on_top_a_color_of_ones_own(client: FakeClient, errors: list[str]) -> None:
+    page = pin_page(client, errors)
+    rgba = Gdk.RGBA()
+    rgba.parse("#ff8000")
+    page.color.content_widget.set_rgba(rgba)
+    page.accent.content_widget.set_active(False)
+    assert client.pin_calls == [{"border_color": "#ff8000"}]
+    assert page.color_revealer.get_reveal_child()
+
+
+def test_always_on_top_switches_save(client: FakeClient, errors: list[str]) -> None:
+    page = pin_page(client, errors)
+    page.border.content_widget.set_active(False)
+    page.shortcut.content_widget.set_active(False)
+    assert client.pin_calls == [{"border": False}, {"shortcut": False}]
+
+
+def test_always_on_top_says_its_keys_were_taken(client: FakeClient, errors: list[str]) -> None:
+    client.pin_state = {"shortcut": "", "shortcut_problem": "taken"}
+    page = pin_page(client, errors)
+    assert page.keys.get_text().startswith("Its keyboard shortcut, Ctrl+Super+T,")

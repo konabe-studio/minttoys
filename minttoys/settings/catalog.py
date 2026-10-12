@@ -24,6 +24,7 @@ TOOLS = (
     Tool("lightswitch", "Light Switch", "system", "weather-clear-night-symbolic"),
     Tool("locksmith", "File Locksmith", "files", "changes-prevent-symbolic"),
     Tool("newplus", "New+", "files", "document-new-symbolic"),
+    Tool("alwaysontop", "Always on Top", "windows", "view-pin-symbolic"),
 )
 
 
@@ -33,6 +34,9 @@ def headings() -> dict[str, str]:
         # TRANSLATORS: a heading in the settings window's sidebar, over the tools that
         # deal with the computer as a whole, such as Awake.
         "system": _("System"),
+        # TRANSLATORS: a heading in the settings window's sidebar, over the tools for
+        # windows, such as Always on Top.
+        "windows": _("Windows"),
         # TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
         # such as File Locksmith.
         "files": _("Files"),
