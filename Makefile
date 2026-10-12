@@ -33,7 +33,7 @@ build/%.desktop: data/%.desktop.in po/LINGUAS $(LINGUAS:%=po/%.po)
 
 # For maintainers: the template from the sources, then every translation merged with it.
 pot:
-	xgettext --language=Python --from-code=UTF-8 --add-comments=TRANSLATORS: \
+	xgettext --language=Python --from-code=UTF-8 --add-comments=TRANSLATORS: --keyword=N_ \
 		--add-location=file --package-name=minttoys \
 		--msgid-bugs-address=https://github.com/konabe-studio/minttoys/issues \
 		-o $(POT) $$(find minttoys -name '*.py' | LC_ALL=C sort)
