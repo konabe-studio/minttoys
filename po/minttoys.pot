@@ -1014,7 +1014,7 @@ msgid ""
 msgstr ""
 
 #: minttoys/settings/newplus_page.py
-msgid "Leave out the digits, spaces and dots a name starts with"
+msgid "Leave out the number a template's name starts with"
 msgstr ""
 
 #: minttoys/settings/newplus_page.py

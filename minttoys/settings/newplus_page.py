@@ -116,7 +116,7 @@ class NewPlusPage(SimplePage):
         )
         variables.content_widget.get_style_context().add_class("dim-label")
         self.names.add_row(variables)
-        self.digits = Switch(_("Leave out the digits, spaces and dots a name starts with"))
+        self.digits = Switch(_("Leave out the number a template's name starts with"))
         self.digits.content_widget.connect("notify::active", self._on_flag, "hide_digits")
         self.names.add_row(self.digits)
         digits = Text(_("Number your templates to set their order, as in 1. Letter.odt."))

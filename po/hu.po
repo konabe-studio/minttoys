@@ -1082,8 +1082,8 @@ msgstr ""
 "%VÁLTOZÓ% a környezetből, például %USER%."
 
 #: minttoys/settings/newplus_page.py
-msgid "Leave out the digits, spaces and dots a name starts with"
-msgstr "A név eleji számjegyek, szóközök és pontok elhagyása"
+msgid "Leave out the number a template's name starts with"
+msgstr "A sablon nevének elején álló szám elhagyása"
 
 #: minttoys/settings/newplus_page.py
 msgid "Number your templates to set their order, as in 1. Letter.odt."
