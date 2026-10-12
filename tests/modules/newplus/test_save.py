@@ -1,22 +1,65 @@
 from dataclasses import replace
 from pathlib import Path
 
+import pytest
+
 from minttoys.modules.base import Context
-from minttoys.modules.newplus.module import NewPlus, menu_item
+from minttoys.modules.newplus.module import NewPlus
+from minttoys.modules.newplus.options import Options
 from minttoys.newplus.main import config_home, save
 
 
+def here(tmp_path: Path) -> NewPlus:
+    return NewPlus(
+        lambda action: replace(action, folder=lambda: tmp_path / "actions", package_root=tmp_path)
+    )
+
+
 def test_the_action_is_offered_on_files(tmp_path: Path) -> None:
-    action = replace(menu_item(), folder=lambda: tmp_path / "actions", package_root=tmp_path)
-    module = NewPlus(action)
+    module = here(tmp_path)
     module.enable(Context(None, {}))
-    text = action.path.read_text(encoding="utf-8")
+    text = module.action.path.read_text(encoding="utf-8")
     assert "Name=Save as template\n" in text
     assert "Extensions=nodirs;\n" in text
     module.disable()
-    assert action.path.exists()
+    assert module.action.path.exists()
     module.switched_off()
-    assert not action.path.exists()
+    assert not module.action.path.exists()
+
+
+def test_new_from_template_is_offered_on_folders_and_the_background(tmp_path: Path) -> None:
+    module = here(tmp_path)
+    module.enable(Context(None, NewPlus.read_settings({})))
+    path = module.create_action(Options()).path
+    text = path.read_text(encoding="utf-8")
+    assert "Name=New from template…\n" in text
+    assert "Selection=any\n" in text
+    assert "Extensions=dir;\n" in text
+    assert "-m minttoys.newitem %P %F\n" in text
+    module.switched_off()
+    assert not path.exists()
+
+
+def test_its_settings_reach_the_window_through_the_action(tmp_path: Path) -> None:
+    module = here(tmp_path)
+    module.enable(Context(None, NewPlus.read_settings({})))
+    settings = NewPlus.check_settings(
+        NewPlus.read_settings({}), {"replace_variables": True, "hide_digits": True}
+    )
+    module.apply_settings(settings)
+    text = module.create_action(Options()).path.read_text(encoding="utf-8")
+    assert "-m minttoys.newitem --variables --hide-digits %P %F\n" in text
+
+
+def test_its_settings_are_checked() -> None:
+    assert NewPlus.read_settings({"hide_digits": "yes"}) == {
+        "replace_variables": False,
+        "hide_digits": False,
+    }
+    with pytest.raises(ValueError, match="true or false"):
+        NewPlus.check_settings(NewPlus.read_settings({}), {"hide_digits": 1})
+    with pytest.raises(ValueError, match="unknown setting"):
+        NewPlus.check_settings(NewPlus.read_settings({}), {"colour": True})
 
 
 def test_off_by_default() -> None:
