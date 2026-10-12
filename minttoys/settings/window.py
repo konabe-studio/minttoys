@@ -26,6 +26,7 @@ from minttoys.settings import catalog, first_run  # noqa: E402
 from minttoys.settings.awake_page import AwakePage  # noqa: E402
 from minttoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
+from minttoys.settings.simple_page import SimplePage  # noqa: E402
 
 SIDEBAR_WIDTH = 200
 
@@ -76,7 +77,29 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self._add_page("overview", _("Overview"), "go-home-symbolic", "", self.overview)
         self.awake = AwakePage(client, self._error)
         self.lightswitch = LightSwitchPage(client, self._error)
-        self.pages = {"awake": self.awake, "lightswitch": self.lightswitch}
+        self.locksmith = SimplePage(
+            client,
+            self._error,
+            "locksmith",
+            _("File Locksmith"),
+            _("Shows which processes hold a file or a folder, and lets you end them."),
+            _("Use File Locksmith"),
+            [
+                _(
+                    "Right-click a file or a folder in Nemo and choose What is using this? A"
+                    " window lists the processes that hold it, and can end one."
+                ),
+                _(
+                    "It shows your own processes. Those of other users, the system's among"
+                    " them, cannot be looked at without administrator rights."
+                ),
+            ],
+        )
+        self.pages = {
+            "awake": self.awake,
+            "lightswitch": self.lightswitch,
+            "locksmith": self.locksmith,
+        }
         pages = self.pages
         for heading, tools in catalog.grouped():
             for tool in tools:

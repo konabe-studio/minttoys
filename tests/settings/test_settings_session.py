@@ -64,6 +64,7 @@ class FakeClient:
         self.light_settings = dict(LIGHT_SETTINGS)
         self.light_state = dict(LIGHT_STATE)
         self.light_calls: list[tuple] = []
+        self.locksmith_on = "off"
 
     def modules(self) -> list[ModuleInfo]:
         if isinstance(self.fail, NotRunning):
@@ -73,12 +74,17 @@ class FakeClient:
         return [
             ModuleInfo("awake", "Awake", "", self.state, self.error),
             ModuleInfo("lightswitch", "Light Switch", "", self.light_on, ""),
+            ModuleInfo("locksmith", "File Locksmith", "", self.locksmith_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
         if module_id == "lightswitch":
             self.light_calls.append(("enabled", enabled))
             self.light_on = "on" if enabled else "off"
+            return
+        if module_id == "locksmith":
+            self.light_calls.append(("locksmith", enabled))
+            self.locksmith_on = "on" if enabled else "off"
             return
         self.calls.append(("enabled", module_id, enabled))
         self.state = "on" if enabled else "off"
@@ -257,10 +263,11 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     window: SettingsWindow,
 ) -> None:
     rows = window.sidebar.get_children()
-    assert [row.page for row in rows] == ["overview", "awake", "lightswitch"]
+    assert [row.page for row in rows] == ["overview", "awake", "lightswitch", "locksmith"]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
     assert rows[2].get_header() is None
+    assert rows[3].get_header().get_text() == "Files"
     assert window.stack.get_visible_child_name() == "overview"
 
 
@@ -397,3 +404,11 @@ def test_light_switch_says_its_shortcut_was_taken(client: FakeClient, errors: li
     assert page.keys.get_text() == (
         "Its keyboard shortcut, Shift+Ctrl+Super+D, is in use already, so it has none."
     )
+
+
+def test_file_locksmith_page_switches_it(window: SettingsWindow, client: FakeClient) -> None:
+    page = window.locksmith
+    assert not page.enabled.content_widget.get_active()
+    page.enabled.content_widget.set_active(True)
+    assert client.light_calls == [("locksmith", True)]
+    assert page.enabled.content_widget.get_active()
