@@ -46,18 +46,6 @@ class ColorRow(SettingsWidget):
         self.pack_end(self.content_widget, False, False, 0)
 
 
-class NumberRow(SettingsWidget):
-    """A label, and a spin button with its unit after it."""
-
-    def __init__(self, label: str, least: int, most: int, unit: str) -> None:
-        super().__init__()
-        self.label = SettingsLabel(label)
-        self.content_widget = Gtk.SpinButton.new_with_range(least, most, 1)
-        self.pack_start(self.label, False, False, 0)
-        self.pack_end(Gtk.Label(label=unit), False, False, 0)
-        self.pack_end(self.content_widget, False, False, 0)
-
-
 class SliderRow(SettingsWidget):
     """A label, and a slider of whole numbers with its value, and the unit after it if any."""
 
@@ -157,8 +145,8 @@ class AlwaysOnTopPage(SimplePage):
         self.color_revealer = self.frame_section.add_reveal_row(self.color)
         # TRANSLATORS: the unit after the frame's width and its corners' radius.
         pixels = _("px")
-        self.width = NumberRow(_("Width"), 1, MOST_WIDTH, pixels)
-        self.width.content_widget.connect("value-changed", self._on_number, "border_width")
+        self.width = SliderRow(_("Width"), 1, MOST_WIDTH, 1, pixels)
+        self.width.content_widget.connect("value-changed", self._on_slider, "border_width")
         self.frame_section.add_row(self.width)
         self.opacity = SliderRow(_("Opacity (%)"), LEAST_OPACITY, 100, 5)
         self.opacity.content_widget.connect("value-changed", self._on_slider, "border_opacity")
@@ -285,9 +273,6 @@ class AlwaysOnTopPage(SimplePage):
         rgba = button.get_rgba()
         red, green, blue = (round(part * 255) for part in (rgba.red, rgba.green, rgba.blue))
         self._save({"border_color": f"#{red:02x}{green:02x}{blue:02x}"})
-
-    def _on_number(self, field: Gtk.SpinButton, key: str) -> None:
-        self._save({key: field.get_value_as_int()}, later=True)
 
     def _on_slider(self, scale: Gtk.Scale, key: str) -> None:
         self._save({key: round(scale.get_value())}, later=True)
