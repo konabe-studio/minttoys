@@ -67,6 +67,9 @@ class FakeClient:
         self.light_state = dict(LIGHT_STATE)
         self.light_calls: list[tuple] = []
         self.locksmith_on = "off"
+        self.newplus_on = "on"
+        self.newplus_settings = {"replace_variables": False, "hide_digits": False}
+        self.newplus_calls: list[dict] = []
         self.pin_on = "on"
         self.pin_settings = {
             "shortcut": True,
@@ -96,6 +99,7 @@ class FakeClient:
             ModuleInfo("lightswitch", "Light Switch", "", self.light_on, ""),
             ModuleInfo("locksmith", "File Locksmith", "", self.locksmith_on, ""),
             ModuleInfo("alwaysontop", "Always on Top", "", self.pin_on, ""),
+            ModuleInfo("newplus", "New+", "", self.newplus_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -115,6 +119,8 @@ class FakeClient:
             return dict(self.light_settings)
         if module_id == "alwaysontop":
             return dict(self.pin_settings)
+        if module_id == "newplus":
+            return dict(self.newplus_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -129,6 +135,10 @@ class FakeClient:
         if module_id == "alwaysontop":
             self.pin_calls.append(dict(changes))
             self.pin_settings.update(changes)
+            return
+        if module_id == "newplus":
+            self.newplus_calls.append(dict(changes))
+            self.newplus_settings.update(changes)
             return
         self.calls.append(("settings", dict(changes)))
         self.settings.update(changes)
@@ -537,6 +547,26 @@ def test_the_switch_on_an_overview_row_only_switches(
     window.overview.rows["awake"].content_widget.set_active(False)
     assert client.calls == [("enabled", "awake", False)]
     assert window.stack.get_visible_child_name() == "overview"
+
+
+def test_new_plus_shows_and_saves_its_naming_settings(
+    client: FakeClient, errors: list[str], tmp_path: Path
+) -> None:
+    client.newplus_settings["hide_digits"] = True
+    page = newplus_page(client, errors, tmp_path)
+    assert not page.variables.content_widget.get_active()
+    assert page.digits.content_widget.get_active()
+    assert page.names.get_sensitive()
+    page.variables.content_widget.set_active(True)
+    assert client.newplus_calls == [{"replace_variables": True}]
+
+
+def test_new_plus_naming_is_grey_while_it_is_off(
+    client: FakeClient, errors: list[str], tmp_path: Path
+) -> None:
+    client.newplus_on = "off"
+    page = newplus_page(client, errors, tmp_path)
+    assert not page.names.get_sensitive()
 
 
 def pin_page(client: FakeClient, errors: list[str]) -> AlwaysOnTopPage:

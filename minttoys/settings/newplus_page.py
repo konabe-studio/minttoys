@@ -1,11 +1,13 @@
-"""New+'s page: whether it is on, how to use it, and the templates themselves, to add,
-rename and remove. The templates are plain files, so the page handles them itself and
-needs no daemon for them.
+"""New+'s page: whether it is on, how to use it, the templates themselves, to add, rename
+and remove, and how New from template names what it makes. The templates are plain files,
+so the page handles them itself and needs no daemon for them; the two naming settings go
+through the daemon.
 """
 
 import os
 import subprocess
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
+from contextlib import suppress
 from pathlib import Path
 
 import gi
@@ -13,8 +15,9 @@ import gi
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gio, GLib, Gtk, Pango  # noqa: E402
-from xapp.SettingsWidgets import Button, SettingsWidget, Text  # noqa: E402
+from xapp.SettingsWidgets import Button, SettingsWidget, Switch, Text  # noqa: E402
 
+from minttoys.api import ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.core.i18n import _  # noqa: E402
 from minttoys.modules.newplus import templates  # noqa: E402
 from minttoys.modules.newplus.templates import (  # noqa: E402
@@ -74,14 +77,19 @@ class NewPlusPage(SimplePage):
             _("Use New+"),
             [
                 _(
-                    "Right-click inside a folder in Nemo and choose Create New Document: your"
-                    " templates are there."
+                    "Right-click inside a folder in Nemo and choose New from template… to make a"
+                    " file or a folder from one of your templates."
                 ),
+                _("Nemo's own Create New Document offers your file templates too."),
                 _("Right-click a file and choose Save as template to add it."),
             ],
         )
         self.templates = self.add_section(
-            _("Templates"), _("A new document starts as a copy of one of these.")
+            _("Templates"),
+            _(
+                "A new item starts as a copy of one of these. A folder is copied whole; Create"
+                " New Document shows it as a submenu of its files instead."
+            ),
         )
         self.where = Text("")
         self.templates.add_row(self.where)
@@ -93,7 +101,61 @@ class NewPlusPage(SimplePage):
         self.templates.add_row(self.open_button)
         self.make_button = Button(_("Make a templates folder"), self._on_make)
         self.templates.add_row(self.make_button)
+        self.names = self.add_section(
+            _("Names"), _("Of the files and folders New from template makes.")
+        )
+        self.variables = Switch(_("Replace variables in names"))
+        self.variables.content_widget.connect("notify::active", self._on_flag, "replace_variables")
+        self.names.add_row(self.variables)
+        variables = Text(
+            _(
+                "$YYYY, $MM, $DD, $hh, $mm, $ss and more for the date and time,"
+                " $PARENT_FOLDER_NAME for the folder an item lands in, and %VARIABLE% from the"
+                " environment, such as %USER%."
+            )
+        )
+        variables.content_widget.get_style_context().add_class("dim-label")
+        self.names.add_row(variables)
+        self.digits = Switch(_("Leave out the digits, spaces and dots a name starts with"))
+        self.digits.content_widget.connect("notify::active", self._on_flag, "hide_digits")
+        self.names.add_row(self.digits)
+        digits = Text(_("Number your templates to set their order, as in 1. Letter.odt."))
+        digits.content_widget.get_style_context().add_class("dim-label")
+        self.names.add_row(digits)
         self.show_templates()
+        self.refresh()
+
+    def refresh(self) -> None:
+        super().refresh()
+        if not hasattr(self, "names"):
+            return  # still being built
+        settings = None
+        with suppress(NotRunning, ModuleOff, Refused):
+            settings = self._client.module_settings("newplus")
+        if settings is not None:
+            self.show_settings(settings)
+        self.names.set_sensitive(self._shown_enabled is True)
+
+    def show_settings(self, settings: object) -> None:
+        if not isinstance(settings, Mapping):
+            return
+        self._loading = True
+        try:
+            self.variables.content_widget.set_active(bool(settings.get("replace_variables")))
+            self.digits.content_widget.set_active(bool(settings.get("hide_digits")))
+        finally:
+            self._loading = False
+
+    def _on_flag(self, switch: Gtk.Switch, _spec: object, key: str) -> None:
+        if self._loading:
+            return
+        try:
+            self._client.set_module_settings("newplus", {key: switch.get_active()})
+        except NotRunning:
+            pass  # refresh() says so
+        except (ModuleOff, Refused) as error:
+            self._show_error(_("MintToys refused: {reason}").format(reason=error))
+        self.refresh()
 
     @property
     def folder(self) -> Path | None:
