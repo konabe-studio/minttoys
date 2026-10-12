@@ -618,3 +618,133 @@ msgstr ""
 #: minttoys/settings/lightswitch_page.py
 msgid "Switch now with a keyboard shortcut"
 msgstr "Váltás gyorsbillentyűvel"
+
+#: minttoys/modules/locksmith/module.py minttoys/locksmith/main.py minttoys/settings/window.py minttoys/locksmith/window.py
+msgid "File Locksmith"
+msgstr "File Locksmith"
+
+#: minttoys/locksmith/main.py
+msgid "Usage: minttoys-locksmith FILE..."
+msgstr "Használat: minttoys-locksmith FÁJL..."
+
+#: minttoys/locksmith/main.py
+#, python-brace-format
+msgid "File Locksmith needs PyGObject and GTK 3: {error}"
+msgstr "A File Locksmith működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: minttoys/locksmith/window.py
+msgid "Force it to stop? Unsaved work in it will be lost."
+msgstr "Kényszeríti a leállítását? A benne lévő, nem mentett munka elvész."
+
+#: minttoys/locksmith/window.py
+msgid "Force stop"
+msgstr "Kényszerített leállítás"
+
+#: minttoys/locksmith/window.py
+msgid "Process"
+msgstr "Folyamat"
+
+#: minttoys/locksmith/window.py
+msgid "PID"
+msgstr "PID"
+
+#. TRANSLATORS: the column of what a process holds of the chosen files.
+#: minttoys/locksmith/window.py
+msgid "Holds"
+msgstr "Használja"
+
+#: minttoys/locksmith/window.py
+msgid "Refresh"
+msgstr "Frissítés"
+
+#: minttoys/locksmith/window.py
+msgid "End process"
+msgstr "Folyamat leállítása"
+
+#: minttoys/locksmith/window.py
+#, python-brace-format
+msgid "{name} did not stop."
+msgstr "{name} nem állt le."
+
+#: minttoys/locksmith/window.py
+#, python-brace-format
+msgid "You may not end {name}."
+msgstr "Ezt a folyamatot nem állíthatja le: {name}."
+
+#. TRANSLATORS: File Locksmith's item in Nemo's right-click menu.
+#: minttoys/modules/locksmith/module.py
+msgid "What is using this?"
+msgstr "Mi használja ezt?"
+
+#. TRANSLATORS: the tooltip of File Locksmith's item in Nemo's right-click menu.
+#: minttoys/modules/locksmith/module.py
+msgid "Shows the processes that hold it open, and lets you end them."
+msgstr "Megmutatja, mely folyamatok tartják nyitva, és leállíthatja őket."
+
+#: minttoys/modules/locksmith/module.py
+msgid ""
+"Shows which processes hold a file or a folder, from Nemo's right-click menu."
+msgstr ""
+"Megmutatja, mely folyamatok használnak egy fájlt vagy mappát, a Nemo jobb "
+"gombos menüjéből."
+
+#: minttoys/modules/locksmith/text.py
+msgid "Nothing of yours is using it right now."
+msgstr "Most egyik folyamata sem használja."
+
+#: minttoys/modules/locksmith/text.py
+msgid "Processes of other users, the system's among them, cannot be shown."
+msgstr ""
+"Más felhasználók folyamatai, köztük a rendszeréi, nem jeleníthetők meg."
+
+#. TRANSLATORS: the heading of File Locksmith's window; {name} is a file or a folder.
+#: minttoys/modules/locksmith/text.py
+#, python-brace-format
+msgid "What is using {name}"
+msgstr "Mi használja ezt: {name}"
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
+#. such as File Locksmith.
+#: minttoys/settings/catalog.py
+msgid "Files"
+msgstr "Fájlok"
+
+#. TRANSLATORS: the heading over the steps that tell how to use a tool.
+#: minttoys/settings/simple_page.py
+msgid "How to use it"
+msgstr "Használat"
+
+#: minttoys/settings/window.py
+msgid "Shows which processes hold a file or a folder, and lets you end them."
+msgstr ""
+"Megmutatja, mely folyamatok használnak egy fájlt vagy mappát, és "
+"leállíthatja őket."
+
+#: minttoys/settings/window.py
+msgid "Use File Locksmith"
+msgstr "File Locksmith használata"
+
+#: minttoys/settings/window.py
+msgid ""
+"Right-click a file or a folder in Nemo and choose What is using this? A "
+"window lists the processes that hold it, and can end one."
+msgstr ""
+"Kattintson jobb gombbal egy fájlra vagy mappára a Nemóban, és válassza a Mi "
+"használja ezt? pontot. Egy ablak felsorolja az azt használó folyamatokat, és"
+" le is állíthat közülük egyet."
+
+#: minttoys/settings/window.py
+msgid ""
+"It shows your own processes. Those of other users, the system's among them, "
+"cannot be looked at without administrator rights."
+msgstr ""
+"A saját folyamatait mutatja. Más felhasználókét, köztük a rendszerét, "
+"rendszergazdai jogok nélkül nem lehet megvizsgálni."
+
+#. TRANSLATORS: the heading of File Locksmith's window for several files and folders.
+#: minttoys/modules/locksmith/text.py
+#, python-brace-format
+msgid "What is using {count} item"
+msgid_plural "What is using {count} items"
+msgstr[0] "Mi használja a kijelölt {count} elemet"
+msgstr[1] "Mi használja a kijelölt {count} elemet"
