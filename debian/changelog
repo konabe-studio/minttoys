@@ -1,3 +1,10 @@
+minttoys (0.2.0~dev) UNRELEASED; urgency=medium
+
+  * Development build: Light Switch, with its keyboard shortcut; a settings
+    window with a sidebar and an Overview; the mode in the panel icon.
+
+ -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 09:47:17 +0200
+
 minttoys (0.1.0) unstable; urgency=medium
 
   * First release: Awake keeps the computer awake until it is turned off,
