@@ -17,12 +17,15 @@ from gi.repository import Gdk, Gio, Gtk  # noqa: E402
 
 from minttoys import APP_ID, BUS_NAME, OBJECT_PATH  # noqa: E402
 from minttoys.api import (  # noqa: E402
+    ALWAYSONTOP_INTERFACE,
+    ALWAYSONTOP_PATH,
     DAEMON_INTERFACE,
     LIGHTSWITCH_INTERFACE,
     LIGHTSWITCH_PATH,
 )
 from minttoys.core.i18n import _  # noqa: E402
 from minttoys.settings import catalog, first_run  # noqa: E402
+from minttoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from minttoys.settings.awake_page import AwakePage  # noqa: E402
 from minttoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
 from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
@@ -99,11 +102,13 @@ class SettingsWindow(Gtk.ApplicationWindow):
             ],
         )
         self.newplus = NewPlusPage(client, self._error)
+        self.alwaysontop = AlwaysOnTopPage(client, self._error)
         self.pages = {
             "awake": self.awake,
             "lightswitch": self.lightswitch,
             "locksmith": self.locksmith,
             "newplus": self.newplus,
+            "alwaysontop": self.alwaysontop,
         }
         pages = self.pages
         for heading, tools in catalog.grouped():
@@ -137,6 +142,15 @@ class SettingsWindow(Gtk.ApplicationWindow):
             None,
             Gio.DBusSignalFlags.NONE,
             lambda *arguments: self.lightswitch.show_state(arguments[5].unpack()[0]),
+        )
+        bus.signal_subscribe(
+            BUS_NAME,
+            ALWAYSONTOP_INTERFACE,
+            "StateChanged",
+            ALWAYSONTOP_PATH,
+            None,
+            Gio.DBusSignalFlags.NONE,
+            lambda *arguments: self.alwaysontop.show_state(arguments[5].unpack()[0]),
         )
         # A module switched on or off elsewhere, from the command line for one.
         bus.signal_subscribe(
