@@ -22,6 +22,7 @@ class Tool:
 TOOLS = (
     Tool("awake", "Awake", "system", f"{APP_ID}-awake-on-symbolic"),
     Tool("lightswitch", "Light Switch", "system", "weather-clear-night-symbolic"),
+    Tool("locksmith", "File Locksmith", "files", "changes-prevent-symbolic"),
 )
 
 
@@ -31,6 +32,9 @@ def headings() -> dict[str, str]:
         # TRANSLATORS: a heading in the settings window's sidebar, over the tools that
         # deal with the computer as a whole, such as Awake.
         "system": _("System"),
+        # TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
+        # such as File Locksmith.
+        "files": _("Files"),
     }
 
 
