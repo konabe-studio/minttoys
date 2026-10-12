@@ -753,14 +753,6 @@ msgstr[1] "Mi használja a kijelölt {count} elemet"
 msgid "New+"
 msgstr "New+"
 
-#: minttoys/modules/newplus/module.py
-msgid ""
-"Manages the templates Nemo offers under Create New Document, and saves files"
-" as templates."
-msgstr ""
-"Kezeli a Nemo Új dokumentum létrehozása menüjében felkínált sablonokat, és "
-"fájlokat ment sablonként."
-
 #. TRANSLATORS: New+'s item in Nemo's right-click menu.
 #: minttoys/modules/newplus/module.py
 msgid "Save as template"
@@ -828,10 +820,6 @@ msgid "Templates"
 msgstr "Sablonok"
 
 #: minttoys/settings/newplus_page.py
-msgid "A new document starts as a copy of one of these."
-msgstr "Az új dokumentum ezek egyikének másolataként indul."
-
-#: minttoys/settings/newplus_page.py
 msgid "Add a template…"
 msgstr "Sablon hozzáadása…"
 
@@ -842,14 +830,6 @@ msgstr "A sablonmappa megnyitása"
 #: minttoys/settings/newplus_page.py
 msgid "Make a templates folder"
 msgstr "Sablonmappa létrehozása"
-
-#: minttoys/settings/newplus_page.py
-msgid ""
-"Right-click inside a folder in Nemo and choose Create New Document: your "
-"templates are there."
-msgstr ""
-"Kattintson jobb gombbal egy mappán belül a Nemóban, és válassza az Új "
-"dokumentum létrehozása pontot: ott vannak a sablonjai."
 
 #: minttoys/settings/newplus_page.py
 msgid "Right-click a file and choose Save as template to add it."
@@ -1039,3 +1019,122 @@ msgstr "Nem sikerült módosítani az ablak átlátszatlanságát: {error}"
 #: minttoys/cli.py
 msgid "The active window is not kept on top, so its opacity stays as it is."
 msgstr "Az aktív ablak nincs a többi fölé rögzítve, ezért az átlátszatlansága nem változik."
+
+#: minttoys/modules/newplus/module.py
+msgid ""
+"Makes files and folders from your templates, and saves files as templates."
+msgstr ""
+"Fájlokat és mappákat hoz létre a sablonjaiból, és fájlokat ment sablonként."
+
+#. TRANSLATORS: New+'s item in Nemo's right-click menu, on a folder or its background.
+#: minttoys/modules/newplus/module.py
+msgid "New from template…"
+msgstr "Létrehozás sablonból…"
+
+#. TRANSLATORS: the tooltip of New from template in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Makes a file or a folder from one of your templates."
+msgstr "Fájlt vagy mappát hoz létre az egyik sablonjából."
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"Right-click inside a folder in Nemo and choose New from template… to make a "
+"file or a folder from one of your templates."
+msgstr ""
+"Kattintson jobb gombbal egy mappában a Nemóban, és válassza a Létrehozás "
+"sablonból… menüpontot, hogy fájlt vagy mappát hozzon létre az egyik "
+"sablonjából."
+
+#: minttoys/settings/newplus_page.py
+msgid "Nemo's own Create New Document offers your file templates too."
+msgstr ""
+"A Nemo saját Új dokumentum létrehozása menüje is felkínálja a "
+"fájlsablonjait."
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"A new item starts as a copy of one of these. A folder is copied whole; "
+"Create New Document shows it as a submenu of its files instead."
+msgstr ""
+"Az új elem ezek egyikének másolataként indul. Egy mappa egészében másolódik;"
+" az Új dokumentum létrehozása viszont a fájljait almenüként mutatja."
+
+#: minttoys/settings/newplus_page.py
+msgid "Names"
+msgstr "Nevek"
+
+#: minttoys/settings/newplus_page.py
+msgid "Of the files and folders New from template makes."
+msgstr "A Létrehozás sablonból által készített fájloké és mappáké."
+
+#: minttoys/settings/newplus_page.py
+msgid "Replace variables in names"
+msgstr "Változók cseréje a nevekben"
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"$YYYY, $MM, $DD, $hh, $mm, $ss and more for the date and time, "
+"$PARENT_FOLDER_NAME for the folder an item lands in, and %VARIABLE% from the"
+" environment, such as %USER%."
+msgstr ""
+"$YYYY, $MM, $DD, $hh, $mm, $ss és továbbiak a dátumhoz és az időhöz, "
+"$PARENT_FOLDER_NAME annak a mappának a nevéhez, amelybe az elem kerül, és "
+"%VÁLTOZÓ% a környezetből, például %USER%."
+
+#: minttoys/settings/newplus_page.py
+msgid "Leave out the digits, spaces and dots a name starts with"
+msgstr "A név eleji számjegyek, szóközök és pontok elhagyása"
+
+#: minttoys/settings/newplus_page.py
+msgid "Number your templates to set their order, as in 1. Letter.odt."
+msgstr ""
+"A sablonok sorrendjét számozással állíthatja be, például: 1. Levél.odt."
+
+#: minttoys/newitem/window.py minttoys/newitem/main.py
+msgid "New from template"
+msgstr "Létrehozás sablonból"
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "New in {folder}"
+msgstr "Új elem itt: {folder}"
+
+#: minttoys/newitem/window.py
+msgid "You have no templates folder. Set one up on New+'s page in MintToys."
+msgstr "Nincs sablonmappája. Hozzon létre egyet a MintToys New+ oldalán."
+
+#: minttoys/newitem/window.py
+msgid ""
+"No templates yet. Add some on New+'s page in MintToys, or right-click a file"
+" in Nemo and choose Save as template."
+msgstr ""
+"Még nincsenek sablonok. Adjon hozzá néhányat a MintToys New+ oldalán, vagy "
+"kattintson jobb gombbal egy fájlra a Nemóban, és válassza a Mentés "
+"sablonként menüpontot."
+
+#: minttoys/newitem/window.py
+msgid "Name"
+msgstr "Név"
+
+#: minttoys/newitem/window.py
+msgid "Create"
+msgstr "Létrehozás"
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "There is something called {name} here already."
+msgstr "Itt már van {name} nevű elem."
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "Could not make {name}: {error}"
+msgstr "{name} létrehozása nem sikerült: {error}"
+
+#: minttoys/newitem/main.py
+#, python-brace-format
+msgid "New+ needs PyGObject and GTK 3: {error}"
+msgstr "A New+ működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: minttoys/newitem/main.py
+msgid "New from template works in a folder on disk."
+msgstr "A Létrehozás sablonból csak a lemezen lévő mappában működik."

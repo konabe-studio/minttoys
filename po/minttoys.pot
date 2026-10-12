@@ -714,12 +714,6 @@ msgstr[1] ""
 msgid "New+"
 msgstr ""
 
-#: minttoys/modules/newplus/module.py
-msgid ""
-"Manages the templates Nemo offers under Create New Document, and saves files"
-" as templates."
-msgstr ""
-
 #. TRANSLATORS: New+'s item in Nemo's right-click menu.
 #: minttoys/modules/newplus/module.py
 msgid "Save as template"
@@ -785,10 +779,6 @@ msgid "Templates"
 msgstr ""
 
 #: minttoys/settings/newplus_page.py
-msgid "A new document starts as a copy of one of these."
-msgstr ""
-
-#: minttoys/settings/newplus_page.py
 msgid "Add a template…"
 msgstr ""
 
@@ -798,12 +788,6 @@ msgstr ""
 
 #: minttoys/settings/newplus_page.py
 msgid "Make a templates folder"
-msgstr ""
-
-#: minttoys/settings/newplus_page.py
-msgid ""
-"Right-click inside a folder in Nemo and choose Create New Document: your "
-"templates are there."
 msgstr ""
 
 #: minttoys/settings/newplus_page.py
@@ -977,4 +961,108 @@ msgstr ""
 
 #: minttoys/cli.py
 msgid "The active window is not kept on top, so its opacity stays as it is."
+msgstr ""
+
+#: minttoys/modules/newplus/module.py
+msgid ""
+"Makes files and folders from your templates, and saves files as templates."
+msgstr ""
+
+#. TRANSLATORS: New+'s item in Nemo's right-click menu, on a folder or its background.
+#: minttoys/modules/newplus/module.py
+msgid "New from template…"
+msgstr ""
+
+#. TRANSLATORS: the tooltip of New from template in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Makes a file or a folder from one of your templates."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"Right-click inside a folder in Nemo and choose New from template… to make a "
+"file or a folder from one of your templates."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Nemo's own Create New Document offers your file templates too."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"A new item starts as a copy of one of these. A folder is copied whole; "
+"Create New Document shows it as a submenu of its files instead."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Names"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Of the files and folders New from template makes."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Replace variables in names"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"$YYYY, $MM, $DD, $hh, $mm, $ss and more for the date and time, "
+"$PARENT_FOLDER_NAME for the folder an item lands in, and %VARIABLE% from the"
+" environment, such as %USER%."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Leave out the digits, spaces and dots a name starts with"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Number your templates to set their order, as in 1. Letter.odt."
+msgstr ""
+
+#: minttoys/newitem/window.py minttoys/newitem/main.py
+msgid "New from template"
+msgstr ""
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "New in {folder}"
+msgstr ""
+
+#: minttoys/newitem/window.py
+msgid "You have no templates folder. Set one up on New+'s page in MintToys."
+msgstr ""
+
+#: minttoys/newitem/window.py
+msgid ""
+"No templates yet. Add some on New+'s page in MintToys, or right-click a file"
+" in Nemo and choose Save as template."
+msgstr ""
+
+#: minttoys/newitem/window.py
+msgid "Name"
+msgstr ""
+
+#: minttoys/newitem/window.py
+msgid "Create"
+msgstr ""
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "There is something called {name} here already."
+msgstr ""
+
+#: minttoys/newitem/window.py
+#, python-brace-format
+msgid "Could not make {name}: {error}"
+msgstr ""
+
+#: minttoys/newitem/main.py
+#, python-brace-format
+msgid "New+ needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: minttoys/newitem/main.py
+msgid "New from template works in a folder on disk."
 msgstr ""
