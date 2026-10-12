@@ -249,3 +249,30 @@ class TestLightSwitch:
             "Light Switch is switched off in MintToys.",
             "Switch it on with: minttoys modules enable lightswitch",
         ]
+
+
+class TestAlwaysOnTop:
+    def test_opacity_steps_the_active_window(
+        self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from minttoys.platform import x11
+
+        steps: list[bool] = []
+        monkeypatch.setattr(x11, "step_active_opacity", steps.append)
+        status, _, _ = run(client, "alwaysontop", "opacity", "down")
+        assert status == 0
+        assert steps == [False]
+        assert client.calls == []  # no daemon needed
+
+    def test_an_x11_error_is_said(
+        self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from minttoys.platform import x11
+
+        def broken(up: bool) -> bool:
+            raise RuntimeError("no display")
+
+        monkeypatch.setattr(x11, "step_active_opacity", broken)
+        status, _, err = run(client, "alwaysontop", "opacity", "up")
+        assert status == 1
+        assert err == "Could not change the window's opacity: no display\n"

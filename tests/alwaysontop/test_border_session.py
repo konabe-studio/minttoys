@@ -17,12 +17,12 @@ from gi.repository import Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.alwaysontop.border import Borders, parse_color, theme_accent  # noqa: E402
+from minttoys.alwaysontop.border import Borders, Style, parse_color, theme_accent  # noqa: E402
 from minttoys.modules.alwaysontop.frame import Rect  # noqa: E402
 
 
 def test_a_frame_for_each_pinned_window_and_none_for_the_rest() -> None:
-    borders = Borders((1.0, 0.5, 0.0), 4)
+    borders = Borders(Style((1.0, 0.5, 0.0), 4, 100, 8))
     borders.show({1: Rect(100, 100, 400, 300), 2: Rect(600, 100, 200, 200)})
     assert set(borders._frames) == {1, 2}
     first = borders._frames[1]
@@ -41,3 +41,23 @@ def test_parse_color() -> None:
 def test_the_theme_has_an_accent() -> None:
     red, green, blue = theme_accent()
     assert all(0 <= part <= 1 for part in (red, green, blue))
+
+
+class Heard:
+    def __init__(self) -> None:
+        self.events: list[str] = []
+
+    def play(self, event: str) -> None:
+        self.events.append(event)
+
+
+def test_sounds_on_pinning_and_letting_go_but_not_on_closing() -> None:
+    heard = Heard()
+    borders = Borders(Style((1.0, 0.5, 0.0), 4, 60, 0), heard)
+    window = Rect(100, 100, 400, 300)
+    borders.show({}, {1, 2})  # what is pinned at the start makes no sound
+    borders.show({1: window}, {1, 2})
+    borders.show({}, {1, 2})  # let go, still open
+    borders.show({2: window}, {1, 2})
+    borders.show({}, {1})  # closed
+    assert heard.events == ["pin", "unpin", "pin"]

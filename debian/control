@@ -23,6 +23,7 @@ Depends: gir1.2-glib-2.0,
          python3-gi,
          python3-gi-cairo,
          python3-xapp,
+         python3-xlib,
          ${misc:Depends},
          ${python3:Depends},
 Description: power-user utilities for Linux Mint Cinnamon

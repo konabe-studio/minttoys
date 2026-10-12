@@ -1,4 +1,4 @@
-.TH MINTTOYS 1 2026-10-09 "MintToys" "User Commands"
+.TH MINTTOYS 1 2026-10-12 "MintToys" "User Commands"
 .SH NAME
 minttoys \- power-user utilities for Linux Mint Cinnamon
 .SH SYNOPSIS
@@ -15,6 +15,9 @@ minttoys \- power-user utilities for Linux Mint Cinnamon
 .br
 .B minttoys lightswitch
 .RB [ status " | " toggle ]
+.br
+.B minttoys alwaysontop opacity
+.RB { up | down }
 .br
 .B minttoys modules
 .RB [ list " | " enable
@@ -62,6 +65,20 @@ cannot. The default.
 .B toggle
 Switches to dark now, or back to the day's mode, until the schedule next changes. This is
 the command to put on a keyboard shortcut.
+.SS Always on Top
+Always on Top keeps a window above the others, with Muffin's own
+.B Super+Ctrl+T
+shortcut, and draws a frame around it.
+.PP
+When it comes on, it adds two custom keyboard shortcuts to Cinnamon,
+.B Super+Ctrl+Page Up
+and
+.BR "Super+Ctrl+Page Down" ,
+which run the command below, unless those keys are in use already.
+.TP
+.BR "opacity up" ", " "opacity down"
+Makes the active window one step more or less opaque, if it is kept above the others.
+Needs python3-xlib, and works without the MintToys service.
 .SS Modules
 .TP
 .B list
