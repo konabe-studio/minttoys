@@ -23,6 +23,7 @@ if not Gtk.init_check()[0]:
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from minttoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
+from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
 from minttoys.settings.window import SettingsWindow  # noqa: E402
 
@@ -263,7 +264,13 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     window: SettingsWindow,
 ) -> None:
     rows = window.sidebar.get_children()
-    assert [row.page for row in rows] == ["overview", "awake", "lightswitch", "locksmith"]
+    assert [row.page for row in rows] == [
+        "overview",
+        "awake",
+        "lightswitch",
+        "locksmith",
+        "newplus",
+    ]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
     assert rows[2].get_header() is None
@@ -412,3 +419,67 @@ def test_file_locksmith_page_switches_it(window: SettingsWindow, client: FakeCli
     page.enabled.content_widget.set_active(True)
     assert client.light_calls == [("locksmith", True)]
     assert page.enabled.content_widget.get_active()
+
+
+@pytest.fixture
+def templates_folder(tmp_path: Path) -> Path:
+    folder = tmp_path / "Templates"
+    folder.mkdir()
+    (folder / "Note.txt").write_text("", encoding="utf-8")
+    (folder / "Letter.odt").write_text("", encoding="utf-8")
+    return folder
+
+
+def newplus_page(client: FakeClient, errors: list[str], folder: Path | None) -> NewPlusPage:
+    return NewPlusPage(client, errors.append, lambda: folder, lambda path: path.unlink())
+
+
+def listed(page: NewPlusPage) -> list[str]:
+    return [row.template.name for row in page.list.get_children() if hasattr(row, "template")]
+
+
+def test_new_plus_lists_the_templates(
+    client: FakeClient, errors: list[str], templates_folder: Path
+) -> None:
+    page = newplus_page(client, errors, templates_folder)
+    assert listed(page) == ["Letter.odt", "Note.txt"]
+    assert page.where.content_widget.get_text() == str(templates_folder)
+
+
+def test_new_plus_adds_renames_and_removes(
+    client: FakeClient, errors: list[str], templates_folder: Path, tmp_path: Path
+) -> None:
+    page = newplus_page(client, errors, templates_folder)
+    source = tmp_path / "Note.txt"
+    source.write_text("", encoding="utf-8")
+    page.add_files([source])
+    assert "Note (2).txt" in listed(page)
+    (letter,) = [row.template for row in page.list.get_children() if hasattr(row, "template")][:1]
+    assert page.rename(letter, "Invoice.odt")
+    assert (templates_folder / "Invoice.odt").exists()
+    note = next(
+        r.template
+        for r in page.list.get_children()
+        if getattr(r, "template", None) and r.template.name == "Note.txt"
+    )
+    page.remove(note)
+    assert listed(page) == ["Invoice.odt", "Note (2).txt"]
+    assert errors == []
+
+
+def test_new_plus_refuses_a_taken_name(
+    client: FakeClient, errors: list[str], templates_folder: Path
+) -> None:
+    page = newplus_page(client, errors, templates_folder)
+    letter = next(r.template for r in page.list.get_children() if hasattr(r, "template"))
+    assert not page.rename(letter, "Note.txt")
+    assert errors == ["There is a template called Note.txt already."]
+
+
+def test_new_plus_without_a_folder_offers_to_make_one(
+    client: FakeClient, errors: list[str]
+) -> None:
+    page = newplus_page(client, errors, None)
+    assert page.where.content_widget.get_text() == "You have no templates folder."
+    assert page.make_button.get_parent().get_visible()
+    assert not page.add_button.get_parent().get_visible()

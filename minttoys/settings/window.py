@@ -25,6 +25,7 @@ from minttoys.core.i18n import _  # noqa: E402
 from minttoys.settings import catalog, first_run  # noqa: E402
 from minttoys.settings.awake_page import AwakePage  # noqa: E402
 from minttoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
+from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
 from minttoys.settings.simple_page import SimplePage  # noqa: E402
 
@@ -95,10 +96,12 @@ class SettingsWindow(Gtk.ApplicationWindow):
                 ),
             ],
         )
+        self.newplus = NewPlusPage(client, self._error)
         self.pages = {
             "awake": self.awake,
             "lightswitch": self.lightswitch,
             "locksmith": self.locksmith,
+            "newplus": self.newplus,
         }
         pages = self.pages
         for heading, tools in catalog.grouped():
