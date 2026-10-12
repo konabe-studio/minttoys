@@ -37,6 +37,28 @@ def send(bus: Gio.DBusConnection, summary: str, body: str) -> None:
     )
 
 
+def send_now(bus: Gio.DBusConnection, summary: str, body: str) -> None:
+    """Shows a bubble and waits for the server, for a short program that ends right after.
+    A failure is logged, not raised.
+    """
+    hints = {"desktop-entry": GLib.Variant("s", APP_ID)}
+    arguments = GLib.Variant("(susssasa{sv}i)", ("MintToys", 0, "", summary, body, [], hints, -1))
+    try:
+        bus.call_sync(
+            BUS_NAME,
+            OBJECT_PATH,
+            INTERFACE,
+            "Notify",
+            arguments,
+            GLib.VariantType("(u)"),
+            Gio.DBusCallFlags.NONE,
+            5000,
+            None,
+        )
+    except GLib.Error as error:
+        log.warning("could not show a notification: %s", error.message)
+
+
 def _finished(bus: Gio.DBusConnection, result: Gio.AsyncResult) -> None:
     try:
         bus.call_finish(result)

@@ -56,9 +56,11 @@ install: all
 	$(SUBSTITUTE) data/launchers/minttoysd.in > $(DESTDIR)$(LIBEXECDIR)/minttoysd
 	$(SUBSTITUTE) data/launchers/minttoys-tray.in > $(DESTDIR)$(LIBEXECDIR)/minttoys-tray
 	$(SUBSTITUTE) data/launchers/minttoys-locksmith.in > $(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith
+	$(SUBSTITUTE) data/launchers/minttoys-save-template.in \
+		> $(DESTDIR)$(LIBEXECDIR)/minttoys-save-template
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/minttoys $(DESTDIR)$(PREFIX)/bin/minttoys-settings \
 		$(DESTDIR)$(LIBEXECDIR)/minttoysd $(DESTDIR)$(LIBEXECDIR)/minttoys-tray \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith
+		$(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith $(DESTDIR)$(LIBEXECDIR)/minttoys-save-template
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \
 		$(SUBSTITUTE) $$entry > $(DESTDIR)$(SYSCONFDIR)/xdg/autostart/$$(basename $$entry); \
