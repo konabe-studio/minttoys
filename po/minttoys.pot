@@ -709,3 +709,132 @@ msgid "What is using {count} item"
 msgid_plural "What is using {count} items"
 msgstr[0] ""
 msgstr[1] ""
+
+#: minttoys/modules/newplus/module.py minttoys/settings/newplus_page.py
+msgid "New+"
+msgstr ""
+
+#: minttoys/modules/newplus/module.py
+msgid ""
+"Manages the templates Nemo offers under Create New Document, and saves files"
+" as templates."
+msgstr ""
+
+#. TRANSLATORS: New+'s item in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Save as template"
+msgstr ""
+
+#. TRANSLATORS: the tooltip of New+'s item in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Copies it to your templates, offered under Create New Document."
+msgstr ""
+
+#: minttoys/newplus/main.py
+msgid "No templates folder"
+msgstr ""
+
+#: minttoys/newplus/main.py
+msgid "Set one up on New+'s page in MintToys, then try again."
+msgstr ""
+
+#: minttoys/newplus/main.py
+msgid "Saved as template"
+msgstr ""
+
+#: minttoys/newplus/main.py
+msgid "Could not save as template"
+msgstr ""
+
+#: minttoys/newplus/main.py
+msgid "Usage: minttoys-save-template FILE..."
+msgstr ""
+
+#. TRANSLATORS: the notification after Save as template; {name} is the template.
+#: minttoys/newplus/main.py
+#, python-brace-format
+msgid "{name} is offered under Create New Document now."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "A template needs a name."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "A name cannot hold a slash, or be . or .."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Rename"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Move to the trash"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Your own templates for Nemo's Create New Document."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Use New+"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Templates"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "A new document starts as a copy of one of these."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Add a template…"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Open the templates folder"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Make a templates folder"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"Right-click inside a folder in Nemo and choose Create New Document: your "
+"templates are there."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Right-click a file and choose Save as template to add it."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "You have no templates folder."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "No templates yet."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+msgid "Add a template"
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+#, python-brace-format
+msgid "There is a template called {name} already."
+msgstr ""
+
+#: minttoys/settings/newplus_page.py
+#, python-brace-format
+msgid "Could not add {name}: {error}"
+msgstr ""
+
+#: minttoys/newplus/main.py
+#, python-brace-format
+msgid "{count} file is offered under Create New Document now."
+msgid_plural "{count} files are offered under Create New Document now."
+msgstr[0] ""
+msgstr[1] ""

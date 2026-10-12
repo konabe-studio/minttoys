@@ -748,3 +748,142 @@ msgid "What is using {count} item"
 msgid_plural "What is using {count} items"
 msgstr[0] "Mi használja a kijelölt {count} elemet"
 msgstr[1] "Mi használja a kijelölt {count} elemet"
+
+#: minttoys/modules/newplus/module.py minttoys/settings/newplus_page.py
+msgid "New+"
+msgstr "New+"
+
+#: minttoys/modules/newplus/module.py
+msgid ""
+"Manages the templates Nemo offers under Create New Document, and saves files"
+" as templates."
+msgstr ""
+"Kezeli a Nemo Új dokumentum létrehozása menüjében felkínált sablonokat, és "
+"fájlokat ment sablonként."
+
+#. TRANSLATORS: New+'s item in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Save as template"
+msgstr "Mentés sablonként"
+
+#. TRANSLATORS: the tooltip of New+'s item in Nemo's right-click menu.
+#: minttoys/modules/newplus/module.py
+msgid "Copies it to your templates, offered under Create New Document."
+msgstr ""
+"Bemásolja a sablonjai közé, amelyeket az Új dokumentum létrehozása menü "
+"kínál fel."
+
+#: minttoys/newplus/main.py
+msgid "No templates folder"
+msgstr "Nincs sablonmappa"
+
+#: minttoys/newplus/main.py
+msgid "Set one up on New+'s page in MintToys, then try again."
+msgstr "Hozzon létre egyet a MintToys New+ oldalán, majd próbálja újra."
+
+#: minttoys/newplus/main.py
+msgid "Saved as template"
+msgstr "Mentve sablonként"
+
+#: minttoys/newplus/main.py
+msgid "Could not save as template"
+msgstr "Nem sikerült sablonként menteni"
+
+#: minttoys/newplus/main.py
+msgid "Usage: minttoys-save-template FILE..."
+msgstr "Használat: minttoys-save-template FÁJL..."
+
+#. TRANSLATORS: the notification after Save as template; {name} is the template.
+#: minttoys/newplus/main.py
+#, python-brace-format
+msgid "{name} is offered under Create New Document now."
+msgstr "Az Új dokumentum létrehozása menü mostantól felkínálja: {name}."
+
+#: minttoys/settings/newplus_page.py
+msgid "A template needs a name."
+msgstr "A sablonnak nevet kell adni."
+
+#: minttoys/settings/newplus_page.py
+msgid "A name cannot hold a slash, or be . or .."
+msgstr "A név nem tartalmazhat perjelt, és nem lehet . vagy .."
+
+#: minttoys/settings/newplus_page.py
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: minttoys/settings/newplus_page.py
+msgid "Move to the trash"
+msgstr "Áthelyezés a Kukába"
+
+#: minttoys/settings/newplus_page.py
+msgid "Your own templates for Nemo's Create New Document."
+msgstr "Saját sablonok a Nemo Új dokumentum létrehozása menüjéhez."
+
+#: minttoys/settings/newplus_page.py
+msgid "Use New+"
+msgstr "New+ használata"
+
+#: minttoys/settings/newplus_page.py
+msgid "Templates"
+msgstr "Sablonok"
+
+#: minttoys/settings/newplus_page.py
+msgid "A new document starts as a copy of one of these."
+msgstr "Az új dokumentum ezek egyikének másolataként indul."
+
+#: minttoys/settings/newplus_page.py
+msgid "Add a template…"
+msgstr "Sablon hozzáadása…"
+
+#: minttoys/settings/newplus_page.py
+msgid "Open the templates folder"
+msgstr "A sablonmappa megnyitása"
+
+#: minttoys/settings/newplus_page.py
+msgid "Make a templates folder"
+msgstr "Sablonmappa létrehozása"
+
+#: minttoys/settings/newplus_page.py
+msgid ""
+"Right-click inside a folder in Nemo and choose Create New Document: your "
+"templates are there."
+msgstr ""
+"Kattintson jobb gombbal egy mappán belül a Nemóban, és válassza az Új "
+"dokumentum létrehozása pontot: ott vannak a sablonjai."
+
+#: minttoys/settings/newplus_page.py
+msgid "Right-click a file and choose Save as template to add it."
+msgstr ""
+"Egy fájlt úgy adhat hozzá, hogy jobb gombbal rákattint, és a Mentés "
+"sablonként pontot választja."
+
+#: minttoys/settings/newplus_page.py
+msgid "You have no templates folder."
+msgstr "Nincs sablonmappája."
+
+#: minttoys/settings/newplus_page.py
+msgid "No templates yet."
+msgstr "Még nincsenek sablonok."
+
+#: minttoys/settings/newplus_page.py
+msgid "Add a template"
+msgstr "Sablon hozzáadása"
+
+#: minttoys/settings/newplus_page.py
+#, python-brace-format
+msgid "There is a template called {name} already."
+msgstr "Már van ilyen nevű sablon: {name}."
+
+#: minttoys/settings/newplus_page.py
+#, python-brace-format
+msgid "Could not add {name}: {error}"
+msgstr "Nem sikerült hozzáadni: {name} ({error})"
+
+#: minttoys/newplus/main.py
+#, python-brace-format
+msgid "{count} file is offered under Create New Document now."
+msgid_plural "{count} files are offered under Create New Document now."
+msgstr[0] ""
+"Az Új dokumentum létrehozása menü mostantól {count} új fájlt kínál fel."
+msgstr[1] ""
+"Az Új dokumentum létrehozása menü mostantól {count} új fájlt kínál fel."
