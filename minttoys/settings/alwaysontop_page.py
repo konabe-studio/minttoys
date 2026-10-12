@@ -58,14 +58,21 @@ class NumberRow(SettingsWidget):
         self.pack_end(self.content_widget, False, False, 0)
 
 
-class PercentRow(SettingsWidget):
-    """A label, and a slider in percent."""
+class SliderRow(SettingsWidget):
+    """A label, and a slider of whole numbers with its value, and the unit after it if any."""
 
-    def __init__(self, label: str, least: int) -> None:
+    def __init__(self, label: str, least: int, most: int, step: int, unit: str = "") -> None:
         super().__init__()
         self.label = SettingsLabel(label)
-        self.content_widget = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, least, 100, 5)
+        self.content_widget = Gtk.Scale.new_with_range(
+            Gtk.Orientation.HORIZONTAL, least, most, step
+        )
         self.content_widget.set_digits(0)
+        self.content_widget.set_round_digits(0)
+        if unit:
+            self.content_widget.connect(
+                "format-value", lambda _scale, value: f"{round(value)} {unit}"
+            )
         # The value before the slider: after it, it would stick out past the rows above.
         self.content_widget.set_value_pos(Gtk.PositionType.LEFT)
         self.content_widget.set_size_request(200, -1)
@@ -153,12 +160,12 @@ class AlwaysOnTopPage(SimplePage):
         self.width = NumberRow(_("Width"), 1, MOST_WIDTH, pixels)
         self.width.content_widget.connect("value-changed", self._on_number, "border_width")
         self.frame_section.add_row(self.width)
-        self.opacity = PercentRow(_("Opacity (%)"), LEAST_OPACITY)
-        self.opacity.content_widget.connect("value-changed", self._on_opacity)
+        self.opacity = SliderRow(_("Opacity (%)"), LEAST_OPACITY, 100, 5)
+        self.opacity.content_widget.connect("value-changed", self._on_slider, "border_opacity")
         self.frame_section.add_row(self.opacity)
-        self.radius = NumberRow(_("Rounded corners"), 0, MOST_RADIUS, pixels)
+        self.radius = SliderRow(_("Rounded corners"), 0, MOST_RADIUS, 1, pixels)
         self.radius.set_tooltip_text(_("0 for square corners."))
-        self.radius.content_widget.connect("value-changed", self._on_number, "border_radius")
+        self.radius.content_widget.connect("value-changed", self._on_slider, "border_radius")
         self.frame_section.add_row(self.radius)
 
         self.sound_section = self.add_section(_("Sound"))
@@ -282,8 +289,8 @@ class AlwaysOnTopPage(SimplePage):
     def _on_number(self, field: Gtk.SpinButton, key: str) -> None:
         self._save({key: field.get_value_as_int()}, later=True)
 
-    def _on_opacity(self, scale: Gtk.Scale) -> None:
-        self._save({"border_opacity": round(scale.get_value())}, later=True)
+    def _on_slider(self, scale: Gtk.Scale, key: str) -> None:
+        self._save({key: round(scale.get_value())}, later=True)
 
     def _on_excluded(self, _buffer: Gtk.TextBuffer) -> None:
         self._save({"excluded": self.excluded.text}, later=True)
