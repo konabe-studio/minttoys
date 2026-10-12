@@ -73,8 +73,17 @@ class FakeClient:
             "border": True,
             "border_color": "",
             "border_width": 4,
+            "opacity_shortcuts": True,
+            "border_opacity": 100,
+            "border_radius": 8,
+            "sound": False,
+            "excluded": "vlc",
         }
-        self.pin_state = {"shortcut": "<Primary><Super>t", "shortcut_problem": ""}
+        self.pin_state = {
+            "shortcut": "<Primary><Super>t",
+            "shortcut_problem": "",
+            "opacity_problem": "",
+        }
         self.pin_calls: list[dict] = []
 
     def modules(self) -> list[ModuleInfo]:
@@ -566,3 +575,38 @@ def test_always_on_top_says_its_keys_were_taken(client: FakeClient, errors: list
     client.pin_state = {"shortcut": "", "shortcut_problem": "taken"}
     page = pin_page(client, errors)
     assert page.keys.get_text().startswith("Its keyboard shortcut, Ctrl+Super+T,")
+
+
+def test_always_on_top_shows_the_rest(client: FakeClient, errors: list[str]) -> None:
+    page = pin_page(client, errors)
+    assert page.opacity_shortcuts.content_widget.get_active()
+    assert "Page Up" in page.opacity_keys.get_text()
+    assert page.opacity.content_widget.get_value() == 100
+    assert page.radius.content_widget.get_value_as_int() == 8
+    assert not page.sound.content_widget.get_active()
+    assert page.excluded.text == "vlc"
+    assert client.pin_calls == []
+
+
+def test_always_on_top_saves_the_rest(client: FakeClient, errors: list[str]) -> None:
+    page = pin_page(client, errors)
+    page.sound.content_widget.set_active(True)
+    page.opacity_shortcuts.content_widget.set_active(False)
+    page.radius.content_widget.set_value(0)
+    page.opacity.content_widget.set_value(60)
+    page.excluded.text = "vlc\nfirefox"
+    page._save_now()
+    assert client.pin_calls == [
+        {"sound": True},
+        {"opacity_shortcuts": False},
+        {"border_radius": 0, "border_opacity": 60, "excluded": "vlc\nfirefox"},
+    ]
+    assert page.opacity_keys.get_text() == ""
+
+
+def test_always_on_top_says_its_opacity_keys_were_taken(
+    client: FakeClient, errors: list[str]
+) -> None:
+    client.pin_state = {"shortcut": "", "shortcut_problem": "", "opacity_problem": "taken"}
+    page = pin_page(client, errors)
+    assert "is in use already" in page.opacity_keys.get_text()
