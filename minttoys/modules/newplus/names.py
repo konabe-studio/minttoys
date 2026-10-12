@@ -3,8 +3,9 @@ of GTK.
 
 - Order: folders first, then by name, with numbers in a name compared as numbers, so
   "2. Letter" comes before "10. Invoice". Leading digits are the way to order templates.
-- Leading digits, spaces and dots can be left out of the name shown and the name offered:
-  "1. Letter.odt" is offered as "Letter.odt".
+- The number a template's name starts with can be left out of the name shown and the
+  name offered, with one dot or space after it: "1. Letter.odt" is offered as
+  "Letter.odt". Only the template's own name: the names inside a folder template stay.
 - Variables in a name are replaced when an item is made from it: the date and time
   ($YYYY, $MM, $DD, $hh and the others PowerRename knows, case-sensitive),
   $PARENT_FOLDER_NAME (the name of the folder the item lands in), and %VARIABLE% from the
@@ -15,7 +16,7 @@ import re
 from collections.abc import Mapping
 from datetime import datetime
 
-_LEADING = re.compile(r"^[\d\s.]+")
+_LEADING = re.compile(r"[0-9]+(?:\. ?| \.?)?")
 _NUMBER = re.compile(r"(\d+)")
 _DATE_TOKENS = "PARENT_FOLDER_NAME|YYYY|YY|Y|MMMM|MMM|MM|M|DDDD|DDD|DD|D|hh|h|mm|m|ss|s|fff|ff|f"
 # One pass for both kinds, so a value put in is never read again for variables.
@@ -29,12 +30,17 @@ def order_key(name: str, folder: bool) -> tuple:
 
 
 def without_leading_digits(name: str, folder: bool) -> str:
-    """The name without the digits, spaces and dots it starts with, its extension kept; the
-    name itself when nothing else would be left, as with "2024.txt".
+    """The name without the number it starts with and the dot or space after it, as
+    PowerToys' New+ has it: "01. First.txt", "03 Third" and "05.Fifth.txt" lose "01. ",
+    "03 " and "05.". A name that is only a number keeps it: "001231.txt", or a folder
+    "001231"; a folder "0123.Name" becomes "Name".
     """
-    stem, extension = (name, "") if folder else split_extension(name)
-    rest = _LEADING.sub("", stem)
-    return rest + extension if rest else name
+    stem, extension = split_extension(name)
+    if stem.isascii() and stem.isdigit() and (not folder or not extension):
+        return name
+    match = _LEADING.match(name)
+    rest = name[match.end() :] if match else name
+    return rest or name
 
 
 def split_extension(name: str) -> tuple[str, str]:

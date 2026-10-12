@@ -44,11 +44,20 @@ def test_a_value_put_in_is_not_read_again() -> None:
 @pytest.mark.parametrize(
     ("name", "folder", "shown"),
     [
-        ("1. Letter.odt", False, "Letter.odt"),
+        # PowerToys' own table, from its template_item.cpp.
+        ("01. First entry.txt", False, "First entry.txt"),
+        ("02. Second entry", True, "Second entry"),
+        ("03 Third entry", True, "Third entry"),
+        ("04 Fourth entry.txt", False, "Fourth entry.txt"),
+        ("05.Fifth entry.txt", False, "Fifth entry.txt"),
+        ("001231", True, "001231"),
+        ("001231.txt", False, "001231.txt"),
+        ("13. 0123456789012345.txt", False, "0123456789012345.txt"),
+        # And a few more.
+        ("0123.Name", True, "Name"),
+        ("01 .Name.txt", False, "Name.txt"),
+        ("01Name.txt", False, "Name.txt"),
         ("02 - Invoice.ods", False, "- Invoice.ods"),
-        ("2024.txt", False, "2024.txt"),
-        ("10 Project", True, "Project"),
-        ("1.2.3", True, "1.2.3"),
         ("Plain.txt", False, "Plain.txt"),
     ],
 )
