@@ -589,3 +589,123 @@ msgstr ""
 #: minttoys/settings/lightswitch_page.py
 msgid "Switch now with a keyboard shortcut"
 msgstr ""
+
+#: minttoys/modules/locksmith/module.py minttoys/locksmith/main.py minttoys/settings/window.py minttoys/locksmith/window.py
+msgid "File Locksmith"
+msgstr ""
+
+#: minttoys/locksmith/main.py
+msgid "Usage: minttoys-locksmith FILE..."
+msgstr ""
+
+#: minttoys/locksmith/main.py
+#, python-brace-format
+msgid "File Locksmith needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "Force it to stop? Unsaved work in it will be lost."
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "Force stop"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "Process"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "PID"
+msgstr ""
+
+#. TRANSLATORS: the column of what a process holds of the chosen files.
+#: minttoys/locksmith/window.py
+msgid "Holds"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "Refresh"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+msgid "End process"
+msgstr ""
+
+#: minttoys/locksmith/window.py
+#, python-brace-format
+msgid "{name} did not stop."
+msgstr ""
+
+#: minttoys/locksmith/window.py
+#, python-brace-format
+msgid "You may not end {name}."
+msgstr ""
+
+#. TRANSLATORS: File Locksmith's item in Nemo's right-click menu.
+#: minttoys/modules/locksmith/module.py
+msgid "What is using this?"
+msgstr ""
+
+#. TRANSLATORS: the tooltip of File Locksmith's item in Nemo's right-click menu.
+#: minttoys/modules/locksmith/module.py
+msgid "Shows the processes that hold it open, and lets you end them."
+msgstr ""
+
+#: minttoys/modules/locksmith/module.py
+msgid ""
+"Shows which processes hold a file or a folder, from Nemo's right-click menu."
+msgstr ""
+
+#: minttoys/modules/locksmith/text.py
+msgid "Nothing of yours is using it right now."
+msgstr ""
+
+#: minttoys/modules/locksmith/text.py
+msgid "Processes of other users, the system's among them, cannot be shown."
+msgstr ""
+
+#. TRANSLATORS: the heading of File Locksmith's window; {name} is a file or a folder.
+#: minttoys/modules/locksmith/text.py
+#, python-brace-format
+msgid "What is using {name}"
+msgstr ""
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
+#. such as File Locksmith.
+#: minttoys/settings/catalog.py
+msgid "Files"
+msgstr ""
+
+#. TRANSLATORS: the heading over the steps that tell how to use a tool.
+#: minttoys/settings/simple_page.py
+msgid "How to use it"
+msgstr ""
+
+#: minttoys/settings/window.py
+msgid "Shows which processes hold a file or a folder, and lets you end them."
+msgstr ""
+
+#: minttoys/settings/window.py
+msgid "Use File Locksmith"
+msgstr ""
+
+#: minttoys/settings/window.py
+msgid ""
+"Right-click a file or a folder in Nemo and choose What is using this? A "
+"window lists the processes that hold it, and can end one."
+msgstr ""
+
+#: minttoys/settings/window.py
+msgid ""
+"It shows your own processes. Those of other users, the system's among them, "
+"cannot be looked at without administrator rights."
+msgstr ""
+
+#. TRANSLATORS: the heading of File Locksmith's window for several files and folders.
+#: minttoys/modules/locksmith/text.py
+#, python-brace-format
+msgid "What is using {count} item"
+msgid_plural "What is using {count} items"
+msgstr[0] ""
+msgstr[1] ""
