@@ -1,9 +1,13 @@
-minttoys (0.2.0~dev) UNRELEASED; urgency=medium
+minttoys (0.2.0) unstable; urgency=medium
 
-  * Development build: Light Switch, with its keyboard shortcut; a settings
-    window with a sidebar and an Overview; the mode in the panel icon.
+  * Four new tools: Light Switch switches the desktop between Linux Mint's
+    day and dark modes on a schedule; Always on Top keeps a window above
+    the others, framed; File Locksmith shows which processes hold a file
+    open; New+ manages the templates of Nemo's Create New Document.
+  * A settings window with a sidebar and an Overview of every tool.
+  * Awake shows its mode in the panel icon.
 
- -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 09:47:17 +0200
+ -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:05:00 +0200
 
 minttoys (0.1.0) unstable; urgency=medium
 

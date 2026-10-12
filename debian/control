@@ -31,7 +31,9 @@ Description: power-user utilities for Linux Mint Cinnamon
  by Microsoft PowerToys, each switched on or off in one place and built on
  what Cinnamon already provides.
  .
- This release carries Awake, which keeps the computer from sleeping until it
- is turned off, for a set time, or until a time of day, without changing the
- power settings. It comes with a panel icon, a settings window and the minttoys
- command.
+ This release carries five tools: Awake keeps the computer from sleeping
+ without changing the power settings; Light Switch switches between Linux
+ Mint's day and dark modes on a schedule; Always on Top keeps a window above
+ the others, framed; File Locksmith shows which processes hold a file open;
+ New+ manages the templates of Nemo's Create New Document. They come with a
+ panel icon, a settings window and the minttoys command.
