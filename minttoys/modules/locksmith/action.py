@@ -51,7 +51,7 @@ def render(
     lines += [
         f"Exec={command}",
         f"Icon-Name={ICON}",
-        "Selection=Any",
+        "Selection=notnone",
         "Extensions=any;",
         "Quote=double",
         f"Dependencies={dependency};",

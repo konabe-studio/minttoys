@@ -31,7 +31,7 @@ def test_render() -> None:
         "Comment[hu]=Megmutatja a folyamatokat.",
         "Exec=/usr/libexec/minttoys/minttoys-locksmith %F",
         "Icon-Name=changes-prevent-symbolic",
-        "Selection=Any",
+        "Selection=notnone",
         "Extensions=any;",
         "Quote=double",
         "Dependencies=/usr/libexec/minttoys/minttoys-locksmith;",
