@@ -909,12 +909,6 @@ msgid "Use Always on Top"
 msgstr "Always on Top használata"
 
 #: minttoys/settings/alwaysontop_page.py
-msgid "Change its keys in the Keyboard settings, under Windows."
-msgstr ""
-"A billentyűkombinációt a billentyűzet-beállításokban, az Ablakok alatt "
-"módosíthatja."
-
-#: minttoys/settings/alwaysontop_page.py
 msgid "Pin a window with a keyboard shortcut"
 msgstr "Ablak rögzítése gyorsbillentyűvel"
 
@@ -946,7 +940,7 @@ msgstr ""
 "Nyomja meg a Super+Ctrl+T-t egy ablakon, hogy a többi fölött tartsa, és "
 "újra, hogy elengedje. Az ablak menüje (Alt+Szóköz) is tudja ezt."
 
-#. TRANSLATORS: the unit after the frame's width.
+#. TRANSLATORS: the unit after the frame's width and its corners' radius.
 #: minttoys/settings/alwaysontop_page.py
 msgid "px"
 msgstr "px"
@@ -956,3 +950,88 @@ msgstr "px"
 #: minttoys/settings/catalog.py
 msgid "Windows"
 msgstr "Ablakok"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Keyboard shortcuts"
+msgstr "Gyorsbillentyűk"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Change their keys in the Keyboard settings."
+msgstr "A billentyűkombinációkat a billentyűzet-beállításokban módosíthatja."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Change a pinned window's opacity with the keyboard"
+msgstr "Rögzített ablak átlátszatlanságának módosítása billentyűzettel"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Opacity (%)"
+msgstr "Átlátszatlanság (%)"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Rounded corners"
+msgstr "Lekerekített sarkok"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "0 for square corners."
+msgstr "0: szögletes sarkok."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Sound"
+msgstr "Hang"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Play a sound on pinning and letting go"
+msgstr "Hang lejátszása rögzítéskor és elengedéskor"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "The Sound settings' sounds for maximizing and unmaximizing windows."
+msgstr ""
+"A Hang beállítások hangjai az ablakok maximalizálásához és eredeti méretének"
+" visszaállításához."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Excluded applications"
+msgstr "Kizárt alkalmazások"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid ""
+"Never kept on top. One on each line, by the name X11 knows it by (its "
+"WM_CLASS), for example firefox."
+msgstr ""
+"Ezek sosem maradnak a többi fölött. Soronként egy, azon a néven, amelyen az "
+"X11 ismeri (WM_CLASS), például firefox."
+
+#: minttoys/settings/alwaysontop_page.py
+#, python-brace-format
+msgid "{more} more opaque, {less} less"
+msgstr "{more}: átlátszatlanabb, {less}: átlátszóbb"
+
+#: minttoys/settings/alwaysontop_page.py
+#, python-brace-format
+msgid "{more} or {less} is in use already, so that shortcut is missing."
+msgstr ""
+"A(z) {more} vagy a(z) {less} már foglalt, ezért az a gyorsbillentyű "
+"hiányzik."
+
+#: minttoys/cli.py
+msgid "change a pinned window's opacity"
+msgstr "rögzített ablak átlátszatlanságának módosítása"
+
+#: minttoys/cli.py
+msgid "Make the active window more or less opaque, if it is pinned on top."
+msgstr ""
+"Az aktív ablakot átlátszatlanabbá vagy átlátszóbbá teszi, ha a többi fölé "
+"van rögzítve."
+
+#: minttoys/cli.py
+msgid "one step more or less opaque"
+msgstr "egy lépéssel átlátszatlanabb vagy átlátszóbb"
+
+#: minttoys/cli.py
+msgid "This needs python3-xlib: sudo apt install python3-xlib"
+msgstr "Ehhez a python3-xlib csomag kell: sudo apt install python3-xlib"
+
+#: minttoys/cli.py
+#, python-brace-format
+msgid "Could not change the window's opacity: {error}"
+msgstr "Nem sikerült módosítani az ablak átlátszatlanságát: {error}"
