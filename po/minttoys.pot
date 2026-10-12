@@ -838,3 +838,66 @@ msgid "{count} file is offered under Create New Document now."
 msgid_plural "{count} files are offered under Create New Document now."
 msgstr[0] ""
 msgstr[1] ""
+
+#: minttoys/modules/alwaysontop/module.py minttoys/settings/alwaysontop_page.py
+msgid "Always on Top"
+msgstr ""
+
+#: minttoys/modules/alwaysontop/module.py
+msgid ""
+"Pins a window above the others with Super+Ctrl+T, and frames it so you see "
+"which."
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Keeps a window above the others, framed so you can tell which."
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Use Always on Top"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Change its keys in the Keyboard settings, under Windows."
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Pin a window with a keyboard shortcut"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Frame"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Frame a pinned window"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "In the theme's accent color"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Color"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Width"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py
+msgid ""
+"Press Super+Ctrl+T on a window to keep it above the others, and again to let"
+" it go. Its window menu (Alt+Space) can do it too."
+msgstr ""
+
+#. TRANSLATORS: the unit after the frame's width.
+#: minttoys/settings/alwaysontop_page.py
+msgid "px"
+msgstr ""
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools for
+#. windows, such as Always on Top.
+#: minttoys/settings/catalog.py
+msgid "Windows"
+msgstr ""

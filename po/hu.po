@@ -887,3 +887,72 @@ msgstr[0] ""
 "Az Új dokumentum létrehozása menü mostantól {count} új fájlt kínál fel."
 msgstr[1] ""
 "Az Új dokumentum létrehozása menü mostantól {count} új fájlt kínál fel."
+
+#: minttoys/modules/alwaysontop/module.py minttoys/settings/alwaysontop_page.py
+msgid "Always on Top"
+msgstr "Always on Top"
+
+#: minttoys/modules/alwaysontop/module.py
+msgid ""
+"Pins a window above the others with Super+Ctrl+T, and frames it so you see "
+"which."
+msgstr ""
+"Super+Ctrl+T-vel a többi fölé rögzít egy ablakot, és keretet rajzol köré, "
+"hogy lássa, melyiket."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Keeps a window above the others, framed so you can tell which."
+msgstr "Egy ablakot a többi fölött tart, kerettel, hogy lássa, melyiket."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Use Always on Top"
+msgstr "Always on Top használata"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Change its keys in the Keyboard settings, under Windows."
+msgstr ""
+"A billentyűkombinációt a billentyűzet-beállításokban, az Ablakok alatt "
+"módosíthatja."
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Pin a window with a keyboard shortcut"
+msgstr "Ablak rögzítése gyorsbillentyűvel"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Frame"
+msgstr "Keret"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Frame a pinned window"
+msgstr "Keret a rögzített ablak körül"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "In the theme's accent color"
+msgstr "A téma kiemelőszínével"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Color"
+msgstr "Szín"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid "Width"
+msgstr "Szélesség"
+
+#: minttoys/settings/alwaysontop_page.py
+msgid ""
+"Press Super+Ctrl+T on a window to keep it above the others, and again to let"
+" it go. Its window menu (Alt+Space) can do it too."
+msgstr ""
+"Nyomja meg a Super+Ctrl+T-t egy ablakon, hogy a többi fölött tartsa, és "
+"újra, hogy elengedje. Az ablak menüje (Alt+Szóköz) is tudja ezt."
+
+#. TRANSLATORS: the unit after the frame's width.
+#: minttoys/settings/alwaysontop_page.py
+msgid "px"
+msgstr "px"
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools for
+#. windows, such as Always on Top.
+#: minttoys/settings/catalog.py
+msgid "Windows"
+msgstr "Ablakok"
