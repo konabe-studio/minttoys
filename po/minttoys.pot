@@ -974,3 +974,7 @@ msgstr ""
 #, python-brace-format
 msgid "Could not change the window's opacity: {error}"
 msgstr ""
+
+#: minttoys/cli.py
+msgid "The active window is not kept on top, so its opacity stays as it is."
+msgstr ""

@@ -1035,3 +1035,7 @@ msgstr "Ehhez a python3-xlib csomag kell: sudo apt install python3-xlib"
 #, python-brace-format
 msgid "Could not change the window's opacity: {error}"
 msgstr "Nem sikerült módosítani az ablak átlátszatlanságát: {error}"
+
+#: minttoys/cli.py
+msgid "The active window is not kept on top, so its opacity stays as it is."
+msgstr "Az aktív ablak nincs a többi fölé rögzítve, ezért az átlátszatlansága nem változik."
