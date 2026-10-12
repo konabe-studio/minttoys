@@ -16,7 +16,7 @@ package and translations, built end to end around a single tool.
 |---|---|
 | Awake | Keeps the computer awake until turned off, for a set time, or until a time of day |
 
-## M1: quick wins
+## M1: quick wins (done, released as 0.2.0)
 
 Brings in global keyboard shortcuts and the first Nemo action.
 
