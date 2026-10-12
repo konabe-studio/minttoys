@@ -550,7 +550,7 @@ def test_always_on_top_shows_its_settings_and_keys(client: FakeClient, errors: l
     assert page.keys.get_text() == "Ctrl+Super+T"
     assert page.accent.content_widget.get_active()
     assert not page.color_revealer.get_reveal_child()
-    assert page.width.content_widget.get_value_as_int() == 4
+    assert page.width.content_widget.get_value() == 4
     assert client.pin_calls == []
 
 
