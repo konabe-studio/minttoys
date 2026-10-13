@@ -18,8 +18,9 @@ LINGUAS = $(shell cat po/LINGUAS)
 POT ?= po/tuxtoys.pot
 MO = $(LINGUAS:%=build/locale/%/LC_MESSAGES/tuxtoys.mo)
 DESKTOP = $(patsubst data/%.desktop.in,build/%.desktop,$(wildcard data/*/*.desktop.in))
+POLICY = build/polkit/io.github.konabe_studio.TuxToys.hosts.policy
 
-all: mo $(DESKTOP)
+all: mo $(DESKTOP) $(POLICY)
 
 mo: $(MO)
 
@@ -30,6 +31,11 @@ build/locale/%/LC_MESSAGES/tuxtoys.mo: po/%.po
 build/%.desktop: data/%.desktop.in po/LINGUAS $(LINGUAS:%=po/%.po)
 	install -d $(@D)
 	msgfmt --desktop --template=$< -d po -o $@
+
+# The polkit action Hosts File Editor saves through, its texts from the catalogues.
+$(POLICY): tuxtoys/modules/hosts/policy.py $(MO)
+	install -d $(@D)
+	python3 -m tuxtoys.modules.hosts.policy build/locale $(LIBEXECDIR)/tuxtoys-hosts-save > $@
 
 # For maintainers: the template from the sources, then every translation merged with it.
 pot:
@@ -66,13 +72,16 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer
 	$(SUBSTITUTE) data/launchers/tuxtoys-rename.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename
+	$(SUBSTITUTE) data/launchers/tuxtoys-hosts-save.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoysd $(DESTDIR)$(LIBEXECDIR)/tuxtoys-tray \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-locksmith $(DESTDIR)$(LIBEXECDIR)/tuxtoys-save-template \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-always-on-top \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-new-from-template \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer \
-		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \
 		$(SUBSTITUTE) $$entry > $(DESTDIR)$(SYSCONFDIR)/xdg/autostart/$$(basename $$entry); \
@@ -88,6 +97,7 @@ install: all
 	done
 	cd data && find icons -name '*.svg' -exec install -D -m 644 {} $(DESTDIR)$(DATADIR)/{} \;
 	install -D -m 644 -t $(DESTDIR)$(DATADIR)/man/man1 data/man/*.1
+	install -D -m 644 -t $(DESTDIR)$(DATADIR)/polkit-1/actions $(POLICY)
 
 clean:
 	rm -rf build

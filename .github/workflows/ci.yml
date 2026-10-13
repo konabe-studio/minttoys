@@ -77,11 +77,24 @@ jobs:
           # entry carries its translated text.
           test "$(LANGUAGE=hu dbus-run-session -- tuxtoys awake status)" = "Az Awake ki van kapcsolva."
           grep -q '^Comment\[hu\]=' /usr/share/applications/io.github.konabe_studio.TuxToys.desktop
+          # Hosts File Editor's polkit action, readable and in Hungarian too, and its root
+          # helper: it refuses a wrong hash, and saves the same content with a backup.
+          policy=/usr/share/polkit-1/actions/io.github.konabe_studio.TuxToys.hosts.policy
+          python3 -c "import sys, xml.dom.minidom; xml.dom.minidom.parse(sys.argv[1])" $policy
+          grep -q '<message xml:lang="hu">' $policy
+          helper=/usr/libexec/tuxtoys/tuxtoys-hosts-save
+          status=0; sudo $helper --expect "$(printf '0%.0s' $(seq 64))" < /etc/hosts || status=$?
+          test $status -eq 3
+          before=$(sha256sum /etc/hosts)
+          sudo $helper --expect "$(sha256sum /etc/hosts | cut -d' ' -f1)" --backup < /etc/hosts
+          test "$(sha256sum /etc/hosts)" = "$before"
+          ls /var/backups/tuxtoys/hosts-*
           sudo apt-get purge --yes tuxtoys
           left=$(grep -E 'tuxtoys|konabe_studio' installed.txt | while read -r path; do
             if [ -e "$path" ]; then echo "$path"; fi
           done)
           if [ -n "$left" ]; then echo "left behind after purge:"; echo "$left"; exit 1; fi
+          test ! -e /var/backups/tuxtoys
       - uses: actions/upload-artifact@v7
         with:
           name: tuxtoys-deb

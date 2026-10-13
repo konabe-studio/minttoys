@@ -1757,3 +1757,13 @@ msgstr ""
 msgid "Rename+ offers the last ten searches and replacements as you type."
 msgstr ""
 "A Rename+ gépelés közben felajánlja a legutóbbi tíz keresést és cserét."
+
+#. TRANSLATORS: what polkit's password dialog says the password is for.
+#: tuxtoys/modules/hosts/policy.py
+msgid "Save the hosts file"
+msgstr "A hosts fájl mentése"
+
+#. TRANSLATORS: the line polkit's password dialog shows above the password field.
+#: tuxtoys/modules/hosts/policy.py
+msgid "Authentication is required to save the hosts file"
+msgstr "A hosts fájl mentéséhez hitelesítés szükséges"
