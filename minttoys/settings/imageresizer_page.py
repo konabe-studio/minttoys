@@ -28,6 +28,8 @@ from minttoys.settings.awake_page import SAVE_AFTER_MS  # noqa: E402
 from minttoys.settings.lightswitch_page import Client  # noqa: E402
 from minttoys.settings.simple_page import SimplePage  # noqa: E402
 
+WARNING_ICON = "dialog-warning-symbolic"
+
 
 class SizeRow(SettingsWidget):
     """A size: its name and what it is, and buttons to change and remove it."""
@@ -247,19 +249,25 @@ class ImageResizerPage(SimplePage):
         try:
             self._shown.update({"file_name": text})
         except ValueError:
-            entry.get_style_context().add_class("error")
-            entry.set_tooltip_text(
-                _("A name is needed, and between slashes a folder name other than . or ..")
+            # A warning sign at the end of the field, as Mint's own settings show one.
+            entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, WARNING_ICON)
+            entry.set_icon_tooltip_text(
+                Gtk.EntryIconPosition.SECONDARY,
+                _("A name is needed, and between slashes a folder name other than . or .."),
             )
             if self._save_timer and "file_name" in self._pending:
                 del self._pending["file_name"]
             return
-        entry.get_style_context().remove_class("error")
-        entry.set_tooltip_text(None)
+        entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
         self._save({"file_name": text}, later=True)
 
+    @property
+    def file_name_problem(self) -> bool:
+        entry = self.file_name.content_widget
+        return entry.get_icon_name(Gtk.EntryIconPosition.SECONDARY) == WARNING_ICON
+
     def _on_file_name_left(self, entry: Gtk.Entry) -> bool:
-        if entry.get_style_context().has_class("error"):
+        if self.file_name_problem:
             entry.set_text(self._shown.file_name)
         return False
 

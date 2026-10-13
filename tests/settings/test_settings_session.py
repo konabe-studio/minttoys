@@ -693,10 +693,10 @@ def test_image_resizer_saves_a_file_name_only_once_it_can_be_used(
     page = resizer_page(client, errors)
     entry = page.file_name.content_widget
     entry.set_text("%2/")
-    assert entry.get_style_context().has_class("error")
+    assert page.file_name_problem
     assert page._pending == {}
     entry.set_text("%2/%1")
-    assert not entry.get_style_context().has_class("error")
+    assert not page.file_name_problem
     page._save_now()
     assert client.resizer_calls == [{"file_name": "%2/%1"}]
     assert errors == []
