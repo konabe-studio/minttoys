@@ -9,4 +9,5 @@ AVAILABLE: dict[str, str] = {
     "newplus": "tuxtoys.modules.newplus.module:NewPlus",
     "alwaysontop": "tuxtoys.modules.alwaysontop.module:AlwaysOnTop",
     "imageresizer": "tuxtoys.modules.imageresizer.module:ImageResizer",
+    "renameplus": "tuxtoys.modules.renameplus.module:RenamePlus",
 }
