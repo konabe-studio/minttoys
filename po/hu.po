@@ -1393,3 +1393,367 @@ msgstr[1] "{count} kép"
 #: tuxtoys/settings/imageresizer_page.py
 msgid "A name is needed, and between slashes a folder name other than . or .."
 msgstr "Név kell, és a perjelek között a . és a .. helyett mappanév."
+
+#: tuxtoys/modules/renameplus/module.py tuxtoys/renameplus/main.py tuxtoys/renameplus/window.py tuxtoys/settings/renameplus_page.py
+msgid "Rename+"
+msgstr "Rename+"
+
+#: tuxtoys/modules/renameplus/module.py
+msgid "Renames many files and folders at once, from Nemo."
+msgstr "Sok fájlt és mappát nevez át egyszerre, a Nemóból."
+
+#. TRANSLATORS: Rename+'s item in Nemo's right-click menu.
+#: tuxtoys/modules/renameplus/module.py
+msgid "Rename with Rename+"
+msgstr "Átnevezés a Rename+ eszközzel"
+
+#. TRANSLATORS: the tooltip of Rename+'s item in Nemo's right-click menu.
+#: tuxtoys/modules/renameplus/module.py
+msgid "Renames the chosen items together, with a preview."
+msgstr "Egyszerre nevezi át a kijelölt elemeket, előnézettel."
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the whole name searched.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name and extension"
+msgstr "Név és kiterjesztés"
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the name without its extension.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name only"
+msgstr "Csak a név"
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the extension alone.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Extension only"
+msgstr "Csak a kiterjesztés"
+
+#. TRANSLATORS: Rename+'s text case choice: names keep their letters as they are.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Keep as it is"
+msgstr "Változatlan"
+
+#. TRANSLATORS: Rename+'s text case choice, shown in lowercase on purpose.
+#: tuxtoys/modules/renameplus/text.py
+msgid "lowercase"
+msgstr "kisbetűs"
+
+#. TRANSLATORS: Rename+'s text case choice, shown in uppercase on purpose.
+#: tuxtoys/modules/renameplus/text.py
+msgid "UPPERCASE"
+msgstr "NAGYBETŰS"
+
+#. TRANSLATORS: Rename+'s text case choice: every word capitalized but short ones such as "of" and "the", which are English rules.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Title Case"
+msgstr "Címszerű Írásmód"
+
+#. TRANSLATORS: Rename+'s text case choice: every word with a capital letter.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Capitalize Every Word"
+msgstr "Minden Szó Nagybetűvel"
+
+#. TRANSLATORS: a heading over Rename+'s counters, such as ${start=1}.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counters"
+msgstr "Számlálók"
+
+#. TRANSLATORS: a heading over Rename+'s random text, such as ${ruuidv4}.
+#: tuxtoys/modules/renameplus/text.py tuxtoys/renameplus/window.py
+msgid "Random text"
+msgstr "Véletlen szöveg"
+
+#. TRANSLATORS: a heading over Rename+'s date variables, such as $YYYY.
+#: tuxtoys/modules/renameplus/text.py
+msgid "When the item was made"
+msgstr "Az elem létrehozásának ideje"
+
+#. TRANSLATORS: a heading over what a regular expression's replacement can hold.
+#: tuxtoys/modules/renameplus/text.py
+msgid "With regular expressions"
+msgstr "Reguláris kifejezésekkel"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A number counting the renamed items, from 0"
+msgstr "Az átnevezett elemeket számolja, 0-tól"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counting from 1"
+msgstr "Számolás 1-től"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counting in steps of 10"
+msgstr "Számolás tízesével"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "At least 3 digits, with zeros in front"
+msgstr "Legalább 3 számjegy, elöl nullákkal"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Both: 001, 002, 003"
+msgstr "Mindkettő: 001, 002, 003"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 letters and digits"
+msgstr "8 betű és számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 letters"
+msgstr "8 betű"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 digits"
+msgstr "8 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A random UUID"
+msgstr "Véletlen UUID"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Year, 4 digits"
+msgstr "Év, 4 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Year, 2 digits"
+msgstr "Év, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name of the month"
+msgstr "A hónap neve"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Short name of the month"
+msgstr "A hónap rövid neve"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Month, 2 digits"
+msgstr "Hónap, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name of the day"
+msgstr "A nap neve"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Short name of the day"
+msgstr "A nap rövid neve"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Day of the month, 2 digits"
+msgstr "A hónap napja, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Hour, 2 digits"
+msgstr "Óra, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Minutes, 2 digits"
+msgstr "Perc, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Seconds, 2 digits"
+msgstr "Másodperc, 2 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Milliseconds, 3 digits"
+msgstr "Ezredmásodperc, 3 számjegy"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "What the first group in brackets found"
+msgstr "Amit a zárójelek közötti első csoport talált"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Everything the search found"
+msgstr "Minden, amit a keresés talált"
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A dollar sign"
+msgstr "Dollárjel"
+
+#: tuxtoys/renameplus/main.py
+msgid "Usage: tuxtoys-rename ITEM..."
+msgstr "Használat: tuxtoys-rename ELEM..."
+
+#: tuxtoys/renameplus/main.py
+#, python-brace-format
+msgid "Left out, as it is not on this computer: {item}"
+msgstr "Kimarad, mert nem ezen a számítógépen van: {item}"
+
+#: tuxtoys/renameplus/main.py
+#, python-brace-format
+msgid "Rename+ needs PyGObject and GTK 3: {error}"
+msgstr "A Rename+ működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/renameplus/window.py
+msgid "Use regular expressions"
+msgstr "Reguláris kifejezések használata"
+
+#: tuxtoys/renameplus/window.py
+msgid "Match all occurrences"
+msgstr "Minden előfordulás cseréje"
+
+#: tuxtoys/renameplus/window.py
+msgid "Case sensitive"
+msgstr "Kis- és nagybetűk megkülönböztetése"
+
+#: tuxtoys/renameplus/window.py
+msgid "Enumerate items"
+msgstr "Elemek számozása"
+
+#: tuxtoys/renameplus/window.py
+msgid "Include files"
+msgstr "Fájlok is"
+
+#: tuxtoys/renameplus/window.py
+msgid "Include folders"
+msgstr "Mappák is"
+
+#: tuxtoys/renameplus/window.py
+msgid "Include what is inside folders"
+msgstr "A mappák tartalma is"
+
+#: tuxtoys/renameplus/window.py
+msgid "Insert a variable"
+msgstr "Változó beszúrása"
+
+#: tuxtoys/renameplus/window.py
+msgid "Original"
+msgstr "Eredeti"
+
+#: tuxtoys/renameplus/window.py
+msgid "Renamed"
+msgstr "Új név"
+
+#: tuxtoys/renameplus/window.py
+msgid "This name cannot be used."
+msgstr "Ez a név nem használható."
+
+#: tuxtoys/renameplus/window.py
+msgid "This name is too long."
+msgstr "Ez a név túl hosszú."
+
+#: tuxtoys/renameplus/window.py
+msgid "This name is taken."
+msgstr "Ez a név már foglalt."
+
+#: tuxtoys/renameplus/window.py
+msgid "Show only items that change"
+msgstr "Csak a változó elemek"
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "{renamed} of {total} item will be renamed."
+msgid_plural "{renamed} of {total} items will be renamed."
+msgstr[0] "{total} elemből {renamed} kap új nevet."
+msgstr[1] "{total} elemből {renamed} kap új nevet."
+
+#: tuxtoys/renameplus/window.py
+msgid "Some items inside the folders are not listed."
+msgstr "A mappákban lévő elemek egy része nincs a listában."
+
+#: tuxtoys/renameplus/window.py
+msgid "Some items could not be renamed."
+msgstr "Néhány elemet nem sikerült átnevezni."
+
+#: tuxtoys/renameplus/window.py
+msgid "The new name was taken meanwhile."
+msgstr "Az új név közben foglalt lett."
+
+#: tuxtoys/renameplus/window.py
+msgid "Search for"
+msgstr "Keresés"
+
+#: tuxtoys/renameplus/window.py
+msgid "Replace with"
+msgstr "Csere erre"
+
+#: tuxtoys/renameplus/window.py
+msgid "Apply to"
+msgstr "Mire vonatkozzon"
+
+#: tuxtoys/renameplus/window.py
+msgid "Text case"
+msgstr "Kis- és nagybetűk"
+
+#: tuxtoys/renameplus/window.py
+msgid "Renaming…"
+msgstr "Átnevezés…"
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "This is not a regular expression: {error}"
+msgstr "Ez nem reguláris kifejezés: {error}"
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "It is now called {hidden} in {folder}."
+msgstr "Most {hidden} a neve, itt: {folder}."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Renames many files and folders at once, with a preview."
+msgstr "Sok fájlt és mappát nevez át egyszerre, előnézettel."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Use Rename+"
+msgstr "Rename+ használata"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Nemo"
+msgstr "Nemo"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Rename several items in Nemo with Rename+"
+msgstr "Több elem átnevezése a Nemóban a Rename+ eszközzel"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "When Rename+ opens"
+msgstr "Amikor a Rename+ megnyílik"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Start with the choices used last time"
+msgstr "Induljon a legutóbb használt beállításokkal"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Fill in the last search and replacement"
+msgstr "A legutóbbi keresés és csere kitöltése"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Forget the recent searches"
+msgstr "A korábbi keresések törlése"
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Choose files or folders in Nemo, right-click them and choose Rename with "
+"Rename+."
+msgstr ""
+"Jelöljön ki fájlokat vagy mappákat a Nemóban, kattintson rájuk a jobb "
+"egérgombbal, és válassza az Átnevezés a Rename+ eszközzel lehetőséget."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Every new name shows before anything is renamed. Clear an item's box to "
+"leave it as it is."
+msgstr ""
+"Minden új név látható, mielőtt bármi átnevezésre kerülne. Ha egy elem "
+"jelölőnégyzetét kikapcsolja, az elem változatlan marad."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Search for text or a regular expression. What replaces it can hold counters, "
+"random text and the date an item was made: the + button beside it lists them."
+msgstr ""
+"Kereshet szöveget vagy reguláris kifejezést. Ami a helyére kerül, "
+"tartalmazhat számlálót, véletlen szöveget és az elem létrehozásának dátumát: "
+"a mellette lévő + gomb felsorolja ezeket."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Rename (F2) on more than one item opens Rename+ instead of Bulky. Switching "
+"this or Rename+ off brings back what Nemo opened before."
+msgstr ""
+"Az Átnevezés (F2) több elemen a Bulky helyett a Rename+ eszközt nyitja meg. "
+"Ha ezt vagy a Rename+ eszközt kikapcsolja, a Nemo újra azt nyitja meg, amit "
+"korábban."
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Rename+ offers the last ten searches and replacements as you type."
+msgstr ""
+"A Rename+ gépelés közben felajánlja a legutóbbi tíz keresést és cserét."
