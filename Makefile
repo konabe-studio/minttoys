@@ -64,12 +64,15 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-new-from-template
 	$(SUBSTITUTE) data/launchers/tuxtoys-image-resizer.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer
+	$(SUBSTITUTE) data/launchers/tuxtoys-rename.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoysd $(DESTDIR)$(LIBEXECDIR)/tuxtoys-tray \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-locksmith $(DESTDIR)$(LIBEXECDIR)/tuxtoys-save-template \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-always-on-top \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-new-from-template \
-		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \
 		$(SUBSTITUTE) $$entry > $(DESTDIR)$(SYSCONFDIR)/xdg/autostart/$$(basename $$entry); \
