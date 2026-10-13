@@ -7,6 +7,9 @@ tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
     templates ordered by a leading number.
   * Image Resizer resizes pictures from Nemo's right-click menu, to sizes
     of your choosing, as PowerToys' Image Resizer does.
+  * Rename+ renames many files and folders at once from Nemo, with search
+    and replace, regular expressions, counters, dates and a preview, as
+    PowerToys' PowerRename does. It can also take over Nemo's Rename.
 
  -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:23:10 +0200
 

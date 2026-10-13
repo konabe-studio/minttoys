@@ -84,6 +84,20 @@ Resizer**.
 - **Upright and private:** pictures are turned the way they are shown, and the camera and
   location data can be removed.
 
+### Rename+
+
+Choose files or folders in Nemo, right-click them and choose **Rename with Rename+**.
+
+- **Search and replace** plain text or a regular expression, in the name, the extension or
+  both, the first match or every one. Every new name shows in a preview before anything
+  is renamed, and any item can be left out.
+- **More than a search:** counters with a start, a step and leading zeros, random text,
+  the date and time an item was made, and lowercase, uppercase or capitalized words.
+- **Folders and what is inside them**, all the way down, or files or folders alone.
+- **Nothing is written over:** a name that is taken is shown, and swapping two names works.
+- **Nemo's Rename (F2)** on several items can open Rename+ instead of Bulky, if you switch
+  it on.
+
 Every tool except Awake starts switched off, so nothing on your desktop changes until you
 pick it. Everything planned next, grouped into milestones, is in the
 [roadmap](ROADMAP.md).
@@ -110,7 +124,8 @@ sudo apt purge tuxtoys
 The panel icon stays until you log out. Your own settings stay in `~/.config/tuxtoys/`
 and `~/.local/state/tuxtoys/`, yours to keep or delete. A keyboard shortcut a tool added
 to Cinnamon, such as Light Switch's or Always on Top's, stays in the Keyboard settings too: switch the tool
-off in TuxToys before removing the package, or delete the shortcut there.
+off in TuxToys before removing the package, or delete the shortcut there. The same goes
+for Nemo's Rename, if you let Rename+ take it over: switch Rename+ off first.
 
 ## Platform
 
