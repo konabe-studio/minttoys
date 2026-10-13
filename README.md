@@ -71,6 +71,18 @@ choose **New from template…**, pick a template and give the new item its name.
 - **Manage them** in the settings window, or right-click a file in Nemo and choose **Save
   as template**. Nemo's own **Create New Document** keeps offering your file templates.
 
+### Image Resizer
+
+Choose one or more pictures in Nemo, right-click them and choose **Resize with Image
+Resizer**.
+
+- **Sizes to pick from**, Small, Medium, Large and Phone to start with, or one of your own
+  in pixels, percent, centimeters or inches. Each one fits, fills or stretches.
+- **Copies beside the originals**, named `photo (Small).jpg` or as you set it, or the
+  originals themselves if you choose so. Nothing else is ever written over.
+- **Upright and private:** pictures are turned the way they are shown, and the camera and
+  location data can be removed.
+
 Every tool except Awake starts switched off, so nothing on your desktop changes until you
 pick it. Everything planned next, grouped into milestones, is in the
 [roadmap](ROADMAP.md).
