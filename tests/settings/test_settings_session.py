@@ -21,8 +21,11 @@ if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
 from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
+from minttoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
+from minttoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from minttoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from minttoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from minttoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from minttoys.settings.overview_page import OverviewPage  # noqa: E402
@@ -70,6 +73,9 @@ class FakeClient:
         self.newplus_on = "on"
         self.newplus_settings = {"replace_variables": False, "hide_digits": False}
         self.newplus_calls: list[dict] = []
+        self.resizer_on = "on"
+        self.resizer_settings = ResizerOptions().settings()
+        self.resizer_calls: list[dict] = []
         self.pin_on = "on"
         self.pin_settings = {
             "shortcut": True,
@@ -100,6 +106,7 @@ class FakeClient:
             ModuleInfo("locksmith", "File Locksmith", "", self.locksmith_on, ""),
             ModuleInfo("alwaysontop", "Always on Top", "", self.pin_on, ""),
             ModuleInfo("newplus", "New+", "", self.newplus_on, ""),
+            ModuleInfo("imageresizer", "Image Resizer", "", self.resizer_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -121,6 +128,8 @@ class FakeClient:
             return dict(self.pin_settings)
         if module_id == "newplus":
             return dict(self.newplus_settings)
+        if module_id == "imageresizer":
+            return dict(self.resizer_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -139,6 +148,12 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "imageresizer":
+            self.resizer_calls.append(dict(changes))
+            self.resizer_settings = (
+                ResizerOptions.read(self.resizer_settings).update(changes).settings()
+            )
             return
         self.calls.append(("settings", dict(changes)))
         self.settings.update(changes)
@@ -310,6 +325,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "alwaysontop",
         "locksmith",
         "newplus",
+        "imageresizer",
     ]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
@@ -640,3 +656,32 @@ def test_always_on_top_says_its_opacity_keys_were_taken(
     client.pin_state = {"shortcut": "", "shortcut_problem": "", "opacity_problem": "taken"}
     page = pin_page(client, errors)
     assert "is in use already" in page.opacity_keys.get_text()
+
+
+def resizer_page(client: FakeClient, errors: list[str]) -> ImageResizerPage:
+    return ImageResizerPage(client, errors.append)
+
+
+def test_image_resizer_lists_its_sizes(client: FakeClient, errors: list[str]) -> None:
+    page = resizer_page(client, errors)
+    rows = page.sizes.get_children()
+    assert [row.size.shown_name for row in rows] == ["Small", "Medium", "Large", "Phone"]
+    assert page.quality.content_widget.get_value() == 90
+    assert page.file_name.content_widget.get_text() == "%1 (%2)"
+    assert not page.keep_date.content_widget.get_active()
+    assert client.resizer_calls == []
+
+
+def test_image_resizer_adds_and_removes_sizes(client: FakeClient, errors: list[str]) -> None:
+    page = resizer_page(client, errors)
+    page.set_size(None, ResizerSize("Web", "fill", 800, 0, "px"))
+    assert client.resizer_calls[-1]["sizes"][-1] == ("Web", "fill", 800, 0, "px")
+    assert [row.size.name for row in page.sizes.get_children()][-1] == "Web"
+    page.remove_size(0)
+    assert page.sizes.get_children()[0].size.name == "$medium$"
+
+
+def test_image_resizer_keeps_the_date_on_its_switch(client: FakeClient, errors: list[str]) -> None:
+    page = resizer_page(client, errors)
+    page.keep_date.content_widget.set_active(True)
+    assert client.resizer_calls == [{"keep_date": True}]
