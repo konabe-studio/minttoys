@@ -685,3 +685,18 @@ def test_image_resizer_keeps_the_date_on_its_switch(client: FakeClient, errors: 
     page = resizer_page(client, errors)
     page.keep_date.content_widget.set_active(True)
     assert client.resizer_calls == [{"keep_date": True}]
+
+
+def test_image_resizer_saves_a_file_name_only_once_it_can_be_used(
+    client: FakeClient, errors: list[str]
+) -> None:
+    page = resizer_page(client, errors)
+    entry = page.file_name.content_widget
+    entry.set_text("%2/")
+    assert entry.get_style_context().has_class("error")
+    assert page._pending == {}
+    entry.set_text("%2/%1")
+    assert not entry.get_style_context().has_class("error")
+    page._save_now()
+    assert client.resizer_calls == [{"file_name": "%2/%1"}]
+    assert errors == []
