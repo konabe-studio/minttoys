@@ -21,6 +21,7 @@ _NUMBER = re.compile(r"(\d+)")
 _DATE_TOKENS = "PARENT_FOLDER_NAME|YYYY|YY|Y|MMMM|MMM|MM|M|DDDD|DDD|DD|D|hh|h|mm|m|ss|s|fff|ff|f"
 # One pass for both kinds, so a value put in is never read again for variables.
 _ANY = re.compile(rf"\$({_DATE_TOKENS})|%([A-Za-z_][A-Za-z0-9_]*)%")
+_DATES_ONLY = re.compile(rf"\$({_DATE_TOKENS.removeprefix('PARENT_FOLDER_NAME|')})")
 
 
 def order_key(name: str, folder: bool) -> tuple:
@@ -69,6 +70,15 @@ def expand(name: str, now: datetime, parent: str, environ: Mapping[str, str]) ->
         return _clean(parent if token == "PARENT_FOLDER_NAME" else _DATE[token](now))
 
     return _ANY.sub(value, name)
+
+
+def expand_dates(text: str, when: datetime) -> str:
+    """`text` with the date and time variables alone replaced, as PowerRename has them."""
+    return _DATES_ONLY.sub(lambda match: _clean(_DATE[match[1]](when)), text)
+
+
+def has_dates(text: str) -> bool:
+    return bool(_DATES_ONLY.search(text))
 
 
 def has_variables(name: str) -> bool:
