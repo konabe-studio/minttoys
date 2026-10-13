@@ -1066,3 +1066,245 @@ msgstr ""
 #: minttoys/newitem/main.py
 msgid "New from template works in a folder on disk."
 msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid ""
+"%1 the original name, %2 the size's name, %3 and %4 the width and the height"
+" chosen, %5 and %6 the height and the width it comes out at. A slash makes a"
+" folder: %2/%1."
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "A size needs a name, and a width, a height, or both."
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Add a size"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Add a size…"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Centimeters"
+msgstr ""
+
+#: minttoys/settings/alwaysontop_page.py minttoys/settings/imageresizer_page.py minttoys/settings/lightswitch_page.py
+msgid "Change"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Change the size"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid ""
+"Choose one or more pictures in Nemo, right-click them and choose Resize with"
+" Image Resizer."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Close"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Custom"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Encoding"
+msgstr ""
+
+#: minttoys/locksmith/main.py minttoys/locksmith/window.py minttoys/modules/locksmith/module.py minttoys/settings/catalog.py minttoys/settings/imageresizer_page.py minttoys/settings/window.py
+msgid "File"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "File name format"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Fill"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py minttoys/settings/imageresizer_page.py
+msgid "Fit"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Height"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Ignore the orientation of pictures"
+msgstr ""
+
+#: minttoys/imageresizer/main.py minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Image Resizer"
+msgstr ""
+
+#: minttoys/imageresizer/main.py
+#, python-brace-format
+msgid "Image Resizer needs PyGObject, GTK 3 and Pillow: {error}"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Image sizes"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Inches"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "JPEG quality level (%)"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Keep the original's modification date"
+msgstr ""
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Large"
+msgstr ""
+
+#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+msgid "Leave it at 0 to keep the proportions."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Make pictures smaller but not larger"
+msgstr ""
+
+#: minttoys/modules/imageresizer/module.py
+msgid "Makes resized copies of the chosen pictures."
+msgstr ""
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Medium"
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "New size"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Percent"
+msgstr ""
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Phone"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Pixels"
+msgstr ""
+
+#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+msgid "Remove"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Remove metadata that doesn't affect rendering"
+msgstr ""
+
+#: minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Resize"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Resize the original pictures (don't create copies)"
+msgstr ""
+
+#: minttoys/modules/imageresizer/module.py
+msgid "Resize with Image Resizer"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Resize your pictures"
+msgstr ""
+
+#: minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Resizes pictures from Nemo's right-click menu."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+#, python-brace-format
+msgid "Resizing {name}…"
+msgstr ""
+
+#: minttoys/modules/newplus/module.py minttoys/newplus/main.py minttoys/settings/imageresizer_page.py
+msgid "Save"
+msgstr ""
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Small"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Some pictures could not be resized."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "Stop"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Stretch"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid ""
+"Such as the camera, the date taken and the place, in the EXIF and XMP data."
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "The sizes the resize window offers."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid ""
+"The smaller number goes to the shorter side, so tall and wide pictures "
+"match."
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+msgid "This kind of picture cannot be saved."
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Unit"
+msgstr ""
+
+#: minttoys/imageresizer/main.py
+msgid "Usage: minttoys-image-resizer PICTURE..."
+msgstr ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Use Image Resizer"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "auto"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "cm"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+msgid "in"
+msgstr ""
+
+#: minttoys/modules/imageresizer/text.py
+#, python-brace-format
+msgid "{fit} · {width} × {height} {unit}"
+msgstr ""
+
+#: minttoys/imageresizer/window.py
+#, python-brace-format
+msgid "{count} picture"
+msgid_plural "{count} pictures"
+msgstr[0] ""
+msgstr[1] ""

@@ -1138,3 +1138,254 @@ msgstr "A New+ működéséhez PyGObject és GTK 3 kell: {error}"
 #: minttoys/newitem/main.py
 msgid "New from template works in a folder on disk."
 msgstr "A Létrehozás sablonból csak a lemezen lévő mappában működik."
+
+#: minttoys/settings/imageresizer_page.py
+msgid ""
+"%1 the original name, %2 the size's name, %3 and %4 the width and the height"
+" chosen, %5 and %6 the height and the width it comes out at. A slash makes a"
+" folder: %2/%1."
+msgstr ""
+"%1 az eredeti név, %2 a méret neve, %3 és %4 a választott szélesség és "
+"magasság, %5 és %6 a kapott magasság és szélesség. A perjel mappát jelent: "
+"%2/%1."
+
+#: minttoys/settings/imageresizer_page.py
+msgid "A size needs a name, and a width, a height, or both."
+msgstr "Egy méretnek név kell, és szélesség, magasság vagy mindkettő."
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Add a size"
+msgstr "Méret hozzáadása"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Add a size…"
+msgstr "Új méret hozzáadása…"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Centimeters"
+msgstr "Centiméter"
+
+#: minttoys/settings/alwaysontop_page.py minttoys/settings/imageresizer_page.py minttoys/settings/lightswitch_page.py
+msgid "Change"
+msgstr "Módosítás"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Change the size"
+msgstr "A méret módosítása"
+
+#: minttoys/settings/imageresizer_page.py
+msgid ""
+"Choose one or more pictures in Nemo, right-click them and choose Resize with"
+" Image Resizer."
+msgstr ""
+"Jelöljön ki egy vagy több képet a Nemóban, kattintson rájuk jobb gombbal, és"
+" válassza az Átméretezés az Image Resizerrel menüpontot."
+
+#: minttoys/imageresizer/window.py
+msgid "Close"
+msgstr "Bezárás"
+
+#: minttoys/imageresizer/window.py
+msgid "Custom"
+msgstr "Egyéni"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Encoding"
+msgstr "Kódolás"
+
+#: minttoys/locksmith/main.py minttoys/locksmith/window.py minttoys/modules/locksmith/module.py minttoys/settings/catalog.py minttoys/settings/imageresizer_page.py minttoys/settings/window.py
+msgid "File"
+msgstr "Fájl"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "File name format"
+msgstr "Fájlnév formátuma"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Fill"
+msgstr "Kitöltés"
+
+#: minttoys/modules/imageresizer/text.py minttoys/settings/imageresizer_page.py
+msgid "Fit"
+msgstr "Igazítás"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Height"
+msgstr "Magasság"
+
+#: minttoys/imageresizer/window.py
+msgid "Ignore the orientation of pictures"
+msgstr "A képek tájolásának figyelmen kívül hagyása"
+
+#: minttoys/imageresizer/main.py minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Image Resizer"
+msgstr "Image Resizer"
+
+#: minttoys/imageresizer/main.py
+#, python-brace-format
+msgid "Image Resizer needs PyGObject, GTK 3 and Pillow: {error}"
+msgstr "Az Image Resizer működéséhez PyGObject, GTK 3 és Pillow kell: {error}"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Image sizes"
+msgstr "Képméretek"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Inches"
+msgstr "Hüvelyk"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "JPEG quality level (%)"
+msgstr "JPEG minőségi szintje (%)"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Keep the original's modification date"
+msgstr "Az eredeti módosítási dátumának megtartása"
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Large"
+msgstr "Nagy"
+
+#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+msgid "Leave it at 0 to keep the proportions."
+msgstr "Hagyja 0-n, hogy az arányok megmaradjanak."
+
+#: minttoys/imageresizer/window.py
+msgid "Make pictures smaller but not larger"
+msgstr "A képek kicsinyítése, de nem nagyítása"
+
+#: minttoys/modules/imageresizer/module.py
+msgid "Makes resized copies of the chosen pictures."
+msgstr "Átméretezett másolatot készít a kijelölt képekről."
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Medium"
+msgstr "Közepes"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "New size"
+msgstr "Új méret"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Percent"
+msgstr "Százalék"
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Phone"
+msgstr "Telefon"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Pixels"
+msgstr "Képpont"
+
+#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: minttoys/imageresizer/window.py
+msgid "Remove metadata that doesn't affect rendering"
+msgstr "A megjelenítést nem befolyásoló metaadatok eltávolítása"
+
+#: minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Resize"
+msgstr "Átméretezés"
+
+#: minttoys/imageresizer/window.py
+msgid "Resize the original pictures (don't create copies)"
+msgstr "Az eredeti képek átméretezése (nem készül másolat)"
+
+#: minttoys/modules/imageresizer/module.py
+msgid "Resize with Image Resizer"
+msgstr "Átméretezés az Image Resizerrel"
+
+#: minttoys/imageresizer/window.py
+msgid "Resize your pictures"
+msgstr "Képek átméretezése"
+
+#: minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+msgid "Resizes pictures from Nemo's right-click menu."
+msgstr "Képeket méretez át a Nemo jobbklikk-menüjéből."
+
+#: minttoys/imageresizer/window.py
+#, python-brace-format
+msgid "Resizing {name}…"
+msgstr "{name} átméretezése…"
+
+#: minttoys/modules/newplus/module.py minttoys/newplus/main.py minttoys/settings/imageresizer_page.py
+msgid "Save"
+msgstr "Mentés"
+
+#: minttoys/modules/imageresizer/options.py
+msgid "Small"
+msgstr "Kicsi"
+
+#: minttoys/imageresizer/window.py
+msgid "Some pictures could not be resized."
+msgstr "Néhány képet nem sikerült átméretezni."
+
+#: minttoys/imageresizer/window.py
+msgid "Stop"
+msgstr "Leállítás"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "Stretch"
+msgstr "Nyújtás"
+
+#: minttoys/imageresizer/window.py
+msgid ""
+"Such as the camera, the date taken and the place, in the EXIF and XMP data."
+msgstr ""
+"Például a fényképezőgép, a készítés dátuma és helye, az EXIF- és XMP-"
+"adatokban."
+
+#: minttoys/settings/imageresizer_page.py
+msgid "The sizes the resize window offers."
+msgstr "Az átméretező ablak által felkínált méretek."
+
+#: minttoys/imageresizer/window.py
+msgid ""
+"The smaller number goes to the shorter side, so tall and wide pictures "
+"match."
+msgstr ""
+"A kisebb szám a rövidebb oldalra kerül, így az álló és a fekvő képek "
+"egyformák lesznek."
+
+#: minttoys/imageresizer/window.py
+msgid "This kind of picture cannot be saved."
+msgstr "Ilyen típusú képet nem lehet menteni."
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Unit"
+msgstr "Mértékegység"
+
+#: minttoys/imageresizer/main.py
+msgid "Usage: minttoys-image-resizer PICTURE..."
+msgstr "Használat: minttoys-image-resizer KÉP..."
+
+#: minttoys/settings/imageresizer_page.py
+msgid "Use Image Resizer"
+msgstr "Image Resizer használata"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "auto"
+msgstr "auto"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "cm"
+msgstr "cm"
+
+#: minttoys/modules/imageresizer/text.py
+msgid "in"
+msgstr "hüv."
+
+#: minttoys/modules/imageresizer/text.py
+#, python-brace-format
+msgid "{fit} · {width} × {height} {unit}"
+msgstr "{fit} · {width} × {height} {unit}"
+
+#: minttoys/imageresizer/window.py
+#, python-brace-format
+msgid "{count} picture"
+msgid_plural "{count} pictures"
+msgstr[0] "{count} kép"
+msgstr[1] "{count} kép"
