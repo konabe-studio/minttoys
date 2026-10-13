@@ -34,7 +34,7 @@ Brings in privileged actions, through `pkexec` and a narrow polkit policy.
 | Tool | What it does |
 |---|---|
 | Image Resizer | Resizes images from Nemo's right-click menu |
-| PowerRename | Renames files in bulk with regular expressions, a preview and undo |
+| Rename+ | Renames files and folders in bulk with regular expressions, counters, dates and a preview |
 | Hosts File Editor | Edits `/etc/hosts` in a window |
 | Environment Variables | Manages environment variables, with profiles |
 
