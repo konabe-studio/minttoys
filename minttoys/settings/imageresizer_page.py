@@ -96,6 +96,10 @@ class ImageResizerPage(SimplePage):
         self.file = self.add_section(_("File"))
         self.file_name = FileNameRow(_("File name format"))
         self.file_name.content_widget.connect("changed", self._on_file_name)
+        # Leaving the field with a format that cannot be used puts the saved one back.
+        self.file_name.content_widget.connect(
+            "focus-out-event", lambda entry, _event: self._on_file_name_left(entry)
+        )
         self.file.add_row(self.file_name)
         parameters = Text(
             _(
@@ -234,9 +238,30 @@ class ImageResizerPage(SimplePage):
         self._save({"jpeg_quality": round(scale.get_value())}, later=True)
 
     def _on_file_name(self, entry: Gtk.Entry) -> None:
+        """Saves the format once it can be used; while it cannot, as halfway through typing
+        "%2/%1", the field says so instead of the daemon refusing it.
+        """
+        if self._loading:
+            return
         text = entry.get_text().strip()
-        if text:
-            self._save({"file_name": text}, later=True)
+        try:
+            self._shown.update({"file_name": text})
+        except ValueError:
+            entry.get_style_context().add_class("error")
+            entry.set_tooltip_text(
+                _("A name is needed, and between slashes a folder name other than . or ..")
+            )
+            if self._save_timer and "file_name" in self._pending:
+                del self._pending["file_name"]
+            return
+        entry.get_style_context().remove_class("error")
+        entry.set_tooltip_text(None)
+        self._save({"file_name": text}, later=True)
+
+    def _on_file_name_left(self, entry: Gtk.Entry) -> bool:
+        if entry.get_style_context().has_class("error"):
+            entry.set_text(self._shown.file_name)
+        return False
 
     def _on_keep_date(self, switch: Gtk.Switch, _spec: object) -> None:
         self._save({"keep_date": switch.get_active()})

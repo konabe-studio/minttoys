@@ -1389,3 +1389,7 @@ msgid "{count} picture"
 msgid_plural "{count} pictures"
 msgstr[0] "{count} kép"
 msgstr[1] "{count} kép"
+
+#: minttoys/settings/imageresizer_page.py
+msgid "A name is needed, and between slashes a folder name other than . or .."
+msgstr "Név kell, és a perjelek között a . és a .. helyett mappanév."

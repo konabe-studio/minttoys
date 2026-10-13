@@ -1308,3 +1308,7 @@ msgid "{count} picture"
 msgid_plural "{count} pictures"
 msgstr[0] ""
 msgstr[1] ""
+
+#: minttoys/settings/imageresizer_page.py
+msgid "A name is needed, and between slashes a folder name other than . or .."
+msgstr ""
