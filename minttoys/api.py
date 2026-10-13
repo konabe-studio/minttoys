@@ -53,12 +53,25 @@ NEWPLUS_SETTINGS = {
     "replace_variables": "b",
     "hide_digits": "b",
 }
+IMAGERESIZER_SETTINGS = {
+    "sizes": "a(ssdds)",
+    "selected": "u",
+    "custom": "(sdds)",
+    "shrink_only": "b",
+    "replace_original": "b",
+    "ignore_orientation": "b",
+    "remove_metadata": "b",
+    "jpeg_quality": "u",
+    "file_name": "s",
+    "keep_date": "b",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
     "lightswitch": LIGHTSWITCH_SETTINGS,
     "alwaysontop": ALWAYSONTOP_SETTINGS,
     "newplus": NEWPLUS_SETTINGS,
+    "imageresizer": IMAGERESIZER_SETTINGS,
 }
 
 
