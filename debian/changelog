@@ -1,6 +1,8 @@
 minttoys (0.3.0~dev) UNRELEASED; urgency=medium
 
-  * Development build, nothing new yet.
+  * New+ adds New from template to Nemo's right-click menu: files and
+    folders from your templates, with variables in their names and the
+    templates ordered by a leading number.
 
  -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:23:10 +0200
 
