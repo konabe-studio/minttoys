@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+# Hosts File Editor's backups of /etc/hosts go with the package's other files.
+if [ "$1" = purge ]; then
+    rm -rf /var/backups/tuxtoys
+fi
+
+#DEBHELPER#
