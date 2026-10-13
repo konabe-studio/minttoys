@@ -1665,3 +1665,13 @@ msgstr ""
 #: tuxtoys/settings/renameplus_page.py
 msgid "Rename+ offers the last ten searches and replacements as you type."
 msgstr ""
+
+#. TRANSLATORS: what polkit's password dialog says the password is for.
+#: tuxtoys/modules/hosts/policy.py
+msgid "Save the hosts file"
+msgstr ""
+
+#. TRANSLATORS: the line polkit's password dialog shows above the password field.
+#: tuxtoys/modules/hosts/policy.py
+msgid "Authentication is required to save the hosts file"
+msgstr ""
