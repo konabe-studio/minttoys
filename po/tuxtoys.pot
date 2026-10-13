@@ -1312,3 +1312,356 @@ msgstr[1] ""
 #: tuxtoys/settings/imageresizer_page.py
 msgid "A name is needed, and between slashes a folder name other than . or .."
 msgstr ""
+
+#: tuxtoys/modules/renameplus/module.py tuxtoys/renameplus/main.py tuxtoys/renameplus/window.py tuxtoys/settings/renameplus_page.py
+msgid "Rename+"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/module.py
+msgid "Renames many files and folders at once, from Nemo."
+msgstr ""
+
+#. TRANSLATORS: Rename+'s item in Nemo's right-click menu.
+#: tuxtoys/modules/renameplus/module.py
+msgid "Rename with Rename+"
+msgstr ""
+
+#. TRANSLATORS: the tooltip of Rename+'s item in Nemo's right-click menu.
+#: tuxtoys/modules/renameplus/module.py
+msgid "Renames the chosen items together, with a preview."
+msgstr ""
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the whole name searched.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name and extension"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the name without its extension.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name only"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s "Apply to" choice: the extension alone.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Extension only"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s text case choice: names keep their letters as they are.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Keep as it is"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s text case choice, shown in lowercase on purpose.
+#: tuxtoys/modules/renameplus/text.py
+msgid "lowercase"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s text case choice, shown in uppercase on purpose.
+#: tuxtoys/modules/renameplus/text.py
+msgid "UPPERCASE"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s text case choice: every word capitalized but short ones such as "of" and "the", which are English rules.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Title Case"
+msgstr ""
+
+#. TRANSLATORS: Rename+'s text case choice: every word with a capital letter.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Capitalize Every Word"
+msgstr ""
+
+#. TRANSLATORS: a heading over Rename+'s counters, such as ${start=1}.
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counters"
+msgstr ""
+
+#. TRANSLATORS: a heading over Rename+'s random text, such as ${ruuidv4}.
+#: tuxtoys/modules/renameplus/text.py tuxtoys/renameplus/window.py
+msgid "Random text"
+msgstr ""
+
+#. TRANSLATORS: a heading over Rename+'s date variables, such as $YYYY.
+#: tuxtoys/modules/renameplus/text.py
+msgid "When the item was made"
+msgstr ""
+
+#. TRANSLATORS: a heading over what a regular expression's replacement can hold.
+#: tuxtoys/modules/renameplus/text.py
+msgid "With regular expressions"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A number counting the renamed items, from 0"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counting from 1"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Counting in steps of 10"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "At least 3 digits, with zeros in front"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Both: 001, 002, 003"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 letters and digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 letters"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "8 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A random UUID"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Year, 4 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Year, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name of the month"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Short name of the month"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Month, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Name of the day"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Short name of the day"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Day of the month, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Hour, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Minutes, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Seconds, 2 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Milliseconds, 3 digits"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "What the first group in brackets found"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "Everything the search found"
+msgstr ""
+
+#: tuxtoys/modules/renameplus/text.py
+msgid "A dollar sign"
+msgstr ""
+
+#: tuxtoys/renameplus/main.py
+msgid "Usage: tuxtoys-rename ITEM..."
+msgstr ""
+
+#: tuxtoys/renameplus/main.py
+#, python-brace-format
+msgid "Left out, as it is not on this computer: {item}"
+msgstr ""
+
+#: tuxtoys/renameplus/main.py
+#, python-brace-format
+msgid "Rename+ needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Use regular expressions"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Match all occurrences"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Case sensitive"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Enumerate items"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Include files"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Include folders"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Include what is inside folders"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Insert a variable"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Original"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Renamed"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "This name cannot be used."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "This name is too long."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "This name is taken."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Show only items that change"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "{renamed} of {total} item will be renamed."
+msgid_plural "{renamed} of {total} items will be renamed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Some items inside the folders are not listed."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Some items could not be renamed."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "The new name was taken meanwhile."
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Search for"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Replace with"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Apply to"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Text case"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+msgid "Renaming…"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "This is not a regular expression: {error}"
+msgstr ""
+
+#: tuxtoys/renameplus/window.py
+#, python-brace-format
+msgid "It is now called {hidden} in {folder}."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Renames many files and folders at once, with a preview."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Use Rename+"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Nemo"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Rename several items in Nemo with Rename+"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "When Rename+ opens"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Start with the choices used last time"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Fill in the last search and replacement"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Forget the recent searches"
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Choose files or folders in Nemo, right-click them and choose Rename with "
+"Rename+."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Every new name shows before anything is renamed. Clear an item's box to "
+"leave it as it is."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Search for text or a regular expression. What replaces it can hold counters, "
+"random text and the date an item was made: the + button beside it lists them."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid ""
+"Rename (F2) on more than one item opens Rename+ instead of Bulky. Switching "
+"this or Rename+ off brings back what Nemo opened before."
+msgstr ""
+
+#: tuxtoys/settings/renameplus_page.py
+msgid "Rename+ offers the last ten searches and replacements as you type."
+msgstr ""
