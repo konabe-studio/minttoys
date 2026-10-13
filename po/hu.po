@@ -1767,3 +1767,214 @@ msgstr "A hosts fájl mentése"
 #: tuxtoys/modules/hosts/policy.py
 msgid "Authentication is required to save the hosts file"
 msgstr "A hosts fájl mentéséhez hitelesítés szükséges"
+
+#: tuxtoys/hostseditor/main.py tuxtoys/hostseditor/window.py
+msgid "Hosts File Editor"
+msgstr "Hosts File Editor"
+
+#: tuxtoys/hostseditor/main.py
+#, python-brace-format
+msgid "Hosts File Editor needs PyGObject and GTK 3: {error}"
+msgstr "A Hosts File Editor működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Add new entry"
+msgstr "Új bejegyzés hozzáadása"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Update the entry"
+msgstr "A bejegyzés módosítása"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Address"
+msgstr "Cím"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Hosts"
+msgstr "Gépnevek"
+
+#: tuxtoys/hostseditor/window.py
+msgid "server server.local"
+msgstr "szerver szerver.local"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Separate several host names with spaces."
+msgstr "Több gépnevet szóközzel válasszon el."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Comment"
+msgstr "Megjegyzés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Active"
+msgstr "Aktív"
+
+#: tuxtoys/hostseditor/window.py
+msgid "More"
+msgstr "Továbbiak"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Reload"
+msgstr "Újratöltés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "New entry (Ctrl+N)"
+msgstr "Új bejegyzés (Ctrl+N)"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Open the hosts file"
+msgstr "A hosts fájl megnyitása"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Filters (Ctrl+F)"
+msgstr "Szűrők (Ctrl+F)"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Save (Ctrl+S)"
+msgstr "Mentés (Ctrl+S)"
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"The hosts file was changed outside this window. Reload it to see the "
+"changes; yours would be lost."
+msgstr ""
+"A hosts fájl ezen az ablakon kívül megváltozott. Töltse újra, hogy lássa a "
+"változásokat; a saját módosításai elvesznének."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Has to be an IPv4 or IPv6 address."
+msgstr "IPv4- vagy IPv6-címnek kell lennie."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Has to be one or more host names, separated by spaces."
+msgstr "Egy vagy több, szóközzel elválasztott gépnévnek kell lennie."
+
+#: tuxtoys/hostseditor/window.py
+msgid "A host name here is in another active entry too."
+msgstr "Az egyik gépnév egy másik aktív bejegyzésben is szerepel."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Saving…"
+msgstr "Mentés…"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Your changes will be lost if you don't save them."
+msgstr "Ha nem menti, a módosítások elvesznek."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Close without saving"
+msgstr "Bezárás mentés nélkül"
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"Changing the hosts file changes how this computer finds other computers by "
+"name, for every program and every user."
+msgstr ""
+"A hosts fájl módosítása megváltoztatja, hogyan találja meg ez a számítógép "
+"név alapján a többi gépet, minden program és minden felhasználó számára."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Quit"
+msgstr "Kilépés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Accept"
+msgstr "Elfogadás"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Update"
+msgstr "Módosítás"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Duplicate"
+msgstr "Kettőzés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Ping"
+msgstr "Ping"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Move up"
+msgstr "Mozgatás fel"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Move down"
+msgstr "Mozgatás le"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Delete"
+msgstr "Törlés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "New entry"
+msgstr "Új bejegyzés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Show only duplicates"
+msgstr "Csak az ismétlődők"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Clear filters"
+msgstr "Szűrők törlése"
+
+#: tuxtoys/hostseditor/window.py
+msgid "No entries in the hosts file"
+msgstr "A hosts fájlban nincs bejegyzés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "There are changes not saved yet."
+msgstr "Vannak még nem mentett módosítások."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Delete this entry?"
+msgstr "Törli ezt a bejegyzést?"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Saved."
+msgstr "Mentve."
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"The hosts file was changed outside this window, so it was not saved. Reload "
+"it to see the changes; yours would be lost."
+msgstr ""
+"A hosts fájl ezen az ablakon kívül megváltozott, ezért nem lett mentve. "
+"Töltse újra, hogy lássa a változásokat; a saját módosításai elvesznének."
+
+#: tuxtoys/hostseditor/window.py
+msgid "Save the changes to the hosts file?"
+msgstr "Menti a hosts fájl módosításait?"
+
+#: tuxtoys/hostseditor/window.py
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#: tuxtoys/hostseditor/window.py
+msgid "You are not allowed to save the hosts file."
+msgstr "Önnek nincs joga menteni a hosts fájlt."
+
+#: tuxtoys/hostseditor/window.py
+msgid "It answered the ping."
+msgstr "Válaszolt a pingre."
+
+#: tuxtoys/hostseditor/window.py
+msgid "No answer to the ping."
+msgstr "Nem válaszolt a pingre."
+
+#: tuxtoys/hostseditor/window.py
+#, python-brace-format
+msgid "The hosts file cannot be read: {reason}"
+msgstr "A hosts fájl nem olvasható: {reason}"
+
+#: tuxtoys/hostseditor/window.py
+#, python-brace-format
+msgid "The hosts file could not be saved: {reason}"
+msgstr "A hosts fájlt nem sikerült menteni: {reason}"

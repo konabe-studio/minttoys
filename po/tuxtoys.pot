@@ -1675,3 +1675,208 @@ msgstr ""
 #: tuxtoys/modules/hosts/policy.py
 msgid "Authentication is required to save the hosts file"
 msgstr ""
+
+#: tuxtoys/hostseditor/main.py tuxtoys/hostseditor/window.py
+msgid "Hosts File Editor"
+msgstr ""
+
+#: tuxtoys/hostseditor/main.py
+#, python-brace-format
+msgid "Hosts File Editor needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Add new entry"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Update the entry"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Address"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Hosts"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "server server.local"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Separate several host names with spaces."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Comment"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Active"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "More"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Reload"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "New entry (Ctrl+N)"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Open the hosts file"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Filters (Ctrl+F)"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Save (Ctrl+S)"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"The hosts file was changed outside this window. Reload it to see the "
+"changes; yours would be lost."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Has to be an IPv4 or IPv6 address."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Has to be one or more host names, separated by spaces."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "A host name here is in another active entry too."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Saving…"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Your changes will be lost if you don't save them."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Close without saving"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"Changing the hosts file changes how this computer finds other computers by "
+"name, for every program and every user."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Quit"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Accept"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Add"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Update"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Edit"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Duplicate"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Ping"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Move up"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Move down"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Delete"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "New entry"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Show only duplicates"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Clear filters"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "No entries in the hosts file"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "There are changes not saved yet."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Delete this entry?"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Saved."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid ""
+"The hosts file was changed outside this window, so it was not saved. Reload "
+"it to see the changes; yours would be lost."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Save the changes to the hosts file?"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "Warning"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "You are not allowed to save the hosts file."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "It answered the ping."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+msgid "No answer to the ping."
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+#, python-brace-format
+msgid "The hosts file cannot be read: {reason}"
+msgstr ""
+
+#: tuxtoys/hostseditor/window.py
+#, python-brace-format
+msgid "The hosts file could not be saved: {reason}"
+msgstr ""
