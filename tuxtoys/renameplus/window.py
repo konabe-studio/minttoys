@@ -13,7 +13,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gdk, Gio, GLib, Gtk, Pango  # noqa: E402
+from gi.repository import Gdk, GdkPixbuf, Gio, GLib, Gtk, Pango  # noqa: E402
 
 from tuxtoys import APP_ID  # noqa: E402
 from tuxtoys.api import ModuleOff, NotRunning, Refused  # noqa: E402
@@ -45,9 +45,14 @@ type Renamer = Callable[[Sequence[files.Move]], tuple[list[files.Move], list[fil
 
 WARNING_ICON = "dialog-warning-symbolic"
 WARNING_CSS = b"entry image.right { color: @warning_color; }"
-# The preview's columns.
-SELECTED, ICON, NAME, NEW, STATUS_ICON, TOOLTIP, INDEX, SHOWN = range(8)
+# The preview's columns: the box, the file type's icon or a thumbnail, the names, a
+# warning sign, its tooltip, the index into the items, and whether the row is shown.
+SELECTED, ICON, NAME, NEW, WARNING, TOOLTIP, INDEX, SHOWN, THUMBNAIL = range(9)
 WAIT_MS = 150
+# As Bulky shows them: thumbnails Nemo has made, this big, else the file type's icon.
+THUMBNAIL_SIZE = 22
+# How many rows get their icon at a time, while the window is already in use.
+ICONS_AT_ONCE = 40
 
 
 def bold(text: str) -> str:
@@ -76,6 +81,28 @@ def item_time(path: Path) -> datetime | None:
         if info.has_attribute(key):
             return datetime.fromtimestamp(info.get_attribute_uint64(key), local_zone())
     return None
+
+
+def look(path: Path, scale: int) -> tuple[Gio.Icon | None, GdkPixbuf.Pixbuf | None]:
+    """The file type's icon, and the thumbnail Nemo has made of it if there is one: Bulky
+    reads the same, and makes none of its own.
+    """
+    try:
+        info = Gio.File.new_for_path(str(path)).query_info(
+            "standard::icon,thumbnail::path,thumbnail::is-valid",
+            Gio.FileQueryInfoFlags.NONE,
+            None,
+        )
+    except GLib.Error:
+        return None, None
+    thumbnail = None
+    if info.get_attribute_boolean("thumbnail::is-valid"):
+        found = info.get_attribute_byte_string("thumbnail::path")
+        if found:
+            with suppress(GLib.Error):
+                size = THUMBNAIL_SIZE * scale
+                thumbnail = GdkPixbuf.Pixbuf.new_from_file_at_scale(found, size, size, True)
+    return info.get_icon(), thumbnail
 
 
 def local_paths(arguments: Sequence[str]) -> tuple[list[Path], list[str]]:
@@ -131,6 +158,8 @@ class RenameWindow(Gtk.ApplicationWindow):
         self.add(self.stack)
         self.stack.show_all()
         self.refresh()
+        self._next_icon = 0
+        GLib.idle_add(self._load_icons)
 
     # The first page: the search, the choices and the preview.
 
@@ -269,7 +298,8 @@ class RenameWindow(Gtk.ApplicationWindow):
         self.replace.grab_focus_without_selecting()
 
     def _preview(self) -> Gtk.Widget:
-        self.store = Gtk.TreeStore(bool, str, str, str, str, str, int, bool)
+        self.store = Gtk.TreeStore(bool, Gio.Icon, str, str, bool, str, int, bool, object)
+        self._rows: list[Gtk.TreeIter] = []
         # The folders above the item at hand, as rows and as indexes into self.items.
         rows: list[Gtk.TreeIter] = []
         above: list[int] = []
@@ -278,10 +308,12 @@ class RenameWindow(Gtk.ApplicationWindow):
             del rows[item.depth :]
             del above[item.depth :]
             self._parent.append(above[-1] if above else -1)
-            icon = "folder-symbolic" if item.is_folder else "text-x-generic-symbolic"
+            icon = Gio.ThemedIcon.new("folder" if item.is_folder else "text-x-generic")
             row = self.store.append(
-                rows[-1] if rows else None, [True, icon, item.name, "", "", None, index, True]
+                rows[-1] if rows else None,
+                [True, icon, item.name, "", False, None, index, True, None],
             )
+            self._rows.append(row)
             if item.is_folder:
                 rows.append(row)
                 above.append(index)
@@ -297,7 +329,7 @@ class RenameWindow(Gtk.ApplicationWindow):
         original.add_attribute(toggle, "active", SELECTED)
         icon = Gtk.CellRendererPixbuf()
         original.pack_start(icon, False)
-        original.add_attribute(icon, "icon-name", ICON)
+        original.set_cell_data_func(icon, self._show_icon)
         name = Gtk.CellRendererText(ellipsize=Pango.EllipsizeMode.MIDDLE)
         original.pack_start(name, True)
         original.add_attribute(name, "text", NAME)
@@ -308,7 +340,7 @@ class RenameWindow(Gtk.ApplicationWindow):
         renamed = Gtk.TreeViewColumn(_("Renamed"))
         status = Gtk.CellRendererPixbuf()
         renamed.pack_start(status, False)
-        renamed.add_attribute(status, "icon-name", STATUS_ICON)
+        renamed.set_cell_data_func(status, self._show_warning)
         new = Gtk.CellRendererText(ellipsize=Pango.EllipsizeMode.MIDDLE)
         renamed.pack_start(new, True)
         renamed.add_attribute(new, "text", NEW)
@@ -320,6 +352,66 @@ class RenameWindow(Gtk.ApplicationWindow):
         scrolled = Gtk.ScrolledWindow(shadow_type=Gtk.ShadowType.IN)
         scrolled.add(self.view)
         return scrolled
+
+    def _show_icon(
+        self,
+        _column: Gtk.TreeViewColumn,
+        cell: Gtk.CellRenderer,
+        model: Gtk.TreeModel,
+        row: Gtk.TreeIter,
+        *_data: object,
+    ) -> None:
+        thumbnail = model[row][THUMBNAIL]
+        if thumbnail is not None:
+            cell.set_property("gicon", None)
+            cell.set_property("surface", thumbnail)
+        else:
+            cell.set_property("surface", None)
+            cell.set_property("gicon", model[row][ICON])
+
+    def _show_warning(
+        self,
+        _column: Gtk.TreeViewColumn,
+        cell: Gtk.CellRenderer,
+        model: Gtk.TreeModel,
+        row: Gtk.TreeIter,
+        *_data: object,
+    ) -> None:
+        cell.set_property("surface", self._warning_sign() if model[row][WARNING] else None)
+
+    def _warning_sign(self) -> object:
+        """The warning sign in the theme's warning colour, amber in Mint-Y, as the search
+        field shows it.
+        """
+        if getattr(self, "_sign", None) is None:
+            scale = self.get_scale_factor()
+            found, colour = self.get_style_context().lookup_color("warning_color")
+            lookup = Gtk.IconTheme.get_default().lookup_icon_for_scale(
+                WARNING_ICON, 16, scale, Gtk.IconLookupFlags.FORCE_SYMBOLIC
+            )
+            if lookup is None:
+                return None
+            if not found:
+                colour = self.get_style_context().get_color(Gtk.StateFlags.NORMAL)
+            pixbuf, _symbolic = lookup.load_symbolic(colour, None, None, None)
+            self._sign = Gdk.cairo_surface_create_from_pixbuf(pixbuf, scale, None)
+        return self._sign
+
+    def _load_icons(self) -> bool:
+        """Puts each item's own icon or thumbnail in, a few rows at a time."""
+        scale = self.get_scale_factor()
+        end = min(self._next_icon + ICONS_AT_ONCE, len(self.items))
+        for index in range(self._next_icon, end):
+            item = self.items[index]
+            icon, thumbnail = look(Path(item.folder, item.name), scale)
+            row = self._rows[index]
+            if icon is not None:
+                self.store[row][ICON] = icon
+            if thumbnail is not None:
+                surface = Gdk.cairo_surface_create_from_pixbuf(thumbnail, scale, None)
+                self.store[row][THUMBNAIL] = surface
+        self._next_icon = end
+        return end < len(self.items)
 
     def _on_toggled(self, _toggle: Gtk.CellRendererToggle, path: str) -> None:
         row = self.filtered.convert_iter_to_child_iter(self.filtered.get_iter(path))
@@ -406,7 +498,7 @@ class RenameWindow(Gtk.ApplicationWindow):
             outcome = self.outcomes[index]
             problem = texts.get(outcome.status)
             model[row][NEW] = outcome.new_name
-            model[row][STATUS_ICON] = WARNING_ICON if problem else ""
+            model[row][WARNING] = bool(problem)
             model[row][TOOLTIP] = GLib.markup_escape_text(problem) if problem else None
             model[row][SHOWN] = shown[index]
             return False

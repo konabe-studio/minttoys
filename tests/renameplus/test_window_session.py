@@ -21,7 +21,14 @@ if not Gtk.init_check()[0]:
 from tuxtoys.api import NotRunning  # noqa: E402
 from tuxtoys.modules.renameplus import files  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options  # noqa: E402
-from tuxtoys.renameplus.window import NEW, RenameWindow, local_paths  # noqa: E402
+from tuxtoys.renameplus.window import (  # noqa: E402
+    ICON,
+    NEW,
+    THUMBNAIL,
+    WARNING,
+    RenameWindow,
+    local_paths,
+)
 
 
 class FakeClient:
@@ -170,6 +177,10 @@ def test_clashes_are_not_renamed(folder: Path) -> None:
     }
     assert statuses["a1.txt"] == "clash"
     assert statuses["a2.txt"] == "clash"
+    warned = []
+    window.store.foreach(lambda model, _path, row: warned.append(model[row][WARNING]) and False)
+    assert warned == [False, False, True, True, False]
+    assert window._warning_sign() is not None
 
 
 def test_failures_are_listed(folder: Path) -> None:
@@ -217,3 +228,15 @@ def test_local_paths(tmp_path: Path) -> None:
     paths, elsewhere = local_paths([uri, str(tmp_path / "c.txt"), "sftp://host/x"])
     assert paths == [tmp_path / "a b.txt", tmp_path / "c.txt"]
     assert elsewhere == ["sftp://host/x"]
+
+
+def test_icons_come_in_after_the_window_opens(folder: Path) -> None:
+    window = open_window(folder)
+    while window._load_icons():
+        pass
+    icons = []
+    window.store.foreach(
+        lambda model, _path, row: icons.append((model[row][ICON], model[row][THUMBNAIL])) and False
+    )
+    assert len(icons) == 5
+    assert all(icon is not None for icon, _thumbnail in icons)
