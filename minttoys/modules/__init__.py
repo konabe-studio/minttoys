@@ -8,4 +8,5 @@ AVAILABLE: dict[str, str] = {
     "locksmith": "minttoys.modules.locksmith.module:FileLocksmith",
     "newplus": "minttoys.modules.newplus.module:NewPlus",
     "alwaysontop": "minttoys.modules.alwaysontop.module:AlwaysOnTop",
+    "imageresizer": "minttoys.modules.imageresizer.module:ImageResizer",
 }
