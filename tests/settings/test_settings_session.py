@@ -23,12 +23,14 @@ if not Gtk.init_check()[0]:
 from tuxtoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
+from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from tuxtoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
+from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
 from tuxtoys.settings.window import SettingsWindow  # noqa: E402
 
 SETTINGS = {
@@ -76,6 +78,9 @@ class FakeClient:
         self.resizer_on = "on"
         self.resizer_settings = ResizerOptions().settings()
         self.resizer_calls: list[dict] = []
+        self.rename_on = "on"
+        self.rename_settings = RenameOptions().settings()
+        self.rename_calls: list[dict] = []
         self.pin_on = "on"
         self.pin_settings = {
             "shortcut": True,
@@ -107,6 +112,7 @@ class FakeClient:
             ModuleInfo("alwaysontop", "Always on Top", "", self.pin_on, ""),
             ModuleInfo("newplus", "New+", "", self.newplus_on, ""),
             ModuleInfo("imageresizer", "Image Resizer", "", self.resizer_on, ""),
+            ModuleInfo("renameplus", "Rename+", "", self.rename_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -130,6 +136,8 @@ class FakeClient:
             return dict(self.newplus_settings)
         if module_id == "imageresizer":
             return dict(self.resizer_settings)
+        if module_id == "renameplus":
+            return dict(self.rename_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -148,6 +156,11 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "renameplus":
+            self.rename_calls.append(dict(changes))
+            options = RenameOptions.read(self.rename_settings).update(changes)
+            self.rename_settings = options.settings()
             return
         if module_id == "imageresizer":
             self.resizer_calls.append(dict(changes))
@@ -326,6 +339,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "locksmith",
         "newplus",
         "imageresizer",
+        "renameplus",
     ]
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
@@ -700,3 +714,21 @@ def test_image_resizer_saves_a_file_name_only_once_it_can_be_used(
     page._save_now()
     assert client.resizer_calls == [{"file_name": "%2/%1"}]
     assert errors == []
+
+
+def test_rename_plus_page(client: FakeClient) -> None:
+    page = RenamePlusPage(client, lambda message: None)
+    assert page.restore_flags.content_widget.get_active()
+    assert not page.nemo_rename.content_widget.get_active()
+    assert not page.forget.get_sensitive()
+    page.nemo_rename.content_widget.set_active(True)
+    assert client.rename_calls[-1] == {"nemo_rename": True}
+    client.rename_settings["recent_search"] = ["a"]
+    page.refresh()
+    assert page.forget.get_sensitive()
+    page._on_forget()
+    assert client.rename_calls[-1] == {"recent_search": [], "recent_replace": []}
+    assert not page.forget.get_sensitive()
+    client.rename_on = "off"
+    page.refresh()
+    assert not page.window.get_sensitive()
