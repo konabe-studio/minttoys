@@ -25,6 +25,7 @@ TOOLS = (
     Tool("locksmith", "File Locksmith", "files", "changes-prevent-symbolic"),
     Tool("newplus", "New+", "files", "document-new-symbolic"),
     Tool("imageresizer", "Image Resizer", "files", "image-x-generic-symbolic"),
+    Tool("renameplus", "Rename+", "files", "document-edit-symbolic"),
     Tool("alwaysontop", "Always on Top", "windows", "view-pin-symbolic"),
 )
 

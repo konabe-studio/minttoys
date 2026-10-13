@@ -65,6 +65,24 @@ IMAGERESIZER_SETTINGS = {
     "file_name": "s",
     "keep_date": "b",
 }
+RENAMEPLUS_SETTINGS = {
+    "regex": "b",
+    "match_all": "b",
+    "case_sensitive": "b",
+    "apply_to": "s",
+    "text_case": "s",
+    "enumerate": "b",
+    "randomize": "b",
+    "include_files": "b",
+    "include_folders": "b",
+    "include_subfolders": "b",
+    "recent_search": "as",
+    "recent_replace": "as",
+    "restore_flags": "b",
+    "show_recent": "b",
+    "nemo_rename": "b",
+    "previous_tool": "s",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -72,6 +90,7 @@ MODULE_SETTINGS = {
     "alwaysontop": ALWAYSONTOP_SETTINGS,
     "newplus": NEWPLUS_SETTINGS,
     "imageresizer": IMAGERESIZER_SETTINGS,
+    "renameplus": RENAMEPLUS_SETTINGS,
 }
 
 
