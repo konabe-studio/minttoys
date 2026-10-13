@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.modules.locksmith.scan import Holder, scan
+from tuxtoys.modules.locksmith.scan import Holder, scan
 
 
 def can_link(tmp_path: Path) -> bool:

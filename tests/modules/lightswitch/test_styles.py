@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.modules.lightswitch import styles
-from minttoys.modules.lightswitch.styles import Installed, Look, Variant
+from tuxtoys.modules.lightswitch import styles
+from tuxtoys.modules.lightswitch.styles import Installed, Look, Variant
 
 # The shape of Mint's styles files, cut down: Mint-Y with two colours in its mixed mode.
 MINT_Y = {

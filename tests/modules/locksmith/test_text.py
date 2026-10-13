@@ -1,4 +1,4 @@
-from minttoys.modules.locksmith import text
+from tuxtoys.modules.locksmith import text
 
 
 def test_heading_names_one_item() -> None:

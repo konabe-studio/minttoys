@@ -1,12 +1,12 @@
 #!/bin/sh
-# Links the files MintToys installs outside Python, for now the panel icons, from this
+# Links the files TuxToys installs outside Python, for now the panel icons, from this
 # checkout into ~/.local/share, where the desktop finds them by name, as it will once the
 # package is installed. Links rather than copies, so the checkout stays the only version.
 #
 #   sh scripts/dev-install.sh            link them
 #   sh scripts/dev-install.sh --remove   take the links out again
 #
-# Restart the panel icon afterwards (python3 -m minttoys.tray) so it asks for the icons by
+# Restart the panel icon afterwards (python3 -m tuxtoys.tray) so it asks for the icons by
 # name again.
 
 set -eu

@@ -1,6 +1,6 @@
 import pytest
 
-from minttoys.settings import values
+from tuxtoys.settings import values
 
 
 def test_modes_are_what_toggle_can_start() -> None:

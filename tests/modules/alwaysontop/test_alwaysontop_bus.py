@@ -12,9 +12,9 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio
 
-from minttoys.modules.alwaysontop.module import AlwaysOnTop, helper_command
-from minttoys.modules.alwaysontop.options import Options
-from minttoys.modules.base import Context
+from tuxtoys.modules.alwaysontop.module import AlwaysOnTop, helper_command
+from tuxtoys.modules.alwaysontop.options import Options
+from tuxtoys.modules.base import Context
 
 KEYS = "<Primary><Super>t"
 
@@ -182,7 +182,7 @@ def test_a_checkout_runs_the_helper_as_a_module(tmp_path: Path) -> None:
     command = helper_command(Options(excluded="firefox\nvlc"), tmp_path)
     assert command[1:] == [
         "-m",
-        "minttoys.alwaysontop",
+        "tuxtoys.alwaysontop",
         "--width",
         "4",
         "--opacity",
@@ -203,8 +203,8 @@ def opacity_shortcuts(harness: Harness) -> list[tuple[str, list[str]]]:
 def test_on_adds_the_opacity_shortcuts(harness: Harness) -> None:
     harness.enable()
     assert opacity_shortcuts(harness) == [
-        ("minttoys alwaysontop opacity up", ["<Primary><Super>Page_Up"]),
-        ("minttoys alwaysontop opacity down", ["<Primary><Super>Page_Down"]),
+        ("tuxtoys alwaysontop opacity up", ["<Primary><Super>Page_Up"]),
+        ("tuxtoys alwaysontop opacity down", ["<Primary><Super>Page_Down"]),
     ]
 
 
@@ -212,7 +212,7 @@ def test_taken_opacity_keys_say_so(harness: Harness) -> None:
     harness.keys.taken["<Primary><Super>Page_Up"] = ["My script"]
     harness.enable()
     assert [command for command, _ in opacity_shortcuts(harness)] == [
-        "minttoys alwaysontop opacity down"
+        "tuxtoys alwaysontop opacity down"
     ]
     assert harness.module.state()["opacity_problem"] == "taken"
 

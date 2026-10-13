@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.core.clock import local_zone
+from tuxtoys.core.clock import local_zone
 
 
 def zone_file(key: str) -> bytes:

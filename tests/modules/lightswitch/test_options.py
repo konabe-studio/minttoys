@@ -1,6 +1,6 @@
 import pytest
 
-from minttoys.modules.lightswitch.options import Options
+from tuxtoys.modules.lightswitch.options import Options
 
 DEFAULTS = {
     "day_mode": "",

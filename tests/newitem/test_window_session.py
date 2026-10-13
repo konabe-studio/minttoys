@@ -19,8 +19,8 @@ from gi.repository import Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.modules.newplus.create import Naming  # noqa: E402
-from minttoys.newitem.window import NewItemWindow, TemplateRow  # noqa: E402
+from tuxtoys.modules.newplus.create import Naming  # noqa: E402
+from tuxtoys.newitem.window import NewItemWindow, TemplateRow  # noqa: E402
 
 NOW = datetime(2026, 3, 5, 7, 8, 9, tzinfo=ZoneInfo("Europe/Budapest"))
 

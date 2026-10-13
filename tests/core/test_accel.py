@@ -1,6 +1,6 @@
 import pytest
 
-from minttoys.core import accel
+from tuxtoys.core import accel
 
 
 def test_parse() -> None:

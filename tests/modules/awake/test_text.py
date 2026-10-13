@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.awake import text
+from tuxtoys.modules.awake import text
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=BUDAPEST)  # 08:00 UTC

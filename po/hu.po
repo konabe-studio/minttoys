@@ -1,11 +1,11 @@
-# Hungarian translation of MintToys.
+# Hungarian translation of TuxToys.
 # Copyright (C) 2026 Kōnabe Studio
-# This file is distributed under the same license as the minttoys package.
+# This file is distributed under the same license as the tuxtoys package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: minttoys\n"
-"Report-Msgid-Bugs-To: https://github.com/konabe-studio/minttoys/issues\n"
+"Project-Id-Version: tuxtoys\n"
+"Report-Msgid-Bugs-To: https://github.com/konabe-studio/tuxtoys/issues\n"
 "POT-Creation-Date: 2026-10-02 19:09+0200\n"
 "PO-Revision-Date: 2026-10-02 19:09+0200\n"
 "Last-Translator: Kōnabe Studio <konabe@proton.me>\n"
@@ -16,69 +16,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: minttoys/cli.py
-msgid "MintToys needs PyGObject: sudo apt install python3-gi"
+#: tuxtoys/cli.py
+msgid "TuxToys needs PyGObject: sudo apt install python3-gi"
 msgstr ""
-"A MintToys működéséhez PyGObject szükséges: sudo apt install python3-gi"
+"A TuxToys működéséhez PyGObject szükséges: sudo apt install python3-gi"
 
-#: minttoys/cli.py
-msgid "MintToys is not running in this session."
-msgstr "A MintToys nem fut ebben a munkamenetben."
+#: tuxtoys/cli.py
+msgid "TuxToys is not running in this session."
+msgstr "A TuxToys nem fut ebben a munkamenetben."
 
-#: minttoys/cli.py minttoys/tray/app.py
-msgid "Awake is switched off in MintToys."
-msgstr "Az Awake ki van kapcsolva a MintToysban."
+#: tuxtoys/cli.py tuxtoys/tray/app.py
+msgid "Awake is switched off in TuxToys."
+msgstr "Az Awake ki van kapcsolva a TuxToysban."
 
-#: minttoys/cli.py
-msgid "Switch it on with: minttoys modules enable awake"
-msgstr "Így kapcsolhatja be: minttoys modules enable awake"
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable awake"
+msgstr "Így kapcsolhatja be: tuxtoys modules enable awake"
 
-#: minttoys/cli.py minttoys/settings/awake_page.py
-#: minttoys/settings/overview_page.py minttoys/tray/app.py
+#: tuxtoys/cli.py tuxtoys/settings/awake_page.py
+#: tuxtoys/settings/overview_page.py tuxtoys/tray/app.py
 #, python-brace-format
-msgid "MintToys refused: {reason}"
-msgstr "A MintToys nem teljesítette a kérést: {reason}"
+msgid "TuxToys refused: {reason}"
+msgstr "A TuxToys nem teljesítette a kérést: {reason}"
 
-#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
-#: minttoys/cli.py
+#. TRANSLATORS: a module's state in the list `tuxtoys modules` prints.
+#: tuxtoys/cli.py
 msgid "on"
 msgstr "bekapcsolva"
 
-#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
-#: minttoys/cli.py
+#. TRANSLATORS: a module's state in the list `tuxtoys modules` prints.
+#: tuxtoys/cli.py
 msgid "off"
 msgstr "kikapcsolva"
 
-#. TRANSLATORS: a module's state in the list `minttoys modules` prints.
-#: minttoys/cli.py
+#. TRANSLATORS: a module's state in the list `tuxtoys modules` prints.
+#: tuxtoys/cli.py
 msgid "failed"
 msgstr "hibás"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "Power-user utilities for Linux Mint Cinnamon."
 msgstr "Segédeszközök haladó felhasználóknak, Linux Mint Cinnamonhoz."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "COMMAND"
 msgstr "PARANCS"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "keep the computer awake"
 msgstr "a számítógép ébren tartása"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "Keep the computer awake."
 msgstr "A számítógép ébren tartása."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "ACTION"
 msgstr "MŰVELET"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch Awake on"
 msgstr "az Awake bekapcsolása"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid ""
 "Switch Awake on: until you turn it off, for a set time, or until a time of "
 "day."
@@ -86,68 +86,68 @@ msgstr ""
 "Az Awake bekapcsolása: amíg ki nem kapcsolja, adott ideig vagy egy adott "
 "időpontig."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "DURATION"
 msgstr "IDŐTARTAM"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "stay awake this long: 90 or 90m, 2h, 1h30m"
 msgstr "ébren tartás ennyi ideig: 90 vagy 90m, 2h, 1h30m"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "HH:MM"
 msgstr "ÓÓ:PP"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "stay awake until this time of day, even one past midnight"
 msgstr "ébren tartás eddig az időpontig, akár éjfél után is"
 
-#: minttoys/cli.py
-msgid "keep the screen on as well, or not; without either, as set in MintToys"
+#: tuxtoys/cli.py
+msgid "keep the screen on as well, or not; without either, as set in TuxToys"
 msgstr ""
 "a képernyő is maradjon bekapcsolva, vagy ne; ha egyik sincs megadva, a "
-"MintToys beállítása szerint"
+"TuxToys beállítása szerint"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch Awake off"
 msgstr "az Awake kikapcsolása"
 
-#: minttoys/cli.py
-msgid "switch Awake off when on, or on as set in MintToys; good for a shortcut"
+#: tuxtoys/cli.py
+msgid "switch Awake off when on, or on as set in TuxToys; good for a shortcut"
 msgstr ""
-"az Awake kikapcsolása, ha be van kapcsolva, különben bekapcsolása a MintToys "
+"az Awake kikapcsolása, ha be van kapcsolva, különben bekapcsolása a TuxToys "
 "beállítása szerint; gyorsbillentyűhöz ideális"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "show whether Awake is on, and for how long"
 msgstr "megmutatja, be van-e kapcsolva az Awake, és meddig"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "list the modules, switch one on or off"
 msgstr "a modulok listázása, egy modul be- vagy kikapcsolása"
 
-#: minttoys/cli.py
-msgid "List MintToys' modules, or switch one on or off."
+#: tuxtoys/cli.py
+msgid "List TuxToys' modules, or switch one on or off."
 msgstr ""
-"A MintToys moduljainak listázása, vagy egy modul be- vagy kikapcsolása."
+"A TuxToys moduljainak listázása, vagy egy modul be- vagy kikapcsolása."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "list the modules and their state (the default)"
 msgstr "a modulok és állapotuk listázása (alapértelmezés)"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch a module on"
 msgstr "egy modul bekapcsolása"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch a module off"
 msgstr "egy modul kikapcsolása"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "MODULE"
 msgstr "MODUL"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 #, python-brace-format
 msgid ""
 "'{text}' is not a duration. Use minutes (90 or 90m), hours (2h), or both "
@@ -156,16 +156,16 @@ msgstr ""
 "„{text}” nem időtartam. Adja meg percben (90 vagy 90m), órában (2h) vagy "
 "órában és percben (1h30m)."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 #, python-brace-format
 msgid "'{text}' is not a time of day. Use hours and minutes, such as 18:00."
 msgstr "„{text}” nem időpont. Adja meg óra:perc alakban, például 18:00."
 
-#: minttoys/modules/awake/module.py minttoys/settings/awake_page.py
+#: tuxtoys/modules/awake/module.py tuxtoys/settings/awake_page.py
 msgid "Awake"
 msgstr "Awake"
 
-#: minttoys/modules/awake/module.py
+#: tuxtoys/modules/awake/module.py
 msgid ""
 "Keeps the computer awake until you turn it off, for a set time, or until a "
 "time of day, without changing your power settings."
@@ -173,318 +173,318 @@ msgstr ""
 "Ébren tartja a számítógépet, amíg ki nem kapcsolja, adott ideig vagy egy "
 "adott időpontig, az energiagazdálkodási beállítások módosítása nélkül."
 
-#: minttoys/modules/awake/module.py
+#: tuxtoys/modules/awake/module.py
 msgid "Awake is keeping the computer awake"
 msgstr "Az Awake ébren tartja a számítógépet"
 
-#: minttoys/modules/awake/module.py
+#: tuxtoys/modules/awake/module.py
 msgid "Awake is off"
 msgstr "Az Awake kikapcsolt"
 
-#: minttoys/modules/awake/module.py
+#: tuxtoys/modules/awake/module.py
 msgid "The time is up. Your usual power settings apply again."
 msgstr ""
 "Letelt az idő. Ismét a megszokott energiagazdálkodási beállítások érvényesek."
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 msgid "Awake is off."
 msgstr "Az Awake ki van kapcsolva."
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 msgid "Awake is on until you turn it off."
 msgstr "Az Awake bekapcsolva marad, amíg ki nem kapcsolja."
 
 #. TRANSLATORS: {left} is the time left, such as "1 h 25 min", and {end} the time Awake
 #. ends, such as "18:00", with the date in front when that is more than a day away.
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 #, python-brace-format
 msgid "Awake is on for {left} more, until {end}."
 msgstr "Az Awake {end}-ig marad bekapcsolva, még {left} van hátra."
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 msgid "The screen stays on."
 msgstr "A képernyő bekapcsolva marad."
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 msgid "The screen may turn off, but the computer will not sleep."
 msgstr "A képernyő kikapcsolhat, de a számítógép nem megy alvó állapotba."
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 #, python-brace-format
 msgid "{minutes} min"
 msgstr "{minutes} perc"
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 #, python-brace-format
 msgid "{hours} h"
 msgstr "{hours} óra"
 
-#: minttoys/modules/awake/text.py
+#: tuxtoys/modules/awake/text.py
 #, python-brace-format
 msgid "{hours} h {minutes} min"
 msgstr "{hours} óra {minutes} perc"
 
 #. TRANSLATORS: the units after the hours field and after the minutes field.
-#: minttoys/settings/awake_page.py minttoys/tray/app.py
+#: tuxtoys/settings/awake_page.py tuxtoys/tray/app.py
 msgid "h"
 msgstr "óra"
 
 #. TRANSLATORS: the units after the hours field and after the minutes field.
-#: minttoys/settings/awake_page.py minttoys/tray/app.py
+#: tuxtoys/settings/awake_page.py tuxtoys/tray/app.py
 msgid "min"
 msgstr "perc"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Keeps the computer awake, without changing your power settings."
 msgstr ""
 "Ébren tartja a számítógépet, az energiagazdálkodási beállítások módosítása "
 "nélkül."
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Use Awake"
 msgstr "Awake használata"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "When you click the panel icon"
 msgstr "A panelikonra kattintáskor"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid ""
-"The same goes for minttoys awake toggle, on a keyboard shortcut or in a "
+"The same goes for tuxtoys awake toggle, on a keyboard shortcut or in a "
 "script."
 msgstr ""
-"Ugyanez érvényes a minttoys awake toggle parancsra is, gyorsbillentyűn vagy "
+"Ugyanez érvényes a tuxtoys awake toggle parancsra is, gyorsbillentyűn vagy "
 "szkriptben."
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Keep the computer awake"
 msgstr "Számítógép ébren tartása"
 
 #. TRANSLATORS: the label in front of the hours and minutes of a duration.
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "For"
 msgstr "Időtartam"
 
 #. TRANSLATORS: the label in front of a time of day.
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Until"
 msgstr "Időpont"
 
-#: minttoys/settings/awake_page.py minttoys/tray/app.py
+#: tuxtoys/settings/awake_page.py tuxtoys/tray/app.py
 msgid "Keep the screen on"
 msgstr "Képernyő bekapcsolva tartása"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Otherwise the screen may turn off, but the computer will not sleep."
 msgstr ""
 "Különben a képernyő kikapcsolhat, de a számítógép nem megy alvó állapotba."
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Keyboard shortcut"
 msgstr "Gyorsbillentyű"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Add a custom shortcut in the Keyboard settings with this command."
 msgstr ""
 "Ezzel a paranccsal vegyen fel egyéni gyorsbillentyűt a "
 "billentyűzet-beállításokban."
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Command"
 msgstr "Parancs"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 msgid "Open the Keyboard settings"
 msgstr "Billentyűzet-beállítások megnyitása"
 
-#: minttoys/settings/awake_page.py
-msgid "This version of MintToys has no Awake."
-msgstr "A MintToys ezen verziójában nincs Awake."
+#: tuxtoys/settings/awake_page.py
+msgid "This version of TuxToys has no Awake."
+msgstr "A TuxToys ezen verziójában nincs Awake."
 
-#: minttoys/settings/awake_page.py minttoys/tray/app.py
-msgid "MintToys is not running."
-msgstr "A MintToys nem fut."
+#: tuxtoys/settings/awake_page.py tuxtoys/tray/app.py
+msgid "TuxToys is not running."
+msgstr "A TuxToys nem fut."
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 #, python-brace-format
 msgid "Could not read Awake's settings: {error}"
 msgstr "Az Awake beállításai nem olvashatók be: {error}"
 
-#: minttoys/settings/awake_page.py
+#: tuxtoys/settings/awake_page.py
 #, python-brace-format
 msgid "Awake could not be switched on: {error}"
 msgstr "Az Awake bekapcsolása nem sikerült: {error}"
 
 #. TRANSLATORS: a heading in the settings window's sidebar, over the tools that
 #. deal with the computer as a whole, such as Awake.
-#: minttoys/settings/catalog.py
+#: tuxtoys/settings/catalog.py
 msgid "System"
 msgstr "Rendszer"
 
-#: minttoys/settings/main.py
+#: tuxtoys/settings/main.py
 #, python-brace-format
 msgid "The settings need PyGObject, GTK 3 and python3-xapp: {error}"
 msgstr "A beállításokhoz PyGObject, GTK 3 és python3-xapp szükséges: {error}"
 
-#: minttoys/settings/main.py minttoys/settings/window.py
-#: data/applications/io.github.konabe_studio.MintToys.desktop.in
-#: data/autostart/io.github.konabe_studio.MintToys.desktop.in
-msgid "MintToys"
-msgstr "MintToys"
+#: tuxtoys/settings/main.py tuxtoys/settings/window.py
+#: data/applications/io.github.konabe_studio.TuxToys.desktop.in
+#: data/autostart/io.github.konabe_studio.TuxToys.desktop.in
+msgid "TuxToys"
+msgstr "TuxToys"
 
 #. TRANSLATORS: under a tool's description in the Overview, when it failed.
-#: minttoys/settings/overview_page.py
+#: tuxtoys/settings/overview_page.py
 #, python-brace-format
 msgid "Could not be switched on: {error}"
 msgstr "Nem sikerült bekapcsolni: {error}"
 
-#: minttoys/settings/overview_page.py
+#: tuxtoys/settings/overview_page.py
 msgid ""
-"Welcome to MintToys. Switch on the tools you want to use. Each one has a "
+"Welcome to TuxToys. Switch on the tools you want to use. Each one has a "
 "page of its own in the sidebar."
 msgstr ""
-"Üdvözli a MintToys. Kapcsolja be azokat az eszközöket, amelyeket használni "
+"Üdvözli a TuxToys. Kapcsolja be azokat az eszközöket, amelyeket használni "
 "szeretne. Mindegyiknek saját oldala van az oldalsávon."
 
-#: minttoys/settings/overview_page.py
+#: tuxtoys/settings/overview_page.py
 msgid "Tools"
 msgstr "Eszközök"
 
-#: minttoys/settings/values.py minttoys/tray/app.py
+#: tuxtoys/settings/values.py tuxtoys/tray/app.py
 msgid "Until turned off"
 msgstr "Kikapcsolásig"
 
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "For a set time"
 msgstr "Adott ideig"
 
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "Until a time of day"
 msgstr "Egy adott időpontig"
 
 #. TRANSLATORS: the first page of the settings window, listing every tool.
-#: minttoys/settings/window.py
+#: tuxtoys/settings/window.py
 msgid "Overview"
 msgstr "Áttekintés"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "For a custom time…"
 msgstr "Egyéni időtartamra…"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Until a time of day…"
 msgstr "Egy adott időpontig…"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Turn off"
 msgstr "Kikapcsolás"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Settings…"
 msgstr "Beállítások…"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Keep the computer awake for"
 msgstr "Számítógép ébren tartása ennyi ideig"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Keep the computer awake until"
 msgstr "Számítógép ébren tartása eddig"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Cancel"
 msgstr "Mégse"
 
-#: minttoys/tray/app.py
+#: tuxtoys/tray/app.py
 msgid "Start"
 msgstr "Indítás"
 
-#: minttoys/tray/main.py
+#: tuxtoys/tray/main.py
 #, python-brace-format
 msgid "The panel icon needs PyGObject, GTK 3 and XApp: {error}"
 msgstr "A panelikonhoz PyGObject, GTK 3 és XApp szükséges: {error}"
 
-#: minttoys/tray/main.py
+#: tuxtoys/tray/main.py
 msgid "The panel icon needs a desktop session."
 msgstr "A panelikonhoz asztali munkamenet szükséges."
 
-#: minttoys/tray/main.py
-msgid "The MintToys panel icon is already running."
-msgstr "A MintToys panelikonja már fut."
+#: tuxtoys/tray/main.py
+msgid "The TuxToys panel icon is already running."
+msgstr "A TuxToys panelikonja már fut."
 
 #. TRANSLATORS: items of the panel icon's menu, each keeping the computer awake for
 #. that long.
-#: minttoys/tray/view.py
+#: tuxtoys/tray/view.py
 #, python-brace-format
 msgid "For {count} minute"
 msgid_plural "For {count} minutes"
 msgstr[0] "{count} percre"
 msgstr[1] "{count} percre"
 
-#: minttoys/tray/view.py
+#: tuxtoys/tray/view.py
 #, python-brace-format
 msgid "For {count} hour"
 msgid_plural "For {count} hours"
 msgstr[0] "{count} órára"
 msgstr[1] "{count} órára"
 
-#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+#: data/applications/io.github.konabe_studio.TuxToys.desktop.in
 msgid "Power-user utilities"
 msgstr "Segédeszközök haladó felhasználóknak"
 
-#: data/applications/io.github.konabe_studio.MintToys.desktop.in
-msgid "Switch MintToys' tools on and off, and set them up"
-msgstr "A MintToys eszközeinek be- és kikapcsolása, beállítása"
+#: data/applications/io.github.konabe_studio.TuxToys.desktop.in
+msgid "Switch TuxToys' tools on and off, and set them up"
+msgstr "A TuxToys eszközeinek be- és kikapcsolása, beállítása"
 
-#: data/applications/io.github.konabe_studio.MintToys.desktop.in
+#: data/applications/io.github.konabe_studio.TuxToys.desktop.in
 msgid "Awake;Sleep;Suspend;Screen;"
 msgstr ""
 "Awake;Ébren;Alvás;Felfüggesztés;Képernyő;Energiagazdálkodás;Sleep;Suspend;Screen;"
 
-#: data/autostart/io.github.konabe_studio.MintToys.Tray.desktop.in
-msgid "MintToys panel icon"
-msgstr "MintToys panelikon"
+#: data/autostart/io.github.konabe_studio.TuxToys.Tray.desktop.in
+msgid "TuxToys panel icon"
+msgstr "TuxToys panelikon"
 
-#: data/autostart/io.github.konabe_studio.MintToys.Tray.desktop.in
+#: data/autostart/io.github.konabe_studio.TuxToys.Tray.desktop.in
 msgid "Keep the computer awake from the panel"
 msgstr "A számítógép ébren tartása a panelről"
 
-#: data/autostart/io.github.konabe_studio.MintToys.desktop.in
-msgid "The background service behind MintToys' tools"
-msgstr "A MintToys eszközeit működtető háttérszolgáltatás"
+#: data/autostart/io.github.konabe_studio.TuxToys.desktop.in
+msgid "The background service behind TuxToys' tools"
+msgstr "A TuxToys eszközeit működtető háttérszolgáltatás"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch between light and dark"
 msgstr "váltás a világos és a sötét között"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "Switch the desktop between light and dark, or show when it is dark."
 msgstr ""
 "Az asztal váltása a világos és a sötét között, vagy a sötét órák "
 "megjelenítése."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "show the mode and the dark hours (the default)"
 msgstr "a mód és a sötét órák megjelenítése (alapértelmezés)"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "switch to dark, or back to the day's mode, until the schedule changes"
 msgstr ""
 "váltás sötétre, vagy vissza a nappali módra, az ütemezés következő váltásáig"
 
-#: minttoys/cli.py
-msgid "Light Switch is switched off in MintToys."
-msgstr "A Light Switch ki van kapcsolva a MintToysban."
+#: tuxtoys/cli.py
+msgid "Light Switch is switched off in TuxToys."
+msgstr "A Light Switch ki van kapcsolva a TuxToysban."
 
-#: minttoys/cli.py
-msgid "Switch it on with: minttoys modules enable lightswitch"
-msgstr "Így kapcsolhatja be: minttoys modules enable lightswitch"
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable lightswitch"
+msgstr "Így kapcsolhatja be: tuxtoys modules enable lightswitch"
 
-#: minttoys/modules/lightswitch/module.py minttoys/settings/lightswitch_page.py
+#: tuxtoys/modules/lightswitch/module.py tuxtoys/settings/lightswitch_page.py
 msgid "Light Switch"
 msgstr "Light Switch"
 
-#: minttoys/modules/lightswitch/module.py
+#: tuxtoys/modules/lightswitch/module.py
 msgid ""
 "Switches between light and dark by the time of day, the way the Themes "
 "window does."
@@ -493,238 +493,238 @@ msgstr ""
 
 #. TRANSLATORS: Light Switch's dark hours by the sun; {start} and {end} are times of
 #. day such as 18:09 and 06:53.
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 #, python-brace-format
 msgid "Dark from {start} to {end}, sunset to sunrise."
 msgstr "Sötét {start} és {end} között, napnyugtától napkeltéig."
 
 #. TRANSLATORS: Light Switch's dark hours at set times, such as 20:00 and 06:00.
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 #, python-brace-format
 msgid "Dark from {start} to {end}."
 msgstr "Sötét {start} és {end} között."
 
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 msgid ""
 "Your themes are not one of Mint's styles, so Light Switch leaves them alone."
 msgstr ""
 "A témái nem tartoznak a Mint stílusai közé, ezért a Light Switch nem "
 "változtat rajtuk."
 
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 msgid "Your style has no mode to switch to."
 msgstr "A stílusának nincs olyan módja, amelyre váltani lehetne."
 
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 msgid "The desktop is dark now."
 msgstr "Az asztal most sötét."
 
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 msgid "The desktop is in its day mode now."
 msgstr "Az asztal most nappali módban van."
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Switches between light and dark by the time of day, keeping your color."
 msgstr "Napszak szerint vált a világos és a sötét között, a színt megtartva."
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Use Light Switch"
 msgstr "Light Switch használata"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Light and dark"
 msgstr "Világos és sötét"
 
 #. TRANSLATORS: the label of the choice between the Themes window's Mixed and Light.
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "During the day"
 msgstr "Nappal"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Dark"
 msgstr "Sötét"
 
 #. TRANSLATORS: the labels in front of the times dark starts and ends.
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "From"
 msgstr "Kezdete"
 
 #. TRANSLATORS: the labels in front of the times dark starts and ends.
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "To"
 msgstr "Vége"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Open the Night Light settings"
 msgstr "Az Éjszakai fény beállításainak megnyitása"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Right now"
 msgstr "Most"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Switch now"
 msgstr "Váltás most"
 
-#: minttoys/settings/lightswitch_page.py
-msgid "This version of MintToys has no Light Switch."
-msgstr "A MintToys ezen verziójában nincs Light Switch."
+#: tuxtoys/settings/lightswitch_page.py
+msgid "This version of TuxToys has no Light Switch."
+msgstr "A TuxToys ezen verziójában nincs Light Switch."
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 #, python-brace-format
 msgid "Light Switch could not be switched on: {error}"
 msgstr "A Light Switch bekapcsolása nem sikerült: {error}"
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 #, python-brace-format
 msgid "Could not read Light Switch's settings: {error}"
 msgstr "A Light Switch beállításai nem olvashatók be: {error}"
 
 #. TRANSLATORS: the Themes window's mode with light windows and a dark panel.
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "Mixed"
 msgstr "Vegyes"
 
 #. TRANSLATORS: the Themes window's mode with light windows and a light panel.
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "Light"
 msgstr "Világos"
 
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "With Night Light's schedule"
 msgstr "Az Éjszakai fény ütemezése szerint"
 
-#: minttoys/settings/values.py
+#: tuxtoys/settings/values.py
 msgid "At set times"
 msgstr "Megadott időpontokban"
 
 #. TRANSLATORS: {keys} is a keyboard shortcut such as Shift+Ctrl+Super+D.
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 #, python-brace-format
 msgid "Keyboard shortcut: {keys}"
 msgstr "Gyorsbillentyű: {keys}"
 
-#: minttoys/modules/lightswitch/text.py
+#: tuxtoys/modules/lightswitch/text.py
 #, python-brace-format
 msgid "Its keyboard shortcut, {keys}, is in use already, so it has none."
 msgstr "Nincs gyorsbillentyűje, mert a kombináció ({keys}) már foglalt."
 
-#: minttoys/settings/lightswitch_page.py
-msgid "Change its keys in the Keyboard settings, under MintToys: Light Switch."
+#: tuxtoys/settings/lightswitch_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Light Switch."
 msgstr ""
 "A billentyűkombinációt a billentyűzet-beállításokban módosíthatja, "
-"„MintToys: Light Switch” néven."
+"„TuxToys: Light Switch” néven."
 
-#: minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/lightswitch_page.py
 msgid "Switch now with a keyboard shortcut"
 msgstr "Váltás gyorsbillentyűvel"
 
-#: minttoys/modules/locksmith/module.py minttoys/locksmith/main.py minttoys/settings/window.py minttoys/locksmith/window.py
+#: tuxtoys/modules/locksmith/module.py tuxtoys/locksmith/main.py tuxtoys/settings/window.py tuxtoys/locksmith/window.py
 msgid "File Locksmith"
 msgstr "File Locksmith"
 
-#: minttoys/locksmith/main.py
-msgid "Usage: minttoys-locksmith FILE..."
-msgstr "Használat: minttoys-locksmith FÁJL..."
+#: tuxtoys/locksmith/main.py
+msgid "Usage: tuxtoys-locksmith FILE..."
+msgstr "Használat: tuxtoys-locksmith FÁJL..."
 
-#: minttoys/locksmith/main.py
+#: tuxtoys/locksmith/main.py
 #, python-brace-format
 msgid "File Locksmith needs PyGObject and GTK 3: {error}"
 msgstr "A File Locksmith működéséhez PyGObject és GTK 3 kell: {error}"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "Force it to stop? Unsaved work in it will be lost."
 msgstr "Kényszeríti a leállítását? A benne lévő, nem mentett munka elvész."
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "Force stop"
 msgstr "Kényszerített leállítás"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "Process"
 msgstr "Folyamat"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "PID"
 msgstr "PID"
 
 #. TRANSLATORS: the column of what a process holds of the chosen files.
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "Holds"
 msgstr "Használja"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "Refresh"
 msgstr "Frissítés"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 msgid "End process"
 msgstr "Folyamat leállítása"
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 #, python-brace-format
 msgid "{name} did not stop."
 msgstr "{name} nem állt le."
 
-#: minttoys/locksmith/window.py
+#: tuxtoys/locksmith/window.py
 #, python-brace-format
 msgid "You may not end {name}."
 msgstr "Ezt a folyamatot nem állíthatja le: {name}."
 
 #. TRANSLATORS: File Locksmith's item in Nemo's right-click menu.
-#: minttoys/modules/locksmith/module.py
+#: tuxtoys/modules/locksmith/module.py
 msgid "What is using this?"
 msgstr "Mi használja ezt?"
 
 #. TRANSLATORS: the tooltip of File Locksmith's item in Nemo's right-click menu.
-#: minttoys/modules/locksmith/module.py
+#: tuxtoys/modules/locksmith/module.py
 msgid "Shows the processes that hold it open, and lets you end them."
 msgstr "Megmutatja, mely folyamatok tartják nyitva, és leállíthatja őket."
 
-#: minttoys/modules/locksmith/module.py
+#: tuxtoys/modules/locksmith/module.py
 msgid ""
 "Shows which processes hold a file or a folder, from Nemo's right-click menu."
 msgstr ""
 "Megmutatja, mely folyamatok használnak egy fájlt vagy mappát, a Nemo jobb "
 "gombos menüjéből."
 
-#: minttoys/modules/locksmith/text.py
+#: tuxtoys/modules/locksmith/text.py
 msgid "Nothing of yours is using it right now."
 msgstr "Most egyik folyamata sem használja."
 
-#: minttoys/modules/locksmith/text.py
+#: tuxtoys/modules/locksmith/text.py
 msgid "Processes of other users, the system's among them, cannot be shown."
 msgstr ""
 "Más felhasználók folyamatai, köztük a rendszeréi, nem jeleníthetők meg."
 
 #. TRANSLATORS: the heading of File Locksmith's window; {name} is a file or a folder.
-#: minttoys/modules/locksmith/text.py
+#: tuxtoys/modules/locksmith/text.py
 #, python-brace-format
 msgid "What is using {name}"
 msgstr "Mi használja ezt: {name}"
 
 #. TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
 #. such as File Locksmith.
-#: minttoys/settings/catalog.py
+#: tuxtoys/settings/catalog.py
 msgid "Files"
 msgstr "Fájlok"
 
 #. TRANSLATORS: the heading over the steps that tell how to use a tool.
-#: minttoys/settings/simple_page.py
+#: tuxtoys/settings/simple_page.py
 msgid "How to use it"
 msgstr "Használat"
 
-#: minttoys/settings/window.py
+#: tuxtoys/settings/window.py
 msgid "Shows which processes hold a file or a folder, and lets you end them."
 msgstr ""
 "Megmutatja, mely folyamatok használnak egy fájlt vagy mappát, és "
 "leállíthatja őket."
 
-#: minttoys/settings/window.py
+#: tuxtoys/settings/window.py
 msgid "Use File Locksmith"
 msgstr "File Locksmith használata"
 
-#: minttoys/settings/window.py
+#: tuxtoys/settings/window.py
 msgid ""
 "Right-click a file or a folder in Nemo and choose What is using this? A "
 "window lists the processes that hold it, and can end one."
@@ -733,7 +733,7 @@ msgstr ""
 "használja ezt? pontot. Egy ablak felsorolja az azt használó folyamatokat, és"
 " le is állíthat közülük egyet."
 
-#: minttoys/settings/window.py
+#: tuxtoys/settings/window.py
 msgid ""
 "It shows your own processes. Those of other users, the system's among them, "
 "cannot be looked at without administrator rights."
@@ -742,124 +742,124 @@ msgstr ""
 "rendszergazdai jogok nélkül nem lehet megvizsgálni."
 
 #. TRANSLATORS: the heading of File Locksmith's window for several files and folders.
-#: minttoys/modules/locksmith/text.py
+#: tuxtoys/modules/locksmith/text.py
 #, python-brace-format
 msgid "What is using {count} item"
 msgid_plural "What is using {count} items"
 msgstr[0] "Mi használja a kijelölt {count} elemet"
 msgstr[1] "Mi használja a kijelölt {count} elemet"
 
-#: minttoys/modules/newplus/module.py minttoys/settings/newplus_page.py
+#: tuxtoys/modules/newplus/module.py tuxtoys/settings/newplus_page.py
 msgid "New+"
 msgstr "New+"
 
 #. TRANSLATORS: New+'s item in Nemo's right-click menu.
-#: minttoys/modules/newplus/module.py
+#: tuxtoys/modules/newplus/module.py
 msgid "Save as template"
 msgstr "Mentés sablonként"
 
 #. TRANSLATORS: the tooltip of New+'s item in Nemo's right-click menu.
-#: minttoys/modules/newplus/module.py
+#: tuxtoys/modules/newplus/module.py
 msgid "Copies it to your templates, offered under Create New Document."
 msgstr ""
 "Bemásolja a sablonjai közé, amelyeket az Új dokumentum létrehozása menü "
 "kínál fel."
 
-#: minttoys/newplus/main.py
+#: tuxtoys/newplus/main.py
 msgid "No templates folder"
 msgstr "Nincs sablonmappa"
 
-#: minttoys/newplus/main.py
-msgid "Set one up on New+'s page in MintToys, then try again."
-msgstr "Hozzon létre egyet a MintToys New+ oldalán, majd próbálja újra."
+#: tuxtoys/newplus/main.py
+msgid "Set one up on New+'s page in TuxToys, then try again."
+msgstr "Hozzon létre egyet a TuxToys New+ oldalán, majd próbálja újra."
 
-#: minttoys/newplus/main.py
+#: tuxtoys/newplus/main.py
 msgid "Saved as template"
 msgstr "Mentve sablonként"
 
-#: minttoys/newplus/main.py
+#: tuxtoys/newplus/main.py
 msgid "Could not save as template"
 msgstr "Nem sikerült sablonként menteni"
 
-#: minttoys/newplus/main.py
-msgid "Usage: minttoys-save-template FILE..."
-msgstr "Használat: minttoys-save-template FÁJL..."
+#: tuxtoys/newplus/main.py
+msgid "Usage: tuxtoys-save-template FILE..."
+msgstr "Használat: tuxtoys-save-template FÁJL..."
 
 #. TRANSLATORS: the notification after Save as template; {name} is the template.
-#: minttoys/newplus/main.py
+#: tuxtoys/newplus/main.py
 #, python-brace-format
 msgid "{name} is offered under Create New Document now."
 msgstr "Az Új dokumentum létrehozása menü mostantól felkínálja: {name}."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "A template needs a name."
 msgstr "A sablonnak nevet kell adni."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "A name cannot hold a slash, or be . or .."
 msgstr "A név nem tartalmazhat perjelt, és nem lehet . vagy .."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Move to the trash"
 msgstr "Áthelyezés a Kukába"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Your own templates for Nemo's Create New Document."
 msgstr "Saját sablonok a Nemo Új dokumentum létrehozása menüjéhez."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Use New+"
 msgstr "New+ használata"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Templates"
 msgstr "Sablonok"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Add a template…"
 msgstr "Sablon hozzáadása…"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Open the templates folder"
 msgstr "A sablonmappa megnyitása"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Make a templates folder"
 msgstr "Sablonmappa létrehozása"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Right-click a file and choose Save as template to add it."
 msgstr ""
 "Egy fájlt úgy adhat hozzá, hogy jobb gombbal rákattint, és a Mentés "
 "sablonként pontot választja."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "You have no templates folder."
 msgstr "Nincs sablonmappája."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "No templates yet."
 msgstr "Még nincsenek sablonok."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Add a template"
 msgstr "Sablon hozzáadása"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 #, python-brace-format
 msgid "There is a template called {name} already."
 msgstr "Már van ilyen nevű sablon: {name}."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 #, python-brace-format
 msgid "Could not add {name}: {error}"
 msgstr "Nem sikerült hozzáadni: {name} ({error})"
 
-#: minttoys/newplus/main.py
+#: tuxtoys/newplus/main.py
 #, python-brace-format
 msgid "{count} file is offered under Create New Document now."
 msgid_plural "{count} files are offered under Create New Document now."
@@ -868,11 +868,11 @@ msgstr[0] ""
 msgstr[1] ""
 "Az Új dokumentum létrehozása menü mostantól {count} új fájlt kínál fel."
 
-#: minttoys/modules/alwaysontop/module.py minttoys/settings/alwaysontop_page.py
+#: tuxtoys/modules/alwaysontop/module.py tuxtoys/settings/alwaysontop_page.py
 msgid "Always on Top"
 msgstr "Always on Top"
 
-#: minttoys/modules/alwaysontop/module.py
+#: tuxtoys/modules/alwaysontop/module.py
 msgid ""
 "Pins a window above the others with Super+Ctrl+T, and frames it so you see "
 "which."
@@ -880,39 +880,39 @@ msgstr ""
 "Super+Ctrl+T-vel a többi fölé rögzít egy ablakot, és keretet rajzol köré, "
 "hogy lássa, melyiket."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Keeps a window above the others, framed so you can tell which."
 msgstr "Egy ablakot a többi fölött tart, kerettel, hogy lássa, melyiket."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Use Always on Top"
 msgstr "Always on Top használata"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Pin a window with a keyboard shortcut"
 msgstr "Ablak rögzítése gyorsbillentyűvel"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Frame"
 msgstr "Keret"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Frame a pinned window"
 msgstr "Keret a rögzített ablak körül"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "In the theme's accent color"
 msgstr "A téma kiemelőszínével"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Color"
 msgstr "Szín"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Width"
 msgstr "Szélesség"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid ""
 "Press Super+Ctrl+T on a window to keep it above the others, and again to let"
 " it go. Its window menu (Alt+Space) can do it too."
@@ -921,59 +921,59 @@ msgstr ""
 "újra, hogy elengedje. Az ablak menüje (Alt+Szóköz) is tudja ezt."
 
 #. TRANSLATORS: the unit after the frame's width and its corners' radius.
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "px"
 msgstr "px"
 
 #. TRANSLATORS: a heading in the settings window's sidebar, over the tools for
 #. windows, such as Always on Top.
-#: minttoys/settings/catalog.py
+#: tuxtoys/settings/catalog.py
 msgid "Windows"
 msgstr "Ablakok"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Keyboard shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Change their keys in the Keyboard settings."
 msgstr "A billentyűkombinációkat a billentyűzet-beállításokban módosíthatja."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Change a pinned window's opacity with the keyboard"
 msgstr "Rögzített ablak átlátszatlanságának módosítása billentyűzettel"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Opacity (%)"
 msgstr "Átlátszatlanság (%)"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Rounded corners"
 msgstr "Lekerekített sarkok"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "0 for square corners."
 msgstr "0: szögletes sarkok."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Sound"
 msgstr "Hang"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Play a sound on pinning and letting go"
 msgstr "Hang lejátszása rögzítéskor és elengedéskor"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "The Sound settings' sounds for maximizing and unmaximizing windows."
 msgstr ""
 "A Hang beállítások hangjai az ablakok maximalizálásához és eredeti méretének"
 " visszaállításához."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid "Excluded applications"
 msgstr "Kizárt alkalmazások"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 msgid ""
 "Never kept on top. One on each line, by the name X11 knows it by (its "
 "WM_CLASS), for example firefox."
@@ -981,62 +981,62 @@ msgstr ""
 "Ezek sosem maradnak a többi fölött. Soronként egy, azon a néven, amelyen az "
 "X11 ismeri (WM_CLASS), például firefox."
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 #, python-brace-format
 msgid "{more} more opaque, {less} less"
 msgstr "{more}: átlátszatlanabb, {less}: átlátszóbb"
 
-#: minttoys/settings/alwaysontop_page.py
+#: tuxtoys/settings/alwaysontop_page.py
 #, python-brace-format
 msgid "{more} or {less} is in use already, so that shortcut is missing."
 msgstr ""
 "A(z) {more} vagy a(z) {less} már foglalt, ezért az a gyorsbillentyű "
 "hiányzik."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "change a pinned window's opacity"
 msgstr "rögzített ablak átlátszatlanságának módosítása"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "Make the active window more or less opaque, if it is pinned on top."
 msgstr ""
 "Az aktív ablakot átlátszatlanabbá vagy átlátszóbbá teszi, ha a többi fölé "
 "van rögzítve."
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "one step more or less opaque"
 msgstr "egy lépéssel átlátszatlanabb vagy átlátszóbb"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "This needs python3-xlib: sudo apt install python3-xlib"
 msgstr "Ehhez a python3-xlib csomag kell: sudo apt install python3-xlib"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 #, python-brace-format
 msgid "Could not change the window's opacity: {error}"
 msgstr "Nem sikerült módosítani az ablak átlátszatlanságát: {error}"
 
-#: minttoys/cli.py
+#: tuxtoys/cli.py
 msgid "The active window is not kept on top, so its opacity stays as it is."
 msgstr "Az aktív ablak nincs a többi fölé rögzítve, ezért az átlátszatlansága nem változik."
 
-#: minttoys/modules/newplus/module.py
+#: tuxtoys/modules/newplus/module.py
 msgid ""
 "Makes files and folders from your templates, and saves files as templates."
 msgstr ""
 "Fájlokat és mappákat hoz létre a sablonjaiból, és fájlokat ment sablonként."
 
 #. TRANSLATORS: New+'s item in Nemo's right-click menu, on a folder or its background.
-#: minttoys/modules/newplus/module.py
+#: tuxtoys/modules/newplus/module.py
 msgid "New from template…"
 msgstr "Létrehozás sablonból…"
 
 #. TRANSLATORS: the tooltip of New from template in Nemo's right-click menu.
-#: minttoys/modules/newplus/module.py
+#: tuxtoys/modules/newplus/module.py
 msgid "Makes a file or a folder from one of your templates."
 msgstr "Fájlt vagy mappát hoz létre az egyik sablonjából."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid ""
 "Right-click inside a folder in Nemo and choose New from template… to make a "
 "file or a folder from one of your templates."
@@ -1045,13 +1045,13 @@ msgstr ""
 "sablonból… menüpontot, hogy fájlt vagy mappát hozzon létre az egyik "
 "sablonjából."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Nemo's own Create New Document offers your file templates too."
 msgstr ""
 "A Nemo saját Új dokumentum létrehozása menüje is felkínálja a "
 "fájlsablonjait."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid ""
 "A new item starts as a copy of one of these. A folder is copied whole; "
 "Create New Document shows it as a submenu of its files instead."
@@ -1059,19 +1059,19 @@ msgstr ""
 "Az új elem ezek egyikének másolataként indul. Egy mappa egészében másolódik;"
 " az Új dokumentum létrehozása viszont a fájljait almenüként mutatja."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Names"
 msgstr "Nevek"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Of the files and folders New from template makes."
 msgstr "A Létrehozás sablonból által készített fájloké és mappáké."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Replace variables in names"
 msgstr "Változók cseréje a nevekben"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid ""
 "$YYYY, $MM, $DD, $hh, $mm, $ss and more for the date and time, "
 "$PARENT_FOLDER_NAME for the folder an item lands in, and %VARIABLE% from the"
@@ -1081,65 +1081,65 @@ msgstr ""
 "$PARENT_FOLDER_NAME annak a mappának a nevéhez, amelybe az elem kerül, és "
 "%VÁLTOZÓ% a környezetből, például %USER%."
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Leave out the number a template's name starts with"
 msgstr "A sablon nevének elején álló szám elhagyása"
 
-#: minttoys/settings/newplus_page.py
+#: tuxtoys/settings/newplus_page.py
 msgid "Number your templates to set their order, as in 1. Letter.odt."
 msgstr ""
 "A sablonok sorrendjét számozással állíthatja be, például: 1. Levél.odt."
 
-#: minttoys/newitem/window.py minttoys/newitem/main.py
+#: tuxtoys/newitem/window.py tuxtoys/newitem/main.py
 msgid "New from template"
 msgstr "Létrehozás sablonból"
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 #, python-brace-format
 msgid "New in {folder}"
 msgstr "Új elem itt: {folder}"
 
-#: minttoys/newitem/window.py
-msgid "You have no templates folder. Set one up on New+'s page in MintToys."
-msgstr "Nincs sablonmappája. Hozzon létre egyet a MintToys New+ oldalán."
+#: tuxtoys/newitem/window.py
+msgid "You have no templates folder. Set one up on New+'s page in TuxToys."
+msgstr "Nincs sablonmappája. Hozzon létre egyet a TuxToys New+ oldalán."
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 msgid ""
-"No templates yet. Add some on New+'s page in MintToys, or right-click a file"
+"No templates yet. Add some on New+'s page in TuxToys, or right-click a file"
 " in Nemo and choose Save as template."
 msgstr ""
-"Még nincsenek sablonok. Adjon hozzá néhányat a MintToys New+ oldalán, vagy "
+"Még nincsenek sablonok. Adjon hozzá néhányat a TuxToys New+ oldalán, vagy "
 "kattintson jobb gombbal egy fájlra a Nemóban, és válassza a Mentés "
 "sablonként menüpontot."
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 msgid "Name"
 msgstr "Név"
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 msgid "Create"
 msgstr "Létrehozás"
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 #, python-brace-format
 msgid "There is something called {name} here already."
 msgstr "Itt már van {name} nevű elem."
 
-#: minttoys/newitem/window.py
+#: tuxtoys/newitem/window.py
 #, python-brace-format
 msgid "Could not make {name}: {error}"
 msgstr "{name} létrehozása nem sikerült: {error}"
 
-#: minttoys/newitem/main.py
+#: tuxtoys/newitem/main.py
 #, python-brace-format
 msgid "New+ needs PyGObject and GTK 3: {error}"
 msgstr "A New+ működéséhez PyGObject és GTK 3 kell: {error}"
 
-#: minttoys/newitem/main.py
+#: tuxtoys/newitem/main.py
 msgid "New from template works in a folder on disk."
 msgstr "A Létrehozás sablonból csak a lemezen lévő mappában működik."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid ""
 "%1 the original name, %2 the size's name, %3 and %4 the width and the height"
 " chosen, %5 and %6 the height and the width it comes out at. A slash makes a"
@@ -1149,31 +1149,31 @@ msgstr ""
 "magasság, %5 és %6 a kapott magasság és szélesség. A perjel mappát jelent: "
 "%2/%1."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "A size needs a name, and a width, a height, or both."
 msgstr "Egy méretnek név kell, és szélesség, magasság vagy mindkettő."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Add a size"
 msgstr "Méret hozzáadása"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Add a size…"
 msgstr "Új méret hozzáadása…"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Centimeters"
 msgstr "Centiméter"
 
-#: minttoys/settings/alwaysontop_page.py minttoys/settings/imageresizer_page.py minttoys/settings/lightswitch_page.py
+#: tuxtoys/settings/alwaysontop_page.py tuxtoys/settings/imageresizer_page.py tuxtoys/settings/lightswitch_page.py
 msgid "Change"
 msgstr "Módosítás"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Change the size"
 msgstr "A méret módosítása"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid ""
 "Choose one or more pictures in Nemo, right-click them and choose Resize with"
 " Image Resizer."
@@ -1181,168 +1181,168 @@ msgstr ""
 "Jelöljön ki egy vagy több képet a Nemóban, kattintson rájuk jobb gombbal, és"
 " válassza az Átméretezés az Image Resizerrel menüpontot."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Close"
 msgstr "Bezárás"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Custom"
 msgstr "Egyéni"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: minttoys/locksmith/main.py minttoys/locksmith/window.py minttoys/modules/locksmith/module.py minttoys/settings/catalog.py minttoys/settings/imageresizer_page.py minttoys/settings/window.py
+#: tuxtoys/locksmith/main.py tuxtoys/locksmith/window.py tuxtoys/modules/locksmith/module.py tuxtoys/settings/catalog.py tuxtoys/settings/imageresizer_page.py tuxtoys/settings/window.py
 msgid "File"
 msgstr "Fájl"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "File name format"
 msgstr "Fájlnév formátuma"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Fill"
 msgstr "Kitöltés"
 
-#: minttoys/modules/imageresizer/text.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/modules/imageresizer/text.py tuxtoys/settings/imageresizer_page.py
 msgid "Fit"
 msgstr "Igazítás"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Height"
 msgstr "Magasság"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Ignore the orientation of pictures"
 msgstr "A képek tájolásának figyelmen kívül hagyása"
 
-#: minttoys/imageresizer/main.py minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/imageresizer/main.py tuxtoys/imageresizer/window.py tuxtoys/modules/imageresizer/module.py tuxtoys/settings/imageresizer_page.py
 msgid "Image Resizer"
 msgstr "Image Resizer"
 
-#: minttoys/imageresizer/main.py
+#: tuxtoys/imageresizer/main.py
 #, python-brace-format
 msgid "Image Resizer needs PyGObject, GTK 3 and Pillow: {error}"
 msgstr "Az Image Resizer működéséhez PyGObject, GTK 3 és Pillow kell: {error}"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Image sizes"
 msgstr "Képméretek"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Inches"
 msgstr "Hüvelyk"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "JPEG quality level (%)"
 msgstr "JPEG minőségi szintje (%)"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Keep the original's modification date"
 msgstr "Az eredeti módosítási dátumának megtartása"
 
-#: minttoys/modules/imageresizer/options.py
+#: tuxtoys/modules/imageresizer/options.py
 msgid "Large"
 msgstr "Nagy"
 
-#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/imageresizer/window.py tuxtoys/settings/imageresizer_page.py
 msgid "Leave it at 0 to keep the proportions."
 msgstr "Hagyja 0-n, hogy az arányok megmaradjanak."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Make pictures smaller but not larger"
 msgstr "A képek kicsinyítése, de nem nagyítása"
 
-#: minttoys/modules/imageresizer/module.py
+#: tuxtoys/modules/imageresizer/module.py
 msgid "Makes resized copies of the chosen pictures."
 msgstr "Átméretezett másolatot készít a kijelölt képekről."
 
-#: minttoys/modules/imageresizer/options.py
+#: tuxtoys/modules/imageresizer/options.py
 msgid "Medium"
 msgstr "Közepes"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "New size"
 msgstr "Új méret"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Percent"
 msgstr "Százalék"
 
-#: minttoys/modules/imageresizer/options.py
+#: tuxtoys/modules/imageresizer/options.py
 msgid "Phone"
 msgstr "Telefon"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Pixels"
 msgstr "Képpont"
 
-#: minttoys/imageresizer/window.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/imageresizer/window.py tuxtoys/settings/imageresizer_page.py
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Remove metadata that doesn't affect rendering"
 msgstr "A megjelenítést nem befolyásoló metaadatok eltávolítása"
 
-#: minttoys/imageresizer/window.py minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/imageresizer/window.py tuxtoys/modules/imageresizer/module.py tuxtoys/settings/imageresizer_page.py
 msgid "Resize"
 msgstr "Átméretezés"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Resize the original pictures (don't create copies)"
 msgstr "Az eredeti képek átméretezése (nem készül másolat)"
 
-#: minttoys/modules/imageresizer/module.py
+#: tuxtoys/modules/imageresizer/module.py
 msgid "Resize with Image Resizer"
 msgstr "Átméretezés az Image Resizerrel"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Resize your pictures"
 msgstr "Képek átméretezése"
 
-#: minttoys/modules/imageresizer/module.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/modules/imageresizer/module.py tuxtoys/settings/imageresizer_page.py
 msgid "Resizes pictures from Nemo's right-click menu."
 msgstr "Képeket méretez át a Nemo jobbklikk-menüjéből."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 #, python-brace-format
 msgid "Resizing {name}…"
 msgstr "{name} átméretezése…"
 
-#: minttoys/modules/newplus/module.py minttoys/newplus/main.py minttoys/settings/imageresizer_page.py
+#: tuxtoys/modules/newplus/module.py tuxtoys/newplus/main.py tuxtoys/settings/imageresizer_page.py
 msgid "Save"
 msgstr "Mentés"
 
-#: minttoys/modules/imageresizer/options.py
+#: tuxtoys/modules/imageresizer/options.py
 msgid "Small"
 msgstr "Kicsi"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Some pictures could not be resized."
 msgstr "Néhány képet nem sikerült átméretezni."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "Stop"
 msgstr "Leállítás"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "Stretch"
 msgstr "Nyújtás"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid ""
 "Such as the camera, the date taken and the place, in the EXIF and XMP data."
 msgstr ""
 "Például a fényképezőgép, a készítés dátuma és helye, az EXIF- és XMP-"
 "adatokban."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "The sizes the resize window offers."
 msgstr "Az átméretező ablak által felkínált méretek."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid ""
 "The smaller number goes to the shorter side, so tall and wide pictures "
 "match."
@@ -1350,46 +1350,46 @@ msgstr ""
 "A kisebb szám a rövidebb oldalra kerül, így az álló és a fekvő képek "
 "egyformák lesznek."
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 msgid "This kind of picture cannot be saved."
 msgstr "Ilyen típusú képet nem lehet menteni."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Unit"
 msgstr "Mértékegység"
 
-#: minttoys/imageresizer/main.py
-msgid "Usage: minttoys-image-resizer PICTURE..."
-msgstr "Használat: minttoys-image-resizer KÉP..."
+#: tuxtoys/imageresizer/main.py
+msgid "Usage: tuxtoys-image-resizer PICTURE..."
+msgstr "Használat: tuxtoys-image-resizer KÉP..."
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "Use Image Resizer"
 msgstr "Image Resizer használata"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "auto"
 msgstr "auto"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "cm"
 msgstr "cm"
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 msgid "in"
 msgstr "hüv."
 
-#: minttoys/modules/imageresizer/text.py
+#: tuxtoys/modules/imageresizer/text.py
 #, python-brace-format
 msgid "{fit} · {width} × {height} {unit}"
 msgstr "{fit} · {width} × {height} {unit}"
 
-#: minttoys/imageresizer/window.py
+#: tuxtoys/imageresizer/window.py
 #, python-brace-format
 msgid "{count} picture"
 msgid_plural "{count} pictures"
 msgstr[0] "{count} kép"
 msgstr[1] "{count} kép"
 
-#: minttoys/settings/imageresizer_page.py
+#: tuxtoys/settings/imageresizer_page.py
 msgid "A name is needed, and between slashes a folder name other than . or .."
 msgstr "Név kell, és a perjelek között a . és a .. helyett mappanév."

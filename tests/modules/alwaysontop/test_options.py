@@ -1,7 +1,7 @@
 import pytest
 
-from minttoys.modules.alwaysontop.frame import OPAQUE, Rect, around, hex_to_rgb, step_opacity
-from minttoys.modules.alwaysontop.options import Options
+from tuxtoys.modules.alwaysontop.frame import OPAQUE, Rect, around, hex_to_rgb, step_opacity
+from tuxtoys.modules.alwaysontop.options import Options
 
 DEFAULTS = {
     "shortcut": True,

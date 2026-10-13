@@ -7,8 +7,8 @@ import pytest
 
 Image = pytest.importorskip("PIL.Image", reason="Pillow is not installed")
 
-from minttoys.modules.imageresizer.options import Options, Size  # noqa: E402
-from minttoys.modules.imageresizer.resize import Unsupported, resize  # noqa: E402
+from tuxtoys.modules.imageresizer.options import Options, Size  # noqa: E402
+from tuxtoys.modules.imageresizer.resize import Unsupported, resize  # noqa: E402
 
 SMALL = Size("$small$", "fit", 854, 480)
 ORIENTATION = 0x0112

@@ -3,10 +3,10 @@ from typing import Any, ClassVar
 
 import pytest
 
-from minttoys.api import ModuleInfo
-from minttoys.core.config import Config
-from minttoys.daemon.host import ModuleHost, ModuleLoader, State, lazy
-from minttoys.modules.base import Context, Module
+from tuxtoys.api import ModuleInfo
+from tuxtoys.core.config import Config
+from tuxtoys.daemon.host import ModuleHost, ModuleLoader, State, lazy
+from tuxtoys.modules.base import Context, Module
 
 BUS = object()
 
@@ -175,13 +175,13 @@ def test_a_module_that_fails_to_switch_off_does_not_stop_the_others(recorder: Re
 
 
 def test_lazy_imports_only_when_called() -> None:
-    load = lazy("minttoys.no_such_module:Nothing")
+    load = lazy("tuxtoys.no_such_module:Nothing")
     with pytest.raises(ModuleNotFoundError):
         load()
 
 
 def test_lazy_finds_the_class() -> None:
-    assert lazy("minttoys.modules.base:Module")() is Module
+    assert lazy("tuxtoys.modules.base:Module")() is Module
 
 
 def test_describe_lists_every_module_with_its_state(recorder: Recorder) -> None:

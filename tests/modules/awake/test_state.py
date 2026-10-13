@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.awake.state import (
+from tuxtoys.modules.awake.state import (
     MAX_MINUTES,
     OFF,
     Defaults,

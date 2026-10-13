@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: MintToys
+Upstream-Name: TuxToys
 Upstream-Contact: Kōnabe Studio <konabe@proton.me>
-Source: https://github.com/konabe-studio/minttoys
+Source: https://github.com/konabe-studio/tuxtoys
 
 Files: *
 Copyright: 2026 Kōnabe Studio <konabe@proton.me>

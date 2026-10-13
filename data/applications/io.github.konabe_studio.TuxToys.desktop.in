@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=TuxToys
+GenericName=Power-user utilities
+Comment=Switch TuxToys' tools on and off, and set them up
+Exec=tuxtoys-settings
+Icon=io.github.konabe_studio.TuxToys
+Categories=Settings;DesktopSettings;
+Keywords=Awake;Sleep;Suspend;Screen;
+OnlyShowIn=X-Cinnamon;
+StartupNotify=true

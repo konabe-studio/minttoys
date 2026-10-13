@@ -1,5 +1,7 @@
-minttoys (0.3.0~dev) UNRELEASED; urgency=medium
+tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
 
+  * MintToys is now TuxToys: the package, its commands, its settings folder
+    and its application ID carry the new name.
   * New+ adds New from template to Nemo's right-click menu: files and
     folders from your templates, with variables in their names and the
     templates ordered by a leading number.

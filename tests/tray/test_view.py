@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.tray import view
+from tuxtoys.tray import view
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=BUDAPEST)  # 08:00 UTC
@@ -45,13 +45,13 @@ class TestPresent:
         assert shown.icon == icon
 
     def test_no_state_shows_the_problem(self) -> None:
-        shown = view.present(None, NOW, "MintToys is not running.")
-        assert shown == view.View(view.ICON_OFF, "MintToys is not running.", False, False, False)
+        shown = view.present(None, NOW, "TuxToys is not running.")
+        assert shown == view.View(view.ICON_OFF, "TuxToys is not running.", False, False, False)
 
 
 def test_icon_names_carry_the_app_id() -> None:
-    assert view.ICON_ON == "io.github.konabe_studio.MintToys-awake-on-symbolic"
-    assert view.ICON_OFF == "io.github.konabe_studio.MintToys-awake-off-symbolic"
+    assert view.ICON_ON == "io.github.konabe_studio.TuxToys-awake-on-symbolic"
+    assert view.ICON_OFF == "io.github.konabe_studio.TuxToys-awake-off-symbolic"
 
 
 def test_every_icon_is_in_the_checkout() -> None:

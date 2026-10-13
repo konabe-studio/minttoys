@@ -1,6 +1,6 @@
 # Roadmap
 
-MintToys grows one milestone at a time. Each milestone brings in one new layer of
+TuxToys grows one milestone at a time. Each milestone brings in one new layer of
 integration with Cinnamon, and it is done when every tool in it meets its own acceptance
 criteria. There are no dates.
 

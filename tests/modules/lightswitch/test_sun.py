@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.lightswitch import sun
+from tuxtoys.modules.lightswitch import sun
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 # Where Night Light put a test machine in Hungary, from its time zone.

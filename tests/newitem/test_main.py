@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from minttoys.newitem.main import target_of
+from tuxtoys.newitem.main import target_of
 
 
 def test_target_of(tmp_path: Path) -> None:

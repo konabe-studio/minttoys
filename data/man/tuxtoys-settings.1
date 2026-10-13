@@ -1,0 +1,23 @@
+.TH TUXTOYS-SETTINGS 1 2026-10-09 "TuxToys" "User Commands"
+.SH NAME
+tuxtoys-settings \- set up TuxToys' tools
+.SH SYNOPSIS
+.B tuxtoys-settings
+.SH DESCRIPTION
+.B tuxtoys-settings
+opens the TuxToys window. Its first page, the Overview, lists every tool with a switch
+to turn it on or off; each tool also has a page of its own in the sidebar, where it is set
+up: for Awake, what a click on the panel icon starts, and whether the screen stays on.
+Escape closes the window, and starting it again brings the open window to the front.
+.PP
+The settings are kept by the TuxToys service of the session, which starts on its own if
+it is not running yet.
+.SH FILES
+.TP
+.I ~/.config/tuxtoys/config.json
+The settings, one section per module.
+.TP
+.I ~/.local/state/tuxtoys/settings-window.ini
+Whether the window has greeted you on its first open.
+.SH SEE ALSO
+.BR tuxtoys (1)

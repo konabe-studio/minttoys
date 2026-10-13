@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=TuxToys panel icon
+Comment=Keep the computer awake from the panel
+Exec=@LIBEXECDIR@/tuxtoys-tray
+Icon=io.github.konabe_studio.TuxToys-awake-on-symbolic
+OnlyShowIn=X-Cinnamon;
+X-GNOME-Autostart-enabled=true

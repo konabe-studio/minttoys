@@ -18,13 +18,13 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys import BUS_NAME, OBJECT_PATH
-from minttoys.api import DAEMON_INTERFACE, ModuleInfo, ModuleOff, NotRunning, Refused
-from minttoys.client import Client
-from minttoys.daemon.service import DaemonService
-from minttoys.modules.awake.inhibit import Flags
-from minttoys.modules.awake.module import Awake
-from minttoys.modules.base import Module
+from tuxtoys import BUS_NAME, OBJECT_PATH
+from tuxtoys.api import DAEMON_INTERFACE, ModuleInfo, ModuleOff, NotRunning, Refused
+from tuxtoys.client import Client
+from tuxtoys.daemon.service import DaemonService
+from tuxtoys.modules.awake.inhibit import Flags
+from tuxtoys.modules.awake.module import Awake
+from tuxtoys.modules.base import Module
 
 T = TypeVar("T")
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=ZoneInfo("Europe/Budapest"))
@@ -95,7 +95,7 @@ class Remote:
 
 @pytest.fixture
 def config_path(tmp_path: Path) -> Path:
-    return tmp_path / "minttoys" / "config.json"
+    return tmp_path / "tuxtoys" / "config.json"
 
 
 @pytest.fixture

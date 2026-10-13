@@ -1,5 +1,5 @@
 """Session tests: they start the real daemon on the session bus, so they run inside a desktop
-session and are skipped anywhere else, CI included, and also while MintToys is running.
+session and are skipped anywhere else, CI included, and also while TuxToys is running.
 """
 
 import os
@@ -16,8 +16,8 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys import BUS_NAME
-from minttoys.modules.awake import module as awake
+from tuxtoys import BUS_NAME
+from tuxtoys.modules.awake import module as awake
 
 CHECKOUT = Path(__file__).parents[2]
 
@@ -53,7 +53,7 @@ def bus() -> Gio.DBusConnection:
     except GLib.Error as error:
         pytest.skip(f"no session bus: {error.message}")
     if owned(connection):
-        pytest.skip(f"{BUS_NAME} is taken, MintToys is running in this session")
+        pytest.skip(f"{BUS_NAME} is taken, TuxToys is running in this session")
     return connection
 
 
@@ -63,7 +63,7 @@ def start(tmp_path: Path) -> Iterator[Callable[[], subprocess.Popen[str]]]:
 
     def launch() -> subprocess.Popen[str]:
         daemon = subprocess.Popen(
-            [sys.executable, "-m", "minttoys.daemon"],
+            [sys.executable, "-m", "tuxtoys.daemon"],
             cwd=CHECKOUT,
             env={**os.environ, "XDG_CONFIG_HOME": str(tmp_path)},
             stderr=subprocess.PIPE,
@@ -136,7 +136,7 @@ def test_the_command_line_talks_to_the_daemon(
 
     def command(*argv: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
-            [sys.executable, "-m", "minttoys", *argv],
+            [sys.executable, "-m", "tuxtoys", *argv],
             cwd=CHECKOUT,
             env={**os.environ, "LANGUAGE": "C"},  # English, whatever is installed
             capture_output=True,

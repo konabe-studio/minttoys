@@ -19,10 +19,10 @@ from gi.repository import Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.api import NotRunning  # noqa: E402
-from minttoys.imageresizer.window import ResizeWindow  # noqa: E402
-from minttoys.modules.imageresizer.options import Options, Size  # noqa: E402
-from minttoys.modules.imageresizer.resize import Unsupported  # noqa: E402
+from tuxtoys.api import NotRunning  # noqa: E402
+from tuxtoys.imageresizer.window import ResizeWindow  # noqa: E402
+from tuxtoys.modules.imageresizer.options import Options, Size  # noqa: E402
+from tuxtoys.modules.imageresizer.resize import Unsupported  # noqa: E402
 
 
 class FakeClient:

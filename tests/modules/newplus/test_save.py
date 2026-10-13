@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.modules.base import Context
-from minttoys.modules.newplus.module import NewPlus
-from minttoys.modules.newplus.options import Options
-from minttoys.newplus.main import config_home, save
+from tuxtoys.modules.base import Context
+from tuxtoys.modules.newplus.module import NewPlus
+from tuxtoys.modules.newplus.options import Options
+from tuxtoys.newplus.main import config_home, save
 
 
 def here(tmp_path: Path) -> NewPlus:
@@ -35,7 +35,7 @@ def test_new_from_template_is_offered_on_folders_and_the_background(tmp_path: Pa
     assert "Name=New from template…\n" in text
     assert "Selection=any\n" in text
     assert "Extensions=dir;\n" in text
-    assert "-m minttoys.newitem %P %F\n" in text
+    assert "-m tuxtoys.newitem %P %F\n" in text
     module.switched_off()
     assert not path.exists()
 
@@ -48,7 +48,7 @@ def test_its_settings_reach_the_window_through_the_action(tmp_path: Path) -> Non
     )
     module.apply_settings(settings)
     text = module.create_action(Options()).path.read_text(encoding="utf-8")
-    assert "-m minttoys.newitem --variables --hide-digits %P %F\n" in text
+    assert "-m tuxtoys.newitem --variables --hide-digits %P %F\n" in text
 
 
 def test_its_settings_are_checked() -> None:

@@ -1,0 +1,12 @@
+"""The tools, one package each, loaded by the daemon."""
+
+# Every module TuxToys ships, as module id -> "package.module:Class". The daemon imports
+# each one only when it gets to it, so a module that fails to import fails alone.
+AVAILABLE: dict[str, str] = {
+    "awake": "tuxtoys.modules.awake.module:Awake",
+    "lightswitch": "tuxtoys.modules.lightswitch.module:LightSwitch",
+    "locksmith": "tuxtoys.modules.locksmith.module:FileLocksmith",
+    "newplus": "tuxtoys.modules.newplus.module:NewPlus",
+    "alwaysontop": "tuxtoys.modules.alwaysontop.module:AlwaysOnTop",
+    "imageresizer": "tuxtoys.modules.imageresizer.module:ImageResizer",
+}

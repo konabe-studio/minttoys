@@ -1,8 +1,8 @@
 import pytest
 
-from minttoys.modules.imageresizer.naming import format_name, target
-from minttoys.modules.imageresizer.options import DEFAULT_SIZES, Options, Size, check_size
-from minttoys.modules.imageresizer.sizing import in_pixels, plan
+from tuxtoys.modules.imageresizer.naming import format_name, target
+from tuxtoys.modules.imageresizer.options import DEFAULT_SIZES, Options, Size, check_size
+from tuxtoys.modules.imageresizer.sizing import in_pixels, plan
 
 
 def test_the_defaults_are_powertoys() -> None:

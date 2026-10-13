@@ -1,4 +1,4 @@
-Source: minttoys
+Source: tuxtoys
 Section: utils
 Priority: optional
 Maintainer: Kōnabe Studio <konabe@proton.me>
@@ -11,11 +11,11 @@ Build-Depends: debhelper-compat (= 13),
                tzdata <!nocheck>,
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
-Homepage: https://github.com/konabe-studio/minttoys
-Vcs-Browser: https://github.com/konabe-studio/minttoys
-Vcs-Git: https://github.com/konabe-studio/minttoys.git
+Homepage: https://github.com/konabe-studio/tuxtoys
+Vcs-Browser: https://github.com/konabe-studio/tuxtoys
+Vcs-Git: https://github.com/konabe-studio/tuxtoys.git
 
-Package: minttoys
+Package: tuxtoys
 Architecture: all
 Depends: gir1.2-glib-2.0,
          gir1.2-gtk-3.0,
@@ -29,7 +29,7 @@ Depends: gir1.2-glib-2.0,
          ${misc:Depends},
          ${python3:Depends},
 Description: power-user utilities for Linux Mint Cinnamon
- MintToys is a set of small desktop tools for Linux Mint Cinnamon, inspired
+ TuxToys is a set of small desktop tools for Linux Mint Cinnamon, inspired
  by Microsoft PowerToys, each switched on or off in one place and built on
  what Cinnamon already provides.
  .
@@ -38,4 +38,4 @@ Description: power-user utilities for Linux Mint Cinnamon
  Mint's day and dark modes on a schedule; Always on Top keeps a window above
  the others, framed; File Locksmith shows which processes hold a file open;
  New+ manages the templates of Nemo's Create New Document. They come with a
- panel icon, a settings window and the minttoys command.
+ panel icon, a settings window and the tuxtoys command.

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TuxToys
+Comment=The background service behind TuxToys' tools
+Exec=@LIBEXECDIR@/tuxtoysd
+Icon=io.github.konabe_studio.TuxToys-awake-off-symbolic
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

@@ -20,16 +20,16 @@ from gi.repository import Gdk, Gio, Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
-from minttoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
-from minttoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
-from minttoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
-from minttoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
-from minttoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
-from minttoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
-from minttoys.settings.newplus_page import NewPlusPage  # noqa: E402
-from minttoys.settings.overview_page import OverviewPage  # noqa: E402
-from minttoys.settings.window import SettingsWindow  # noqa: E402
+from tuxtoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
+from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
+from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
+from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
+from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
+from tuxtoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
+from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
+from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
+from tuxtoys.settings.window import SettingsWindow  # noqa: E402
 
 SETTINGS = {
     "default_mode": "indefinite",
@@ -264,7 +264,7 @@ def test_a_failed_awake_says_why(client: FakeClient, errors: list[str]) -> None:
 def test_without_the_daemon_it_says_so(client: FakeClient, errors: list[str]) -> None:
     client.fail = NotRunning()
     page = page_for(client, errors)
-    assert page.problem.get_text() == "MintToys is not running."
+    assert page.problem.get_text() == "TuxToys is not running."
     assert not page.enabled.get_sensitive()
     assert not page.click.get_sensitive()
 
@@ -284,7 +284,7 @@ def test_unreadable_settings_say_why(client: FakeClient, errors: list[str]) -> N
 def test_a_missing_awake_says_so(client: FakeClient, errors: list[str]) -> None:
     client.listed = False
     page = page_for(client, errors)
-    assert page.problem.get_text() == "This version of MintToys has no Awake."
+    assert page.problem.get_text() == "This version of TuxToys has no Awake."
     assert not page.enabled.get_sensitive()
     assert not page.click.get_sensitive()
 
@@ -293,7 +293,7 @@ def test_a_refused_change_is_reported_and_undone(client: FakeClient, errors: lis
     page = page_for(client, errors)
     client.fail = Refused("disk full")
     page.keep_screen.content_widget.set_active(True)
-    assert errors == ["MintToys refused: disk full"]
+    assert errors == ["TuxToys refused: disk full"]
     assert not page.keep_screen.content_widget.get_active()
 
 
@@ -310,7 +310,7 @@ def window(
 
 
 def test_the_window_holds_the_awake_page(window: SettingsWindow) -> None:
-    assert window.get_title() == "MintToys"
+    assert window.get_title() == "TuxToys"
     assert window.awake.mode.content_widget.get_active_id() == "indefinite"
 
 
@@ -366,7 +366,7 @@ def test_without_the_daemon_the_overview_says_so(client: FakeClient, errors: lis
     page = OverviewPage(client, errors.append, welcome=False)
     client.fail = NotRunning()
     page.refresh()
-    assert page.problem.get_text() == "MintToys is not running."
+    assert page.problem.get_text() == "TuxToys is not running."
     assert not page.rows["awake"].get_sensitive()
 
 
@@ -376,7 +376,7 @@ def test_the_first_open_greets_once(
     tmp_path: Path,
 ) -> None:
     _, bus = private_bus
-    state = tmp_path / "minttoys" / "settings-window.ini"
+    state = tmp_path / "tuxtoys" / "settings-window.ini"
     first = SettingsWindow(None, bus, client, state)
     assert first.overview.welcome.get_visible()
     first.destroy()
