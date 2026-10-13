@@ -2,5 +2,7 @@
 # Install them into a virtual environment: pip install -r requirements-dev.txt
 ruff==0.16.10
 pytest==9.1.1
+# Image Resizer's tests resize real pictures; installed, the package uses python3-pil.
+pillow==12.3.0
 # Windows has no system time zone database for the tests to read; Linux has /usr/share/zoneinfo.
 tzdata==2026.4; sys_platform == "win32"
