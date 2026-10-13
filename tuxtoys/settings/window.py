@@ -31,6 +31,7 @@ from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
 from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
+from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
 
 SIDEBAR_WIDTH = 200
@@ -105,6 +106,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.newplus = NewPlusPage(client, self._error)
         self.alwaysontop = AlwaysOnTopPage(client, self._error)
         self.imageresizer = ImageResizerPage(client, self._error)
+        self.renameplus = RenamePlusPage(client, self._error)
         self.pages = {
             "awake": self.awake,
             "lightswitch": self.lightswitch,
@@ -112,6 +114,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
             "newplus": self.newplus,
             "alwaysontop": self.alwaysontop,
             "imageresizer": self.imageresizer,
+            "renameplus": self.renameplus,
         }
         pages = self.pages
         for heading, tools in catalog.grouped():
