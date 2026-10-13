@@ -62,11 +62,14 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/minttoys-always-on-top
 	$(SUBSTITUTE) data/launchers/minttoys-new-from-template.in \
 		> $(DESTDIR)$(LIBEXECDIR)/minttoys-new-from-template
+	$(SUBSTITUTE) data/launchers/minttoys-image-resizer.in \
+		> $(DESTDIR)$(LIBEXECDIR)/minttoys-image-resizer
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/minttoys $(DESTDIR)$(PREFIX)/bin/minttoys-settings \
 		$(DESTDIR)$(LIBEXECDIR)/minttoysd $(DESTDIR)$(LIBEXECDIR)/minttoys-tray \
 		$(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith $(DESTDIR)$(LIBEXECDIR)/minttoys-save-template \
 		$(DESTDIR)$(LIBEXECDIR)/minttoys-always-on-top \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-new-from-template
+		$(DESTDIR)$(LIBEXECDIR)/minttoys-new-from-template \
+		$(DESTDIR)$(LIBEXECDIR)/minttoys-image-resizer
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \
 		$(SUBSTITUTE) $$entry > $(DESTDIR)$(SYSCONFDIR)/xdg/autostart/$$(basename $$entry); \
