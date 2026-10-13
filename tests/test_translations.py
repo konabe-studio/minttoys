@@ -70,6 +70,9 @@ def read_po(path: Path) -> dict[str, Entry]:
     return entries
 
 
+MARKERS = ("_", "N_", "ngettext")
+
+
 def source_messages() -> dict[str, str | None]:
     """Every message the sources mark, as msgid -> its plural (None for none): the
     arguments of _() and ngettext() in the package, and the translated keys of the
@@ -77,7 +80,17 @@ def source_messages() -> dict[str, str | None]:
     """
     found: dict[str, str | None] = {}
     for path in sorted((ROOT / "minttoys").rglob("*.py")):
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        # xgettext does not look inside f-strings, so a message there never reaches the
+        # template; this says so even where gettext is missing.
+        for formatted in (node for node in ast.walk(tree) if isinstance(node, ast.JoinedStr)):
+            for node in ast.walk(formatted):
+                if isinstance(node, ast.Call) and getattr(node.func, "id", "") in MARKERS:
+                    where = f"{path.relative_to(ROOT)}:{node.lineno}"
+                    raise AssertionError(
+                        f"{where}: a message inside an f-string, which xgettext skips"
+                    )
+        for node in ast.walk(tree):
             if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)):
                 continue
             count = {"_": 1, "N_": 1, "ngettext": 2}.get(node.func.id)
