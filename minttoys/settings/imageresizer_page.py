@@ -29,6 +29,8 @@ from minttoys.settings.lightswitch_page import Client  # noqa: E402
 from minttoys.settings.simple_page import SimplePage  # noqa: E402
 
 WARNING_ICON = "dialog-warning-symbolic"
+# The warning sign in the theme's warning colour, amber in Mint-Y, rather than the text's.
+WARNING_CSS = b"entry image.right { color: @warning_color; }"
 
 
 class SizeRow(SettingsWidget):
@@ -97,6 +99,11 @@ class ImageResizerPage(SimplePage):
 
         self.file = self.add_section(_("File"))
         self.file_name = FileNameRow(_("File name format"))
+        warning = Gtk.CssProvider()
+        warning.load_from_data(WARNING_CSS)
+        self.file_name.content_widget.get_style_context().add_provider(
+            warning, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
         self.file_name.content_widget.connect("changed", self._on_file_name)
         # Leaving the field with a format that cannot be used puts the saved one back.
         self.file_name.content_widget.connect(
