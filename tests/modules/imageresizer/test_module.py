@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.modules.base import Context
-from minttoys.modules.imageresizer.module import ImageResizer
-from minttoys.modules.imageresizer.options import Size
-from minttoys.modules.imageresizer.text import describe
+from tuxtoys.modules.base import Context
+from tuxtoys.modules.imageresizer.module import ImageResizer
+from tuxtoys.modules.imageresizer.options import Size
+from tuxtoys.modules.imageresizer.text import describe
 
 
 def here(tmp_path: Path) -> ImageResizer:
@@ -22,7 +22,7 @@ def test_the_action_is_offered_on_pictures(tmp_path: Path) -> None:
     assert "Name=Resize with Image Resizer\n" in text
     assert "Selection=notnone\n" in text
     assert "Extensions=jpg;jpeg;jpe;png;webp;tif;tiff;bmp;gif;\n" in text
-    assert "-m minttoys.imageresizer %F\n" in text
+    assert "-m tuxtoys.imageresizer %F\n" in text
     module.disable()
     assert module.action.path.exists()
     module.switched_off()

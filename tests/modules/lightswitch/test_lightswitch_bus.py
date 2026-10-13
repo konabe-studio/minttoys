@@ -14,10 +14,10 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys.modules.base import Context
-from minttoys.modules.lightswitch.module import INTERFACE, OBJECT_PATH, LightSwitch
-from minttoys.modules.lightswitch.schedule import NightLight
-from minttoys.modules.lightswitch.styles import Look, Style, Variant
+from tuxtoys.modules.base import Context
+from tuxtoys.modules.lightswitch.module import INTERFACE, OBJECT_PATH, LightSwitch
+from tuxtoys.modules.lightswitch.schedule import NightLight
+from tuxtoys.modules.lightswitch.styles import Look, Style, Variant
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 
@@ -94,7 +94,7 @@ class FakeKeybindings:
         self.customs = [custom for custom in self.customs if custom.path != path]
 
 
-OURS = ("MintToys: Light Switch", "minttoys lightswitch toggle")
+OURS = ("TuxToys: Light Switch", "tuxtoys lightswitch toggle")
 KEYS = "<Primary><Shift><Super>d"
 
 
@@ -332,11 +332,11 @@ def test_taken_keys_give_no_shortcut_and_say_so(harness: Harness) -> None:
 
 
 def test_a_shortcut_of_the_users_own_is_not_ours(harness: Harness) -> None:
-    harness.keybindings.add("Dark mode", "minttoys lightswitch toggle", "<Super>F8")
+    harness.keybindings.add("Dark mode", "tuxtoys lightswitch toggle", "<Super>F8")
     harness.enable()
     assert len(shortcuts(harness)) == 2
     harness.module.switched_off()
-    assert shortcuts(harness) == [("Dark mode", "minttoys lightswitch toggle", ["<Super>F8"])]
+    assert shortcuts(harness) == [("Dark mode", "tuxtoys lightswitch toggle", ["<Super>F8"])]
 
 
 def test_the_end_of_a_session_keeps_the_shortcut(harness: Harness) -> None:

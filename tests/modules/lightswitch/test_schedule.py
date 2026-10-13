@@ -3,8 +3,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.lightswitch import schedule
-from minttoys.modules.lightswitch.schedule import Dark, NightLight
+from tuxtoys.modules.lightswitch import schedule
+from tuxtoys.modules.lightswitch.schedule import Dark, NightLight
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 OCTOBER_NOON = datetime(2026, 10, 9, 12, tzinfo=BUDAPEST)

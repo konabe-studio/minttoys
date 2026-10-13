@@ -8,8 +8,8 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys import APP_ID
-from minttoys.core import notifications
+from tuxtoys import APP_ID
+from tuxtoys.core import notifications
 
 SERVER_XML = """
 <node>
@@ -63,7 +63,7 @@ def test_sends_summary_body_and_desktop_entry(
     notifications.send(client, "Awake is off", "The time is up.")
     assert pump(lambda: received)
     app_name, _, _, summary, body, _, hints, _ = received[0]
-    assert (app_name, summary, body) == ("MintToys", "Awake is off", "The time is up.")
+    assert (app_name, summary, body) == ("TuxToys", "Awake is off", "The time is up.")
     assert hints == {"desktop-entry": APP_ID}
 
 

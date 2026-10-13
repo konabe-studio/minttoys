@@ -19,7 +19,7 @@ debian/debhelper-build-stamp
 debian/files
 debian/*.substvars
 debian/*.debhelper.log
-debian/minttoys/
+debian/tuxtoys/
 *.deb
 *.buildinfo
 *.changes

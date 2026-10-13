@@ -18,9 +18,9 @@ from gi.repository import Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.locksmith import window as window_module  # noqa: E402
-from minttoys.locksmith.window import LocksmithWindow  # noqa: E402
-from minttoys.modules.locksmith.scan import Holder, Scan  # noqa: E402
+from tuxtoys.locksmith import window as window_module  # noqa: E402
+from tuxtoys.locksmith.window import LocksmithWindow  # noqa: E402
+from tuxtoys.modules.locksmith.scan import Holder, Scan  # noqa: E402
 
 REPORT = "/home/ben/report.odt"
 

@@ -12,7 +12,7 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys.modules.awake.inhibit import (
+from tuxtoys.modules.awake.inhibit import (
     BUS_NAME,
     INTERFACE,
     OBJECT_PATH,
@@ -20,7 +20,7 @@ from minttoys.modules.awake.inhibit import (
     Inhibitor,
 )
 
-APP_ID = "minttoys-test"
+APP_ID = "tuxtoys-test"
 
 
 def call(
@@ -83,7 +83,7 @@ def test_hold_adds_one_inhibitor_and_release_removes_it(
     bus: Gio.DBusConnection, inhibitor: Inhibitor
 ) -> None:
     before = inhibitors(bus)
-    inhibitor.hold(Flags.SUSPEND | Flags.IDLE, "MintToys session test")
+    inhibitor.hold(Flags.SUSPEND | Flags.IDLE, "TuxToys session test")
     assert inhibitor.held
     assert len(inhibitors(bus) - before) == 1
     assert inhibited(bus, Flags.SUSPEND)
@@ -96,7 +96,7 @@ def test_hold_adds_one_inhibitor_and_release_removes_it(
 def test_suspend_only_leaves_idle_alone(bus: Gio.DBusConnection, inhibitor: Inhibitor) -> None:
     if inhibited(bus, Flags.IDLE):
         pytest.skip("another application is holding off idle right now")
-    inhibitor.hold(Flags.SUSPEND, "MintToys session test")
+    inhibitor.hold(Flags.SUSPEND, "TuxToys session test")
     assert inhibited(bus, Flags.SUSPEND)
     assert not inhibited(bus, Flags.IDLE)
 
@@ -105,8 +105,8 @@ def test_a_new_hold_replaces_the_old_one(bus: Gio.DBusConnection, inhibitor: Inh
     if inhibited(bus, Flags.IDLE):
         pytest.skip("another application is holding off idle right now")
     before = inhibitors(bus)
-    inhibitor.hold(Flags.SUSPEND | Flags.IDLE, "MintToys session test")
-    inhibitor.hold(Flags.SUSPEND, "MintToys session test")
+    inhibitor.hold(Flags.SUSPEND | Flags.IDLE, "TuxToys session test")
+    inhibitor.hold(Flags.SUSPEND, "TuxToys session test")
     assert len(inhibitors(bus) - before) == 1
     assert not inhibited(bus, Flags.IDLE)
 
@@ -128,7 +128,7 @@ def test_the_inhibitor_goes_with_its_connection(bus: Gio.DBusConnection) -> None
         None,
     )
     before = inhibitors(bus)
-    Inhibitor(own, APP_ID).hold(Flags.SUSPEND | Flags.IDLE, "MintToys session test")
+    Inhibitor(own, APP_ID).hold(Flags.SUSPEND | Flags.IDLE, "TuxToys session test")
     new = inhibitors(bus) - before
     assert len(new) == 1
     (ours,) = new

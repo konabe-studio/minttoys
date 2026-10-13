@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.modules.newplus import templates
-from minttoys.modules.newplus.templates import BadName, EmptyName, TakenName, Template
+from tuxtoys.modules.newplus import templates
+from tuxtoys.modules.newplus.templates import BadName, EmptyName, TakenName, Template
 
 
 def user_dirs(tmp_path: Path, line: str) -> tuple[Path, Path]:

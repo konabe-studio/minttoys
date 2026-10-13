@@ -1,29 +1,29 @@
-# Installs MintToys the way the Debian package lays it out; debian/rules runs it with
+# Installs TuxToys the way the Debian package lays it out; debian/rules runs it with
 # DESTDIR. The Python package goes to a directory of its own rather than dist-packages, as
 # Debian's Python policy asks of an application, and the launchers point there.
 #
 # Building compiles the translations in po/ into build/: the gettext catalogues, and the
 # desktop entries with their translated names. A checkout uses build/locale too, so
-# `make mo` is enough to see MintToys in another language before installing it.
+# `make mo` is enough to see TuxToys in another language before installing it.
 
 PREFIX ?= /usr
-LIBDIR = $(PREFIX)/lib/minttoys
-LIBEXECDIR = $(PREFIX)/libexec/minttoys
+LIBDIR = $(PREFIX)/lib/tuxtoys
+LIBEXECDIR = $(PREFIX)/libexec/tuxtoys
 DATADIR = $(PREFIX)/share
 SYSCONFDIR ?= /etc
 
 SUBSTITUTE = sed -e 's|@LIBDIR@|$(LIBDIR)|g' -e 's|@LIBEXECDIR@|$(LIBEXECDIR)|g'
 
 LINGUAS = $(shell cat po/LINGUAS)
-POT ?= po/minttoys.pot
-MO = $(LINGUAS:%=build/locale/%/LC_MESSAGES/minttoys.mo)
+POT ?= po/tuxtoys.pot
+MO = $(LINGUAS:%=build/locale/%/LC_MESSAGES/tuxtoys.mo)
 DESKTOP = $(patsubst data/%.desktop.in,build/%.desktop,$(wildcard data/*/*.desktop.in))
 
 all: mo $(DESKTOP)
 
 mo: $(MO)
 
-build/locale/%/LC_MESSAGES/minttoys.mo: po/%.po
+build/locale/%/LC_MESSAGES/tuxtoys.mo: po/%.po
 	install -d $(@D)
 	msgfmt --check --check-format -o $@ $<
 
@@ -34,9 +34,9 @@ build/%.desktop: data/%.desktop.in po/LINGUAS $(LINGUAS:%=po/%.po)
 # For maintainers: the template from the sources, then every translation merged with it.
 pot:
 	xgettext --language=Python --from-code=UTF-8 --add-comments=TRANSLATORS: --keyword=N_ \
-		--add-location=file --package-name=minttoys \
-		--msgid-bugs-address=https://github.com/konabe-studio/minttoys/issues \
-		-o $(POT) $$(find minttoys -name '*.py' | LC_ALL=C sort)
+		--add-location=file --package-name=tuxtoys \
+		--msgid-bugs-address=https://github.com/konabe-studio/tuxtoys/issues \
+		-o $(POT) $$(find tuxtoys -name '*.py' | LC_ALL=C sort)
 	xgettext --language=Desktop --join-existing --add-location=file \
 		-o $(POT) data/*/*.desktop.in
 
@@ -49,39 +49,39 @@ check:
 	PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider
 
 install: all
-	find minttoys -name '*.py' -exec install -D -m 644 {} $(DESTDIR)$(LIBDIR)/{} \;
+	find tuxtoys -name '*.py' -exec install -D -m 644 {} $(DESTDIR)$(LIBDIR)/{} \;
 	install -d $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(LIBEXECDIR)
-	$(SUBSTITUTE) data/launchers/minttoys.in > $(DESTDIR)$(PREFIX)/bin/minttoys
-	$(SUBSTITUTE) data/launchers/minttoys-settings.in > $(DESTDIR)$(PREFIX)/bin/minttoys-settings
-	$(SUBSTITUTE) data/launchers/minttoysd.in > $(DESTDIR)$(LIBEXECDIR)/minttoysd
-	$(SUBSTITUTE) data/launchers/minttoys-tray.in > $(DESTDIR)$(LIBEXECDIR)/minttoys-tray
-	$(SUBSTITUTE) data/launchers/minttoys-locksmith.in > $(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith
-	$(SUBSTITUTE) data/launchers/minttoys-save-template.in \
-		> $(DESTDIR)$(LIBEXECDIR)/minttoys-save-template
-	$(SUBSTITUTE) data/launchers/minttoys-always-on-top.in \
-		> $(DESTDIR)$(LIBEXECDIR)/minttoys-always-on-top
-	$(SUBSTITUTE) data/launchers/minttoys-new-from-template.in \
-		> $(DESTDIR)$(LIBEXECDIR)/minttoys-new-from-template
-	$(SUBSTITUTE) data/launchers/minttoys-image-resizer.in \
-		> $(DESTDIR)$(LIBEXECDIR)/minttoys-image-resizer
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/minttoys $(DESTDIR)$(PREFIX)/bin/minttoys-settings \
-		$(DESTDIR)$(LIBEXECDIR)/minttoysd $(DESTDIR)$(LIBEXECDIR)/minttoys-tray \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-locksmith $(DESTDIR)$(LIBEXECDIR)/minttoys-save-template \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-always-on-top \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-new-from-template \
-		$(DESTDIR)$(LIBEXECDIR)/minttoys-image-resizer
+	$(SUBSTITUTE) data/launchers/tuxtoys.in > $(DESTDIR)$(PREFIX)/bin/tuxtoys
+	$(SUBSTITUTE) data/launchers/tuxtoys-settings.in > $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings
+	$(SUBSTITUTE) data/launchers/tuxtoysd.in > $(DESTDIR)$(LIBEXECDIR)/tuxtoysd
+	$(SUBSTITUTE) data/launchers/tuxtoys-tray.in > $(DESTDIR)$(LIBEXECDIR)/tuxtoys-tray
+	$(SUBSTITUTE) data/launchers/tuxtoys-locksmith.in > $(DESTDIR)$(LIBEXECDIR)/tuxtoys-locksmith
+	$(SUBSTITUTE) data/launchers/tuxtoys-save-template.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-save-template
+	$(SUBSTITUTE) data/launchers/tuxtoys-always-on-top.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-always-on-top
+	$(SUBSTITUTE) data/launchers/tuxtoys-new-from-template.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-new-from-template
+	$(SUBSTITUTE) data/launchers/tuxtoys-image-resizer.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoysd $(DESTDIR)$(LIBEXECDIR)/tuxtoys-tray \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-locksmith $(DESTDIR)$(LIBEXECDIR)/tuxtoys-save-template \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-always-on-top \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-new-from-template \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \
 		$(SUBSTITUTE) $$entry > $(DESTDIR)$(SYSCONFDIR)/xdg/autostart/$$(basename $$entry); \
 	done
-	$(SUBSTITUTE) data/dbus/io.github.konabe_studio.MintToys.service.in \
-		> $(DESTDIR)$(DATADIR)/dbus-1/services/io.github.konabe_studio.MintToys.service
+	$(SUBSTITUTE) data/dbus/io.github.konabe_studio.TuxToys.service.in \
+		> $(DESTDIR)$(DATADIR)/dbus-1/services/io.github.konabe_studio.TuxToys.service
 	install -d $(DESTDIR)$(DATADIR)/applications
-	$(SUBSTITUTE) build/applications/io.github.konabe_studio.MintToys.desktop \
-		> $(DESTDIR)$(DATADIR)/applications/io.github.konabe_studio.MintToys.desktop
+	$(SUBSTITUTE) build/applications/io.github.konabe_studio.TuxToys.desktop \
+		> $(DESTDIR)$(DATADIR)/applications/io.github.konabe_studio.TuxToys.desktop
 	for lang in $(LINGUAS); do \
-		install -D -m 644 build/locale/$$lang/LC_MESSAGES/minttoys.mo \
-			$(DESTDIR)$(DATADIR)/locale/$$lang/LC_MESSAGES/minttoys.mo; \
+		install -D -m 644 build/locale/$$lang/LC_MESSAGES/tuxtoys.mo \
+			$(DESTDIR)$(DATADIR)/locale/$$lang/LC_MESSAGES/tuxtoys.mo; \
 	done
 	cd data && find icons -name '*.svg' -exec install -D -m 644 {} $(DESTDIR)$(DATADIR)/{} \;
 	install -D -m 644 -t $(DESTDIR)$(DATADIR)/man/man1 data/man/*.1

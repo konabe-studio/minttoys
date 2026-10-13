@@ -14,10 +14,10 @@ pytest.importorskip("gi", reason="PyGObject is not installed")
 
 from gi.repository import Gio, GLib
 
-from minttoys.modules.awake.inhibit import Flags
-from minttoys.modules.awake.module import INTERFACE, OBJECT_PATH, Awake
-from minttoys.modules.awake.state import Mode
-from minttoys.modules.base import Context
+from tuxtoys.modules.awake.inhibit import Flags
+from tuxtoys.modules.awake.module import INTERFACE, OBJECT_PATH, Awake
+from tuxtoys.modules.awake.state import Mode
+from tuxtoys.modules.base import Context
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 OFF = {"mode": "off", "keep_screen": False, "ends_at": 0}

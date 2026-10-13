@@ -21,9 +21,9 @@ from gi.repository import Gio, GLib, Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys import BUS_NAME  # noqa: E402
-from minttoys.api import AWAKE_INTERFACE, AWAKE_PATH  # noqa: E402
-from minttoys.tray import app, view  # noqa: E402
+from tuxtoys import BUS_NAME  # noqa: E402
+from tuxtoys.api import AWAKE_INTERFACE, AWAKE_PATH  # noqa: E402
+from tuxtoys.tray import app, view  # noqa: E402
 
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=ZoneInfo("Europe/Budapest"))
 OFF = {"mode": "off", "keep_screen": False, "ends_at": 0}
@@ -83,8 +83,8 @@ def harness(
 
 
 def test_without_the_daemon_it_says_so_and_offers_nothing(harness: Harness) -> None:
-    assert harness.status() == "MintToys is not running."
-    assert harness.tray.tooltip == "MintToys is not running."
+    assert harness.status() == "TuxToys is not running."
+    assert harness.tray.tooltip == "TuxToys is not running."
     assert not harness.item("Until turned off").get_sensitive()
     assert not harness.item("Keep the screen on").get_sensitive()
 

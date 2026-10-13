@@ -17,8 +17,8 @@ from gi.repository import Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from minttoys.alwaysontop.border import Borders, Style, parse_color, theme_accent  # noqa: E402
-from minttoys.modules.alwaysontop.frame import Rect  # noqa: E402
+from tuxtoys.alwaysontop.border import Borders, Style, parse_color, theme_accent  # noqa: E402
+from tuxtoys.modules.alwaysontop.frame import Rect  # noqa: E402
 
 
 def test_a_frame_for_each_pinned_window_and_none_for_the_rest() -> None:

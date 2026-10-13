@@ -5,9 +5,9 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.newplus import names
-from minttoys.modules.newplus.create import Naming, check, make, ordered
-from minttoys.modules.newplus.templates import BadName, EmptyName, TakenName, Template
+from tuxtoys.modules.newplus import names
+from tuxtoys.modules.newplus.create import Naming, check, make, ordered
+from tuxtoys.modules.newplus.templates import BadName, EmptyName, TakenName, Template
 
 NOW = datetime(2026, 3, 5, 7, 8, 9, 123456, tzinfo=ZoneInfo("Europe/Budapest"))
 

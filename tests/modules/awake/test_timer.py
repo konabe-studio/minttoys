@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys.modules.awake.timer import (
+from tuxtoys.modules.awake.timer import (
     end_after,
     minutes_left,
     next_occurrence,

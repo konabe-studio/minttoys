@@ -1,8 +1,8 @@
 from dataclasses import replace
 from pathlib import Path
 
-from minttoys.modules.base import Context
-from minttoys.modules.locksmith.module import FileLocksmith, menu_item
+from tuxtoys.modules.base import Context
+from tuxtoys.modules.locksmith.module import FileLocksmith, menu_item
 
 
 def module(tmp_path: Path) -> FileLocksmith:

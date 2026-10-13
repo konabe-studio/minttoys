@@ -1,4 +1,4 @@
-# MintToys runs on Linux, so every text file is LF in the working tree too, on every OS.
+# TuxToys runs on Linux, so every text file is LF in the working tree too, on every OS.
 * text=auto eol=lf
 
 *.png binary

@@ -4,8 +4,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from minttoys import cli
-from minttoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
+from tuxtoys import cli
+from tuxtoys.api import ModuleInfo, ModuleOff, NotRunning, Refused
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 NOW = datetime(2026, 6, 1, 10, 0, tzinfo=BUDAPEST)  # 08:00 UTC
@@ -181,19 +181,19 @@ class TestErrors:
         client.error = NotRunning()
         status, _, err = run(client, "awake", "status")
         assert status == 1
-        assert err == "MintToys is not running in this session.\n"
+        assert err == "TuxToys is not running in this session.\n"
 
     def test_module_off_says_how_to_switch_it_on(self, client: FakeClient) -> None:
         client.error = ModuleOff()
         status, _, err = run(client, "awake", "on")
         assert status == 1
-        assert "minttoys modules enable awake" in err
+        assert "tuxtoys modules enable awake" in err
 
     def test_refused_says_why(self, client: FakeClient) -> None:
         client.error = Refused("unknown module: 'nope'")
         status, _, err = run(client, "modules", "enable", "nope")
         assert status == 1
-        assert err == "MintToys refused: unknown module: 'nope'\n"
+        assert err == "TuxToys refused: unknown module: 'nope'\n"
 
     def test_no_pygobject(self) -> None:
         def connect() -> FakeClient:
@@ -246,8 +246,8 @@ class TestLightSwitch:
         status, _, err = run(client, "lightswitch")
         assert status == 1
         assert err.splitlines() == [
-            "Light Switch is switched off in MintToys.",
-            "Switch it on with: minttoys modules enable lightswitch",
+            "Light Switch is switched off in TuxToys.",
+            "Switch it on with: tuxtoys modules enable lightswitch",
         ]
 
 
@@ -255,7 +255,7 @@ class TestAlwaysOnTop:
     def test_opacity_steps_the_active_window(
         self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from minttoys.platform import x11
+        from tuxtoys.platform import x11
 
         steps: list[bool] = []
 
@@ -272,7 +272,7 @@ class TestAlwaysOnTop:
     def test_a_window_not_pinned_is_said(
         self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from minttoys.platform import x11
+        from tuxtoys.platform import x11
 
         monkeypatch.setattr(x11, "step_active_opacity", lambda up: False)
         status, _, err = run(client, "alwaysontop", "opacity", "down")
@@ -282,7 +282,7 @@ class TestAlwaysOnTop:
     def test_an_x11_error_is_said(
         self, client: FakeClient, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from minttoys.platform import x11
+        from tuxtoys.platform import x11
 
         def broken(up: bool) -> bool:
             raise RuntimeError("no display")

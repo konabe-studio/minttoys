@@ -1,4 +1,4 @@
-from minttoys.settings import catalog
+from tuxtoys.settings import catalog
 
 
 def test_every_tool_has_a_heading() -> None:
@@ -26,6 +26,6 @@ def test_grouped_keeps_the_order_and_leaves_out_empty_headings() -> None:
 
 
 def test_every_module_the_daemon_has_is_listed() -> None:
-    from minttoys.modules import AVAILABLE
+    from tuxtoys.modules import AVAILABLE
 
     assert {tool.id for tool in catalog.TOOLS} == set(AVAILABLE)

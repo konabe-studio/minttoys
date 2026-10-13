@@ -17,7 +17,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PO = ROOT / "po"
-TEMPLATE = PO / "minttoys.pot"
+TEMPLATE = PO / "tuxtoys.pot"
 LANGUAGES = (PO / "LINGUAS").read_text(encoding="utf-8").split()
 # The keys of a desktop entry that xgettext extracts and msgfmt translates.
 DESKTOP_KEYS = ("Name", "GenericName", "Comment", "Keywords")
@@ -79,7 +79,7 @@ def source_messages() -> dict[str, str | None]:
     desktop entries.
     """
     found: dict[str, str | None] = {}
-    for path in sorted((ROOT / "minttoys").rglob("*.py")):
+    for path in sorted((ROOT / "tuxtoys").rglob("*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         # xgettext does not look inside f-strings, so a message there never reaches the
         # template; this says so even where gettext is missing.
@@ -120,7 +120,7 @@ def messages(entries: dict[str, Entry]) -> dict[str, str | None]:
     return {msgid: entry.plural for msgid, entry in entries.items()}
 
 
-@pytest.mark.parametrize("name", ["minttoys.pot", *(f"{lang}.po" for lang in LANGUAGES)])
+@pytest.mark.parametrize("name", ["tuxtoys.pot", *(f"{lang}.po" for lang in LANGUAGES)])
 def test_no_message_is_there_twice(name: str) -> None:
     read_po(PO / name)  # raises for a message that is
 
@@ -129,7 +129,7 @@ def test_the_template_has_every_message_of_the_sources_and_no_other() -> None:
     sources, template = source_messages(), messages(read_po(TEMPLATE))
     missing = {msgid for msgid in sources if template.get(msgid, "") != sources[msgid]}
     stale = {msgid for msgid in template if msgid not in sources}
-    assert not missing, f"not in po/minttoys.pot, run make update-po: {sorted(missing)}"
+    assert not missing, f"not in po/tuxtoys.pot, run make update-po: {sorted(missing)}"
     assert not stale, f"no longer in the sources, run make update-po: {sorted(stale)}"
 
 
@@ -181,7 +181,7 @@ def test_a_translation_has_no_long_dashes(language: str) -> None:
 @pytest.mark.skipif(shutil.which("msgfmt") is None, reason="gettext is not installed")
 @pytest.mark.parametrize("language", LANGUAGES)
 def test_msgfmt_compiles_a_translation_python_reads(language: str, tmp_path: Path) -> None:
-    compiled = tmp_path / "minttoys.mo"
+    compiled = tmp_path / "tuxtoys.mo"
     subprocess.run(
         ["msgfmt", "--check", "--check-format", "-o", compiled, PO / f"{language}.po"],
         check=True,
@@ -201,6 +201,6 @@ def test_msgfmt_compiles_a_translation_python_reads(language: str, tmp_path: Pat
     reason="make and gettext are not installed",
 )
 def test_make_pot_extracts_what_the_template_has(tmp_path: Path) -> None:
-    extracted = tmp_path / "minttoys.pot"
+    extracted = tmp_path / "tuxtoys.pot"
     subprocess.run(["make", "-s", "pot", f"POT={extracted}"], cwd=ROOT, check=True)
     assert messages(read_po(extracted)) == messages(read_po(TEMPLATE))

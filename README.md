@@ -1,22 +1,23 @@
-# MintToys
+# TuxToys
 
 **Power-user utilities for Linux Mint Cinnamon. One package, one settings window.**
 
-<a href="https://github.com/konabe-studio/minttoys/actions/workflows/ci.yml"><img src="https://github.com/konabe-studio/minttoys/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+<a href="https://github.com/konabe-studio/tuxtoys/actions/workflows/ci.yml"><img src="https://github.com/konabe-studio/tuxtoys/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License: GPL-3.0-or-later"></a>
 
 ---
 
-MintToys is a set of small desktop tools for Linux Mint Cinnamon, inspired by Microsoft
+TuxToys is a set of small desktop tools for Linux Mint Cinnamon, inspired by Microsoft
 PowerToys. You install it once and switch each tool on or off from a single settings app.
 
 Every tool is built on what Cinnamon already provides (Muffin, Nemo, gsettings and D-Bus),
 so it follows your theme and behaves like the rest of the system. Where Cinnamon already
-does something well, MintToys leaves it alone, and each tool says what it adds over the
+does something well, TuxToys leaves it alone, and each tool says what it adds over the
 built-in one.
 
 > **Status: early development.** Release 0.2.0 carries five tools: Awake, and the first
-> milestone's Light Switch, Always on Top, File Locksmith and New+.
+> milestone's Light Switch, Always on Top, File Locksmith and New+. Up to that release
+> TuxToys was called MintToys; the next release is the first under the new name.
 
 ## The tools
 
@@ -31,7 +32,7 @@ without touching your power settings.
   computer from sleeping.
 - **From the panel.** One click turns it on or off, the icon shows the mode, the tooltip
   shows the time left, and a notification tells you when a timer runs out.
-- **Nothing left behind.** Awake starts off after every login, and if MintToys stops for
+- **Nothing left behind.** Awake starts off after every login, and if TuxToys stops for
   any reason, your usual power settings apply again within seconds.
 
 ### Light Switch
@@ -89,27 +90,27 @@ pick it. Everything planned next, grouped into milestones, is in the
 
 ## Install
 
-Download `minttoys_0.2.0_all.deb` from the
-[latest release](https://github.com/konabe-studio/minttoys/releases/latest) and
+Download the `.deb` from the
+[latest release](https://github.com/konabe-studio/tuxtoys/releases/latest) and
 double-click it, or install it from a terminal in the folder you downloaded it to:
 
 ```sh
-sudo apt install ./minttoys_0.2.0_all.deb
+sudo apt install ./tuxtoys_*_all.deb
 ```
 
-Then log out and back in. The coffee cup appears in the panel, and MintToys is in the
+Then log out and back in. The coffee cup appears in the panel, and TuxToys is in the
 menu.
 
-To remove MintToys:
+To remove TuxToys:
 
 ```sh
-sudo apt purge minttoys
+sudo apt purge tuxtoys
 ```
 
-The panel icon stays until you log out. Your own settings stay in `~/.config/minttoys/`
-and `~/.local/state/minttoys/`, yours to keep or delete. A keyboard shortcut a tool added
+The panel icon stays until you log out. Your own settings stay in `~/.config/tuxtoys/`
+and `~/.local/state/tuxtoys/`, yours to keep or delete. A keyboard shortcut a tool added
 to Cinnamon, such as Light Switch's or Always on Top's, stays in the Keyboard settings too: switch the tool
-off in MintToys before removing the package, or delete the shortcut there.
+off in TuxToys before removing the package, or delete the shortcut there.
 
 ## Platform
 
@@ -132,19 +133,19 @@ python3 -m venv .venv
 .venv/bin/ruff check && .venv/bin/ruff format --check && .venv/bin/pytest
 ```
 
-To run MintToys from a checkout, start the daemon and the panel icon from the checkout's
+To run TuxToys from a checkout, start the daemon and the panel icon from the checkout's
 folder, each in a terminal of its own. The panel finds the icons by name only once they are
 installed; until then, `scripts/dev-install.sh` links them into `~/.local/share`, and
 `scripts/dev-install.sh --remove` takes them out again.
 
 ```sh
-python3 -m minttoys.daemon
-python3 -m minttoys.tray
-python3 -m minttoys.settings
-python3 -m minttoys awake status
+python3 -m tuxtoys.daemon
+python3 -m tuxtoys.tray
+python3 -m tuxtoys.settings
+python3 -m tuxtoys awake status
 ```
 
-The translations are in `po/`: the template `minttoys.pot`, and a `.po` file for each
+The translations are in `po/`: the template `tuxtoys.pot`, and a `.po` file for each
 language listed in `po/LINGUAS`. After a change to the text in the code, `make update-po`
 brings them up to date. A checkout shows a translation once `make mo` has compiled it into
 `build/locale`:
@@ -152,7 +153,7 @@ brings them up to date. A checkout shows a translation once `make mo` has compil
 ```sh
 sudo apt install gettext make
 make mo
-LANGUAGE=hu python3 -m minttoys awake status
+LANGUAGE=hu python3 -m tuxtoys awake status
 ```
 
 To add a language, copy the template to `po/<language>.po`, translate it, and add the
@@ -171,11 +172,11 @@ request, installs it, tries it and purges it again.
 ## Feedback
 
 Ideas and bug reports are welcome in the
-[issues](https://github.com/konabe-studio/minttoys/issues).
+[issues](https://github.com/konabe-studio/tuxtoys/issues).
 
 ## License
 
-MintToys is free software, released under the GNU General Public License, version 3 or
+TuxToys is free software, released under the GNU General Public License, version 3 or
 later. See [LICENSE](LICENSE).
 
 ## Built with
@@ -184,4 +185,4 @@ Built with AI assistance (Claude Code), human-reviewed and maintained by Kōnabe
 
 ---
 
-<p align="center"><sub>MintToys is an independent project, not affiliated with or endorsed by Microsoft or the Linux Mint project. PowerToys is a trademark of Microsoft Corporation.</sub></p>
+<p align="center"><sub>TuxToys is an independent project, not affiliated with or endorsed by Microsoft or the Linux Mint project. PowerToys is a trademark of Microsoft Corporation.</sub></p>

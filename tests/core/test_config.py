@@ -3,23 +3,23 @@ from pathlib import Path
 
 import pytest
 
-from minttoys.core import config
-from minttoys.core.config import Config
+from tuxtoys.core import config
+from tuxtoys.core.config import Config
 
 
 class TestDefaultPath:
     def test_follows_xdg_config_home(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
         monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
-        assert config.default_path() == tmp_path / "minttoys" / "config.json"
+        assert config.default_path() == tmp_path / "tuxtoys" / "config.json"
 
     @pytest.mark.parametrize("value", ["", "relative/path"])
     def test_falls_back_to_dot_config(self, monkeypatch: pytest.MonkeyPatch, value: str) -> None:
         monkeypatch.setenv("XDG_CONFIG_HOME", value)
-        assert config.default_path() == Path.home() / ".config" / "minttoys" / "config.json"
+        assert config.default_path() == Path.home() / ".config" / "tuxtoys" / "config.json"
 
     def test_falls_back_when_unset(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delenv("XDG_CONFIG_HOME", raising=False)
-        assert config.default_path() == Path.home() / ".config" / "minttoys" / "config.json"
+        assert config.default_path() == Path.home() / ".config" / "tuxtoys" / "config.json"
 
 
 class TestConfig:
@@ -76,7 +76,7 @@ class TestSave:
         assert config.load(path).module("awake") == {"enabled": True, "default_minutes": 60}
 
     def test_creates_the_directory(self, tmp_path: Path) -> None:
-        path = tmp_path / "minttoys" / "config.json"
+        path = tmp_path / "tuxtoys" / "config.json"
         config.save(Config(), path)
         assert path.exists()
 

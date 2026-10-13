@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-# The tests read the English text. Set before any test imports minttoys, which picks its
+# The tests read the English text. Set before any test imports tuxtoys, which picks its
 # language once, so that a translation installed with the package or built by `make mo`
 # does not reach them on a desktop in another language.
 os.environ["LANGUAGE"] = "C"
