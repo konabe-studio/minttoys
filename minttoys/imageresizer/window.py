@@ -24,6 +24,13 @@ from minttoys.modules.imageresizer.text import describe, fit_name, unit_name  # 
 type Resizer = Callable[[Path, Size, Options], object]
 
 
+def bold(text: str) -> str:
+    """Markup for a heading. The message is passed in, never written inside an f-string,
+    where xgettext would not find it.
+    """
+    return f"<b>{GLib.markup_escape_text(text)}</b>"
+
+
 class Client(Protocol):
     def module_settings(self, module_id: str) -> dict: ...
     def set_module_settings(self, module_id: str, changes: Mapping[str, object]) -> None: ...
@@ -67,7 +74,7 @@ class ResizeWindow(Gtk.ApplicationWindow):
     def _choose_page(self) -> Gtk.Widget:
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin=18)
         heading = Gtk.Label(xalign=0)
-        heading.set_markup(f"<b>{GLib.markup_escape_text(_('Resize your pictures'))}</b>")
+        heading.set_markup(bold(_("Resize your pictures")))
         box.pack_start(heading, False, False, 0)
         count = len(self._pictures)
         what = (
@@ -274,9 +281,7 @@ class ResizeWindow(Gtk.ApplicationWindow):
     def _done_page(self) -> Gtk.Widget:
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin=18)
         heading = Gtk.Label(xalign=0, wrap=True)
-        heading.set_markup(
-            f"<b>{GLib.markup_escape_text(_('Some pictures could not be resized.'))}</b>"
-        )
+        heading.set_markup(bold(_("Some pictures could not be resized.")))
         box.pack_start(heading, False, False, 0)
         self.failures = Gtk.Label(xalign=0, wrap=True, selectable=True)
         box.pack_start(self.failures, False, False, 0)
