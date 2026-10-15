@@ -27,6 +27,8 @@ from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # no
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.modules.screenruler.options import Options as RulerOptions  # noqa: E402
+from tuxtoys.modules.textextractor import tesseract  # noqa: E402
+from tuxtoys.modules.textextractor.options import Options as ExtractorOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from tuxtoys.settings.colorpicker_page import ColorPickerPage  # noqa: E402
@@ -39,6 +41,7 @@ from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
 from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
 from tuxtoys.settings.screenruler_page import ScreenRulerPage  # noqa: E402
+from tuxtoys.settings.textextractor_page import TextExtractorPage  # noqa: E402
 from tuxtoys.settings.window import SettingsWindow  # noqa: E402
 
 SETTINGS = {
@@ -91,6 +94,8 @@ class FakeClient:
         self.picker_settings = PickerOptions().settings()
         self.picker_calls: list[dict] = []
         self.ruler_settings = RulerOptions().settings()
+        self.extractor_settings = ExtractorOptions().settings()
+        self.extractor_calls: list[dict] = []
         self.ruler_calls: list[dict] = []
         self.hosts_settings = HostsOptions().settings()
         self.hosts_calls: list[dict] = []
@@ -133,6 +138,7 @@ class FakeClient:
             ModuleInfo("envvars", "Environment Variables", "", "off", ""),
             ModuleInfo("colorpicker", "Color Picker", "", self.picker_on, ""),
             ModuleInfo("screenruler", "Screen Ruler", "", "on", ""),
+            ModuleInfo("textextractor", "Text Extractor", "", "on", ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -164,6 +170,8 @@ class FakeClient:
             return dict(self.picker_settings)
         if module_id == "screenruler":
             return dict(self.ruler_settings)
+        if module_id == "textextractor":
+            return dict(self.extractor_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -182,6 +190,11 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "textextractor":
+            self.extractor_calls.append(dict(changes))
+            options = ExtractorOptions.read(self.extractor_settings).update(changes)
+            self.extractor_settings = options.settings()
             return
         if module_id == "screenruler":
             self.ruler_calls.append(dict(changes))
@@ -380,6 +393,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "alwaysontop",
         "colorpicker",
         "screenruler",
+        "textextractor",
         "locksmith",
         "newplus",
         "imageresizer",
@@ -393,7 +407,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[5].get_header() is None
     assert rows[6].get_header().get_text() == "Windows"
     assert rows[7].get_header().get_text() == "Screen"
-    assert rows[9].get_header().get_text() == "Files"
+    assert rows[10].get_header().get_text() == "Files"
     assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
@@ -948,3 +962,31 @@ def test_screenruler_page(client: FakeClient) -> None:
     assert client.ruler_calls[-1] == {"tolerance": 45}
     page._opener(lambda message: None)
     assert len(opened) == 1
+
+
+def test_textextractor_page(client: FakeClient) -> None:
+    opened: list[object] = []
+    page = TextExtractorPage(
+        client,
+        lambda message: None,
+        opened.append,
+        FakeShortcut("<Shift><Super>t"),
+        lambda: ["deu", "eng", "hun"],
+    )
+    assert page.keys.get_text() == "Shift+Super+T"
+    # Nothing set: the desktop's language.
+    wanted = tesseract.pick("", ["deu", "eng", "hun"])
+    assert page.language.content_widget.get_active_id() == wanted
+    page.language.content_widget.set_active_id("hun")
+    assert client.extractor_calls[-1] == {"language": "hun"}
+    page.shortcut.content_widget.set_active(False)
+    assert client.extractor_calls[-1] == {"shortcut": False}
+    page._opener(lambda message: None)
+    assert len(opened) == 1
+
+
+def test_textextractor_page_without_tesseract(client: FakeClient) -> None:
+    page = TextExtractorPage(
+        client, lambda message: None, lambda error: None, FakeShortcut(""), lambda: None
+    )
+    assert not page.language.get_sensitive()
