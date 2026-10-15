@@ -21,6 +21,8 @@ tuxtoys \- power-user utilities for Linux Mint Cinnamon
 .br
 .B tuxtoys hosts
 .br
+.B tuxtoys env
+.br
 .B tuxtoys modules
 .RB [ list " | " enable
 .I MODULE
@@ -89,6 +91,13 @@ Opens Hosts File Editor, which edits
 Saving asks for an administrator's password through
 .BR pkexec (1).
 Hosts File Editor has to be switched on.
+.SS Environment Variables
+.TP
+.B env
+Opens Environment Variables, which sets the user's variables, profiles of them, and
+the system's in
+.IR /etc/environment .
+Environment Variables has to be switched on.
 .SS Modules
 .TP
 .B list
@@ -130,12 +139,25 @@ The settings, one section per module.
 .I /var/backups/tuxtoys/
 Hosts File Editor's backups of
 .IR /etc/hosts ,
-removed with the package when it is purged.
+removed with the package when it is purged, and Environment Variables' of
+.IR /etc/environment .
+.TP
+.I ~/.config/tuxtoys/environment
+The user's variables and the applied profile's, written by Environment Variables and
+loaded by a line it adds to
+.I ~/.xsessionrc
+and
+.IR ~/.bashrc .
 .SH NOTES
 Removing the package cannot reach into a user's own settings: a keyboard shortcut a tool
 added stays in Cinnamon's custom shortcuts until the tool is switched off first, or the
 shortcut is removed in the Keyboard settings. Likewise, Nemo's Rename on several items
-keeps opening Rename+, if Rename+ was set to take it over, until Rename+ is switched off.
+keeps opening Rename+, if Rename+ was set to take it over, until Rename+ is switched off,
+and the lines Environment Variables adds to
+.I ~/.xsessionrc
+and
+.I ~/.bashrc
+stay until it is switched off.
 .SH EXAMPLES
 Stay awake for an hour and a half, with the screen on:
 .PP
