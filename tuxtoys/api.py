@@ -98,6 +98,11 @@ ENVVARS_SETTINGS = {
 }
 COLORPICKER_SETTINGS = {
     "shortcut": "b",
+    "activation": "s",
+    "left": "s",
+    "middle": "s",
+    "right": "s",
+    "show_name": "b",
     "default_format": "s",
     "formats": "a(ssb)",
     "history": "as",
