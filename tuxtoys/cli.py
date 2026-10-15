@@ -10,6 +10,7 @@
     tuxtoys env
     tuxtoys colorpicker
     tuxtoys screenruler
+    tuxtoys textextractor
     tuxtoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when TuxToys could not do it, 2 when the command line is wrong.
@@ -63,7 +64,7 @@ def main(
             run_awake(client, args, now(), out)
         elif args.command == "lightswitch":
             run_lightswitch(client, args, out)
-        elif args.command in ("hosts", "env", "colorpicker", "screenruler"):
+        elif args.command in ("hosts", "env", "colorpicker", "screenruler", "textextractor"):
             run_window(client, args.command, spawn or _spawn)
         else:
             run_modules(client, args, out)
@@ -89,6 +90,9 @@ def main(
         elif args.command == "screenruler":
             print(_("Screen Ruler is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable screenruler"), file=err)
+        elif args.command == "textextractor":
+            print(_("Text Extractor is switched off in TuxToys."), file=err)
+            print(_("Switch it on with: tuxtoys modules enable textextractor"), file=err)
         else:
             print(_("Awake is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable awake"), file=err)
@@ -127,13 +131,14 @@ def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> No
 def run_window(client: Client, command: str, spawn: Callable[[list[str]], None]) -> None:
     """Opens a tool's window, while the tool is switched on: hosts opens Hosts File
     Editor, env Environment Variables, colorpicker Color Picker's picker, screenruler
-    Screen Ruler.
+    Screen Ruler, textextractor Text Extractor.
     """
     module_id = {
         "hosts": "hosts",
         "env": "envvars",
         "colorpicker": "colorpicker",
         "screenruler": "screenruler",
+        "textextractor": "textextractor",
     }[command]
     if not any(info.id == module_id and info.state == "on" for info in client.modules()):
         raise ModuleOff
@@ -143,8 +148,10 @@ def run_window(client: Client, command: str, spawn: Callable[[list[str]], None])
         from tuxtoys.modules.envvars.module import editor_command
     elif command == "colorpicker":
         from tuxtoys.modules.colorpicker.module import picker_command as editor_command
-    else:
+    elif command == "screenruler":
         from tuxtoys.modules.screenruler.module import ruler_command as editor_command
+    else:
+        from tuxtoys.modules.textextractor.module import extractor_command as editor_command
 
     spawn(editor_command())
 
@@ -279,6 +286,11 @@ def parser() -> argparse.ArgumentParser:
         "screenruler",
         help=_("measure something on the screen"),
         description=_("Measure distances and sizes on the screen."),
+    )
+    commands.add_parser(
+        "textextractor",
+        help=_("copy text from the screen"),
+        description=_("Copy the text in any part of the screen."),
     )
     commands.add_parser(
         "env",
