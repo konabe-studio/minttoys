@@ -12,4 +12,5 @@ AVAILABLE: dict[str, str] = {
     "renameplus": "tuxtoys.modules.renameplus.module:RenamePlus",
     "hosts": "tuxtoys.modules.hosts.module:HostsFileEditor",
     "envvars": "tuxtoys.modules.envvars.module:EnvironmentVariables",
+    "colorpicker": "tuxtoys.modules.colorpicker.module:ColorPicker",
 }

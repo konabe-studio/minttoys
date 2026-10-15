@@ -8,6 +8,7 @@
     tuxtoys alwaysontop opacity {up | down}
     tuxtoys hosts
     tuxtoys env
+    tuxtoys colorpicker
     tuxtoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when TuxToys could not do it, 2 when the command line is wrong.
@@ -61,7 +62,7 @@ def main(
             run_awake(client, args, now(), out)
         elif args.command == "lightswitch":
             run_lightswitch(client, args, out)
-        elif args.command in ("hosts", "env"):
+        elif args.command in ("hosts", "env", "colorpicker"):
             run_window(client, args.command, spawn or _spawn)
         else:
             run_modules(client, args, out)
@@ -81,6 +82,9 @@ def main(
         elif args.command == "env":
             print(_("Environment Variables is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable envvars"), file=err)
+        elif args.command == "colorpicker":
+            print(_("Color Picker is switched off in TuxToys."), file=err)
+            print(_("Switch it on with: tuxtoys modules enable colorpicker"), file=err)
         else:
             print(_("Awake is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable awake"), file=err)
@@ -118,15 +122,17 @@ def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> No
 
 def run_window(client: Client, command: str, spawn: Callable[[list[str]], None]) -> None:
     """Opens a tool's window, while the tool is switched on: hosts opens Hosts File
-    Editor, env Environment Variables.
+    Editor, env Environment Variables, colorpicker Color Picker's picker.
     """
-    module_id = {"hosts": "hosts", "env": "envvars"}[command]
+    module_id = {"hosts": "hosts", "env": "envvars", "colorpicker": "colorpicker"}[command]
     if not any(info.id == module_id and info.state == "on" for info in client.modules()):
         raise ModuleOff
     if command == "hosts":
         from tuxtoys.modules.hosts.module import editor_command
-    else:
+    elif command == "env":
         from tuxtoys.modules.envvars.module import editor_command
+    else:
+        from tuxtoys.modules.colorpicker.module import picker_command as editor_command
 
     spawn(editor_command())
 
@@ -251,6 +257,11 @@ def parser() -> argparse.ArgumentParser:
         "hosts",
         help=_("open Hosts File Editor"),
         description=_("Open Hosts File Editor, to edit /etc/hosts."),
+    )
+    commands.add_parser(
+        "colorpicker",
+        help=_("pick a color from the screen"),
+        description=_("Pick a color from anywhere on the screen, and copy it."),
     )
     commands.add_parser(
         "env",

@@ -96,6 +96,12 @@ ENVVARS_SETTINGS = {
     "profiles": "a(sa(ss))",
     "active_profile": "s",
 }
+COLORPICKER_SETTINGS = {
+    "shortcut": "b",
+    "default_format": "s",
+    "formats": "a(ssb)",
+    "history": "as",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -106,6 +112,7 @@ MODULE_SETTINGS = {
     "renameplus": RENAMEPLUS_SETTINGS,
     "hosts": HOSTS_SETTINGS,
     "envvars": ENVVARS_SETTINGS,
+    "colorpicker": COLORPICKER_SETTINGS,
 }
 
 
