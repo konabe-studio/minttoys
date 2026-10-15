@@ -21,11 +21,13 @@ if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
 from tuxtoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
+from tuxtoys.modules.hosts.options import Options as HostsOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from tuxtoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
@@ -78,6 +80,9 @@ class FakeClient:
         self.resizer_on = "on"
         self.resizer_settings = ResizerOptions().settings()
         self.resizer_calls: list[dict] = []
+        self.hosts_on = "on"
+        self.hosts_settings = HostsOptions().settings()
+        self.hosts_calls: list[dict] = []
         self.rename_on = "on"
         self.rename_settings = RenameOptions().settings()
         self.rename_calls: list[dict] = []
@@ -113,6 +118,7 @@ class FakeClient:
             ModuleInfo("newplus", "New+", "", self.newplus_on, ""),
             ModuleInfo("imageresizer", "Image Resizer", "", self.resizer_on, ""),
             ModuleInfo("renameplus", "Rename+", "", self.rename_on, ""),
+            ModuleInfo("hosts", "Hosts File Editor", "", self.hosts_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -138,6 +144,8 @@ class FakeClient:
             return dict(self.resizer_settings)
         if module_id == "renameplus":
             return dict(self.rename_settings)
+        if module_id == "hosts":
+            return dict(self.hosts_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -156,6 +164,10 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "hosts":
+            self.hosts_calls.append(dict(changes))
+            self.hosts_settings = HostsOptions.read(self.hosts_settings).update(changes).settings()
             return
         if module_id == "renameplus":
             self.rename_calls.append(dict(changes))
@@ -335,6 +347,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "overview",
         "awake",
         "lightswitch",
+        "hosts",
         "alwaysontop",
         "locksmith",
         "newplus",
@@ -344,8 +357,9 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[0].get_header() is None
     assert rows[1].get_header().get_text() == "System"
     assert rows[2].get_header() is None
-    assert rows[3].get_header().get_text() == "Windows"
-    assert rows[4].get_header().get_text() == "Files"
+    assert rows[3].get_header() is None
+    assert rows[4].get_header().get_text() == "Windows"
+    assert rows[5].get_header().get_text() == "Files"
     assert window.stack.get_visible_child_name() == "overview"
 
 
@@ -732,3 +746,28 @@ def test_rename_plus_page(client: FakeClient) -> None:
     client.rename_on = "off"
     page.refresh()
     assert not page.window.get_sensitive()
+
+
+def test_hosts_page(client: FakeClient) -> None:
+    opened: list[object] = []
+    page = HostsPage(client, lambda message: None, opened.append)
+    assert page.show_warning.content_widget.get_active()
+    assert page.backup.content_widget.get_active()
+    assert page.keep.content_widget.get_active_id() == "age"
+    assert page.count_revealer.get_reveal_child()
+    assert page.days_revealer.get_reveal_child()
+    page.keep.content_widget.set_active_id("count")
+    assert client.hosts_calls[-1] == {"keep": "count"}
+    assert not page.days_revealer.get_reveal_child()
+    page.loopback.content_widget.set_active(True)
+    assert client.hosts_calls[-1] == {"loopback_duplicates": True}
+    page.count.content_widget.set_value(7)
+    page._save_numbers()
+    assert client.hosts_calls[-1] == {"count": 7}
+    page.backup.content_widget.set_active(False)
+    assert not page.keep.get_sensitive()
+    page._on_open()
+    assert len(opened) == 1
+    client.hosts_on = "off"
+    page.refresh()
+    assert not page.backups.get_sensitive()
