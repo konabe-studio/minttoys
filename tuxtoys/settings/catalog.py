@@ -29,6 +29,7 @@ TOOLS = (
     Tool("imageresizer", "Image Resizer", "files", "image-x-generic-symbolic"),
     Tool("renameplus", "Rename+", "files", "document-edit-symbolic"),
     Tool("alwaysontop", "Always on Top", "windows", "view-pin-symbolic"),
+    Tool("colorpicker", "Color Picker", "screen", "color-select-symbolic"),
 )
 
 
@@ -41,6 +42,9 @@ def headings() -> dict[str, str]:
         # TRANSLATORS: a heading in the settings window's sidebar, over the tools for
         # windows, such as Always on Top.
         "windows": _("Windows"),
+        # TRANSLATORS: a heading in the settings window's sidebar, over the tools that work
+        # on what is on the screen, such as Color Picker.
+        "screen": _("Screen"),
         # TRANSLATORS: a heading in the settings window's sidebar, over the tools for files,
         # such as File Locksmith.
         "files": _("Files"),
