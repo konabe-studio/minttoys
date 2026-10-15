@@ -308,3 +308,20 @@ class TestHosts:
         assert status == 1
         assert "Hosts File Editor is switched off in TuxToys." in err
         assert "tuxtoys modules enable hosts" in err
+
+
+class TestEnv:
+    def test_opens_the_window_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("envvars", "Environment Variables", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["env"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.envvars"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE]
+        status, _out, err = run(client, "env")
+        assert status == 1
+        assert "Environment Variables is switched off in TuxToys." in err
+        assert "tuxtoys modules enable envvars" in err

@@ -3,6 +3,7 @@ import io
 import os
 import shutil
 import subprocess
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -157,7 +158,13 @@ def test_the_root_helper(tmp_path: Path) -> None:
 
 
 def module_here(tmp_path: Path) -> EnvironmentVariables:
-    return EnvironmentVariables(home=lambda: tmp_path / "home", config=lambda: tmp_path / "config")
+    return EnvironmentVariables(
+        home=lambda: tmp_path / "home",
+        config=lambda: tmp_path / "config",
+        adapt=lambda entry: replace(
+            entry, folder=lambda: tmp_path / "applications", package_root=tmp_path
+        ),
+    )
 
 
 def test_the_module_writes_its_file_and_lines(tmp_path: Path) -> None:
@@ -173,10 +180,15 @@ def test_the_module_writes_its_file_and_lines(tmp_path: Path) -> None:
     assert (home / ".bashrc").read_text().startswith("alias ll='ls -l'\n\n[ -r ")
     module.apply_settings(Options(variables=(("EDITOR", "vim"),)).settings())
     assert '    EDITOR="vim"\n' in module.file.read_text()
+    entry = (
+        tmp_path / "applications" / "io.github.konabe_studio.TuxToys.EnvironmentVariables.desktop"
+    )
+    assert "-m tuxtoys.envvars\n" in entry.read_text()
     module.disable()
     assert module.file.exists()
     module.switched_off()
     assert not module.file.exists()
+    assert not entry.exists()
     assert not (home / ".xsessionrc").exists()
     assert (home / ".bashrc").read_text() == "alias ll='ls -l'\n"
 
