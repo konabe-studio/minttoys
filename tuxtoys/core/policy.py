@@ -1,36 +1,58 @@
-"""The polkit action that lets Hosts File Editor save /etc/hosts, as a .policy file. Free
-of GTK.
+"""The polkit actions that let a tool save a system file through its root helper, as
+.policy files. Free of GTK.
 
-Its two texts are messages in po/ like any other, and `make` writes the file with every
+Their texts are messages in po/ like any other, and `make` writes each file with every
 language there is a catalogue for: polkit shows the one in the user's language in its
-password dialog. Rendering it here keeps that out of gettext's ITS rules, which differ
+password dialog. Rendering them here keeps that out of gettext's ITS rules, which differ
 between gettext versions.
 
 Users at the machine are asked for an administrator's password, which polkit then
 remembers for a few minutes (auth_admin_keep); anyone else is asked every time.
 
-    python3 -m tuxtoys.modules.hosts.policy LOCALE_DIR HELPER > the.policy
+    python3 -m tuxtoys.core.policy ACTION LOCALE_DIR HELPER > the.policy
 """
 
 import gettext
 import sys
 from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from pathlib import Path
 from xml.sax.saxutils import escape, quoteattr
 
 from tuxtoys import APP_ID
 from tuxtoys.core.i18n import N_
 
-ACTION = f"{APP_ID}.hosts.save"
-HELPER = "/usr/libexec/tuxtoys/tuxtoys-hosts-save"
-# TRANSLATORS: what polkit's password dialog says the password is for.
-DESCRIPTION = N_("Save the hosts file")
-# TRANSLATORS: the line polkit's password dialog shows above the password field.
-MESSAGE = N_("Authentication is required to save the hosts file")
+
+@dataclass(frozen=True)
+class Action:
+    id: str
+    description: str  # what the password is for
+    message: str  # the line above the password field
+
+
+ACTIONS = {
+    "hosts": Action(
+        f"{APP_ID}.hosts.save",
+        # TRANSLATORS: what polkit's password dialog says the password is for.
+        N_("Save the hosts file"),
+        # TRANSLATORS: the line polkit's password dialog shows above the password field.
+        N_("Authentication is required to save the hosts file"),
+    ),
+    "environment": Action(
+        f"{APP_ID}.environment.save",
+        # TRANSLATORS: what polkit's password dialog says the password is for.
+        N_("Save the system's environment variables"),
+        # TRANSLATORS: the line polkit's password dialog shows above the password field.
+        N_("Authentication is required to save the system's environment variables"),
+    ),
+}
 
 
 def render(
-    descriptions: Mapping[str, str], messages: Mapping[str, str], helper: str = HELPER
+    action: Action,
+    descriptions: Mapping[str, str],
+    messages: Mapping[str, str],
+    helper: str,
 ) -> str:
     """The .policy file. `descriptions` and `messages` map a language to its text, "" to
     the English one.
@@ -52,7 +74,7 @@ def render(
         "  <vendor>TuxToys</vendor>",
         "  <vendor_url>https://github.com/konabe-studio/tuxtoys</vendor_url>",
         f"  <icon_name>{APP_ID}</icon_name>",
-        f"  <action id={quoteattr(ACTION)}>",
+        f"  <action id={quoteattr(action.id)}>",
         *texts("description", descriptions),
         *texts("message", messages),
         "    <defaults>",
@@ -80,12 +102,13 @@ def translated(locale_dir: Path, languages: Sequence[str], text: str) -> dict[st
 
 
 def main(argv: list[str]) -> int:
-    locale_dir, helper = Path(argv[0]), argv[1]
+    action, locale_dir, helper = ACTIONS[argv[0]], Path(argv[1]), argv[2]
     languages = sorted(path.name for path in locale_dir.iterdir() if path.is_dir())
     sys.stdout.write(
         render(
-            translated(locale_dir, languages, DESCRIPTION),
-            translated(locale_dir, languages, MESSAGE),
+            action,
+            translated(locale_dir, languages, action.description),
+            translated(locale_dir, languages, action.message),
             helper,
         )
     )

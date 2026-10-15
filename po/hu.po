@@ -2196,3 +2196,13 @@ msgstr "Kezdőlap"
 #: tuxtoys/settings/window.py
 msgid "General"
 msgstr "Általános"
+
+#. TRANSLATORS: what polkit's password dialog says the password is for.
+#: tuxtoys/core/policy.py
+msgid "Save the system's environment variables"
+msgstr "A rendszer környezeti változóinak mentése"
+
+#. TRANSLATORS: the line polkit's password dialog shows above the password field.
+#: tuxtoys/core/policy.py
+msgid "Authentication is required to save the system's environment variables"
+msgstr "A rendszer környezeti változóinak mentéséhez hitelesítés szükséges"

@@ -2087,3 +2087,13 @@ msgstr ""
 #: tuxtoys/settings/window.py
 msgid "General"
 msgstr ""
+
+#. TRANSLATORS: what polkit's password dialog says the password is for.
+#: tuxtoys/core/policy.py
+msgid "Save the system's environment variables"
+msgstr ""
+
+#. TRANSLATORS: the line polkit's password dialog shows above the password field.
+#: tuxtoys/core/policy.py
+msgid "Authentication is required to save the system's environment variables"
+msgstr ""

@@ -9,7 +9,7 @@ from contextlib import suppress
 from dataclasses import dataclass, replace
 from typing import Any
 
-from tuxtoys.modules.hosts.backups import KEEPS
+from tuxtoys.core.backups import KEEPS
 
 MOST_COUNT = 1000
 MOST_DAYS = 3650
