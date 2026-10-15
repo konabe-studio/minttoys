@@ -92,6 +92,17 @@ any of sixteen formats, or one of your own.
   a button to copy it, offers similar shades, and fine-tunes a color in GTK's own editor.
 - **As you like it:** what the shortcut opens first, and what each mouse button does.
 
+### Screen Ruler
+
+Press Super+Ctrl+Shift+M and pick a tool from the bar at the top of the screen to measure
+what is on it, in pixels.
+
+- **Bounds:** drag a box to measure it; hold Shift to keep several.
+- **Spacing:** point anywhere and see the space to the edges around it, both ways or
+  one: it finds the edges by itself, and scrolling makes it more or less strict.
+- **A click copies** the measurement. Inches, centimeters or millimeters can show beside
+  the pixels.
+
 ### File Locksmith
 
 Right-click a file or folder in Nemo and choose **What is using this?** to see which of
