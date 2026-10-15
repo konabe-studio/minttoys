@@ -1,9 +1,9 @@
-"""Color Picker's picker: the frozen screen with a magnifier at the pointer, and under it
-the color there in the format it will be copied in.
+"""Color Picker's picker: the frozen screen, and beside the pointer a small label with the
+color there and its value in the format it will be copied in.
 
-As in PowerToys: the scroll wheel zooms, a left or a middle click picks the color, a right
-click closes. PowerToys' left click also opens its editor; until TuxToys has one, both
-pick and close.
+As in PowerToys: scrolling up shows a magnifier and zooms in, scrolling down zooms out
+and hides it again; a left or a middle click picks the color, a right click closes.
+PowerToys' left click also opens its editor; until TuxToys has one, both pick and close.
 """
 
 from collections.abc import Callable
@@ -21,6 +21,8 @@ from tuxtoys.overlay.window import Overlay  # noqa: E402
 
 ZOOMS = (2, 4, 6, 8, 12, 16, 24, 32)
 MAGNIFIER = 160
+# The zoom step before the first: no magnifier, the label alone.
+NO_ZOOM = -1
 
 
 class Picker(Overlay):
@@ -36,7 +38,7 @@ class Picker(Overlay):
         super().__init__(screen)
         self._template = template
         self._picked = picked
-        self.zoom = ZOOMS.index(8)
+        self.zoom = NO_ZOOM
         self.connect("button-press-event", self._on_button)
         self.connect("scroll-event", self._on_scroll)
 
@@ -62,13 +64,17 @@ class Picker(Overlay):
             _ok, _dx, dy = event.get_scroll_deltas()
             direction = Gdk.ScrollDirection.UP if dy < 0 else Gdk.ScrollDirection.DOWN
         step = 1 if direction == Gdk.ScrollDirection.UP else -1
-        self.zoom = min(max(self.zoom + step, 0), len(ZOOMS) - 1)
+        self.zoom = min(max(self.zoom + step, NO_ZOOM), len(ZOOMS) - 1)
         self.queue_draw()
         return True
 
     def draw_over(self, context: cairo.Context) -> None:
         x, y = self.pointer
-        left, top = self.magnify(context, x, y, ZOOMS[self.zoom], MAGNIFIER)
+        if self.zoom == NO_ZOOM:
+            left, top, below = x + 16, y + 16, 0
+        else:
+            left, top = self.magnify(context, x, y, ZOOMS[self.zoom], MAGNIFIER)
+            below = MAGNIFIER + 4
         color = self.color_at(x, y)
         layout = PangoCairo.create_layout(context)
         layout.set_font_description(Pango.FontDescription.from_string("Monospace 10"))
@@ -76,8 +82,20 @@ class Picker(Overlay):
         _ink, logical = layout.get_pixel_extents()
         swatch = 16
         height = max(logical.height, swatch) + 12
-        width = max(MAGNIFIER, swatch + logical.width + 24)
-        box_top = top + MAGNIFIER + 4
+        width = swatch + logical.width + 24
+        if self.zoom != NO_ZOOM:
+            width = max(width, MAGNIFIER)
+        screen_width, screen_height = (
+            self.screen_picture.get_width(),
+            self.screen_picture.get_height(),
+        )
+        if self.zoom == NO_ZOOM:
+            # Beside the pointer, turned back inside the screen near its edges.
+            if left + width > screen_width:
+                left = x - 16 - width
+            if top + height > screen_height:
+                top = y - 16 - height
+        box_top = top + below
         context.set_source_rgba(0.12, 0.12, 0.12, 0.92)
         context.rectangle(left, box_top, width, height)
         context.fill()
