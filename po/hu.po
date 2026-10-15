@@ -2565,3 +2565,263 @@ msgid ""
 msgstr ""
 "A most futó TuxToys-szolgáltatásban még nincs meg ez az eszköz. Jelentkezzen "
 "ki és vissza, hogy az új induljon el."
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Pick a color from the screen"
+msgstr "Szín választása a képernyőről"
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Copy"
+msgstr "Másolás"
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Pick"
+msgstr "Választás"
+
+#: tuxtoys/colorpicker/editor.py
+msgid "No colors picked yet. Pick one from the screen."
+msgstr "Még nincs választott szín. Válasszon egyet a képernyőről."
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Fine-tune the color"
+msgstr "A szín finomhangolása"
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Fine-tune this color"
+msgstr "A szín finomhangolása"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "White"
+msgstr "Fehér"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Black"
+msgstr "Fekete"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Gray"
+msgstr "Világosszürke"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Gray"
+msgstr "Szürke"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Gray"
+msgstr "Sötétszürke"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Coral"
+msgstr "Korall"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Rose"
+msgstr "Rózsa"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Orange"
+msgstr "Világos narancs"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Tan"
+msgstr "Drapp"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Yellow"
+msgstr "Világossárga"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Green"
+msgstr "Világoszöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Lime"
+msgstr "Limezöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Aqua"
+msgstr "Vízkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Sky Blue"
+msgstr "Égkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Turquoise"
+msgstr "Világos türkiz"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Pale Blue"
+msgstr "Halványkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Blue"
+msgstr "Világoskék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Ice Blue"
+msgstr "Jégkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Periwinkle"
+msgstr "Búzavirágkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Lavender"
+msgstr "Levendula"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Pink"
+msgstr "Rózsaszín"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Red"
+msgstr "Piros"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Orange"
+msgstr "Narancs"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Brown"
+msgstr "Barna"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Gold"
+msgstr "Arany"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Yellow"
+msgstr "Sárga"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Olive Green"
+msgstr "Olívazöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Green"
+msgstr "Zöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Bright Green"
+msgstr "Élénkzöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Teal"
+msgstr "Kékeszöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Turquoise"
+msgstr "Türkiz"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Blue"
+msgstr "Kék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Blue Gray"
+msgstr "Kékesszürke"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Indigo"
+msgstr "Indigó"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Purple"
+msgstr "Lila"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Red"
+msgstr "Sötétvörös"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Yellow"
+msgstr "Sötétsárga"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Green"
+msgstr "Sötétzöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Teal"
+msgstr "Sötét kékeszöld"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Blue"
+msgstr "Sötétkék"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Purple"
+msgstr "Sötétlila"
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Plum"
+msgstr "Szilva"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color first"
+msgstr "Először színválasztás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Open the editor"
+msgstr "A szerkesztő megnyitása"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color and open the editor"
+msgstr "Színválasztás és a szerkesztő megnyitása"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color and close"
+msgstr "Színválasztás és bezárás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "When the shortcut is pressed"
+msgstr "A gyorsbillentyű megnyomásakor"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Show the color's name"
+msgstr "A szín nevének megjelenítése"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Color formats"
+msgstr "Színformátumok"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "The ones switched on are shown in the editor."
+msgstr "A bekapcsoltak jelennek meg a szerkesztőben."
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Color format"
+msgstr "Színformátum"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid ""
+"%Re, %Gr, %Bl: red, green, blue. %Hu: hue. %Sl, %Ll: HSL's saturation and "
+"lightness. %Sb, %Va: HSV's. %Cy, %Ma, %Ye, %Bk: CMYK. A letter after one "
+"changes how it is written: x or X two hex digits, f a fraction, i a whole "
+"number."
+msgstr ""
+"%Re, %Gr, %Bl: vörös, zöld, kék. %Hu: árnyalat. %Sl, %Ll: a HSL telítettsége "
+"és világossága. %Sb, %Va: a HSV-é. %Cy, %Ma, %Ye, %Bk: CMYK. Az utánuk írt "
+"betű az írásmódot változtatja: x vagy X két hexa számjegy, f tört, i egész "
+"szám."
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Left click"
+msgstr "Bal kattintás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Middle click"
+msgstr "Középső kattintás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Right click"
+msgstr "Jobb kattintás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Add a format"
+msgstr "Formátum hozzáadása"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Format"
+msgstr "Formátum"
