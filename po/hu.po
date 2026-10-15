@@ -730,7 +730,7 @@ msgid ""
 "window lists the processes that hold it, and can end one."
 msgstr ""
 "Kattintson jobb gombbal egy fájlra vagy mappára a Nemóban, és válassza a Mi "
-"használja ezt? pontot. Egy ablak felsorolja az azt használó folyamatokat, és"
+"használja ezt? menüpontot. Egy ablak felsorolja az azt használó folyamatokat, és"
 " le is állíthat közülük egyet."
 
 #: tuxtoys/settings/window.py
@@ -835,7 +835,7 @@ msgstr "Sablonmappa létrehozása"
 msgid "Right-click a file and choose Save as template to add it."
 msgstr ""
 "Egy fájlt úgy adhat hozzá, hogy jobb gombbal rákattint, és a Mentés "
-"sablonként pontot választja."
+"sablonként menüpontot választja."
 
 #: tuxtoys/settings/newplus_page.py
 msgid "You have no templates folder."
@@ -1304,7 +1304,7 @@ msgstr "Képek átméretezése"
 
 #: tuxtoys/modules/imageresizer/module.py tuxtoys/settings/imageresizer_page.py
 msgid "Resizes pictures from Nemo's right-click menu."
-msgstr "Képeket méretez át a Nemo jobbklikk-menüjéből."
+msgstr "Képeket méretez át a Nemo jobb gombos menüjéből."
 
 #: tuxtoys/imageresizer/window.py
 #, python-brace-format
@@ -1724,8 +1724,8 @@ msgid ""
 "Choose files or folders in Nemo, right-click them and choose Rename with "
 "Rename+."
 msgstr ""
-"Jelöljön ki fájlokat vagy mappákat a Nemóban, kattintson rájuk a jobb "
-"egérgombbal, és válassza az Átnevezés a Rename+ eszközzel lehetőséget."
+"Jelöljön ki fájlokat vagy mappákat a Nemóban, kattintson rájuk jobb gombbal, "
+"és válassza az Átnevezés a Rename+ eszközzel menüpontot."
 
 #: tuxtoys/settings/renameplus_page.py
 msgid ""
