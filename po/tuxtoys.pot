@@ -2428,3 +2428,259 @@ msgid ""
 "The TuxToys service running now does not have this tool. Log out and back in "
 "to start the new one."
 msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Pick a color from the screen"
+msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Copy"
+msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Pick"
+msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "No colors picked yet. Pick one from the screen."
+msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Fine-tune the color"
+msgstr ""
+
+#: tuxtoys/colorpicker/editor.py
+msgid "Fine-tune this color"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "White"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Black"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Gray"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Gray"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Gray"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Coral"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Rose"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Orange"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Tan"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Yellow"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Green"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Lime"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Aqua"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Sky Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Turquoise"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Pale Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Light Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Ice Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Periwinkle"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Lavender"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Pink"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Red"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Orange"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Brown"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Gold"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Yellow"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Olive Green"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Green"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Bright Green"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Teal"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Turquoise"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Blue Gray"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Indigo"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Purple"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Red"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Yellow"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Green"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Teal"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Blue"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Dark Purple"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/names.py
+msgid "Plum"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color first"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Open the editor"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color and open the editor"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color and close"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "When the shortcut is pressed"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Show the color's name"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Color formats"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "The ones switched on are shown in the editor."
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Color format"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid ""
+"%Re, %Gr, %Bl: red, green, blue. %Hu: hue. %Sl, %Ll: HSL's saturation and "
+"lightness. %Sb, %Va: HSV's. %Cy, %Ma, %Ye, %Bk: CMYK. A letter after one "
+"changes how it is written: x or X two hex digits, f a fraction, i a whole "
+"number."
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Left click"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Middle click"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Right click"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Add a format"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Format"
+msgstr ""
