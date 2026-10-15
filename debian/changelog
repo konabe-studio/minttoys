@@ -10,6 +10,8 @@ tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
   * Rename+ renames many files and folders at once from Nemo, with search
     and replace, regular expressions, counters, dates and a preview, as
     PowerToys' PowerRename does. It can also take over Nemo's Rename.
+  * Hosts File Editor edits /etc/hosts in a window, as PowerToys' Hosts
+    File Editor does, saving through pkexec with a backup first.
 
  -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:23:10 +0200
 

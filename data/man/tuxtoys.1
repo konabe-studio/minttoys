@@ -19,6 +19,8 @@ tuxtoys \- power-user utilities for Linux Mint Cinnamon
 .B tuxtoys alwaysontop opacity
 .RB { up | down }
 .br
+.B tuxtoys hosts
+.br
 .B tuxtoys modules
 .RB [ list " | " enable
 .I MODULE
@@ -79,6 +81,14 @@ which run the command below, unless those keys are in use already.
 .BR "opacity up" ", " "opacity down"
 Makes the active window one step more or less opaque, if it is kept above the others.
 Needs python3-xlib, and works without the TuxToys service.
+.SS Hosts File Editor
+.TP
+.B hosts
+Opens Hosts File Editor, which edits
+.IR /etc/hosts .
+Saving asks for an administrator's password through
+.BR pkexec (1).
+Hosts File Editor has to be switched on.
 .SS Modules
 .TP
 .B list
@@ -116,6 +126,11 @@ The command line is wrong.
 .TP
 .I ~/.config/tuxtoys/config.json
 The settings, one section per module.
+.TP
+.I /var/backups/tuxtoys/
+Hosts File Editor's backups of
+.IR /etc/hosts ,
+removed with the package when it is purged.
 .SH NOTES
 Removing the package cannot reach into a user's own settings: a keyboard shortcut a tool
 added stays in Cinnamon's custom shortcuts until the tool is switched off first, or the
