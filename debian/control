@@ -29,14 +29,19 @@ Depends: gir1.2-glib-2.0,
          python3-xlib,
          ${misc:Depends},
          ${python3:Depends},
+Conflicts: minttoys
+Replaces: minttoys
 Description: power-user utilities for Linux Mint Cinnamon
  TuxToys is a set of small desktop tools for Linux Mint Cinnamon, inspired
  by Microsoft PowerToys, each switched on or off in one place and built on
  what Cinnamon already provides.
  .
- This release carries five tools: Awake keeps the computer from sleeping
+ This release carries nine tools: Awake keeps the computer from sleeping
  without changing the power settings; Light Switch switches between Linux
- Mint's day and dark modes on a schedule; Always on Top keeps a window above
- the others, framed; File Locksmith shows which processes hold a file open;
- New+ manages the templates of Nemo's Create New Document. They come with a
- panel icon, a settings window and the tuxtoys command.
+ Mint's day and dark modes on a schedule; Hosts File Editor edits /etc/hosts;
+ Environment Variables sets your variables, profiles of them, and the
+ system's; Always on Top keeps a window above the others, framed; File
+ Locksmith shows which processes hold a file open; New+ manages the templates
+ of Nemo's Create New Document; Image Resizer resizes pictures and Rename+
+ renames many files at once, both from Nemo's right-click menu. They come
+ with a panel icon, a settings window and the tuxtoys command.

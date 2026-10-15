@@ -27,7 +27,7 @@ Brings in global keyboard shortcuts and the first Nemo action.
 | New+ | Manages the file and folder templates in Nemo's right-click menu |
 | File Locksmith | Shows which processes are holding a file |
 
-## M2: Nemo pack
+## M2: Nemo pack (done, released as 0.3.0)
 
 Brings in privileged actions, through `pkexec` and a narrow polkit policy.
 
