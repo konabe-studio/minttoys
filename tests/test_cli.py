@@ -341,3 +341,20 @@ class TestColorPicker:
         status, _out, err = run(client, "colorpicker")
         assert status == 1
         assert "tuxtoys modules enable colorpicker" in err
+
+
+class TestScreenRuler:
+    def test_starts_the_ruler_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("screenruler", "Screen Ruler", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["screenruler"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.screenruler"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE]
+        status, _out, err = run(client, "screenruler")
+        assert status == 1
+        assert "Screen Ruler is switched off in TuxToys." in err
+        assert "tuxtoys modules enable screenruler" in err
