@@ -111,8 +111,12 @@ class VariableDialog(Gtk.Dialog):
         self.name.connect("changed", lambda _entry: self.check())
         grid.attach(self.name, 1, 0, 1, 1)
         grid.attach(Gtk.Label(label=_("Value"), xalign=0, yalign=0), 0, 1, 1, 1)
-        self.stack = Gtk.Stack()
-        self.value = Gtk.Entry(text=value, hexpand=True, activates_default=True)
+        # As tall as what it shows: a one-line field, or the list, not the list's height
+        # for both.
+        self.stack = Gtk.Stack(vhomogeneous=False, interpolate_size=True)
+        self.value = Gtk.Entry(
+            text=value, hexpand=True, activates_default=True, valign=Gtk.Align.START
+        )
         self.value.connect("changed", lambda _entry: self.check())
         self.stack.add_named(self.value, "line")
         self.items = Gtk.TextView(monospace=True, wrap_mode=Gtk.WrapMode.NONE)
