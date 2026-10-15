@@ -1,4 +1,4 @@
-tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
+tuxtoys (0.3.0) unstable; urgency=medium
 
   * MintToys is now TuxToys: the package, its commands, its settings folder
     and its application ID carry the new name.
@@ -19,7 +19,7 @@ tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
     version and links, the panel icon on or off, and a backup of every
     tool's settings to restore later or elsewhere.
 
- -- Kōnabe Studio <konabe@proton.me>  Mon, 12 Oct 2026 14:23:10 +0200
+ -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 10:24:15 +0200
 
 minttoys (0.2.0) unstable; urgency=medium
 
