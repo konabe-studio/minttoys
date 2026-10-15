@@ -1,4 +1,4 @@
-"""Whether the settings window has been opened before, so that the Overview can greet a new
+"""Whether the settings window has been opened before, so that the Home page can greet a new
 user once.
 
 Kept apart from the daemon's config, in $XDG_STATE_HOME/tuxtoys/settings-window.ini: it
@@ -21,7 +21,7 @@ def state_file(environ: Mapping[str, str] = os.environ) -> Path:
 
 
 def welcomed(path: Path) -> bool:
-    """Whether the Overview has greeted the user already. An unreadable file counts as no,
+    """Whether the Home page has greeted the user already. An unreadable file counts as no,
     so the worst case is one greeting too many.
     """
     parser = configparser.ConfigParser()

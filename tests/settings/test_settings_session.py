@@ -27,6 +27,7 @@ from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E4
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from tuxtoys.settings.general_page import GeneralPage  # noqa: E402
 from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from tuxtoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
@@ -345,6 +346,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     rows = window.sidebar.get_children()
     assert [row.page for row in rows] == [
         "overview",
+        "general",
         "awake",
         "lightswitch",
         "hosts",
@@ -355,11 +357,13 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "renameplus",
     ]
     assert rows[0].get_header() is None
-    assert rows[1].get_header().get_text() == "System"
-    assert rows[2].get_header() is None
+    assert rows[1].get_header() is None
+    assert rows[2].get_header().get_text() == "System"
     assert rows[3].get_header() is None
-    assert rows[4].get_header().get_text() == "Windows"
-    assert rows[5].get_header().get_text() == "Files"
+    assert rows[4].get_header() is None
+    assert rows[5].get_header().get_text() == "Windows"
+    assert rows[6].get_header().get_text() == "Files"
+    assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
 
@@ -375,7 +379,7 @@ def test_the_overview_lists_every_tool_with_its_switch(window: SettingsWindow) -
 
 
 def test_the_overview_lists_the_tools_in_the_sidebars_order(window: SettingsWindow) -> None:
-    sidebar = [row.page for row in window.sidebar.get_children()][1:]
+    sidebar = [row.page for row in window.sidebar.get_children()][2:]
     assert list(window.overview.rows) == sidebar
 
 
@@ -776,3 +780,46 @@ def test_hosts_page(client: FakeClient) -> None:
     client.hosts_on = "off"
     page.refresh()
     assert not page.backups.get_sensitive()
+
+
+class FakeTray:
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+
+    def start(self) -> None:
+        self.calls.append("start")
+
+    def stop(self) -> None:
+        self.calls.append("stop")
+
+
+def test_general_page_panel_icon(client: FakeClient, tmp_path: Path) -> None:
+    tray = FakeTray()
+    page = GeneralPage(client, lambda message: None, tray, lambda: tmp_path / "autostart")
+    assert page.panel_icon.content_widget.get_active()
+    page.panel_icon.content_widget.set_active(False)
+    assert tray.calls == ["stop"]
+    assert (tmp_path / "autostart" / "io.github.konabe_studio.TuxToys.Tray.desktop").exists()
+    page.panel_icon.content_widget.set_active(True)
+    assert tray.calls == ["stop", "start"]
+    assert not (tmp_path / "autostart" / "io.github.konabe_studio.TuxToys.Tray.desktop").exists()
+    assert set(page.links.links) == {"docs", "code", "bug", "idea"}
+
+
+def test_general_page_backs_up_and_restores(client: FakeClient, tmp_path: Path) -> None:
+    errors: list[str] = []
+    target = tmp_path / "settings.json"
+    page = GeneralPage(
+        client, errors.append, FakeTray(), lambda: tmp_path / "autostart", lambda saving: target
+    )
+    page._on_back_up()
+    assert '"format": "tuxtoys-settings"' in target.read_text(encoding="utf-8")
+    client.hosts_settings["days"] = 99
+    client.rename_settings["regex"] = True
+    page._on_restore()
+    assert client.hosts_settings["days"] == 15
+    assert client.rename_settings["regex"] is False
+    assert errors == []
+    target.write_text("{}", encoding="utf-8")
+    page._on_restore()
+    assert errors == ["This is not a file of TuxToys settings."]
