@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from tuxtoys.modules.hosts import policy
-from tuxtoys.modules.hosts.backups import backup_name, made_at, to_delete
+from tuxtoys.core import policy
+from tuxtoys.core.backups import backup_name, made_at, to_delete
 from tuxtoys.modules.hosts.save import BAD, CHANGED, FAILED, MOST_BYTES, SAVED, save
 
 NOW = datetime(2026, 10, 13, 15, 30, tzinfo=UTC)
@@ -133,6 +133,7 @@ def test_to_delete() -> None:
 
 def test_policy() -> None:
     text = policy.render(
+        policy.ACTIONS["hosts"],
         {"": "Save the hosts file", "hu": "A hosts fájl mentése"},
         {"": "Authentication is required", "hu": "Hitelesítés & jelszó"},
         "/usr/libexec/tuxtoys/tuxtoys-hosts-save",
@@ -149,4 +150,6 @@ def test_policy() -> None:
 
 
 def test_policy_without_catalogues(tmp_path: Path) -> None:
-    assert policy.translated(tmp_path, ["hu"], policy.MESSAGE) == {"": policy.MESSAGE}
+    message = policy.ACTIONS["environment"].message
+    assert policy.translated(tmp_path, ["hu"], message) == {"": message}
+    assert policy.ACTIONS["environment"].id == "io.github.konabe_studio.TuxToys.environment.save"

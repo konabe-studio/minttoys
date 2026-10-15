@@ -18,9 +18,9 @@ LINGUAS = $(shell cat po/LINGUAS)
 POT ?= po/tuxtoys.pot
 MO = $(LINGUAS:%=build/locale/%/LC_MESSAGES/tuxtoys.mo)
 DESKTOP = $(patsubst data/%.desktop.in,build/%.desktop,$(wildcard data/*/*.desktop.in))
-POLICY = build/polkit/io.github.konabe_studio.TuxToys.hosts.policy
+POLICIES = build/polkit/io.github.konabe_studio.TuxToys.hosts.policy
 
-all: mo $(DESKTOP) $(POLICY)
+all: mo $(DESKTOP) $(POLICIES)
 
 mo: $(MO)
 
@@ -32,10 +32,11 @@ build/%.desktop: data/%.desktop.in po/LINGUAS $(LINGUAS:%=po/%.po)
 	install -d $(@D)
 	msgfmt --desktop --template=$< -d po -o $@
 
-# The polkit action Hosts File Editor saves through, its texts from the catalogues.
-$(POLICY): tuxtoys/modules/hosts/policy.py $(MO)
+# The polkit actions the tools save system files through, with their helpers, their
+# texts from the catalogues: hosts for /etc/hosts, environment for /etc/environment.
+build/polkit/io.github.konabe_studio.TuxToys.%.policy: tuxtoys/core/policy.py $(MO)
 	install -d $(@D)
-	python3 -m tuxtoys.modules.hosts.policy build/locale $(LIBEXECDIR)/tuxtoys-hosts-save > $@
+	python3 -m tuxtoys.core.policy $* build/locale $(LIBEXECDIR)/tuxtoys-$*-save > $@
 
 # For maintainers: the template from the sources, then every translation merged with it.
 pot:
@@ -100,7 +101,7 @@ install: all
 	done
 	cd data && find icons -name '*.svg' -exec install -D -m 644 {} $(DESTDIR)$(DATADIR)/{} \;
 	install -D -m 644 -t $(DESTDIR)$(DATADIR)/man/man1 data/man/*.1
-	install -D -m 644 -t $(DESTDIR)$(DATADIR)/polkit-1/actions $(POLICY)
+	install -D -m 644 -t $(DESTDIR)$(DATADIR)/polkit-1/actions $(POLICIES)
 
 clean:
 	rm -rf build
