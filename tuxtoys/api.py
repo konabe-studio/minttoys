@@ -105,6 +105,7 @@ MODULE_SETTINGS = {
     "imageresizer": IMAGERESIZER_SETTINGS,
     "renameplus": RENAMEPLUS_SETTINGS,
     "hosts": HOSTS_SETTINGS,
+    "envvars": ENVVARS_SETTINGS,
 }
 
 

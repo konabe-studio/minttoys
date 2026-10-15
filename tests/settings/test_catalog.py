@@ -19,6 +19,7 @@ def test_grouped_keeps_the_order_and_leaves_out_empty_headings() -> None:
         "awake",
         "lightswitch",
         "hosts",
+        "envvars",
         "alwaysontop",
         "locksmith",
         "newplus",

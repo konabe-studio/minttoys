@@ -27,6 +27,7 @@ from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E4
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from tuxtoys.settings.envvars_page import EnvVarsPage  # noqa: E402
 from tuxtoys.settings.general_page import GeneralPage  # noqa: E402
 from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
@@ -120,6 +121,7 @@ class FakeClient:
             ModuleInfo("imageresizer", "Image Resizer", "", self.resizer_on, ""),
             ModuleInfo("renameplus", "Rename+", "", self.rename_on, ""),
             ModuleInfo("hosts", "Hosts File Editor", "", self.hosts_on, ""),
+            ModuleInfo("envvars", "Environment Variables", "", "off", ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -350,6 +352,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "awake",
         "lightswitch",
         "hosts",
+        "envvars",
         "alwaysontop",
         "locksmith",
         "newplus",
@@ -361,8 +364,9 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[2].get_header().get_text() == "System"
     assert rows[3].get_header() is None
     assert rows[4].get_header() is None
-    assert rows[5].get_header().get_text() == "Windows"
-    assert rows[6].get_header().get_text() == "Files"
+    assert rows[5].get_header() is None
+    assert rows[6].get_header().get_text() == "Windows"
+    assert rows[7].get_header().get_text() == "Files"
     assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
@@ -827,3 +831,10 @@ def test_general_page_backs_up_and_restores(client: FakeClient, tmp_path: Path) 
     target.write_text("{}", encoding="utf-8")
     page._on_restore()
     assert errors == ["This is not a file of TuxToys settings."]
+
+
+def test_envvars_page_opens_the_window(client: FakeClient) -> None:
+    opened: list[object] = []
+    page = EnvVarsPage(client, lambda message: None, opened.append)
+    page._on_open()
+    assert len(opened) == 1
