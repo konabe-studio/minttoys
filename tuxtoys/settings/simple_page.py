@@ -57,6 +57,11 @@ class SimplePage(SettingsPage):
             problem = _("TuxToys is not running.")
         except Refused as error:
             problem = _("TuxToys refused: {reason}").format(reason=error)
+        if info is None and not problem:
+            problem = _(
+                "The TuxToys service running now does not have this tool. Log out and back"
+                " in to start the new one."
+            )
         if info and info.state == "failed":
             problem = _("Could not be switched on: {error}").format(error=info.error)
         self._shown_enabled = info.state == "on" if info else None

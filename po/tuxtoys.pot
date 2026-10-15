@@ -2422,3 +2422,9 @@ msgid ""
 "{keys} is in use already. Give Color Picker other keys in the Keyboard "
 "settings."
 msgstr ""
+
+#: tuxtoys/settings/simple_page.py
+msgid ""
+"The TuxToys service running now does not have this tool. Log out and back in "
+"to start the new one."
+msgstr ""
