@@ -107,3 +107,18 @@ def origins(system: Variables, user: Variables, profile: Variables) -> dict[str,
         for name, _value in variables:
             found[name] = origin
     return found
+
+
+# Debian's own, when /etc/login.defs does not say.
+DEFAULT_PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+
+
+def login_path(login_defs: str) -> str:
+    """The search path a login starts with, from /etc/login.defs's ENV_PATH line, as
+    Debian's login sets it.
+    """
+    for line in login_defs.splitlines():
+        words = line.split()
+        if len(words) == 2 and words[0] == "ENV_PATH":
+            return words[1].removeprefix("PATH=")
+    return DEFAULT_PATH
