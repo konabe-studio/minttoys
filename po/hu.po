@@ -1978,3 +1978,125 @@ msgstr "A hosts fájl nem olvasható: {reason}"
 #, python-brace-format
 msgid "The hosts file could not be saved: {reason}"
 msgstr "A hosts fájlt nem sikerült menteni: {reason}"
+
+#: tuxtoys/cli.py
+msgid "open Hosts File Editor"
+msgstr "a Hosts File Editor megnyitása"
+
+#: tuxtoys/cli.py
+msgid "Open Hosts File Editor, to edit /etc/hosts."
+msgstr "A Hosts File Editor megnyitása az /etc/hosts szerkesztéséhez."
+
+#: tuxtoys/cli.py
+msgid "Hosts File Editor is switched off in TuxToys."
+msgstr "A Hosts File Editor ki van kapcsolva a TuxToysban."
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable hosts"
+msgstr "Bekapcsolás: tuxtoys modules enable hosts"
+
+#: tuxtoys/modules/hosts/module.py
+msgid "Edits /etc/hosts in a window, with a backup."
+msgstr "Az /etc/hosts szerkesztése ablakban, biztonsági mentéssel."
+
+#. TRANSLATORS: the tooltip of Hosts File Editor's entry in the applications menu.
+#: tuxtoys/modules/hosts/module.py
+msgid "Edit the hosts file, which maps names to addresses on this computer"
+msgstr "A hosts fájl szerkesztése, amely ezen a gépen neveket rendel címekhez"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Never"
+msgstr "Soha"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Based on count"
+msgstr "Darabszám alapján"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Based on age and count"
+msgstr "Kor és darabszám alapján"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Edits /etc/hosts, which maps names to addresses on this computer."
+msgstr ""
+"Az /etc/hosts szerkesztése, amely ezen a gépen neveket rendel címekhez."
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Use Hosts File Editor"
+msgstr "Hosts File Editor használata"
+
+#. TRANSLATORS: the heading over the button that opens the tool and its command.
+#: tuxtoys/settings/hosts_page.py
+msgid "Open"
+msgstr "Megnyitás"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Behavior"
+msgstr "Működés"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Show a warning at startup"
+msgstr "Figyelmeztetés megjelenítése indításkor"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Consider loopback addresses as duplicates"
+msgstr "A visszacsatolási címek is ismétlődőnek számítanak"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Such as 127.0.0.1 and ::1."
+msgstr "Például 127.0.0.1 és ::1."
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Backup"
+msgstr "Biztonsági mentés"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Into /var/backups/tuxtoys, before the first save of a session."
+msgstr "A /var/backups/tuxtoys mappába, a munkamenet első mentése előtt."
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Back up the hosts file"
+msgstr "A hosts fájl biztonsági mentése"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Automatically delete backups"
+msgstr "Biztonsági mentések automatikus törlése"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Backup count"
+msgstr "Biztonsági mentések száma"
+
+#: tuxtoys/settings/hosts_page.py
+msgid "How many of the newest backups are always kept."
+msgstr "Ennyi legújabb biztonsági mentés mindig megmarad."
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Days"
+msgstr "Napok"
+
+#: tuxtoys/settings/hosts_page.py
+msgid ""
+"Backups older than this are deleted, but never the newest ones counted above."
+msgstr ""
+"Az ennél régebbi biztonsági mentések törlődnek, de a fent megadott számú "
+"legújabb soha."
+
+#: tuxtoys/settings/hosts_page.py
+msgid ""
+"Open it with the button below, from the applications menu, or with tuxtoys "
+"hosts."
+msgstr ""
+"Az alábbi gombbal, az alkalmazások menüjéből vagy a tuxtoys hosts paranccsal "
+"nyitható meg."
+
+#: tuxtoys/settings/hosts_page.py
+msgid ""
+"Changes stay in its window until you save them. Saving asks for an "
+"administrator's password."
+msgstr ""
+"A módosítások a mentésig az ablakban maradnak. A mentés rendszergazdai "
+"jelszót kér."
+
+#: tuxtoys/settings/hosts_page.py
+msgid "Open Hosts File Editor"
+msgstr "Hosts File Editor megnyitása"
