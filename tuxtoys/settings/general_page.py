@@ -226,8 +226,19 @@ class GeneralPage(SettingsPage):
         try:
             for restore in restores:
                 try:
-                    if restore.settings:
-                        self._client.set_module_settings(restore.tool, restore.settings)
+                    # Only what differs: a value a tool keeps but takes no part in setting,
+                    # such as Light Switch's day mode before it is first switched on, is
+                    # left alone rather than refused.
+                    current: dict = {}
+                    with suppress(ModuleOff, Refused):
+                        current = self._client.module_settings(restore.tool)
+                    changes = {
+                        key: value
+                        for key, value in restore.settings.items()
+                        if current.get(key) != value
+                    }
+                    if changes:
+                        self._client.set_module_settings(restore.tool, changes)
                     if restore.enabled is not None:
                         self._client.set_module_enabled(restore.tool, restore.enabled)
                 except (ModuleOff, Refused) as error:

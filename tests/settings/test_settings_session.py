@@ -814,6 +814,10 @@ def test_general_page_backs_up_and_restores(client: FakeClient, tmp_path: Path) 
     )
     page._on_back_up()
     assert '"format": "tuxtoys-settings"' in target.read_text(encoding="utf-8")
+    # What has not changed is not sent back.
+    page._on_restore()
+    assert client.hosts_calls == []
+    assert client.rename_calls == []
     client.hosts_settings["days"] = 99
     client.rename_settings["regex"] = True
     page._on_restore()
