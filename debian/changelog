@@ -12,6 +12,9 @@ tuxtoys (0.3.0~dev) UNRELEASED; urgency=medium
     PowerToys' PowerRename does. It can also take over Nemo's Rename.
   * Hosts File Editor edits /etc/hosts in a window, as PowerToys' Hosts
     File Editor does, saving through pkexec with a backup first.
+  * Environment Variables sets your environment variables, profiles of
+    them, and the system's in /etc/environment, as PowerToys'
+    Environment Variables does.
   * The settings window opens on Home, with a General page beside it: the
     version and links, the panel icon on or off, and a backup of every
     tool's settings to restore later or elsewhere.

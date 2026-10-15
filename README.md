@@ -57,6 +57,20 @@ its page in the settings window, the applications menu or `tuxtoys hosts`.
   runs as root. Before the first save of a session the file is backed up into
   `/var/backups/tuxtoys`, and old backups are deleted as you set it.
 
+### Environment Variables
+
+Sets your environment variables, profiles of them, and the system's, in a window: from
+its page in the settings window, the applications menu or `tuxtoys env`.
+
+- **Your variables** are loaded when you log in, through one line TuxToys adds to
+  `~/.xsessionrc`, and in every new terminal at once, through one in `~/.bashrc`. A value
+  can build on another, as `$HOME/bin:$PATH`, and a list such as PATH is edited one
+  folder a line.
+- **Profiles** are sets of variables to switch on together, one at a time, over your own.
+- **The system's variables** are `/etc/environment`, for every user; saving them asks for
+  an administrator's password, with a backup first, as Hosts File Editor does.
+- **Applied variables** shows what you get at the next login, and where each comes from.
+
 ### Always on Top
 
 Keeps a window above all the others, with Muffin's own Super+Ctrl+T.
@@ -139,7 +153,8 @@ The panel icon stays until you log out. Your own settings stay in `~/.config/tux
 and `~/.local/state/tuxtoys/`, yours to keep or delete. A keyboard shortcut a tool added
 to Cinnamon, such as Light Switch's or Always on Top's, stays in the Keyboard settings too: switch the tool
 off in TuxToys before removing the package, or delete the shortcut there. The same goes
-for Nemo's Rename, if you let Rename+ take it over: switch Rename+ off first.
+for Nemo's Rename, if you let Rename+ take it over, and for the lines Environment
+Variables adds to `~/.xsessionrc` and `~/.bashrc`: switch the tool off first.
 
 ## Platform
 
