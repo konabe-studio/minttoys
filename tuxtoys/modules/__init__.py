@@ -13,4 +13,5 @@ AVAILABLE: dict[str, str] = {
     "hosts": "tuxtoys.modules.hosts.module:HostsFileEditor",
     "envvars": "tuxtoys.modules.envvars.module:EnvironmentVariables",
     "colorpicker": "tuxtoys.modules.colorpicker.module:ColorPicker",
+    "screenruler": "tuxtoys.modules.screenruler.module:ScreenRuler",
 }

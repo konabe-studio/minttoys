@@ -107,6 +107,15 @@ COLORPICKER_SETTINGS = {
     "formats": "a(ssb)",
     "history": "as",
 }
+SCREENRULER_SETTINGS = {
+    "shortcut": "b",
+    "default_mode": "s",
+    "tolerance": "u",
+    "per_channel": "b",
+    "extra_unit": "s",
+    "draw_feet": "b",
+    "line_color": "s",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -118,6 +127,7 @@ MODULE_SETTINGS = {
     "hosts": HOSTS_SETTINGS,
     "envvars": ENVVARS_SETTINGS,
     "colorpicker": COLORPICKER_SETTINGS,
+    "screenruler": SCREENRULER_SETTINGS,
 }
 
 
