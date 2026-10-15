@@ -886,3 +886,21 @@ def test_a_tool_the_running_service_does_not_have(client: FakeClient) -> None:
     page = HostsPage(client, lambda message: None)
     assert not page.enabled.get_sensitive()
     assert "does not have this tool" in page.problem.get_text()
+
+
+def test_colorpicker_page_behaviour_and_formats(client: FakeClient) -> None:
+    page = ColorPickerPage(client, lambda message: None, lambda error: None, FakeShortcut(""))
+    assert page.activation.content_widget.get_active_id() == "pick"
+    assert page.buttons["left"].content_widget.get_active_id() == "pick-editor"
+    page.activation.content_widget.set_active_id("editor")
+    assert client.picker_calls[-1] == {"activation": "editor"}
+    page.buttons["right"].content_widget.set_active_id("pick-close")
+    assert client.picker_calls[-1] == {"right": "pick-close"}
+    page.show_name.content_widget.set_active(True)
+    assert client.picker_calls[-1] == {"show_name": True}
+    rows = page.formats_list.get_children()
+    assert len(rows) == 16
+    page.move_format(0, 1)
+    assert [entry[0] for entry in client.picker_calls[-1]["formats"][:2]] == ["RGB", "HEX"]
+    page.delete_format(0)
+    assert "RGB" not in [entry[0] for entry in client.picker_calls[-1]["formats"]]
