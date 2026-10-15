@@ -7,6 +7,7 @@
     tuxtoys lightswitch [status | toggle]
     tuxtoys alwaysontop opacity {up | down}
     tuxtoys hosts
+    tuxtoys env
     tuxtoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when TuxToys could not do it, 2 when the command line is wrong.
@@ -60,8 +61,8 @@ def main(
             run_awake(client, args, now(), out)
         elif args.command == "lightswitch":
             run_lightswitch(client, args, out)
-        elif args.command == "hosts":
-            run_hosts(client, spawn or _spawn)
+        elif args.command in ("hosts", "env"):
+            run_window(client, args.command, spawn or _spawn)
         else:
             run_modules(client, args, out)
     except ImportError:
@@ -77,6 +78,9 @@ def main(
         elif args.command == "hosts":
             print(_("Hosts File Editor is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable hosts"), file=err)
+        elif args.command == "env":
+            print(_("Environment Variables is switched off in TuxToys."), file=err)
+            print(_("Switch it on with: tuxtoys modules enable envvars"), file=err)
         else:
             print(_("Awake is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable awake"), file=err)
@@ -112,11 +116,17 @@ def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> No
     print(lightswitch_text.describe(client.lightswitch_state()), file=out)
 
 
-def run_hosts(client: Client, spawn: Callable[[list[str]], None]) -> None:
-    """Opens Hosts File Editor, while it is switched on."""
-    if not any(info.id == "hosts" and info.state == "on" for info in client.modules()):
+def run_window(client: Client, command: str, spawn: Callable[[list[str]], None]) -> None:
+    """Opens a tool's window, while the tool is switched on: hosts opens Hosts File
+    Editor, env Environment Variables.
+    """
+    module_id = {"hosts": "hosts", "env": "envvars"}[command]
+    if not any(info.id == module_id and info.state == "on" for info in client.modules()):
         raise ModuleOff
-    from tuxtoys.modules.hosts.module import editor_command
+    if command == "hosts":
+        from tuxtoys.modules.hosts.module import editor_command
+    else:
+        from tuxtoys.modules.envvars.module import editor_command
 
     spawn(editor_command())
 
@@ -241,6 +251,11 @@ def parser() -> argparse.ArgumentParser:
         "hosts",
         help=_("open Hosts File Editor"),
         description=_("Open Hosts File Editor, to edit /etc/hosts."),
+    )
+    commands.add_parser(
+        "env",
+        help=_("open Environment Variables"),
+        description=_("Open Environment Variables, to set your variables and the system's."),
     )
 
     modules = commands.add_parser(

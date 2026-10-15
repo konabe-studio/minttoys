@@ -1,5 +1,6 @@
 """Environment Variables' page: whether it is on, how its variables reach the session, and
-a button that opens its window, where everything is set.
+a button and a command that open its window, where everything is set; from the
+applications menu too.
 """
 
 from collections.abc import Callable
@@ -15,6 +16,7 @@ from tuxtoys.core.i18n import _  # noqa: E402
 from tuxtoys.modules.envvars.module import editor_command  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
+from tuxtoys.settings.widgets import CommandRow  # noqa: E402
 
 
 def open_window(show_error: Callable[[str], None]) -> None:
@@ -55,6 +57,7 @@ class EnvVarsPage(SimplePage):
         # TRANSLATORS: the heading over the button that opens the tool.
         section = self.add_section(_("Open"))
         section.add_row(Button(_("Open Environment Variables"), self._on_open))
+        section.add_row(CommandRow(_("Command"), "tuxtoys env"))
 
     def _on_open(self, *_args: object) -> None:
         self._opener(self._show_error)
