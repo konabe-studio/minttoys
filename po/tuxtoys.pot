@@ -2342,3 +2342,83 @@ msgstr ""
 #: tuxtoys/modules/envvars/module.py
 msgid "Set your environment variables, profiles of them, and the system's"
 msgstr ""
+
+#: tuxtoys/cli.py
+msgid "pick a color from the screen"
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Pick a color from anywhere on the screen, and copy it."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Color Picker is switched off in TuxToys."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable colorpicker"
+msgstr ""
+
+#: tuxtoys/colorpicker/main.py
+msgid "Color Picker cannot see the screen."
+msgstr ""
+
+#: tuxtoys/colorpicker/main.py
+#, python-brace-format
+msgid "Color Picker needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/module.py tuxtoys/settings/colorpicker_page.py
+msgid "Color Picker"
+msgstr ""
+
+#: tuxtoys/modules/colorpicker/module.py
+msgid ""
+"Picks a color from anywhere on the screen with Super+Shift+C, and copies it."
+msgstr ""
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools that work on what is on the screen, such as Color Picker.
+#: tuxtoys/settings/catalog.py
+msgid "Screen"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Picks a color from anywhere on the screen, and copies it."
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Use Color Picker"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Color Picker."
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color with a keyboard shortcut"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Picking"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Copy colors as"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid ""
+"Press the shortcut, point at a color and click: it is copied in the format "
+"below. Scroll to zoom in; right-click or Escape to leave."
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color now"
+msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Color Picker other keys in the Keyboard "
+"settings."
+msgstr ""

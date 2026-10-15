@@ -2469,3 +2469,91 @@ msgstr "Bekapcsolás: tuxtoys modules enable envvars"
 msgid "Set your environment variables, profiles of them, and the system's"
 msgstr ""
 "A környezeti változói, azok profiljai és a rendszer változóinak beállítása"
+
+#: tuxtoys/cli.py
+msgid "pick a color from the screen"
+msgstr "szín választása a képernyőről"
+
+#: tuxtoys/cli.py
+msgid "Pick a color from anywhere on the screen, and copy it."
+msgstr "Szín választása a képernyő bármely pontjáról, és a másolása."
+
+#: tuxtoys/cli.py
+msgid "Color Picker is switched off in TuxToys."
+msgstr "A Color Picker ki van kapcsolva a TuxToysban."
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable colorpicker"
+msgstr "Bekapcsolás: tuxtoys modules enable colorpicker"
+
+#: tuxtoys/colorpicker/main.py
+msgid "Color Picker cannot see the screen."
+msgstr "A Color Picker nem látja a képernyőt."
+
+#: tuxtoys/colorpicker/main.py
+#, python-brace-format
+msgid "Color Picker needs PyGObject and GTK 3: {error}"
+msgstr "A Color Picker működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/modules/colorpicker/module.py tuxtoys/settings/colorpicker_page.py
+msgid "Color Picker"
+msgstr "Color Picker"
+
+#: tuxtoys/modules/colorpicker/module.py
+msgid ""
+"Picks a color from anywhere on the screen with Super+Shift+C, and copies it."
+msgstr ""
+"Super+Shift+C-vel színt választ a képernyő bármely pontjáról, és kimásolja."
+
+#. TRANSLATORS: a heading in the settings window's sidebar, over the tools that work on what is on the screen, such as Color Picker.
+#: tuxtoys/settings/catalog.py
+msgid "Screen"
+msgstr "Képernyő"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Picks a color from anywhere on the screen, and copies it."
+msgstr "Színt választ a képernyő bármely pontjáról, és kimásolja."
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Use Color Picker"
+msgstr "Color Picker használata"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Color Picker."
+msgstr ""
+"A billentyűit a Billentyűzet beállításaiban módosíthatja, a TuxToys: Color "
+"Picker alatt."
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color with a keyboard shortcut"
+msgstr "Színválasztás gyorsbillentyűvel"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Picking"
+msgstr "Színválasztás"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Copy colors as"
+msgstr "Színek másolása ebben a formában"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid ""
+"Press the shortcut, point at a color and click: it is copied in the format "
+"below. Scroll to zoom in; right-click or Escape to leave."
+msgstr ""
+"Nyomja meg a gyorsbillentyűt, mutasson egy színre, és kattintson: az alábbi "
+"formában kerül a vágólapra. Görgetéssel nagyít; jobb kattintással vagy "
+"Escape-pel kiléphet."
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Pick a color now"
+msgstr "Szín választása most"
+
+#: tuxtoys/settings/colorpicker_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Color Picker other keys in the Keyboard "
+"settings."
+msgstr ""
+"A(z) {keys} már foglalt. Adjon a Color Pickernek más billentyűket a "
+"Billentyűzet beállításaiban."
