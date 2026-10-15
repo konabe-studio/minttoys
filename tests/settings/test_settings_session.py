@@ -21,12 +21,14 @@ if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
 from tuxtoys.api import ModuleInfo, ModuleOff, NotRunning, Refused  # noqa: E402
+from tuxtoys.modules.colorpicker.options import Options as PickerOptions  # noqa: E402
 from tuxtoys.modules.hosts.options import Options as HostsOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
+from tuxtoys.settings.colorpicker_page import ColorPickerPage  # noqa: E402
 from tuxtoys.settings.envvars_page import EnvVarsPage  # noqa: E402
 from tuxtoys.settings.general_page import GeneralPage  # noqa: E402
 from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
@@ -83,6 +85,9 @@ class FakeClient:
         self.resizer_settings = ResizerOptions().settings()
         self.resizer_calls: list[dict] = []
         self.hosts_on = "on"
+        self.picker_on = "on"
+        self.picker_settings = PickerOptions().settings()
+        self.picker_calls: list[dict] = []
         self.hosts_settings = HostsOptions().settings()
         self.hosts_calls: list[dict] = []
         self.rename_on = "on"
@@ -122,6 +127,7 @@ class FakeClient:
             ModuleInfo("renameplus", "Rename+", "", self.rename_on, ""),
             ModuleInfo("hosts", "Hosts File Editor", "", self.hosts_on, ""),
             ModuleInfo("envvars", "Environment Variables", "", "off", ""),
+            ModuleInfo("colorpicker", "Color Picker", "", self.picker_on, ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -149,6 +155,8 @@ class FakeClient:
             return dict(self.rename_settings)
         if module_id == "hosts":
             return dict(self.hosts_settings)
+        if module_id == "colorpicker":
+            return dict(self.picker_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -167,6 +175,11 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "colorpicker":
+            self.picker_calls.append(dict(changes))
+            options = PickerOptions.read(self.picker_settings).update(changes)
+            self.picker_settings = options.settings()
             return
         if module_id == "hosts":
             self.hosts_calls.append(dict(changes))
@@ -354,6 +367,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "hosts",
         "envvars",
         "alwaysontop",
+        "colorpicker",
         "locksmith",
         "newplus",
         "imageresizer",
@@ -366,7 +380,8 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[4].get_header() is None
     assert rows[5].get_header() is None
     assert rows[6].get_header().get_text() == "Windows"
-    assert rows[7].get_header().get_text() == "Files"
+    assert rows[7].get_header().get_text() == "Screen"
+    assert rows[8].get_header().get_text() == "Files"
     assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
@@ -838,3 +853,29 @@ def test_envvars_page_opens_the_window(client: FakeClient) -> None:
     page = EnvVarsPage(client, lambda message: None, opened.append)
     page._on_open()
     assert len(opened) == 1
+
+
+class FakeShortcut:
+    def __init__(self, keys: str) -> None:
+        self.keys = keys
+
+    def current_keys(self) -> str:
+        return self.keys
+
+
+def test_colorpicker_page(client: FakeClient) -> None:
+    opened: list[object] = []
+    shortcut = FakeShortcut("<Shift><Super>c")
+    page = ColorPickerPage(client, lambda message: None, opened.append, shortcut)
+    assert page.format.content_widget.get_active_id() == "HEX"
+    assert page.keys.get_text() == "Shift+Super+C"
+    page.format.content_widget.set_active_id("RGB")
+    assert client.picker_calls[-1] == {"default_format": "RGB"}
+    page.shortcut.content_widget.set_active(False)
+    assert client.picker_calls[-1] == {"shortcut": False}
+    assert page.keys.get_text() == ""
+    page._opener(lambda message: None)
+    assert len(opened) == 1
+    taken = ColorPickerPage(client, lambda message: None, opened.append, FakeShortcut(""))
+    taken._save({"shortcut": True})
+    assert "in use already" in taken.keys.get_text()
