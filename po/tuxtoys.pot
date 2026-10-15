@@ -2847,3 +2847,135 @@ msgid ""
 "measure it, or point between two edges to measure the space between them. A "
 "click copies the measurement. Escape or the close button leaves the ruler."
 msgstr ""
+
+#: tuxtoys/cli.py
+msgid "copy text from the screen"
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Copy the text in any part of the screen."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Text Extractor is switched off in TuxToys."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable textextractor"
+msgstr ""
+
+#: tuxtoys/modules/textextractor/module.py tuxtoys/settings/textextractor_page.py tuxtoys/textextractor/main.py
+msgid "Text Extractor"
+msgstr ""
+
+#: tuxtoys/modules/textextractor/module.py
+msgid "Copies the text in any part of the screen with Super+Shift+T."
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Text Extractor reads only the languages whose tesseract data is installed. "
+"Add one with its package, such as: sudo apt install tesseract-ocr-deu"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Text Extractor reads the screen with tesseract, which is not installed. "
+"Install it with: sudo apt install tesseract-ocr tesseract-ocr-hun"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Copies the text in any part of the screen."
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Use Text Extractor"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Change its keys in the Keyboard settings, under TuxToys: Text Extractor."
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Extract text with a keyboard shortcut"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Preferred language"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "The language it reads in when it opens."
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "No language installed"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Press the shortcut and drag over the text: it is copied. A click copies the "
+"one word under it. At the top of the screen, choose the language, or have "
+"the text copied on one line or as a table."
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Extract text now"
+msgstr ""
+
+#: tuxtoys/settings/textextractor_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Text Extractor other keys in the Keyboard "
+"settings."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor needs tesseract."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Install it with: sudo apt install tesseract-ocr tesseract-ocr-hun"
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Tesseract has no language to read."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Install one with: sudo apt install tesseract-ocr-eng"
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor cannot see the screen."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor could not read the text."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+msgid "No text found."
+msgstr ""
+
+#: tuxtoys/textextractor/main.py
+#, python-brace-format
+msgid "Text Extractor needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/textextractor/window.py
+msgid "Language"
+msgstr ""
+
+#: tuxtoys/textextractor/window.py
+msgid "Settings"
+msgstr ""
+
+#: tuxtoys/textextractor/window.py
+msgid "Format the result as a single line (S)"
+msgstr ""
+
+#: tuxtoys/textextractor/window.py
+msgid "Format the result as a table (T)"
+msgstr ""
