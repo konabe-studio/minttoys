@@ -291,3 +291,20 @@ class TestAlwaysOnTop:
         status, _, err = run(client, "alwaysontop", "opacity", "up")
         assert status == 1
         assert err == "Could not change the window's opacity: no display\n"
+
+
+class TestHosts:
+    def test_opens_the_editor_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("hosts", "Hosts File Editor", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["hosts"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.hostseditor"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("hosts", "Hosts File Editor", "", "off", "")]
+        status, _out, err = run(client, "hosts")
+        assert status == 1
+        assert "Hosts File Editor is switched off in TuxToys." in err
+        assert "tuxtoys modules enable hosts" in err

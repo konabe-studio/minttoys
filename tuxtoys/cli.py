@@ -6,12 +6,14 @@
     tuxtoys awake status
     tuxtoys lightswitch [status | toggle]
     tuxtoys alwaysontop opacity {up | down}
+    tuxtoys hosts
     tuxtoys modules [list | enable MODULE | disable MODULE]
 
 Exit status: 0 when done, 1 when TuxToys could not do it, 2 when the command line is wrong.
 """
 
 import argparse
+import subprocess
 import sys
 from collections.abc import Callable, Sequence
 from datetime import datetime, timedelta
@@ -43,8 +45,11 @@ def main(
     now: Callable[[], datetime] = clock.now,
     out: TextIO | None = None,
     err: TextIO | None = None,
+    spawn: Callable[[list[str]], None] | None = None,
 ) -> int:
-    """Runs one command. The tests hand in a client, a clock and streams of their own."""
+    """Runs one command. The tests hand in a client, a clock, streams and a way to start
+    a program of their own.
+    """
     out, err = out or sys.stdout, err or sys.stderr
     args = parser().parse_args(argv)
     if args.command == "alwaysontop":
@@ -55,6 +60,8 @@ def main(
             run_awake(client, args, now(), out)
         elif args.command == "lightswitch":
             run_lightswitch(client, args, out)
+        elif args.command == "hosts":
+            run_hosts(client, spawn or _spawn)
         else:
             run_modules(client, args, out)
     except ImportError:
@@ -67,6 +74,9 @@ def main(
         if args.command == "lightswitch":
             print(_("Light Switch is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable lightswitch"), file=err)
+        elif args.command == "hosts":
+            print(_("Hosts File Editor is switched off in TuxToys."), file=err)
+            print(_("Switch it on with: tuxtoys modules enable hosts"), file=err)
         else:
             print(_("Awake is switched off in TuxToys."), file=err)
             print(_("Switch it on with: tuxtoys modules enable awake"), file=err)
@@ -100,6 +110,26 @@ def run_lightswitch(client: Client, args: argparse.Namespace, out: TextIO) -> No
     if args.action == "toggle":
         client.lightswitch_toggle()
     print(lightswitch_text.describe(client.lightswitch_state()), file=out)
+
+
+def run_hosts(client: Client, spawn: Callable[[list[str]], None]) -> None:
+    """Opens Hosts File Editor, while it is switched on."""
+    if not any(info.id == "hosts" and info.state == "on" for info in client.modules()):
+        raise ModuleOff
+    from tuxtoys.modules.hosts.module import editor_command
+
+    spawn(editor_command())
+
+
+def _spawn(argv: list[str]) -> None:
+    """Starts a window of its own, which outlives this command."""
+    subprocess.Popen(  # our own program, by its full path
+        argv,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
 
 
 def run_alwaysontop(args: argparse.Namespace, err: TextIO) -> int:
@@ -206,6 +236,12 @@ def parser() -> argparse.ArgumentParser:
     pinned = alwaysontop.add_subparsers(dest="action", required=True, metavar=_("ACTION"))
     opacity = pinned.add_parser("opacity", help=_("one step more or less opaque"))
     opacity.add_argument("direction", choices=("up", "down"))
+
+    commands.add_parser(
+        "hosts",
+        help=_("open Hosts File Editor"),
+        description=_("Open Hosts File Editor, to edit /etc/hosts."),
+    )
 
     modules = commands.add_parser(
         "modules",

@@ -83,6 +83,14 @@ RENAMEPLUS_SETTINGS = {
     "nemo_rename": "b",
     "previous_tool": "s",
 }
+HOSTS_SETTINGS = {
+    "show_warning": "b",
+    "loopback_duplicates": "b",
+    "backup": "b",
+    "keep": "s",
+    "count": "u",
+    "days": "u",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -91,6 +99,7 @@ MODULE_SETTINGS = {
     "newplus": NEWPLUS_SETTINGS,
     "imageresizer": IMAGERESIZER_SETTINGS,
     "renameplus": RENAMEPLUS_SETTINGS,
+    "hosts": HOSTS_SETTINGS,
 }
 
 
