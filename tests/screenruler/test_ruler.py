@@ -6,9 +6,12 @@ from types import SimpleNamespace
 
 import pytest
 
-gi = pytest.importorskip("gi")
-gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
+gi = pytest.importorskip("gi", reason="PyGObject is not installed")
+try:
+    gi.require_version("Gtk", "3.0")
+    gi.require_version("Gdk", "3.0")
+except ValueError as error:
+    pytest.skip(f"GTK 3 is missing: {error}", allow_module_level=True)
 
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk  # noqa: E402
 
