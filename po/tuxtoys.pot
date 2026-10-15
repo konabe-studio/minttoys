@@ -2684,3 +2684,7 @@ msgstr ""
 #: tuxtoys/settings/colorpicker_page.py
 msgid "Format"
 msgstr ""
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Drag to reorder"
+msgstr ""

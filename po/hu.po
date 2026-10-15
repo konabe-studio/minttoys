@@ -2825,3 +2825,7 @@ msgstr "Formátum hozzáadása"
 #: tuxtoys/settings/colorpicker_page.py
 msgid "Format"
 msgstr "Formátum"
+
+#: tuxtoys/settings/colorpicker_page.py
+msgid "Drag to reorder"
+msgstr "Húzással átrendezhető"

@@ -26,6 +26,7 @@ from tuxtoys.modules.colorpicker.options import (  # noqa: E402
     SHORTCUT_NAME,
     Options,
 )
+from tuxtoys.settings.drag import handle, make_draggable  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
 from tuxtoys.settings.widgets import open_keyboard_settings  # noqa: E402
@@ -62,13 +63,18 @@ def actions() -> list[tuple[str, str]]:
 
 
 class FormatRow(SettingsWidget):
-    """A format: its name and how it writes the example color, a switch for whether the
-    editor shows it, and Edit, Delete, Move up and Move down in a menu.
+    """A format: a handle to drag it into another place, its name and how it writes the
+    example color, a switch for whether the editor shows it, and Edit, Delete, Move up and
+    Move down in a menu, the last two for the keyboard.
     """
 
     def __init__(self, page: "ColorPickerPage", index: int, entry: tuple[str, str, bool]) -> None:
         super().__init__()
         name, template, shown = entry
+        grip = handle()
+        grip.set_tooltip_text(_("Drag to reorder"))
+        self.pack_start(grip, False, False, 0)
+        make_draggable(grip, self, index, page.reorder_format)
         texts = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         texts.pack_start(Gtk.Label(label=name, xalign=0), False, False, 0)
         example = Gtk.Label(label=format_color(EXAMPLE, template), xalign=0, selectable=True)
@@ -302,6 +308,13 @@ class ColorPickerPage(SimplePage):
         if 0 <= other < len(formats):
             formats[index], formats[other] = formats[other], formats[index]
             self._save_formats(formats)
+
+    def reorder_format(self, source: int, target: int) -> None:
+        """A format dragged from `source` and dropped on the row at `target`."""
+        formats = list(self.options.formats)
+        moved = formats.pop(source)
+        formats.insert(target, moved)
+        self._save_formats(formats)
 
     def delete_format(self, index: int) -> None:
         formats = list(self.options.formats)

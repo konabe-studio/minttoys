@@ -904,3 +904,11 @@ def test_colorpicker_page_behaviour_and_formats(client: FakeClient) -> None:
     assert [entry[0] for entry in client.picker_calls[-1]["formats"][:2]] == ["RGB", "HEX"]
     page.delete_format(0)
     assert "RGB" not in [entry[0] for entry in client.picker_calls[-1]["formats"]]
+
+
+def test_colorpicker_formats_reorder_by_drag(client: FakeClient) -> None:
+    page = ColorPickerPage(client, lambda message: None, lambda error: None, FakeShortcut(""))
+    page.reorder_format(0, 2)
+    assert [entry[0] for entry in client.picker_calls[-1]["formats"][:3]] == ["RGB", "HSL", "HEX"]
+    page.reorder_format(2, 0)
+    assert [entry[0] for entry in client.picker_calls[-1]["formats"][:3]] == ["HEX", "RGB", "HSL"]
