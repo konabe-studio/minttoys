@@ -29,6 +29,9 @@ Depends: gir1.2-glib-2.0,
          python3-xlib,
          ${misc:Depends},
          ${python3:Depends},
+Recommends: tesseract-ocr,
+            tesseract-ocr-eng,
+            tesseract-ocr-hun,
 Conflicts: minttoys
 Replaces: minttoys
 Description: power-user utilities for Linux Mint Cinnamon

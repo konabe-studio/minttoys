@@ -116,6 +116,10 @@ SCREENRULER_SETTINGS = {
     "draw_feet": "b",
     "line_color": "s",
 }
+TEXTEXTRACTOR_SETTINGS = {
+    "shortcut": "b",
+    "language": "s",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -128,6 +132,7 @@ MODULE_SETTINGS = {
     "envvars": ENVVARS_SETTINGS,
     "colorpicker": COLORPICKER_SETTINGS,
     "screenruler": SCREENRULER_SETTINGS,
+    "textextractor": TEXTEXTRACTOR_SETTINGS,
 }
 
 
