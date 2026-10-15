@@ -20,40 +20,25 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("PangoCairo", "1.0")
 
 import cairo  # noqa: E402
-from gi.repository import Gdk, GdkPixbuf, Gio, Gtk, PangoCairo  # noqa: E402
+from gi.repository import Gdk, GdkPixbuf, Gtk, PangoCairo  # noqa: E402
 
-from tuxtoys import APP_ID  # noqa: E402
 from tuxtoys.core.i18n import _  # noqa: E402
 from tuxtoys.modules.screenruler.measure import (  # noqa: E402
     TOLERANCE_STEP,
-    Monitor,
     Rect,
     box,
     copied,
     label,
     measure_at,
-    monitor_at,
 )
 from tuxtoys.modules.screenruler.options import Options  # noqa: E402
+from tuxtoys.overlay.monitors import Monitor, monitor_at  # noqa: E402
+from tuxtoys.overlay.toolbar import Toolbar, flat, icon  # noqa: E402
 from tuxtoys.overlay.window import Overlay  # noqa: E402
 
 TOOLS = ("bounds", "spacing", "horizontal", "vertical")
 UNIT_NAMES = {"": "px", "in": "in", "cm": "cm", "mm": "mm"}
 FOOT = 4  # half a foot's length, in pixels
-ICONS = "data/icons/hicolor/symbolic/apps"
-
-
-def tool_icon(name: str) -> Gtk.Image:
-    """One of our own symbolic icons: by name once installed, else the checkout's file."""
-    icon_name = f"{APP_ID}-{name}-symbolic"
-    if Gtk.IconTheme.get_default().has_icon(icon_name):
-        return Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-    from tuxtoys.core.nemo_action import PACKAGE_ROOT
-
-    path = PACKAGE_ROOT / ICONS / f"{icon_name}.svg"
-    return Gtk.Image.new_from_gicon(
-        Gio.FileIcon.new(Gio.File.new_for_path(str(path))), Gtk.IconSize.BUTTON
-    )
 
 
 def tooltips() -> dict[str, str]:
@@ -90,43 +75,14 @@ class Ruler(Overlay):
         self._showing = False
 
         self.buttons: dict[str, Gtk.ToggleButton] = {}
-        toolbar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
-        for side in ("top", "bottom", "start", "end"):
-            getattr(toolbar, f"set_margin_{side}")(4)
+        self.toolbar = Toolbar(self.close_overlay)
         for tool, tip in tooltips().items():
-            button = Gtk.ToggleButton(image=tool_icon(f"ruler-{tool}"), tooltip_text=tip)
-            button.get_style_context().add_class("flat")
+            button = flat(Gtk.ToggleButton(image=icon(f"ruler-{tool}"), tooltip_text=tip))
             button.connect("toggled", self._on_toggled, tool)
             self.buttons[tool] = button
-            toolbar.add(button)
-        close = Gtk.Button.new_from_icon_name("window-close-symbolic", Gtk.IconSize.BUTTON)
-        close.set_tooltip_text(_("Close (Esc)"))
-        close.connect("clicked", lambda _button: self.close_overlay())
-        close.get_style_context().add_class("flat")
-        close.get_style_context().add_class("ruler-close")
-        separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
-        separator.set_margin_start(4)
-        separator.set_margin_end(4)
-        toolbar.add(separator)
-        toolbar.add(close)
-        # A bar in the theme's own colors, floating over the frozen screen.
-        # A rounded bar in the theme's own colors, floating over the frozen screen, with a
-        # red close button, as PowerToys has it.
-        frame = Gtk.Frame(shadow_type=Gtk.ShadowType.OUT)
-        css = Gtk.CssProvider()
-        css.load_from_data(
-            b"frame.ruler-bar { background-color: @theme_bg_color; border-radius: 8px; }"
-            b" frame.ruler-bar > border { border-radius: 8px; }"
-            b" .ruler-close image { color: #e01b24; }"
-        )
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        )
-        frame.get_style_context().add_class("ruler-bar")
-        frame.add(toolbar)
-        self.toolbar = frame
+            self.toolbar.add_item(button)
         fixed = Gtk.Fixed()
-        fixed.put(frame, 0, 0)
+        fixed.put(self.toolbar, 0, 0)
         self.add(fixed)
         self._fixed = fixed
         self._show_tool()
@@ -136,11 +92,7 @@ class Ruler(Overlay):
         self.connect("scroll-event", self._on_scroll)
 
     def _place_toolbar(self, _window: Gtk.Window) -> None:
-        """At the top of the monitor the pointer is on, in the middle."""
-        monitor = monitor_at(self.monitors, *self.pointer)
-        self.toolbar.show_all()
-        _least, natural = self.toolbar.get_preferred_width()
-        self._fixed.move(self.toolbar, monitor.x + (monitor.width - natural) // 2, monitor.y + 16)
+        self.toolbar.place(self._fixed, self.monitors, self.pointer)
 
     def _show_tool(self) -> None:
         self._showing = True
@@ -307,20 +259,3 @@ class Ruler(Overlay):
         context.set_source_rgb(1, 1, 1)
         context.move_to(left + 8, top + 5)
         PangoCairo.show_layout(context, layout)
-
-
-def monitors_of(display: Gdk.Display) -> list[Monitor]:
-    """Every monitor's place, and its pixel size from the millimetres it reports."""
-    found = []
-    for number in range(display.get_n_monitors()):
-        monitor = display.get_monitor(number)
-        area = monitor.get_geometry()
-        width_mm = monitor.get_width_mm()
-        mm_per_pixel = width_mm / area.width if width_mm > 0 and area.width > 0 else 0.0
-        found.append(Monitor(area.x, area.y, area.width, area.height, mm_per_pixel))
-    return found
-
-
-def pointer_of(display: Gdk.Display) -> tuple[int, int]:
-    _screen, x, y = display.get_default_seat().get_pointer().get_position()
-    return x, y

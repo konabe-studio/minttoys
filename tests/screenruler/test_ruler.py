@@ -18,8 +18,9 @@ from gi.repository import Gdk, GdkPixbuf, GLib, Gtk  # noqa: E402
 if not Gtk.init_check()[0]:
     pytest.skip("no display to open", allow_module_level=True)
 
-from tuxtoys.modules.screenruler.measure import Monitor, Rect  # noqa: E402
+from tuxtoys.modules.screenruler.measure import Rect  # noqa: E402
 from tuxtoys.modules.screenruler.options import Options  # noqa: E402
+from tuxtoys.overlay.monitors import Monitor  # noqa: E402
 from tuxtoys.screenruler.ruler import Ruler  # noqa: E402
 
 

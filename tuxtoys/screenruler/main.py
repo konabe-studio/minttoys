@@ -18,8 +18,9 @@ def main(argv: list[str] | None = None) -> int:
         gi.require_version("Gdk", "3.0")
         from gi.repository import Gdk, GLib, Gtk
 
+        from tuxtoys.overlay.toolbar import monitors_of, pointer_of
         from tuxtoys.platform.x11 import capture_screen
-        from tuxtoys.screenruler.ruler import Ruler, monitors_of, pointer_of
+        from tuxtoys.screenruler.ruler import Ruler
     except (ImportError, ValueError) as error:
         print(
             _("Screen Ruler needs PyGObject and GTK 3: {error}").format(error=error),
