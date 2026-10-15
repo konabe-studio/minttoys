@@ -78,6 +78,8 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save
 	$(SUBSTITUTE) data/launchers/tuxtoys-environment-save.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-save
+	$(SUBSTITUTE) data/launchers/tuxtoys-environment-variables.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-variables
 	$(SUBSTITUTE) data/launchers/tuxtoys-hosts-editor.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
@@ -89,6 +91,7 @@ install: all
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-save \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-variables \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \

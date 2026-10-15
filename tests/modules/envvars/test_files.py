@@ -207,3 +207,8 @@ def test_a_linked_bashrc_stays_a_link(tmp_path: Path) -> None:
 
 def test_off_by_default() -> None:
     assert EnvironmentVariables.enabled_by_default is False
+
+
+def test_login_path() -> None:
+    assert variables.login_path("# x\nENV_PATH\tPATH=/usr/bin:/bin\n") == "/usr/bin:/bin"
+    assert variables.login_path("") == variables.DEFAULT_PATH
