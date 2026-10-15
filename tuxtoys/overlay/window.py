@@ -1,6 +1,7 @@
 """The screen tools' shared layer: a window over every monitor that shows the screen as it
 was when the tool opened, frozen, and takes the mouse and the keyboard until it closes.
-Color Picker picks from it; the other screen tools of M3 build on it too.
+Color Picker picks from it and Screen Ruler measures on it; the other screen tools of M3
+build on it too.
 
 It is an override-redirect window over the whole root window, as screenshot tools make
 them, with the pointer and the keyboard grabbed, so nothing under it reacts. Escape
@@ -78,7 +79,8 @@ class Overlay(Gtk.Window):
         Gdk.cairo_set_source_pixbuf(context, self.screen_picture, 0, 0)
         context.paint()
         self.draw_over(context)
-        return True
+        # On to the window's children, if a tool has any, such as Screen Ruler's toolbar.
+        return False
 
     def draw_over(self, context: cairo.Context) -> None:
         """Whatever the tool shows over the frozen screen."""
