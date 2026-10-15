@@ -39,6 +39,14 @@ def open_picker(show_error: Callable[[str], None]) -> None:
         show_error(error.message)
 
 
+def format_choices(options: Options) -> list[tuple[str, str]]:
+    """Each format, by name, with an example of how it writes a color."""
+    return [
+        (name, f"{name}: {format_color(EXAMPLE, template)}")
+        for name, template, _shown in options.formats
+    ]
+
+
 def keys_label(keys: str) -> str:
     key, mods = Gtk.accelerator_parse(keys)
     return Gtk.accelerator_get_label(key, mods) if key else keys
@@ -83,7 +91,8 @@ class ColorPickerPage(SimplePage):
             Button(_("Open the Keyboard settings"), lambda *_a: open_keyboard_settings(show_error))
         )
         self.picking = self.add_section(_("Picking"))
-        self.format = ComboBox(_("Copy colors as"), [])
+        # python3-xapp's ComboBox needs its choices from the start.
+        self.format = ComboBox(_("Copy colors as"), format_choices(Options()))
         self.format.content_widget.connect("changed", self._on_format)
         self.picking.add_row(self.format)
         self.picking.add_row(Button(_("Pick a color now"), lambda *_a: self._opener(show_error)))
@@ -109,12 +118,8 @@ class ColorPickerPage(SimplePage):
         self._loading = True
         try:
             self.shortcut.content_widget.set_active(options.shortcut)
-            combo = self.format.content_widget
-            model = combo.get_model()
-            model.clear()
-            for name, template, _shown in options.formats:
-                model.append([name, f"{name}: {format_color(EXAMPLE, template)}"])
-            combo.set_active_id(options.default_format)
+            self.format.set_options(format_choices(options))
+            self.format.content_widget.set_active_id(options.default_format)
             self.keys.set_text(self._keys_text(options.shortcut))
         finally:
             self._loading = False
