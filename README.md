@@ -81,6 +81,17 @@ Keeps a window above all the others, with Muffin's own Super+Ctrl+T.
 - **A sound** on pinning and letting go, if you want one, and **applications to leave
   out**, which are never kept on top.
 
+### Color Picker
+
+Press Super+Shift+C, point at any color on the screen and click: it is copied, in HEX or
+any of sixteen formats, or one of your own.
+
+- **A label beside the pointer** shows the color and, if you like, its name; scroll up
+  for a magnifier.
+- **The editor** keeps the last twenty colors, shows each in the formats you choose with
+  a button to copy it, offers similar shades, and fine-tunes a color in GTK's own editor.
+- **As you like it:** what the shortcut opens first, and what each mouse button does.
+
 ### File Locksmith
 
 Right-click a file or folder in Nemo and choose **What is using this?** to see which of
