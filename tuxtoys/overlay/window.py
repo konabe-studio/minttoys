@@ -84,14 +84,16 @@ class Overlay(Gtk.Window):
         """Whatever the tool shows over the frozen screen."""
 
     def magnify(
-        self, context: cairo.Context, x: int, y: int, zoom: int, size: int
+        self, context: cairo.Context, x: int, y: int, zoom: int, size: int, below: int = 0
     ) -> tuple[int, int]:
         """A square `size` pixels wide showing the screen around (x, y) `zoom` times as
-        large, beside the pointer and inside the screen; where its top left corner went.
+        large, beside the pointer and inside the screen with `below` pixels more under it
+        for the tool's own; where its top left corner went.
         """
         width, height = self.screen_picture.get_width(), self.screen_picture.get_height()
         left = x + 24 if x + 24 + size < width else x - 24 - size
-        top = y + 24 if y + 24 + size < height else y - 24 - size
+        tall = size + below
+        top = y + 24 if y + 24 + tall < height else y - 24 - tall
         context.save()
         context.rectangle(left, top, size, size)
         context.clip()
