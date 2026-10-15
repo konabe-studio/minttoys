@@ -1,6 +1,6 @@
 [project]
 name = "tuxtoys"
-version = "0.3.0"
+version = "0.4.0.dev0"
 description = "Power-user utilities for Linux Mint Cinnamon"
 readme = "README.md"
 license = "GPL-3.0-or-later"
