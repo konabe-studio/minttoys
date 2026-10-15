@@ -14,6 +14,7 @@ from xapp.SettingsWidgets import SettingsPage, SettingsWidget  # noqa: E402
 
 from tuxtoys.api import ModuleInfo, NotRunning, Refused  # noqa: E402
 from tuxtoys.core.i18n import _  # noqa: E402
+from tuxtoys.settings import catalog  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client  # noqa: E402
 
 
@@ -101,6 +102,9 @@ class OverviewPage(SettingsPage):
                 row.set_sensitive(False)
             return
         self._set_problem("")
+        # In the sidebar's order, by heading; a tool the sidebar does not know goes last.
+        order = {tool.id: n for n, tool in enumerate(t for _h, ts in catalog.grouped() for t in ts)}
+        infos = sorted(infos, key=lambda info: order.get(info.id, len(order)))
         self._loading = True
         try:
             for info in infos:

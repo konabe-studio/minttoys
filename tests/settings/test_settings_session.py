@@ -374,6 +374,11 @@ def test_the_overview_lists_every_tool_with_its_switch(window: SettingsWindow) -
     assert row.content_widget.get_active()
 
 
+def test_the_overview_lists_the_tools_in_the_sidebars_order(window: SettingsWindow) -> None:
+    sidebar = [row.page for row in window.sidebar.get_children()][1:]
+    assert list(window.overview.rows) == sidebar
+
+
 def test_a_switch_on_the_overview_turns_the_tool_on_and_off(
     window: SettingsWindow, client: FakeClient
 ) -> None:
