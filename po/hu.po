@@ -2206,3 +2206,11 @@ msgstr "A rendszer környezeti változóinak mentése"
 #: tuxtoys/core/policy.py
 msgid "Authentication is required to save the system's environment variables"
 msgstr "A rendszer környezeti változóinak mentéséhez hitelesítés szükséges"
+
+#: tuxtoys/modules/envvars/module.py
+msgid "Environment Variables"
+msgstr "Environment Variables"
+
+#: tuxtoys/modules/envvars/module.py
+msgid "Sets your environment variables, and profiles of them."
+msgstr "Beállítja a környezeti változóit és azok profiljait."

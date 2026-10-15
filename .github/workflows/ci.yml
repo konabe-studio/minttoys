@@ -89,6 +89,12 @@ jobs:
           sudo $helper --expect "$(sha256sum /etc/hosts | cut -d' ' -f1)" --backup < /etc/hosts
           test "$(sha256sum /etc/hosts)" = "$before"
           ls /var/backups/tuxtoys/hosts-*
+          # Environment Variables' policy and helper, the same way, on /etc/environment.
+          grep -q '<message xml:lang="hu">' /usr/share/polkit-1/actions/io.github.konabe_studio.TuxToys.environment.policy
+          before=$(sha256sum /etc/environment)
+          sudo /usr/libexec/tuxtoys/tuxtoys-environment-save --expect "$(sha256sum /etc/environment | cut -d' ' -f1)" --backup < /etc/environment
+          test "$(sha256sum /etc/environment)" = "$before"
+          ls /var/backups/tuxtoys/environment-*
           sudo apt-get purge --yes tuxtoys
           left=$(grep -E 'tuxtoys|konabe_studio' installed.txt | while read -r path; do
             if [ -e "$path" ]; then echo "$path"; fi
