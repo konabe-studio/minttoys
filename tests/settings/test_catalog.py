@@ -18,6 +18,7 @@ def test_grouped_keeps_the_order_and_leaves_out_empty_headings() -> None:
     assert [tool.id for _, tools in groups for tool in tools] == [
         "awake",
         "lightswitch",
+        "hosts",
         "alwaysontop",
         "locksmith",
         "newplus",
