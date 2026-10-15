@@ -4,6 +4,9 @@ tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
     Super+Shift+C and copies it, in sixteen formats or one of your own,
     with an editor of the last colors picked, as PowerToys' Color Picker
     does.
+  * Screen Ruler measures what is on the screen with Super+Ctrl+Shift+M:
+    a box dragged, or the space between the edges around the pointer, found
+    as PowerToys' Screen Ruler finds them, copied with a click.
 
  -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 11:45:00 +0200
 
