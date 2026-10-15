@@ -75,7 +75,8 @@ class EditorWindow(Gtk.Window):
         self.connect("key-press-event", self._on_key)
         layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin=12)
         top = Gtk.Box(spacing=12)
-        pick = Gtk.Button(label=_("Pick"), always_show_image=True)
+        # Its own height, whatever rows the history takes beside it.
+        pick = Gtk.Button(label=_("Pick"), always_show_image=True, valign=Gtk.Align.START)
         pick.set_image(Gtk.Image.new_from_icon_name("color-select-symbolic", Gtk.IconSize.BUTTON))
         pick.set_tooltip_text(_("Pick a color from the screen"))
         pick.connect("clicked", lambda _button: controller.pick_again())
