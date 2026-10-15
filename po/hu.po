@@ -2214,3 +2214,234 @@ msgstr "Environment Variables"
 #: tuxtoys/modules/envvars/module.py
 msgid "Sets your environment variables, and profiles of them."
 msgstr "Beállítja a környezeti változóit és azok profiljait."
+
+#: tuxtoys/envvars/main.py
+#, python-brace-format
+msgid "Environment Variables needs PyGObject and GTK 3: {error}"
+msgstr "Az Environment Variables működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/envvars/window.py
+msgid "A folder in the list cannot hold a colon."
+msgstr "A listában egy mappa neve nem tartalmazhat kettőspontot."
+
+#: tuxtoys/envvars/window.py
+msgid "New profile"
+msgstr "Új profil"
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the profile"
+msgstr "A profil szerkesztése"
+
+#: tuxtoys/envvars/window.py
+msgid "No variables in this profile yet."
+msgstr "Ebben a profilban még nincs változó."
+
+#: tuxtoys/envvars/window.py
+msgid "There is a profile of this name already."
+msgstr "Már van ilyen nevű profil."
+
+#: tuxtoys/envvars/window.py
+msgid "Add a variable"
+msgstr "Változó hozzáadása"
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the variable"
+msgstr "A változó szerkesztése"
+
+#. TRANSLATORS: where a variable that applies comes from: the user's own.
+#: tuxtoys/envvars/window.py
+msgid "User"
+msgstr "Felhasználó"
+
+#. TRANSLATORS: where a variable that applies comes from: the profile applied.
+#: tuxtoys/envvars/window.py
+msgid "Profile"
+msgstr "Profil"
+
+#. TRANSLATORS: where the search path comes from when nothing sets it: the login.
+#: tuxtoys/envvars/window.py
+msgid "Login"
+msgstr "Bejelentkezés"
+
+#: tuxtoys/envvars/window.py
+msgid "No profiles yet."
+msgstr "Még nincs profil."
+
+#: tuxtoys/envvars/window.py
+msgid "No variables of your own yet."
+msgstr "Még nincs saját változója."
+
+#: tuxtoys/envvars/window.py
+msgid "No system variables."
+msgstr "Nincs rendszerváltozó."
+
+#: tuxtoys/envvars/window.py
+msgid "No variables are set."
+msgstr "Nincs beállított változó."
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"/etc/environment was changed outside this window. Reload it to see the "
+"changes; yours would be lost."
+msgstr ""
+"Az /etc/environment ezen az ablakon kívül megváltozott. Töltse újra, hogy "
+"lássa a változásokat; a saját módosításai elvesznének."
+
+#: tuxtoys/envvars/window.py
+msgid "Add a system variable"
+msgstr "Rendszerváltozó hozzáadása"
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the system variable"
+msgstr "A rendszerváltozó szerkesztése"
+
+#: tuxtoys/envvars/window.py
+msgid "Edit as a list, one folder a line"
+msgstr "Szerkesztés listaként, soronként egy mappa"
+
+#: tuxtoys/envvars/window.py
+msgid "Letters, digits and _, not starting with a digit."
+msgstr "Betűk, számjegyek és _, de nem kezdődhet számjeggyel."
+
+#: tuxtoys/envvars/window.py
+msgid "The value has to be one line."
+msgstr "Az érték csak egy sor lehet."
+
+#: tuxtoys/envvars/window.py
+msgid "Add an existing variable"
+msgstr "Meglévő változó hozzáadása"
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"Your variables and the profile's reach new terminals at once, and everything "
+"else once you log out and back in. The system's apply at the next login."
+msgstr ""
+"A saját és a profil változói az új terminálokban azonnal, minden máshol ki- "
+"és visszajelentkezés után érvényesek. A rendszerváltozók a következő "
+"bejelentkezéskor lépnek életbe."
+
+#: tuxtoys/envvars/window.py
+msgid "Profiles"
+msgstr "Profilok"
+
+#: tuxtoys/envvars/window.py
+msgid "A set of variables to switch on and off together; one at a time."
+msgstr "Együtt ki- és bekapcsolható változók; egyszerre egy alkalmazható."
+
+#: tuxtoys/envvars/window.py
+msgid "Default variables"
+msgstr "Alapértelmezett változók"
+
+#: tuxtoys/envvars/window.py
+msgid "In /etc/environment, for every user."
+msgstr "Az /etc/environment fájlban, minden felhasználónak."
+
+#: tuxtoys/envvars/window.py
+msgid "Applied variables"
+msgstr "Alkalmazott változók"
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"As they will be at the next login: the profile's over yours, yours over the "
+"system's."
+msgstr ""
+"Ahogy a következő bejelentkezéskor lesznek: a profil változói felülírják a "
+"sajátjait, a sajátjai a rendszerét."
+
+#: tuxtoys/envvars/window.py
+msgid "Saved. It applies at the next login."
+msgstr "Mentve. A következő bejelentkezéskor lép életbe."
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"/etc/environment was changed outside this window, so it was not saved. "
+"Reload it to see the changes; yours would be lost."
+msgstr ""
+"Az /etc/environment ezen az ablakon kívül megváltozott, ezért nem lett "
+"mentve. Töltse újra, hogy lássa a változásokat; a saját módosításai "
+"elvesznének."
+
+#: tuxtoys/envvars/window.py
+msgid "Applied"
+msgstr "Alkalmazva"
+
+#: tuxtoys/envvars/window.py
+msgid "Save the changes to the system's variables?"
+msgstr "Menti a rendszerváltozók módosításait?"
+
+#: tuxtoys/envvars/window.py
+msgid "Value"
+msgstr "Érték"
+
+#: tuxtoys/envvars/window.py
+msgid "$HOME and $PATH stand for those variables' values."
+msgstr "A $HOME és a $PATH helyére e változók értéke kerül."
+
+#: tuxtoys/envvars/window.py
+msgid "There is a variable of this name already."
+msgstr "Már van ilyen nevű változó."
+
+#: tuxtoys/envvars/window.py
+msgid "A system variable cannot hold both kinds of quotes."
+msgstr "Egy rendszerváltozó nem tartalmazhat kétféle idézőjelet."
+
+#: tuxtoys/envvars/window.py
+msgid "Switch Environment Variables on in TuxToys to set your own."
+msgstr ""
+"Saját változókhoz kapcsolja be az Environment Variables eszközt a TuxToysban."
+
+#: tuxtoys/envvars/window.py
+msgid "You are not allowed to change the system's variables."
+msgstr "Önnek nincs joga módosítani a rendszerváltozókat."
+
+#: tuxtoys/envvars/window.py
+msgid "No variables"
+msgstr "Nincs változó"
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "Delete {name}?"
+msgstr "Törli ezt: {name}?"
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "Could not be saved: {reason}"
+msgstr "Nem sikerült menteni: {reason}"
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "/etc/environment cannot be read: {reason}"
+msgstr "Az /etc/environment nem olvasható: {reason}"
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "/etc/environment could not be saved: {reason}"
+msgstr "Az /etc/environment fájlt nem sikerült menteni: {reason}"
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Your environment variables, profiles of them, and the system's."
+msgstr "A környezeti változói, azok profiljai és a rendszer változói."
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Use Environment Variables"
+msgstr "Environment Variables használata"
+
+#: tuxtoys/settings/envvars_page.py
+msgid ""
+"Your variables are loaded by ~/.xsessionrc when you log in, and by ~/.bashrc "
+"in every new terminal. Switching the tool off takes those lines away again."
+msgstr ""
+"A változóit bejelentkezéskor a ~/.xsessionrc, minden új terminálban a "
+"~/.bashrc tölti be. Az eszköz kikapcsolása ezeket a sorokat is eltávolítja."
+
+#: tuxtoys/settings/envvars_page.py
+msgid ""
+"The system's variables are /etc/environment, for every user; changing them "
+"asks for an administrator's password."
+msgstr ""
+"A rendszerváltozók az /etc/environment fájlban vannak, minden "
+"felhasználónak; a módosításuk rendszergazdai jelszót kér."
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Open Environment Variables"
+msgstr "Environment Variables megnyitása"

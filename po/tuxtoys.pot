@@ -2105,3 +2105,219 @@ msgstr ""
 #: tuxtoys/modules/envvars/module.py
 msgid "Sets your environment variables, and profiles of them."
 msgstr ""
+
+#: tuxtoys/envvars/main.py
+#, python-brace-format
+msgid "Environment Variables needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "A folder in the list cannot hold a colon."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "New profile"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the profile"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No variables in this profile yet."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "There is a profile of this name already."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Add a variable"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the variable"
+msgstr ""
+
+#. TRANSLATORS: where a variable that applies comes from: the user's own.
+#: tuxtoys/envvars/window.py
+msgid "User"
+msgstr ""
+
+#. TRANSLATORS: where a variable that applies comes from: the profile applied.
+#: tuxtoys/envvars/window.py
+msgid "Profile"
+msgstr ""
+
+#. TRANSLATORS: where the search path comes from when nothing sets it: the login.
+#: tuxtoys/envvars/window.py
+msgid "Login"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No profiles yet."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No variables of your own yet."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No system variables."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No variables are set."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"/etc/environment was changed outside this window. Reload it to see the "
+"changes; yours would be lost."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Add a system variable"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Edit the system variable"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Edit as a list, one folder a line"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Letters, digits and _, not starting with a digit."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "The value has to be one line."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Add an existing variable"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"Your variables and the profile's reach new terminals at once, and everything "
+"else once you log out and back in. The system's apply at the next login."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Profiles"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "A set of variables to switch on and off together; one at a time."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Default variables"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "In /etc/environment, for every user."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Applied variables"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"As they will be at the next login: the profile's over yours, yours over the "
+"system's."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Saved. It applies at the next login."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid ""
+"/etc/environment was changed outside this window, so it was not saved. "
+"Reload it to see the changes; yours would be lost."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Applied"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Save the changes to the system's variables?"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Value"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "$HOME and $PATH stand for those variables' values."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "There is a variable of this name already."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "A system variable cannot hold both kinds of quotes."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "Switch Environment Variables on in TuxToys to set your own."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "You are not allowed to change the system's variables."
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+msgid "No variables"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "Delete {name}?"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "Could not be saved: {reason}"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "/etc/environment cannot be read: {reason}"
+msgstr ""
+
+#: tuxtoys/envvars/window.py
+#, python-brace-format
+msgid "/etc/environment could not be saved: {reason}"
+msgstr ""
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Your environment variables, profiles of them, and the system's."
+msgstr ""
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Use Environment Variables"
+msgstr ""
+
+#: tuxtoys/settings/envvars_page.py
+msgid ""
+"Your variables are loaded by ~/.xsessionrc when you log in, and by ~/.bashrc "
+"in every new terminal. Switching the tool off takes those lines away again."
+msgstr ""
+
+#: tuxtoys/settings/envvars_page.py
+msgid ""
+"The system's variables are /etc/environment, for every user; changing them "
+"asks for an administrator's password."
+msgstr ""
+
+#: tuxtoys/settings/envvars_page.py
+msgid "Open Environment Variables"
+msgstr ""
