@@ -6,3 +6,7 @@
 APP_ID = "io.github.konabe_studio.TuxToys"
 BUS_NAME = APP_ID
 OBJECT_PATH = "/io/github/konabe_studio/TuxToys"
+
+# The version, as pyproject.toml has it; debian/changelog says the same in Debian's way
+# (0.3.0~dev for 0.3.0.dev0). tests/test_version.py keeps the three in step.
+VERSION = "0.3.0.dev0"
