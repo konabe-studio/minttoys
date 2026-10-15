@@ -26,6 +26,7 @@ from tuxtoys.modules.hosts.options import Options as HostsOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # noqa: E402
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
+from tuxtoys.modules.screenruler.options import Options as RulerOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import SAVE_AFTER_MS, AwakePage  # noqa: E402
 from tuxtoys.settings.colorpicker_page import ColorPickerPage  # noqa: E402
@@ -37,6 +38,7 @@ from tuxtoys.settings.lightswitch_page import LightSwitchPage  # noqa: E402
 from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
 from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
+from tuxtoys.settings.screenruler_page import ScreenRulerPage  # noqa: E402
 from tuxtoys.settings.window import SettingsWindow  # noqa: E402
 
 SETTINGS = {
@@ -88,6 +90,8 @@ class FakeClient:
         self.picker_on = "on"
         self.picker_settings = PickerOptions().settings()
         self.picker_calls: list[dict] = []
+        self.ruler_settings = RulerOptions().settings()
+        self.ruler_calls: list[dict] = []
         self.hosts_settings = HostsOptions().settings()
         self.hosts_calls: list[dict] = []
         self.rename_on = "on"
@@ -128,6 +132,7 @@ class FakeClient:
             ModuleInfo("hosts", "Hosts File Editor", "", self.hosts_on, ""),
             ModuleInfo("envvars", "Environment Variables", "", "off", ""),
             ModuleInfo("colorpicker", "Color Picker", "", self.picker_on, ""),
+            ModuleInfo("screenruler", "Screen Ruler", "", "on", ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -157,6 +162,8 @@ class FakeClient:
             return dict(self.hosts_settings)
         if module_id == "colorpicker":
             return dict(self.picker_settings)
+        if module_id == "screenruler":
+            return dict(self.ruler_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -175,6 +182,10 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "screenruler":
+            self.ruler_calls.append(dict(changes))
+            self.ruler_settings = RulerOptions.read(self.ruler_settings).update(changes).settings()
             return
         if module_id == "colorpicker":
             self.picker_calls.append(dict(changes))
@@ -368,6 +379,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "envvars",
         "alwaysontop",
         "colorpicker",
+        "screenruler",
         "locksmith",
         "newplus",
         "imageresizer",
@@ -381,7 +393,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[5].get_header() is None
     assert rows[6].get_header().get_text() == "Windows"
     assert rows[7].get_header().get_text() == "Screen"
-    assert rows[8].get_header().get_text() == "Files"
+    assert rows[9].get_header().get_text() == "Files"
     assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
@@ -912,3 +924,27 @@ def test_colorpicker_formats_reorder_by_drag(client: FakeClient) -> None:
     assert [entry[0] for entry in client.picker_calls[-1]["formats"][:3]] == ["RGB", "HSL", "HEX"]
     page.reorder_format(2, 0)
     assert [entry[0] for entry in client.picker_calls[-1]["formats"][:3]] == ["HEX", "RGB", "HSL"]
+
+
+def test_screenruler_page(client: FakeClient) -> None:
+    opened: list[object] = []
+    page = ScreenRulerPage(
+        client, lambda message: None, opened.append, FakeShortcut("<Primary><Shift><Super>m")
+    )
+    assert page.keys.get_text() == "Shift+Ctrl+Super+M"
+    assert page.mode.content_widget.get_active_id() == "none"
+    assert page.unit.content_widget.get_active_id() == "none"
+    assert page.tolerance.content_widget.get_value() == 30
+    page.mode.content_widget.set_active_id("spacing")
+    assert client.ruler_calls[-1] == {"default_mode": "spacing"}
+    page.unit.content_widget.set_active_id("cm")
+    assert client.ruler_calls[-1] == {"extra_unit": "cm"}
+    page.per_channel.content_widget.set_active(True)
+    assert client.ruler_calls[-1] == {"per_channel": True}
+    page.draw_feet.content_widget.set_active(False)
+    assert client.ruler_calls[-1] == {"draw_feet": False}
+    page.tolerance.content_widget.set_value(45)
+    page._save_tolerance()
+    assert client.ruler_calls[-1] == {"tolerance": 45}
+    page._opener(lambda message: None)
+    assert len(opened) == 1
