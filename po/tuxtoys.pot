@@ -2321,3 +2321,24 @@ msgstr ""
 #: tuxtoys/settings/envvars_page.py
 msgid "Open Environment Variables"
 msgstr ""
+
+#: tuxtoys/cli.py
+msgid "open Environment Variables"
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Open Environment Variables, to set your variables and the system's."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Environment Variables is switched off in TuxToys."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable envvars"
+msgstr ""
+
+#. TRANSLATORS: the tooltip of Environment Variables' entry in the applications menu.
+#: tuxtoys/modules/envvars/module.py
+msgid "Set your environment variables, profiles of them, and the system's"
+msgstr ""
