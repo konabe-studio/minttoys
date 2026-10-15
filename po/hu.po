@@ -2829,3 +2829,172 @@ msgstr "Formátum"
 #: tuxtoys/settings/colorpicker_page.py
 msgid "Drag to reorder"
 msgstr "Húzással átrendezhető"
+
+#: tuxtoys/cli.py
+msgid "measure something on the screen"
+msgstr "mérés a képernyőn"
+
+#: tuxtoys/cli.py
+msgid "Measure distances and sizes on the screen."
+msgstr "Távolságok és méretek mérése a képernyőn."
+
+#: tuxtoys/cli.py
+msgid "Screen Ruler is switched off in TuxToys."
+msgstr "A Screen Ruler ki van kapcsolva a TuxToysban."
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable screenruler"
+msgstr "Bekapcsolás: tuxtoys modules enable screenruler"
+
+#: tuxtoys/modules/screenruler/module.py tuxtoys/screenruler/main.py tuxtoys/settings/screenruler_page.py
+msgid "Screen Ruler"
+msgstr "Screen Ruler"
+
+#: tuxtoys/modules/screenruler/module.py
+msgid "Measures distances and sizes on the screen with Super+Ctrl+Shift+M."
+msgstr "Super+Ctrl+Shift+M-mel távolságokat és méreteket mér a képernyőn."
+
+#: tuxtoys/screenruler/main.py
+msgid "Screen Ruler cannot see the screen."
+msgstr "A Screen Ruler nem látja a képernyőt."
+
+#: tuxtoys/screenruler/main.py
+#, python-brace-format
+msgid "Screen Ruler needs PyGObject and GTK 3: {error}"
+msgstr "A Screen Ruler működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Bounds (Ctrl+1)"
+msgstr "Határok (Ctrl+1)"
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Spacing (Ctrl+2)"
+msgstr "Térköz (Ctrl+2)"
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Horizontal spacing (Ctrl+3)"
+msgstr "Vízszintes térköz (Ctrl+3)"
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Vertical spacing (Ctrl+4)"
+msgstr "Függőleges térköz (Ctrl+4)"
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Close (Esc)"
+msgstr "Bezárás (Esc)"
+
+#. TRANSLATORS: Screen Ruler opens with none of its tools chosen.
+#: tuxtoys/settings/screenruler_page.py
+msgid "None"
+msgstr "Nincs"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Bounds"
+msgstr "Határok"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Spacing"
+msgstr "Térköz"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Horizontal spacing"
+msgstr "Vízszintes térköz"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Vertical spacing"
+msgstr "Függőleges térköz"
+
+#. TRANSLATORS: Screen Ruler shows pixels and no second unit.
+#: tuxtoys/settings/screenruler_page.py
+msgid "Show only pixels"
+msgstr "Csak képpontok megjelenítése"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Millimeters"
+msgstr "Milliméter"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Measures distances and sizes on the screen."
+msgstr "Távolságokat és méreteket mér a képernyőn."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Use Screen Ruler"
+msgstr "Screen Ruler használata"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Activation"
+msgstr "Aktiválás"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Screen Ruler."
+msgstr ""
+"A billentyűit a Billentyűzet beállításaiban módosíthatja, a TuxToys: Screen "
+"Ruler alatt."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Open the ruler with a keyboard shortcut"
+msgstr "A vonalzó megnyitása gyorsbillentyűvel"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Default mode"
+msgstr "Alapértelmezett mód"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "The tool chosen when the ruler opens."
+msgstr "A vonalzó megnyitásakor kiválasztott eszköz."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Edge detection per color channel"
+msgstr "Élészlelés színcsatornánként"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid ""
+"When on, every color channel has to stay within the tolerance. When off, the "
+"differences of all channels added up have to."
+msgstr ""
+"Bekapcsolva minden színcsatornának a tűréshatáron belül kell maradnia. "
+"Kikapcsolva a csatornák eltéréseinek összegének kell."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Pixel tolerance for edge detection"
+msgstr "Képpont-tűréshatár az élek észlelésénél"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Additional unit of measurement"
+msgstr "További mértékegység"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Draw feet on the cross"
+msgstr "Lábak rajzolása a keresztre"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Adds feet to the ends of the cross's lines."
+msgstr "Lábakat ad a keresztvonalak végeihez."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Line color"
+msgstr "Vonal színe"
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Measure something now"
+msgstr "Mérés most"
+
+#: tuxtoys/settings/screenruler_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Screen Ruler other keys in the Keyboard "
+"settings."
+msgstr ""
+"A(z) {keys} már foglalt. Adjon a Screen Rulernek más billentyűket a "
+"Billentyűzet beállításaiban."
+
+#: tuxtoys/settings/screenruler_page.py
+msgid ""
+"Press the shortcut and choose a tool at the top of the screen: drag a box to "
+"measure it, or point between two edges to measure the space between them. A "
+"click copies the measurement. Escape or the close button leaves the ruler."
+msgstr ""
+"Nyomja meg a gyorsbillentyűt, és válasszon eszközt a képernyő tetején: "
+"húzzon egy téglalapot a megméréséhez, vagy mutasson két él közé a köztük "
+"lévő távolság méréséhez. Kattintással a mérés a vágólapra kerül. Escape-pel "
+"vagy a bezárás gombbal lép ki a vonalzóból."

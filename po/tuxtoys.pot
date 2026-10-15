@@ -2688,3 +2688,162 @@ msgstr ""
 #: tuxtoys/settings/colorpicker_page.py
 msgid "Drag to reorder"
 msgstr ""
+
+#: tuxtoys/cli.py
+msgid "measure something on the screen"
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Measure distances and sizes on the screen."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Screen Ruler is switched off in TuxToys."
+msgstr ""
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable screenruler"
+msgstr ""
+
+#: tuxtoys/modules/screenruler/module.py tuxtoys/screenruler/main.py tuxtoys/settings/screenruler_page.py
+msgid "Screen Ruler"
+msgstr ""
+
+#: tuxtoys/modules/screenruler/module.py
+msgid "Measures distances and sizes on the screen with Super+Ctrl+Shift+M."
+msgstr ""
+
+#: tuxtoys/screenruler/main.py
+msgid "Screen Ruler cannot see the screen."
+msgstr ""
+
+#: tuxtoys/screenruler/main.py
+#, python-brace-format
+msgid "Screen Ruler needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Bounds (Ctrl+1)"
+msgstr ""
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Spacing (Ctrl+2)"
+msgstr ""
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Horizontal spacing (Ctrl+3)"
+msgstr ""
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Vertical spacing (Ctrl+4)"
+msgstr ""
+
+#: tuxtoys/screenruler/ruler.py
+msgid "Close (Esc)"
+msgstr ""
+
+#. TRANSLATORS: Screen Ruler opens with none of its tools chosen.
+#: tuxtoys/settings/screenruler_page.py
+msgid "None"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Bounds"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Spacing"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Horizontal spacing"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Vertical spacing"
+msgstr ""
+
+#. TRANSLATORS: Screen Ruler shows pixels and no second unit.
+#: tuxtoys/settings/screenruler_page.py
+msgid "Show only pixels"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Millimeters"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Measures distances and sizes on the screen."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Use Screen Ruler"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Activation"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Screen Ruler."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Open the ruler with a keyboard shortcut"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Default mode"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "The tool chosen when the ruler opens."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Edge detection per color channel"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid ""
+"When on, every color channel has to stay within the tolerance. When off, the "
+"differences of all channels added up have to."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Pixel tolerance for edge detection"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Additional unit of measurement"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Draw feet on the cross"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Adds feet to the ends of the cross's lines."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Line color"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid "Measure something now"
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Screen Ruler other keys in the Keyboard "
+"settings."
+msgstr ""
+
+#: tuxtoys/settings/screenruler_page.py
+msgid ""
+"Press the shortcut and choose a tool at the top of the screen: drag a box to "
+"measure it, or point between two edges to measure the space between them. A "
+"click copies the measurement. Escape or the close button leaves the ruler."
+msgstr ""
