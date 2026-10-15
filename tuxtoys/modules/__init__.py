@@ -14,4 +14,5 @@ AVAILABLE: dict[str, str] = {
     "envvars": "tuxtoys.modules.envvars.module:EnvironmentVariables",
     "colorpicker": "tuxtoys.modules.colorpicker.module:ColorPicker",
     "screenruler": "tuxtoys.modules.screenruler.module:ScreenRuler",
+    "textextractor": "tuxtoys.modules.textextractor.module:TextExtractor",
 }
