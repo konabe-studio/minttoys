@@ -1,6 +1,8 @@
 """Color Picker's settings, read and checked without GTK or D-Bus, as PowerToys has them:
-whether it keeps its keyboard shortcut, the format a picked color is copied in, the
-formats the editor shows, each with whether it is shown, and the last colors picked.
+whether it keeps its keyboard shortcut; what the shortcut opens first, the picker or the
+editor; what each mouse button does in the picker; whether the picker names the color;
+the format a picked color is copied in; the formats the editor shows, each with whether
+it is shown; and the last colors picked.
 """
 
 from collections.abc import Mapping
@@ -22,10 +24,20 @@ SHORTCUT_COMMAND = "tuxtoys colorpicker"
 
 type Format = tuple[str, str, bool]  # name, template, shown
 
+# What the shortcut opens first.
+ACTIVATIONS = ("pick", "editor")
+# What a mouse button does in the picker.
+ACTIONS = ("pick-editor", "pick-close", "close")
+
 
 @dataclass(frozen=True)
 class Options:
     shortcut: bool = True
+    activation: str = "pick"
+    left: str = "pick-editor"
+    middle: str = "pick-close"
+    right: str = "close"
+    show_name: bool = False
     default_format: str = "HEX"
     formats: tuple[Format, ...] = tuple(
         (name, template, name in SHOWN_AT_FIRST) for name, template in DEFAULT_FORMATS
@@ -38,7 +50,7 @@ class Options:
         default, so a config edited by hand cannot keep the tool from working.
         """
         options = cls()
-        for key in ("shortcut", "formats", "default_format", "history"):
+        for key in (*_CHOICES, *_FLAGS, "formats", "default_format", "history"):
             if key in settings:
                 with suppress(ValueError, TypeError):
                     options = options.update({key: settings[key]})
@@ -50,9 +62,13 @@ class Options:
         """
         fields: dict[str, Any] = {}
         for key, value in changes.items():
-            if key == "shortcut":
+            if key in _FLAGS:
                 if not isinstance(value, bool):
-                    raise ValueError(f"shortcut is true or false, not {value!r}")
+                    raise ValueError(f"{key} is true or false, not {value!r}")
+                fields[key] = value
+            elif key in _CHOICES:
+                if value not in _CHOICES[key]:
+                    raise ValueError(f"{key} is one of {', '.join(_CHOICES[key])}, not {value!r}")
                 fields[key] = value
             elif key == "default_format":
                 if not isinstance(value, str):
@@ -74,6 +90,11 @@ class Options:
     def settings(self) -> dict[str, Any]:
         return {
             "shortcut": self.shortcut,
+            "activation": self.activation,
+            "left": self.left,
+            "middle": self.middle,
+            "right": self.right,
+            "show_name": self.show_name,
             "default_format": self.default_format,
             "formats": [list(entry) for entry in self.formats],
             "history": list(self.history),
@@ -89,6 +110,10 @@ class Options:
         """These settings with `color` first in the history, once."""
         history = [color.hex, *(old for old in self.history if old != color.hex)]
         return replace(self, history=tuple(history[:MOST_HISTORY]))
+
+
+_FLAGS = ("shortcut", "show_name")
+_CHOICES = {"activation": ACTIVATIONS, "left": ACTIONS, "middle": ACTIONS, "right": ACTIONS}
 
 
 def _formats(value: object) -> tuple[Format, ...]:

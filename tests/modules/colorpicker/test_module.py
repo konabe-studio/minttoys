@@ -103,3 +103,18 @@ def test_options() -> None:
 
 def test_picker_command(tmp_path: Path) -> None:
     assert picker_command(tmp_path)[-2:] == ["-m", "tuxtoys.colorpicker"]
+
+
+def test_activation_mouse_and_name() -> None:
+    options = Options()
+    assert (options.activation, options.left, options.middle, options.right) == (
+        "pick",
+        "pick-editor",
+        "pick-close",
+        "close",
+    )
+    assert not options.show_name
+    changed = options.update({"activation": "editor", "right": "pick-close", "show_name": True})
+    assert Options.read(changed.settings()) == changed
+    with pytest.raises(ValueError, match="left is one of"):
+        options.update({"left": "jump"})
