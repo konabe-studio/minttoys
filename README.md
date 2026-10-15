@@ -43,6 +43,20 @@ the same way the Themes window does.
 - **On a schedule:** Night Light's, sunset to sunrise included, or hours of your own.
 - **Right now:** Super+Ctrl+Shift+D switches until the schedule next changes.
 
+### Hosts File Editor
+
+Edits `/etc/hosts`, which maps names to addresses on this computer, in a window: from
+its page in the settings window, the applications menu or `tuxtoys hosts`.
+
+- **Entries** with their address, host names and comment, each switched on or off, added,
+  edited, duplicated, moved and deleted. A bad address or host name, or a host name
+  another entry has too, is marked. Filters, and a ping for each.
+- **Your file stays yours:** lines you do not touch stay exactly as they are, comments
+  included, and a change made elsewhere is never written over.
+- **Saving asks for an administrator's password** through pkexec; the window itself never
+  runs as root. Before the first save of a session the file is backed up into
+  `/var/backups/tuxtoys`, and old backups are deleted as you set it.
+
 ### Always on Top
 
 Keeps a window above all the others, with Muffin's own Super+Ctrl+T.
