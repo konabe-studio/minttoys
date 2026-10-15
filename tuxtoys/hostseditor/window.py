@@ -23,6 +23,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk, Pango  # noqa: E402
 from tuxtoys import APP_ID  # noqa: E402
 from tuxtoys.api import ModuleOff, NotRunning, Refused  # noqa: E402
 from tuxtoys.core.i18n import _  # noqa: E402
+from tuxtoys.core.pkexec import run as run_saver  # noqa: E402
 from tuxtoys.modules.hosts import saving  # noqa: E402
 from tuxtoys.modules.hosts.hostsfile import (  # noqa: E402
     Entry,
@@ -32,7 +33,7 @@ from tuxtoys.modules.hosts.hostsfile import (  # noqa: E402
     is_host,
 )
 from tuxtoys.modules.hosts.options import Options  # noqa: E402
-from tuxtoys.modules.hosts.save import FAILED, HOSTS  # noqa: E402
+from tuxtoys.modules.hosts.save import HOSTS  # noqa: E402
 
 type Done = Callable[[int, str], None]
 type Runner = Callable[[list[str], bytes, Done], None]
@@ -56,28 +57,6 @@ def bold(text: str) -> str:
 
 class Client(Protocol):
     def module_settings(self, module_id: str) -> dict: ...
-
-
-def run_saver(argv: list[str], content: bytes, done: Done) -> None:
-    """Runs the save command with `content` on its standard input, in the background."""
-    try:
-        process = Gio.Subprocess.new(
-            argv, Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDERR_PIPE
-        )
-    except GLib.Error as error:
-        done(FAILED, error.message)
-        return
-
-    def finished(process: Gio.Subprocess, result: Gio.AsyncResult) -> None:
-        try:
-            _ok, _out, err = process.communicate_finish(result)
-        except GLib.Error as error:
-            done(FAILED, error.message)
-            return
-        reason = err.get_data().decode("utf-8", "replace").strip() if err else ""
-        done(process.get_exit_status(), reason)
-
-    process.communicate_async(GLib.Bytes.new(content), None, finished)
 
 
 def run_ping(address: str, done: Callable[[bool], None]) -> None:
