@@ -28,15 +28,34 @@ def main() -> int:
     # panel groups the window under the TuxToys menu entry and its icon.
     GLib.set_prgname(APP_ID)
     GLib.set_application_name(_("TuxToys"))
-    application = Gtk.Application(application_id=f"{APP_ID}.Settings")
+    application = Gtk.Application(
+        application_id=f"{APP_ID}.Settings",
+        flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
+    )
 
-    def on_activate(application: Gtk.Application) -> None:
-        for window in application.get_windows():
-            window.present()
-            return
-        bus = Gio.bus_get_sync(Gio.BusType.SESSION)
-        window = SettingsWindow(application, bus, Client(bus))
-        window.show_all()
+    def present(page: str) -> None:
+        windows = application.get_windows()
+        if windows:
+            window = windows[0]
+        else:
+            bus = Gio.bus_get_sync(Gio.BusType.SESSION)
+            window = SettingsWindow(application, bus, Client(bus))
+            window.show_all()
+        if page:
+            window.show_page(page)
+        window.present()
 
-    application.connect("activate", on_activate)
-    return application.run(sys.argv[:1])
+    def on_command_line(
+        _application: Gtk.Application, command_line: Gio.ApplicationCommandLine
+    ) -> int:
+        # --page opens a tool's page, as Text Extractor's settings button does; in the
+        # window already open when there is one.
+        arguments = command_line.get_arguments()[1:]
+        page = ""
+        if len(arguments) == 2 and arguments[0] == "--page":
+            page = arguments[1]
+        present(page)
+        return 0
+
+    application.connect("command-line", on_command_line)
+    return application.run(sys.argv)
