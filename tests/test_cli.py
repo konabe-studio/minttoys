@@ -358,3 +358,20 @@ class TestScreenRuler:
         assert status == 1
         assert "Screen Ruler is switched off in TuxToys." in err
         assert "tuxtoys modules enable screenruler" in err
+
+
+class TestTextExtractor:
+    def test_starts_it_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("textextractor", "Text Extractor", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["textextractor"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.textextractor"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE]
+        status, _out, err = run(client, "textextractor")
+        assert status == 1
+        assert "Text Extractor is switched off in TuxToys." in err
+        assert "tuxtoys modules enable textextractor" in err
