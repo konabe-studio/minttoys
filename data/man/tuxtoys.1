@@ -27,6 +27,8 @@ tuxtoys \- power-user utilities for Linux Mint Cinnamon
 .br
 .B tuxtoys screenruler
 .br
+.B tuxtoys textextractor
+.br
 .B tuxtoys modules
 .RB [ list " | " enable
 .I MODULE
@@ -116,6 +118,16 @@ Opens Screen Ruler over the screen, to measure what is on it. It is the command
 Screen Ruler's keyboard shortcut,
 .BR Super+Ctrl+Shift+M ,
 runs. Screen Ruler has to be switched on.
+.SS Text Extractor
+.TP
+.B textextractor
+Opens Text Extractor over the screen: the text in the region dragged over, or the word
+clicked, is read by
+.BR tesseract (1)
+and copied. It is the command Text Extractor's keyboard shortcut,
+.BR Super+Shift+T ,
+runs. Text Extractor has to be switched on, and tesseract installed with at least one
+language.
 .SS Modules
 .TP
 .B list

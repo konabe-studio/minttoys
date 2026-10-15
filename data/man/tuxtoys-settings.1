@@ -3,6 +3,8 @@
 tuxtoys-settings \- set up TuxToys' tools
 .SH SYNOPSIS
 .B tuxtoys-settings
+.RB [ \-\-page
+.IR TOOL ]
 .SH DESCRIPTION
 .B tuxtoys-settings
 opens the TuxToys window. Its first page, Home, lists every tool with a switch to turn
@@ -13,6 +15,14 @@ Escape closes the window, and starting it again brings the open window to the fr
 .PP
 The settings are kept by the TuxToys service of the session, which starts on its own if
 it is not running yet.
+.SH OPTIONS
+.TP
+.BI \-\-page " TOOL"
+Shows a tool's page, by the tool's module name, such as
+.BR textextractor ,
+as
+.B tuxtoys modules
+lists them; in the window already open, if there is one.
 .SH FILES
 .TP
 .I ~/.config/tuxtoys/config.json

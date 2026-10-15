@@ -103,6 +103,18 @@ what is on it, in pixels.
 - **A click copies** the measurement. Inches, centimeters or millimeters can show beside
   the pixels.
 
+### Text Extractor
+
+Press Super+Shift+T and drag over any text on the screen, in a picture, a video or a
+window that will not let you select it: the text is copied. A click copies the one word
+under the pointer.
+
+- **On one line or as a table:** the bar at the top of the screen joins the lines, or
+  lays the text out in columns with tabs, ready to paste into a spreadsheet.
+- **In your language:** the text is read by tesseract, in any language whose
+  `tesseract-ocr-*` package is installed; English and Hungarian come recommended with
+  TuxToys. Pick one on the bar, or set the one it starts with.
+
 ### File Locksmith
 
 Right-click a file or folder in Nemo and choose **What is using this?** to see which of
