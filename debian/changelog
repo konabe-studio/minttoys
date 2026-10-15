@@ -1,6 +1,9 @@
 tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
 
-  * Development build, nothing new yet.
+  * Color Picker picks a color from anywhere on the screen with
+    Super+Shift+C and copies it, in sixteen formats or one of your own,
+    with an editor of the last colors picked, as PowerToys' Color Picker
+    does.
 
  -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 11:45:00 +0200
 
