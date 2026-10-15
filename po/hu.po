@@ -2998,3 +2998,148 @@ msgstr ""
 "húzzon egy téglalapot a megméréséhez, vagy mutasson két él közé a köztük "
 "lévő távolság méréséhez. Kattintással a mérés a vágólapra kerül. Escape-pel "
 "vagy a bezárás gombbal lép ki a vonalzóból."
+
+#: tuxtoys/cli.py
+msgid "copy text from the screen"
+msgstr "szöveg másolása a képernyőről"
+
+#: tuxtoys/cli.py
+msgid "Copy the text in any part of the screen."
+msgstr "A képernyő bármely részén lévő szöveg másolása."
+
+#: tuxtoys/cli.py
+msgid "Text Extractor is switched off in TuxToys."
+msgstr "A Text Extractor ki van kapcsolva a TuxToysban."
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable textextractor"
+msgstr "Bekapcsolás: tuxtoys modules enable textextractor"
+
+#: tuxtoys/modules/textextractor/module.py tuxtoys/settings/textextractor_page.py tuxtoys/textextractor/main.py
+msgid "Text Extractor"
+msgstr "Text Extractor"
+
+#: tuxtoys/modules/textextractor/module.py
+msgid "Copies the text in any part of the screen with Super+Shift+T."
+msgstr "Super+Shift+T-vel kimásolja a képernyő bármely részén lévő szöveget."
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Text Extractor reads only the languages whose tesseract data is installed. "
+"Add one with its package, such as: sudo apt install tesseract-ocr-deu"
+msgstr ""
+"A Text Extractor csak azokat a nyelveket ismeri fel, amelyekhez telepítve "
+"van a tesseract nyelvi csomagja. Újat a csomagjával adhat hozzá, például: "
+"sudo apt install tesseract-ocr-deu"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Text Extractor reads the screen with tesseract, which is not installed. "
+"Install it with: sudo apt install tesseract-ocr tesseract-ocr-hun"
+msgstr ""
+"A Text Extractor a tesseract segítségével olvassa a képernyőt, de az nincs "
+"telepítve. Telepítse ezzel: sudo apt install tesseract-ocr tesseract-ocr-hun"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Copies the text in any part of the screen."
+msgstr "Kimásolja a képernyő bármely részén lévő szöveget."
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Use Text Extractor"
+msgstr "Text Extractor használata"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Change its keys in the Keyboard settings, under TuxToys: Text Extractor."
+msgstr ""
+"A billentyűit a Billentyűzet beállításaiban módosíthatja, a TuxToys: Text "
+"Extractor alatt."
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Extract text with a keyboard shortcut"
+msgstr "Szövegkinyerés gyorsbillentyűvel"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Preferred language"
+msgstr "Előnyben részesített nyelv"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "The language it reads in when it opens."
+msgstr "A megnyitáskor használt felismerési nyelv."
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "No language installed"
+msgstr "Nincs telepített nyelv"
+
+#: tuxtoys/settings/textextractor_page.py
+msgid ""
+"Press the shortcut and drag over the text: it is copied. A click copies the "
+"one word under it. At the top of the screen, choose the language, or have "
+"the text copied on one line or as a table."
+msgstr ""
+"Nyomja meg a gyorsbillentyűt, és húzzon a szöveg fölött: a vágólapra kerül. "
+"Kattintással az alatta lévő egy szót másolja. A képernyő tetején "
+"kiválaszthatja a nyelvet, vagy kérheti a szöveget egy sorban vagy "
+"táblázatként."
+
+#: tuxtoys/settings/textextractor_page.py
+msgid "Extract text now"
+msgstr "Szövegkinyerés most"
+
+#: tuxtoys/settings/textextractor_page.py
+#, python-brace-format
+msgid ""
+"{keys} is in use already. Give Text Extractor other keys in the Keyboard "
+"settings."
+msgstr ""
+"A(z) {keys} már foglalt. Adjon a Text Extractornak más billentyűket a "
+"Billentyűzet beállításaiban."
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor needs tesseract."
+msgstr "A Text Extractor működéséhez tesseract kell."
+
+#: tuxtoys/textextractor/main.py
+msgid "Install it with: sudo apt install tesseract-ocr tesseract-ocr-hun"
+msgstr "Telepítse ezzel: sudo apt install tesseract-ocr tesseract-ocr-hun"
+
+#: tuxtoys/textextractor/main.py
+msgid "Tesseract has no language to read."
+msgstr "A tesseracthoz nincs telepítve nyelv."
+
+#: tuxtoys/textextractor/main.py
+msgid "Install one with: sudo apt install tesseract-ocr-eng"
+msgstr "Telepítsen egyet, például: sudo apt install tesseract-ocr-eng"
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor cannot see the screen."
+msgstr "A Text Extractor nem látja a képernyőt."
+
+#: tuxtoys/textextractor/main.py
+msgid "Text Extractor could not read the text."
+msgstr "A Text Extractor nem tudta beolvasni a szöveget."
+
+#: tuxtoys/textextractor/main.py
+msgid "No text found."
+msgstr "Nem található szöveg."
+
+#: tuxtoys/textextractor/main.py
+#, python-brace-format
+msgid "Text Extractor needs PyGObject and GTK 3: {error}"
+msgstr "A Text Extractor működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/textextractor/window.py
+msgid "Language"
+msgstr "Nyelv"
+
+#: tuxtoys/textextractor/window.py
+msgid "Settings"
+msgstr "Beállítások"
+
+#: tuxtoys/textextractor/window.py
+msgid "Format the result as a single line (S)"
+msgstr "Az eredmény egy sorban (S)"
+
+#: tuxtoys/textextractor/window.py
+msgid "Format the result as a table (T)"
+msgstr "Az eredmény táblázatként (T)"
