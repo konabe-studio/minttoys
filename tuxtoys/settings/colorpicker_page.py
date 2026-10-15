@@ -26,7 +26,7 @@ from tuxtoys.modules.colorpicker.options import (  # noqa: E402
     SHORTCUT_NAME,
     Options,
 )
-from tuxtoys.settings.drag import handle, make_draggable  # noqa: E402
+from tuxtoys.settings.drag import DragList, handle  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
 from tuxtoys.settings.widgets import open_keyboard_settings  # noqa: E402
@@ -71,10 +71,9 @@ class FormatRow(SettingsWidget):
     def __init__(self, page: "ColorPickerPage", index: int, entry: tuple[str, str, bool]) -> None:
         super().__init__()
         name, template, shown = entry
-        grip = handle()
-        grip.set_tooltip_text(_("Drag to reorder"))
-        self.pack_start(grip, False, False, 0)
-        make_draggable(grip, self, index, page.reorder_format)
+        self.grip = handle()
+        self.grip.set_tooltip_text(_("Drag to reorder"))
+        self.pack_start(self.grip, False, False, 0)
         texts = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         texts.pack_start(Gtk.Label(label=name, xalign=0), False, False, 0)
         example = Gtk.Label(label=format_color(EXAMPLE, template), xalign=0, selectable=True)
@@ -224,6 +223,7 @@ class ColorPickerPage(SimplePage):
             _("Color formats"), _("The ones switched on are shown in the editor.")
         )
         self.formats_list = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.formats_drag = DragList(self.formats_list, self.reorder_format)
         self.formats_section.add_row(self.formats_list)
         self.formats_section.add_row(Button(_("Add a format"), lambda *_a: self.add_format()))
         self.options = Options()
@@ -257,10 +257,10 @@ class ColorPickerPage(SimplePage):
             self.format.content_widget.set_active_id(options.default_format)
             self.show_name.content_widget.set_active(options.show_name)
             self.keys.set_text(self._keys_text(options.shortcut))
-            for child in self.formats_list.get_children():
-                self.formats_list.remove(child)
+            self.formats_drag.clear()
             for index, entry in enumerate(options.formats):
-                self.formats_list.pack_start(FormatRow(self, index, entry), False, False, 0)
+                row = FormatRow(self, index, entry)
+                self.formats_drag.add(row, row.grip)
             self.formats_list.show_all()
         finally:
             self._loading = False
@@ -310,7 +310,7 @@ class ColorPickerPage(SimplePage):
             self._save_formats(formats)
 
     def reorder_format(self, source: int, target: int) -> None:
-        """A format dragged from `source` and dropped on the row at `target`."""
+        """A format dragged from `source` to `target`, counted once it has left."""
         formats = list(self.options.formats)
         moved = formats.pop(source)
         formats.insert(target, moved)
