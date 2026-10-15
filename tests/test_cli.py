@@ -325,3 +325,19 @@ class TestEnv:
         assert status == 1
         assert "Environment Variables is switched off in TuxToys." in err
         assert "tuxtoys modules enable envvars" in err
+
+
+class TestColorPicker:
+    def test_starts_the_picker_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("colorpicker", "Color Picker", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["colorpicker"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.colorpicker"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE]
+        status, _out, err = run(client, "colorpicker")
+        assert status == 1
+        assert "tuxtoys modules enable colorpicker" in err
