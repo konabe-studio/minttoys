@@ -10,4 +10,5 @@ AVAILABLE: dict[str, str] = {
     "alwaysontop": "tuxtoys.modules.alwaysontop.module:AlwaysOnTop",
     "imageresizer": "tuxtoys.modules.imageresizer.module:ImageResizer",
     "renameplus": "tuxtoys.modules.renameplus.module:RenamePlus",
+    "hosts": "tuxtoys.modules.hosts.module:HostsFileEditor",
 }
