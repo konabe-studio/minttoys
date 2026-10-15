@@ -7,6 +7,11 @@ tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
   * Screen Ruler measures what is on the screen with Super+Ctrl+Shift+M:
     a box dragged, or the space between the edges around the pointer, found
     as PowerToys' Screen Ruler finds them, copied with a click.
+  * Text Extractor copies the text in any part of the screen with
+    Super+Shift+T, read by tesseract, as it reads, on one line or as a
+    table, as PowerToys' Text Extractor does. tesseract-ocr with its English
+    and Hungarian data is recommended.
+  * tuxtoys-settings --page opens a tool's page.
 
  -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 11:45:00 +0200
 
