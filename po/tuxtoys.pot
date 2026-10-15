@@ -342,11 +342,6 @@ msgstr ""
 msgid "Until a time of day"
 msgstr ""
 
-#. TRANSLATORS: the first page of the settings window, listing every tool.
-#: tuxtoys/settings/window.py
-msgid "Overview"
-msgstr ""
-
 #: tuxtoys/tray/app.py
 msgid "For a custom time…"
 msgstr ""
@@ -1994,4 +1989,101 @@ msgstr ""
 
 #: tuxtoys/settings/hosts_page.py
 msgid "Open Hosts File Editor"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Startup"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Show the panel icon"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid ""
+"It starts with your session. The service the tools run in always starts, "
+"with or without it."
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Backup and restore"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Every tool's settings, and whether it is on, in one file."
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Privacy"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "TuxToys settings"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Documentation"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "GitHub repository"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Report a bug"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Request a feature"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Back up the settings…"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Restore the settings…"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid ""
+"TuxToys collects no data about you or your computer, and sends nothing "
+"anywhere."
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+#, python-brace-format
+msgid "Version {version}"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Back up the settings"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "Restore the settings"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+msgid "This is not a file of TuxToys settings."
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+#, python-brace-format
+msgid "This version of TuxToys does not have these tools: {tools}"
+msgstr ""
+
+#: tuxtoys/settings/general_page.py
+#, python-brace-format
+msgid "These could not be restored: {what}"
+msgstr ""
+
+#. TRANSLATORS: the first page of the settings window, listing every tool, as PowerToys' Home page does.
+#: tuxtoys/settings/window.py
+msgid "Home"
+msgstr ""
+
+#. TRANSLATORS: the page of settings for TuxToys as a whole, as PowerToys' General.
+#: tuxtoys/settings/window.py
+msgid "General"
 msgstr ""
