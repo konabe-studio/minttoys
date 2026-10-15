@@ -70,11 +70,6 @@ class Picker(Overlay):
 
     def draw_over(self, context: cairo.Context) -> None:
         x, y = self.pointer
-        if self.zoom == NO_ZOOM:
-            left, top, below = x + 16, y + 16, 0
-        else:
-            left, top = self.magnify(context, x, y, ZOOMS[self.zoom], MAGNIFIER)
-            below = MAGNIFIER + 4
         color = self.color_at(x, y)
         layout = PangoCairo.create_layout(context)
         layout.set_font_description(Pango.FontDescription.from_string("Monospace 10"))
@@ -82,6 +77,13 @@ class Picker(Overlay):
         _ink, logical = layout.get_pixel_extents()
         swatch = 16
         height = max(logical.height, swatch) + 12
+        if self.zoom == NO_ZOOM:
+            left, top, below = x + 16, y + 16, 0
+        else:
+            # The label goes under the magnifier, so both have to fit.
+            zoom = ZOOMS[self.zoom]
+            left, top = self.magnify(context, x, y, zoom, MAGNIFIER, 4 + height)
+            below = MAGNIFIER + 4
         width = swatch + logical.width + 24
         if self.zoom != NO_ZOOM:
             width = max(width, MAGNIFIER)
