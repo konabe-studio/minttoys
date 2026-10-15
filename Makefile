@@ -18,7 +18,8 @@ LINGUAS = $(shell cat po/LINGUAS)
 POT ?= po/tuxtoys.pot
 MO = $(LINGUAS:%=build/locale/%/LC_MESSAGES/tuxtoys.mo)
 DESKTOP = $(patsubst data/%.desktop.in,build/%.desktop,$(wildcard data/*/*.desktop.in))
-POLICIES = build/polkit/io.github.konabe_studio.TuxToys.hosts.policy
+POLICIES = build/polkit/io.github.konabe_studio.TuxToys.hosts.policy \
+	build/polkit/io.github.konabe_studio.TuxToys.environment.policy
 
 all: mo $(DESKTOP) $(POLICIES)
 
@@ -75,6 +76,8 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename
 	$(SUBSTITUTE) data/launchers/tuxtoys-hosts-save.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save
+	$(SUBSTITUTE) data/launchers/tuxtoys-environment-save.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-save
 	$(SUBSTITUTE) data/launchers/tuxtoys-hosts-editor.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
@@ -85,6 +88,7 @@ install: all
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-image-resizer \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-rename \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-save \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-environment-save \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \

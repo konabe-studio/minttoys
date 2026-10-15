@@ -91,6 +91,11 @@ HOSTS_SETTINGS = {
     "count": "u",
     "days": "u",
 }
+ENVVARS_SETTINGS = {
+    "variables": "a(ss)",
+    "profiles": "a(sa(ss))",
+    "active_profile": "s",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,

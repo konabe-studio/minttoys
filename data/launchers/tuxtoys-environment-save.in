@@ -1,0 +1,9 @@
+#!/usr/bin/python3 -I
+# Runs as root through pkexec: -I keeps the environment and the user's site out.
+import sys
+
+sys.path.insert(0, "@LIBDIR@")
+
+from tuxtoys.modules.envvars.save import main
+
+raise SystemExit(main())
