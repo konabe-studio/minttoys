@@ -879,3 +879,10 @@ def test_colorpicker_page(client: FakeClient) -> None:
     taken = ColorPickerPage(client, lambda message: None, opened.append, FakeShortcut(""))
     taken._save({"shortcut": True})
     assert "in use already" in taken.keys.get_text()
+
+
+def test_a_tool_the_running_service_does_not_have(client: FakeClient) -> None:
+    client.listed = False
+    page = HostsPage(client, lambda message: None)
+    assert not page.enabled.get_sensitive()
+    assert "does not have this tool" in page.problem.get_text()

@@ -2557,3 +2557,11 @@ msgid ""
 msgstr ""
 "A(z) {keys} már foglalt. Adjon a Color Pickernek más billentyűket a "
 "Billentyűzet beállításaiban."
+
+#: tuxtoys/settings/simple_page.py
+msgid ""
+"The TuxToys service running now does not have this tool. Log out and back in "
+"to start the new one."
+msgstr ""
+"A most futó TuxToys-szolgáltatásban még nincs meg ez az eszköz. Jelentkezzen "
+"ki és vissza, hogy az új induljon el."
