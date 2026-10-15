@@ -3,6 +3,8 @@
 Which windows Muffin keeps above the others and where they are, through libwnck, which reads
 the window manager's EWMH hints; and a window's opacity, through python3-xlib, as the
 _NET_WM_WINDOW_OPACITY hint Muffin draws windows with.
+
+And a picture of the whole screen, for the screen tools, through GDK.
 """
 
 from collections.abc import Callable, Iterable
@@ -93,3 +95,15 @@ def step_active_opacity(up: bool) -> bool:
         return True
     finally:
         screen.close()
+
+
+def capture_screen() -> Any:  # noqa: ANN401, a GdkPixbuf.Pixbuf or None
+    """The whole screen, every monitor, as it is now: the root window's pixels, which an
+    X11 session with a compositor lets any client read.
+    """
+    from gi.repository import Gdk
+
+    root = Gdk.get_default_root_window()
+    if root is None:
+        return None
+    return Gdk.pixbuf_get_from_window(root, 0, 0, root.get_width(), root.get_height())
