@@ -1,5 +1,5 @@
 """The settings window: a sidebar of tools on the left, under their headings, and the page
-of the one selected on the right, the Overview first.
+of the one selected on the right, Home and General first.
 
 XApp.PreferencesWindow's own sidebar holds plain text only, so the sidebar is a list of our
 own, with an icon per tool and a heading per group, as in Linux Mint's Software Sources.
@@ -27,6 +27,7 @@ from tuxtoys.core.i18n import _  # noqa: E402
 from tuxtoys.settings import catalog, first_run  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import AwakePage  # noqa: E402
+from tuxtoys.settings.general_page import GeneralPage, TrayProcess  # noqa: E402
 from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
 from tuxtoys.settings.lightswitch_page import Client, LightSwitchPage  # noqa: E402
@@ -82,8 +83,12 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.overview = OverviewPage(
             client, self._error, welcome=welcome, open_page=lambda page: self.show_page(page)
         )
-        # TRANSLATORS: the first page of the settings window, listing every tool.
-        self._add_page("overview", _("Overview"), "go-home-symbolic", "", self.overview)
+        # TRANSLATORS: the first page of the settings window, listing every tool, as
+        # PowerToys' Home page does.
+        self._add_page("overview", _("Home"), "go-home-symbolic", "", self.overview)
+        self.general = GeneralPage(client, self._error, TrayProcess(bus))
+        # TRANSLATORS: the page of settings for TuxToys as a whole, as PowerToys' General.
+        self._add_page("general", _("General"), "preferences-system-symbolic", "", self.general)
         self.awake = AwakePage(client, self._error)
         self.lightswitch = LightSwitchPage(client, self._error)
         self.locksmith = SimplePage(
@@ -183,6 +188,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
 
     def refresh(self) -> None:
         self.overview.refresh()
+        self.general.refresh()
         for page in self.pages.values():
             page.refresh()
 
