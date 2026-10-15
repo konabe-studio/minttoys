@@ -11,4 +11,5 @@ AVAILABLE: dict[str, str] = {
     "imageresizer": "tuxtoys.modules.imageresizer.module:ImageResizer",
     "renameplus": "tuxtoys.modules.renameplus.module:RenamePlus",
     "hosts": "tuxtoys.modules.hosts.module:HostsFileEditor",
+    "envvars": "tuxtoys.modules.envvars.module:EnvironmentVariables",
 }

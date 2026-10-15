@@ -23,6 +23,7 @@ TOOLS = (
     Tool("awake", "Awake", "system", f"{APP_ID}-awake-on-symbolic"),
     Tool("lightswitch", "Light Switch", "system", "weather-clear-night-symbolic"),
     Tool("hosts", "Hosts File Editor", "system", "network-server-symbolic"),
+    Tool("envvars", "Environment Variables", "system", "utilities-terminal-symbolic"),
     Tool("locksmith", "File Locksmith", "files", "changes-prevent-symbolic"),
     Tool("newplus", "New+", "files", "document-new-symbolic"),
     Tool("imageresizer", "Image Resizer", "files", "image-x-generic-symbolic"),

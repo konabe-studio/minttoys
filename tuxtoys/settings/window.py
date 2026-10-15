@@ -27,6 +27,7 @@ from tuxtoys.core.i18n import _  # noqa: E402
 from tuxtoys.settings import catalog, first_run  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
 from tuxtoys.settings.awake_page import AwakePage  # noqa: E402
+from tuxtoys.settings.envvars_page import EnvVarsPage  # noqa: E402
 from tuxtoys.settings.general_page import GeneralPage, TrayProcess  # noqa: E402
 from tuxtoys.settings.hosts_page import HostsPage  # noqa: E402
 from tuxtoys.settings.imageresizer_page import ImageResizerPage  # noqa: E402
@@ -114,6 +115,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.imageresizer = ImageResizerPage(client, self._error)
         self.renameplus = RenamePlusPage(client, self._error)
         self.hosts = HostsPage(client, self._error)
+        self.envvars = EnvVarsPage(client, self._error)
         self.pages = {
             "awake": self.awake,
             "lightswitch": self.lightswitch,
@@ -123,6 +125,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
             "imageresizer": self.imageresizer,
             "renameplus": self.renameplus,
             "hosts": self.hosts,
+            "envvars": self.envvars,
         }
         pages = self.pages
         for heading, tools in catalog.grouped():
