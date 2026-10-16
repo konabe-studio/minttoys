@@ -120,6 +120,12 @@ TEXTEXTRACTOR_SETTINGS = {
     "shortcut": "b",
     "language": "s",
 }
+SHORTCUTGUIDE_SETTINGS = {
+    "shortcut": "b",
+    "position": "s",
+    "excluded": "s",
+    "pinned": "as",
+}
 # Every module's settings types, by module id, for clients that send settings.
 MODULE_SETTINGS = {
     "awake": AWAKE_SETTINGS,
@@ -133,6 +139,7 @@ MODULE_SETTINGS = {
     "colorpicker": COLORPICKER_SETTINGS,
     "screenruler": SCREENRULER_SETTINGS,
     "textextractor": TEXTEXTRACTOR_SETTINGS,
+    "shortcutguide": SHORTCUTGUIDE_SETTINGS,
 }
 
 
