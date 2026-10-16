@@ -37,6 +37,7 @@ from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
 from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
 from tuxtoys.settings.screenruler_page import ScreenRulerPage  # noqa: E402
+from tuxtoys.settings.shortcutguide_page import ShortcutGuidePage  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
 from tuxtoys.settings.textextractor_page import TextExtractorPage  # noqa: E402
 
@@ -122,6 +123,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
         self.colorpicker = ColorPickerPage(client, self._error)
         self.screenruler = ScreenRulerPage(client, self._error)
         self.textextractor = TextExtractorPage(client, self._error)
+        self.shortcutguide = ShortcutGuidePage(client, self._error)
         self.pages = {
             "awake": self.awake,
             "lightswitch": self.lightswitch,
@@ -135,6 +137,7 @@ class SettingsWindow(Gtk.ApplicationWindow):
             "colorpicker": self.colorpicker,
             "screenruler": self.screenruler,
             "textextractor": self.textextractor,
+            "shortcutguide": self.shortcutguide,
         }
         pages = self.pages
         for heading, tools in catalog.grouped():
