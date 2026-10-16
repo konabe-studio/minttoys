@@ -115,6 +115,20 @@ under the pointer.
   `tesseract-ocr-*` package is installed; English and Hungarian come recommended with
   TuxToys. Pick one on the bar, or set the one it starts with.
 
+### Shortcut Guide
+
+Press Super+Shift+/ (Super+Shift+6 on a Hungarian keyboard) to see the keyboard
+shortcuts you have: Cinnamon's own, as its Keyboard settings list them, the ones TuxToys'
+tools use, and the active app's, for Nemo, Xed, the Terminal and Firefox.
+
+- **In Mint's own words:** Cinnamon's, Nemo's, Xed's and the Terminal's shortcuts carry
+  the labels of their own settings and menus, in your language.
+- **The keys you have:** shortcuts you changed show as you changed them.
+- **Search and pins:** search every list at once, and click a shortcut to pin it to the
+  top.
+- Press the shortcut again, or Escape, to put it away. Apps where it should not open can
+  be left out.
+
 ### File Locksmith
 
 Right-click a file or folder in Nemo and choose **What is using this?** to see which of
