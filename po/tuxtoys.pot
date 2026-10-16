@@ -3187,3 +3187,36 @@ msgstr ""
 #: tuxtoys/modules/shortcutguide/reading.py
 msgid "Pin the window"
 msgstr ""
+
+#: tuxtoys/shortcutguide/main.py
+#, python-brace-format
+msgid "Shortcut Guide needs PyGObject and GTK 3: {error}"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Search shortcuts"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Pinned shortcuts"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Unpin"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Pin"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "No shortcuts found."
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "or"
+msgstr ""
+
+#: tuxtoys/shortcutguide/window.py
+msgid "No pinned shortcuts"
+msgstr ""

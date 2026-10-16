@@ -3351,3 +3351,36 @@ msgstr "A Shortcut Guide megnyitása"
 #: tuxtoys/modules/shortcutguide/reading.py
 msgid "Pin the window"
 msgstr "Ablak rögzítése"
+
+#: tuxtoys/shortcutguide/main.py
+#, python-brace-format
+msgid "Shortcut Guide needs PyGObject and GTK 3: {error}"
+msgstr "A Shortcut Guide működéséhez PyGObject és GTK 3 kell: {error}"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Search shortcuts"
+msgstr "Gyorsbillentyűk keresése"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Pinned shortcuts"
+msgstr "Rögzített gyorsbillentyűk"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Unpin"
+msgstr "Rögzítés feloldása"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "Pin"
+msgstr "Rögzítés"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "No shortcuts found."
+msgstr "Nincs ilyen gyorsbillentyű."
+
+#: tuxtoys/shortcutguide/window.py
+msgid "or"
+msgstr "vagy"
+
+#: tuxtoys/shortcutguide/window.py
+msgid "No pinned shortcuts"
+msgstr "Nincs rögzített gyorsbillentyű"
