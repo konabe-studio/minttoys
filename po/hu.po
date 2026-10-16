@@ -3384,3 +3384,76 @@ msgstr "vagy"
 #: tuxtoys/shortcutguide/window.py
 msgid "No pinned shortcuts"
 msgstr "Nincs rögzített gyorsbillentyű"
+
+#: tuxtoys/cli.py
+msgid "show the keyboard shortcuts"
+msgstr "a gyorsbillentyűk megjelenítése"
+
+#: 
+msgid "Show Cinnamon's keyboard shortcuts, TuxToys' and the active app's, or put them away when they are showing."
+msgstr "A Cinnamon, a TuxToys és az aktív alkalmazás gyorsbillentyűinek megjelenítése, vagy elrejtése, ha látszanak."
+
+#: tuxtoys/cli.py
+msgid "Shortcut Guide is switched off in TuxToys."
+msgstr "A Shortcut Guide ki van kapcsolva a TuxToysban."
+
+#: tuxtoys/cli.py
+msgid "Switch it on with: tuxtoys modules enable shortcutguide"
+msgstr "Bekapcsolás: tuxtoys modules enable shortcutguide"
+
+#: tuxtoys/modules/shortcutguide/keys.py tuxtoys/settings/shortcutguide_page.py
+msgid "Left"
+msgstr "Bal"
+
+#: tuxtoys/modules/shortcutguide/keys.py tuxtoys/settings/shortcutguide_page.py
+msgid "Right"
+msgstr "Jobb"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Center"
+msgstr "Közép"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Shows the keyboard shortcuts of Cinnamon and of the active app."
+msgstr "Megmutatja a Cinnamon és az aktív alkalmazás gyorsbillentyűit."
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Use Shortcut Guide"
+msgstr "Shortcut Guide használata"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Change its keys in the Keyboard settings, under TuxToys: Shortcut Guide."
+msgstr "A billentyűit a Billentyűzet beállításaiban módosíthatja, a TuxToys: Shortcut Guide alatt."
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Open Shortcut Guide with a keyboard shortcut"
+msgstr "Shortcut Guide megnyitása gyorsbillentyűvel"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Appearance and behavior"
+msgstr "Megjelenés és működés"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Window position"
+msgstr "Ablak helyzete"
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "The edge of the screen it opens at, or the middle."
+msgstr "A képernyő melyik szélén nyíljon meg, vagy középen."
+
+#: 
+msgid "Shortcut Guide does not open over these. One on each line, by the name X11 knows it by (its WM_CLASS), for example firefox."
+msgstr "Ezek fölött a Shortcut Guide nem nyílik meg. Soronként egy, azon a néven, amelyen az X11 ismeri (WM_CLASS), például firefox."
+
+#: 
+msgid "Press the shortcut to see Cinnamon's keyboard shortcuts, TuxToys' and the active app's, for Nemo, Xed, the Terminal and Firefox. Search them, and click one to pin it to the top. Press the shortcut again, or Escape, to put it away."
+msgstr "Nyomja meg a gyorsbillentyűt, és megjelennek a Cinnamon, a TuxToys és az aktív alkalmazás gyorsbillentyűi (Nemo, Xed, Terminál és Firefox esetén). Kereshet köztük, és egy kattintással a lista tetejére rögzítheti őket. A gyorsbillentyű ismételt lenyomása vagy az Escape elrejti."
+
+#: tuxtoys/settings/shortcutguide_page.py
+msgid "Open Shortcut Guide now"
+msgstr "Shortcut Guide megnyitása most"
+
+#: tuxtoys/settings/shortcutguide_page.py
+#, python-brace-format
+msgid "{keys} is in use already. Give Shortcut Guide other keys in the Keyboard settings."
+msgstr "A(z) {keys} már foglalt. Adjon a Shortcut Guide-nak más billentyűket a Billentyűzet beállításaiban."
