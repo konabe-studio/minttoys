@@ -27,6 +27,7 @@ from tuxtoys.modules.imageresizer.options import Options as ResizerOptions  # no
 from tuxtoys.modules.imageresizer.options import Size as ResizerSize  # noqa: E402
 from tuxtoys.modules.renameplus.options import Options as RenameOptions  # noqa: E402
 from tuxtoys.modules.screenruler.options import Options as RulerOptions  # noqa: E402
+from tuxtoys.modules.shortcutguide.options import Options as GuideOptions  # noqa: E402
 from tuxtoys.modules.textextractor import tesseract  # noqa: E402
 from tuxtoys.modules.textextractor.options import Options as ExtractorOptions  # noqa: E402
 from tuxtoys.settings.alwaysontop_page import AlwaysOnTopPage  # noqa: E402
@@ -41,6 +42,7 @@ from tuxtoys.settings.newplus_page import NewPlusPage  # noqa: E402
 from tuxtoys.settings.overview_page import OverviewPage  # noqa: E402
 from tuxtoys.settings.renameplus_page import RenamePlusPage  # noqa: E402
 from tuxtoys.settings.screenruler_page import ScreenRulerPage  # noqa: E402
+from tuxtoys.settings.shortcutguide_page import ShortcutGuidePage  # noqa: E402
 from tuxtoys.settings.textextractor_page import TextExtractorPage  # noqa: E402
 from tuxtoys.settings.window import SettingsWindow  # noqa: E402
 
@@ -96,6 +98,8 @@ class FakeClient:
         self.ruler_settings = RulerOptions().settings()
         self.extractor_settings = ExtractorOptions().settings()
         self.extractor_calls: list[dict] = []
+        self.guide_settings = GuideOptions().settings()
+        self.guide_calls: list[dict] = []
         self.ruler_calls: list[dict] = []
         self.hosts_settings = HostsOptions().settings()
         self.hosts_calls: list[dict] = []
@@ -139,6 +143,7 @@ class FakeClient:
             ModuleInfo("colorpicker", "Color Picker", "", self.picker_on, ""),
             ModuleInfo("screenruler", "Screen Ruler", "", "on", ""),
             ModuleInfo("textextractor", "Text Extractor", "", "on", ""),
+            ModuleInfo("shortcutguide", "Shortcut Guide", "", "on", ""),
         ]
 
     def set_module_enabled(self, module_id: str, enabled: bool) -> None:
@@ -172,6 +177,8 @@ class FakeClient:
             return dict(self.ruler_settings)
         if module_id == "textextractor":
             return dict(self.extractor_settings)
+        if module_id == "shortcutguide":
+            return dict(self.guide_settings)
         if self.settings_fail:
             raise self.settings_fail
         return dict(self.settings)
@@ -190,6 +197,10 @@ class FakeClient:
         if module_id == "newplus":
             self.newplus_calls.append(dict(changes))
             self.newplus_settings.update(changes)
+            return
+        if module_id == "shortcutguide":
+            self.guide_calls.append(dict(changes))
+            self.guide_settings = GuideOptions.read(self.guide_settings).update(changes).settings()
             return
         if module_id == "textextractor":
             self.extractor_calls.append(dict(changes))
@@ -394,6 +405,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
         "colorpicker",
         "screenruler",
         "textextractor",
+        "shortcutguide",
         "locksmith",
         "newplus",
         "imageresizer",
@@ -407,7 +419,7 @@ def test_the_sidebar_starts_with_the_overview_then_the_tools_under_headings(
     assert rows[5].get_header() is None
     assert rows[6].get_header().get_text() == "Windows"
     assert rows[7].get_header().get_text() == "Screen"
-    assert rows[10].get_header().get_text() == "Files"
+    assert rows[11].get_header().get_text() == "Files"
     assert rows[0].get_child().get_children()[-1].get_text() == "Home"
     assert window.stack.get_visible_child_name() == "overview"
 
@@ -981,6 +993,24 @@ def test_textextractor_page(client: FakeClient) -> None:
     assert client.extractor_calls[-1] == {"language": "hun"}
     page.shortcut.content_widget.set_active(False)
     assert client.extractor_calls[-1] == {"shortcut": False}
+    page._opener(lambda message: None)
+    assert len(opened) == 1
+
+
+def test_shortcutguide_page(client: FakeClient) -> None:
+    opened: list[object] = []
+    page = ShortcutGuidePage(
+        client, lambda message: None, opened.append, FakeShortcut("<Shift><Super>slash")
+    )
+    assert page.keys.get_text() == "Shift+Super+/"
+    assert page.position.content_widget.get_active_id() == "left"
+    page.position.content_widget.set_active_id("right")
+    assert client.guide_calls[-1] == {"position": "right"}
+    page.shortcut.content_widget.set_active(False)
+    assert client.guide_calls[-1] == {"shortcut": False}
+    page.excluded.text = "gimp"
+    page._save_now()
+    assert client.guide_calls[-1] == {"excluded": "gimp"}
     page._opener(lambda message: None)
     assert len(opened) == 1
 

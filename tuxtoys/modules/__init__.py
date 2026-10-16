@@ -15,4 +15,5 @@ AVAILABLE: dict[str, str] = {
     "colorpicker": "tuxtoys.modules.colorpicker.module:ColorPicker",
     "screenruler": "tuxtoys.modules.screenruler.module:ScreenRuler",
     "textextractor": "tuxtoys.modules.textextractor.module:TextExtractor",
+    "shortcutguide": "tuxtoys.modules.shortcutguide.module:ShortcutGuide",
 }

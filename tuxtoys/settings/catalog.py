@@ -32,6 +32,7 @@ TOOLS = (
     Tool("colorpicker", "Color Picker", "screen", "color-select-symbolic"),
     Tool("screenruler", "Screen Ruler", "screen", f"{APP_ID}-screenruler-symbolic"),
     Tool("textextractor", "Text Extractor", "screen", f"{APP_ID}-textextractor-symbolic"),
+    Tool("shortcutguide", "Shortcut Guide", "screen", "input-keyboard-symbolic"),
 )
 
 
