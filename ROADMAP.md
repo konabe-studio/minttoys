@@ -38,7 +38,7 @@ Brings in privileged actions, through `pkexec` and a narrow polkit policy.
 | Hosts File Editor | Edits `/etc/hosts` in a window |
 | Environment Variables | Manages environment variables, with profiles |
 
-## M3: screen tools
+## M3: screen tools (done, released as 0.4.0)
 
 Brings in a shared overlay and screen region selection.
 
