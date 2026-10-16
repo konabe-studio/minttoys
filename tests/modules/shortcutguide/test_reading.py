@@ -47,7 +47,7 @@ def test_a_translation_comes_from_the_label_s_own_domain() -> None:
 SHEET = Sheet(
     "test",
     "Test",
-    "icon",
+    ("icon",),
     (
         Group(
             Text("Windows"),

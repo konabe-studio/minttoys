@@ -263,4 +263,4 @@ GROUPS = (
 # Cinnamon's heading over the user's own shortcuts in its Keyboard settings.
 CUSTOM_TITLE = Text("Custom Shortcuts", DOMAIN)
 
-SHEET = Sheet("cinnamon", "Cinnamon", "cinnamon-symbolic", GROUPS)
+SHEET = Sheet("cinnamon", "Cinnamon", ("cinnamon-symbolic",), GROUPS)
