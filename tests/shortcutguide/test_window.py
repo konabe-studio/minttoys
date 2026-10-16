@@ -25,7 +25,7 @@ TABS = [
     Tab(
         "cinnamon",
         "Cinnamon",
-        ("cinnamon-symbolic",),
+        ("cinnamon", "preferences-desktop"),
         [
             Section(
                 "Windows",
@@ -39,7 +39,7 @@ TABS = [
     Tab(
         "nemo",
         "Nemo",
-        ("system-file-manager-symbolic", "nemo"),
+        ("system-file-manager", "nemo"),
         [Section("File", (Row("nemo/NewTab", "New Tab", "", (("Ctrl", "T"),)),))],
     ),
 ]
