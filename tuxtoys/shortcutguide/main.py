@@ -32,7 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     from tuxtoys import APP_ID
     from tuxtoys.api import ModuleOff, NotRunning, Refused
     from tuxtoys.client import Client
-    from tuxtoys.modules.shortcutguide import apps, cinnamon
+    from tuxtoys.modules.shortcutguide import apps, cinnamon, keys
     from tuxtoys.modules.shortcutguide.options import Options
     from tuxtoys.modules.shortcutguide.placing import panel
     from tuxtoys.modules.shortcutguide.reading import (
@@ -103,12 +103,23 @@ def main(argv: list[str] | None = None) -> int:
         area = display.get_monitor_at_point(x, y).get_workarea()
         return panel(Monitor(area.x, area.y, area.width, area.height), options.position)
 
+    def name_above_tab() -> None:
+        """Names Muffin's Above_Tab after what the layout has on the key above Tab, the
+        key whose X keycode is 49 (TLDE).
+        """
+        keymap = Gdk.Keymap.get_for_display(Gdk.Display.get_default())
+        found, keyval, *_rest = keymap.translate_keyboard_state(49, Gdk.ModifierType(0), 0)
+        character = chr(Gdk.keyval_to_unicode(keyval)) if found else ""
+        if character.strip():
+            keys.LAYOUT_NAMES["Above_Tab"] = character.upper()
+
     def activate(app: Gtk.Application) -> None:
         nonlocal guide
         if guide is not None:
             # The shortcut again, from a second start: put the guide away.
             guide.close()
             return
+        name_above_tab()
         found, first = tabs()
         guide = Guide(app, found, first, options.pinned, geometry(), save_pins, open_settings)
         guide.present_with_time(Gtk.get_current_event_time() or Gdk.CURRENT_TIME)
