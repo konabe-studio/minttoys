@@ -29,7 +29,14 @@ class Overlay(Gtk.Window):
         self.screen_picture = screen
         self.pixels = Pixels.from_pixbuf(screen)
         self._cursor_name = cursor
+        # Where the pointer is, from the start: the window covers the root window from its
+        # corner, so the screen's coordinates are the window's. Without it, what a tool
+        # draws beside the pointer would sit in the corner until the mouse moved.
         self.pointer = (0, 0)
+        display = Gdk.Display.get_default()
+        if display is not None:
+            _screen, x, y = display.get_default_seat().get_pointer().get_position()
+            self.pointer = (x, y)
         self.move(0, 0)
         self.set_default_size(screen.get_width(), screen.get_height())
         self.set_app_paintable(True)
