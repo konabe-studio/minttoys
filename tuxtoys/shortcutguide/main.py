@@ -116,8 +116,12 @@ def main(argv: list[str] | None = None) -> int:
     def activate(app: Gtk.Application) -> None:
         nonlocal guide
         if guide is not None:
-            # The shortcut again, from a second start: put the guide away.
-            guide.close()
+            # The shortcut again, from a second start: put the guide away, unless it
+            # has only just opened, as when the first press was slow to show it.
+            if guide.just_opened():
+                guide.present()
+            else:
+                guide.close()
             return
         name_above_tab()
         found, first = tabs()
