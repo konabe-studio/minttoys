@@ -1,4 +1,4 @@
-tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
+tuxtoys (0.4.0) unstable; urgency=medium
 
   * Color Picker picks a color from anywhere on the screen with
     Super+Shift+C and copies it, in sixteen formats or one of your own,
@@ -16,7 +16,7 @@ tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
     active app's with Super+Shift+/, in their own words, with search and
     pins, as PowerToys' Shortcut Guide does.
 
- -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 11:45:00 +0200
+ -- Kōnabe Studio <konabe@proton.me>  Fri, 16 Oct 2026 12:20:00 +0200
 
 tuxtoys (0.3.0) unstable; urgency=medium
 
