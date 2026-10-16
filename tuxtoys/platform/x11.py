@@ -4,7 +4,8 @@ Which windows Muffin keeps above the others and where they are, through libwnck,
 the window manager's EWMH hints; and a window's opacity, through python3-xlib, as the
 _NET_WM_WINDOW_OPACITY hint Muffin draws windows with.
 
-And a picture of the whole screen, for the screen tools, through GDK.
+And a picture of the whole screen, for the screen tools, through GDK, and which application
+the active window belongs to, for Shortcut Guide.
 """
 
 from collections.abc import Callable, Iterable
@@ -93,6 +94,28 @@ def step_active_opacity(up: bool) -> bool:
         window.change_property(opacity, Xatom.CARDINAL, 32, [value])
         screen.sync()
         return True
+    finally:
+        screen.close()
+
+
+def active_window_class() -> str:
+    """The class part of the active window's WM_CLASS, "Nemo" for Nemo; "" when there is no
+    active window or it has none.
+    """
+    from Xlib import X, display, error
+
+    screen = display.Display()
+    try:
+        root = screen.screen().root
+        active = root.get_full_property(screen.intern_atom("_NET_ACTIVE_WINDOW"), X.AnyPropertyType)
+        if not active or not active.value or not active.value[0]:
+            return ""
+        window = screen.create_resource_object("window", active.value[0])
+        try:
+            wm_class = window.get_wm_class()
+        except error.XError:
+            return ""
+        return wm_class[1] if wm_class else ""
     finally:
         screen.close()
 
