@@ -40,6 +40,7 @@ from tuxtoys.settings.screenruler_page import ScreenRulerPage  # noqa: E402
 from tuxtoys.settings.shortcutguide_page import ShortcutGuidePage  # noqa: E402
 from tuxtoys.settings.simple_page import SimplePage  # noqa: E402
 from tuxtoys.settings.textextractor_page import TextExtractorPage  # noqa: E402
+from tuxtoys.settings.widgets import scroll_passes_through  # noqa: E402
 
 SIDEBAR_WIDTH = 200
 
@@ -221,6 +222,9 @@ class SettingsWindow(Gtk.ApplicationWindow):
         # Scrolls rather than grows when a translation makes the page longer.
         scroller = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER)
         scroller.add(widget)
+        # Scrolling the page must not turn the fields it passes over, those added later too.
+        scroll_passes_through(widget)
+        widget.connect("size-allocate", lambda page, _area: scroll_passes_through(page))
         # Shown before they are added: a GtkListBox gives no header to a hidden row, and a
         # GtkStack does not switch to a hidden page.
         scroller.show_all()

@@ -68,3 +68,26 @@ def open_keyboard_settings(show_error: Callable[[str], None]) -> None:
         Gio.Subprocess.new(["cinnamon-settings", "keyboard"], Gio.SubprocessFlags.NONE)
     except GLib.Error as error:
         show_error(error.message)
+
+
+# Fields that GTK lets the mouse wheel change while the pointer is over them.
+_WHEEL_CHANGES = (Gtk.ComboBox, Gtk.SpinButton, Gtk.Scale)
+
+
+def _pass_scroll(widget: Gtk.Widget, _event: object) -> bool:
+    # Not to the field, on to the page under it, which scrolls.
+    widget.stop_emission_by_name("scroll-event")
+    return False
+
+
+def scroll_passes_through(root: Gtk.Widget) -> None:
+    """Keeps the mouse wheel from changing the fields under `root` while the page is
+    scrolled: GTK would otherwise turn a combo box, a spin button or a slider the pointer
+    passes over. Safe to call again as rows come and go.
+    """
+    if isinstance(root, _WHEEL_CHANGES) and not getattr(root, "_wheel_passes", False):
+        root._wheel_passes = True
+        root.connect("scroll-event", _pass_scroll)
+    if isinstance(root, Gtk.Container):
+        for child in root.get_children():
+            scroll_passes_through(child)
