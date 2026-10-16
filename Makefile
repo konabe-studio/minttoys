@@ -86,6 +86,8 @@ install: all
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-screen-ruler
 	$(SUBSTITUTE) data/launchers/tuxtoys-text-extractor.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-text-extractor
+	$(SUBSTITUTE) data/launchers/tuxtoys-shortcut-guide.in \
+		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-shortcut-guide
 	$(SUBSTITUTE) data/launchers/tuxtoys-hosts-editor.in \
 		> $(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/tuxtoys $(DESTDIR)$(PREFIX)/bin/tuxtoys-settings \
@@ -101,6 +103,7 @@ install: all
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-color-picker \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-screen-ruler \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-text-extractor \
+		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-shortcut-guide \
 		$(DESTDIR)$(LIBEXECDIR)/tuxtoys-hosts-editor
 	install -d $(DESTDIR)$(SYSCONFDIR)/xdg/autostart $(DESTDIR)$(DATADIR)/dbus-1/services
 	for entry in build/autostart/*.desktop; do \

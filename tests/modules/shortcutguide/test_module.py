@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from tuxtoys.modules.base import Context
-from tuxtoys.modules.shortcutguide.module import ShortcutGuide
+from tuxtoys.modules.shortcutguide.module import ShortcutGuide, guide_command
 from tuxtoys.modules.shortcutguide.options import Options
 
 
@@ -58,3 +59,7 @@ def test_keys_in_use_are_left_alone() -> None:
 def test_settings_are_checked_all_or_none() -> None:
     settings = ShortcutGuide.read_settings({})
     assert ShortcutGuide.check_settings(settings, {"position": "center"})["position"] == "center"
+
+
+def test_guide_command(tmp_path: Path) -> None:
+    assert guide_command(tmp_path)[-2:] == ["-m", "tuxtoys.shortcutguide"]
