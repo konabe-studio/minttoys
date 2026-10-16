@@ -15,6 +15,8 @@ tuxtoys (0.4.0) unstable; urgency=medium
   * Shortcut Guide shows Cinnamon's keyboard shortcuts, TuxToys' and the
     active app's with Super+Shift+/, in their own words, with search and
     pins, as PowerToys' Shortcut Guide does.
+  * Scrolling a settings page no longer changes the choices, numbers and
+    sliders the pointer passes over.
 
  -- Kōnabe Studio <konabe@proton.me>  Fri, 16 Oct 2026 12:20:00 +0200
 
