@@ -3143,3 +3143,211 @@ msgstr "Az eredmény egy sorban (S)"
 #: tuxtoys/textextractor/window.py
 msgid "Format the result as a table (T)"
 msgstr "Az eredmény táblázatként (T)"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Most applications"
+msgstr "A legtöbb alkalmazásban"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Cut"
+msgstr "Kivágás"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Paste"
+msgstr "Beillesztés"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Undo"
+msgstr "Visszavonás"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Select all"
+msgstr "Összes kijelölése"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Find"
+msgstr "Keresés"
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/keys.py
+msgid "Print"
+msgstr "Nyomtatás"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Close the window or tab"
+msgstr "Az ablak vagy a lap bezárása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Quit the application"
+msgstr "Kilépés az alkalmazásból"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Help"
+msgstr "Súgó"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open the menu bar"
+msgstr "A menüsor megnyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open the context menu"
+msgstr "A helyi menü megnyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Move to the next control"
+msgstr "Ugrás a következő vezérlőre"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Move to the previous control"
+msgstr "Ugrás az előző vezérlőre"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Full screen"
+msgstr "Teljes képernyő"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Tabs and windows"
+msgstr "Lapok és ablakok"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Navigation"
+msgstr "Navigáció"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Page"
+msgstr "Oldal"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Bookmarks and tools"
+msgstr "Könyvjelzők és eszközök"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new tab"
+msgstr "Új lap megnyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Close the tab"
+msgstr "A lap bezárása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reopen the closed tab"
+msgstr "A bezárt lap újranyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Next tab"
+msgstr "Következő lap"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Previous tab"
+msgstr "Előző lap"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new window"
+msgstr "Új ablak megnyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new private window"
+msgstr "Új privát ablak megnyitása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Go to the address bar"
+msgstr "Ugrás a címsorra"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Back"
+msgstr "Vissza"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Forward"
+msgstr "Előre"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Home page"
+msgstr "Kezdőlap"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reload, skipping the cache"
+msgstr "Újratöltés a gyorsítótár kihagyásával"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Find in the page"
+msgstr "Keresés az oldalon"
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/cinnamon.py
+msgid "Zoom in"
+msgstr "Nagyítás"
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/cinnamon.py
+msgid "Zoom out"
+msgstr "Kicsinyítés"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reset the zoom"
+msgstr "A nagyítás visszaállítása"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Save the page"
+msgstr "Az oldal mentése"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Bookmark the page"
+msgstr "Az oldal hozzáadása a könyvjelzőkhöz"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Show all bookmarks"
+msgstr "Az összes könyvjelző megjelenítése"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "History sidebar"
+msgstr "Előzmények oldalsáv"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Downloads"
+msgstr "Letöltések"
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Web developer tools"
+msgstr "Webfejlesztői eszközök"
+
+#: tuxtoys/modules/shortcutguide/module.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Shortcut Guide"
+msgstr "Shortcut Guide"
+
+#: tuxtoys/modules/shortcutguide/module.py
+msgid "Shows Cinnamon's keyboard shortcuts and the active app's with Super+Shift+/."
+msgstr "A Super+Shift+/ billentyűkkel megmutatja a Cinnamon és az aktív alkalmazás gyorsbillentyűit."
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Turn on or off"
+msgstr "Be- vagy kikapcsolás"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Switch between light and dark"
+msgstr "Váltás a világos és a sötét között"
+
+#: tuxtoys/modules/shortcutguide/cinnamon.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Increase opacity"
+msgstr "Átlátszatlanság növelése"
+
+#: tuxtoys/modules/shortcutguide/cinnamon.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Decrease opacity"
+msgstr "Átlátszatlanság csökkentése"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Pick a color"
+msgstr "Szín kiválasztása"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Start measuring"
+msgstr "Mérés indítása"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Start extracting text"
+msgstr "Szöveg kinyerésének indítása"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Open Shortcut Guide"
+msgstr "A Shortcut Guide megnyitása"
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Pin the window"
+msgstr "Ablak rögzítése"
