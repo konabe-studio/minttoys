@@ -1,5 +1,6 @@
 import pytest
 
+from tuxtoys.modules.shortcutguide import keys
 from tuxtoys.modules.shortcutguide.keys import caps, key_name
 
 
@@ -33,3 +34,12 @@ def test_what_is_not_a_shortcut_has_no_keycaps(keys: str) -> None:
 def test_a_key_without_a_name_of_its_own_drops_its_underscores() -> None:
     assert key_name("Scroll_Lock") == "Scroll Lock"
     assert key_name("backslash") == "\\"
+
+
+def test_the_key_above_tab_is_named_as_the_layout_has_it() -> None:
+    assert caps("<Alt>Above_Tab") == ["Alt", "`"]
+    keys.LAYOUT_NAMES["Above_Tab"] = "0"
+    try:
+        assert caps("<Alt>Above_Tab") == ["Alt", "0"]
+    finally:
+        keys.LAYOUT_NAMES.clear()

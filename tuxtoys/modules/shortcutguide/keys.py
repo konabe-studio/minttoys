@@ -52,7 +52,16 @@ _NAMES = {
 _CAMEL = re.compile(r"(?<=[a-z])(?=[A-Z0-9])")
 
 
+# Names that depend on the keyboard layout, which the window fills in: Muffin's Above_Tab is
+# the key above Tab, whatever the layout has there ("0" on a Hungarian keyboard).
+LAYOUT_NAMES: dict[str, str] = {}
+
+
 def key_name(key: str) -> str:
+    if key in LAYOUT_NAMES:
+        return LAYOUT_NAMES[key]
+    if key == "Above_Tab":
+        return "`"
     if key in _NAMES:
         return _NAMES[key]
     if len(key) == 1:
