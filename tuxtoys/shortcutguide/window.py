@@ -5,6 +5,7 @@ ones first. Click a shortcut, right-click it, or press Enter or the Menu key on 
 or unpin it. Escape, or clicking elsewhere, puts it away.
 """
 
+import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
@@ -39,6 +40,10 @@ CSS = b"""
 list row.shortcutguide-chosen { background-color: alpha(@theme_selected_bg_color, 0.3); }
 """
 SEARCH = "search"
+# Seconds after opening in which it stays: the window manager may hand the focus back
+# for a moment, and a second press of the shortcut, made while it was still starting,
+# would put it away as soon as it showed.
+STAYS_FOR = 1.0
 
 
 @dataclass(frozen=True)
@@ -115,6 +120,7 @@ class Guide(Gtk.ApplicationWindow):
         self._save_pins = save_pins
         self._open_settings = open_settings
         self._was_active = False
+        self.opened_at = time.monotonic()
         self.set_skip_taskbar_hint(True)
         self.set_skip_pager_hint(True)
         self.set_keep_above(True)
@@ -339,7 +345,10 @@ class Guide(Gtk.ApplicationWindow):
         elif self._was_active:
             GLib.idle_add(self._close_if_inactive)
 
+    def just_opened(self) -> bool:
+        return time.monotonic() - self.opened_at < STAYS_FOR
+
     def _close_if_inactive(self) -> bool:
-        if not self.is_active():
+        if not self.is_active() and not self.just_opened():
             self.close()
         return False

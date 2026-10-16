@@ -102,6 +102,22 @@ def test_a_pinned_row_comes_first_and_is_saved() -> None:
     guide.destroy()
 
 
+def test_it_stays_when_the_focus_goes_just_after_it_opened() -> None:
+    guide, _saved = make()
+    closed = []
+    guide.connect("delete-event", lambda *_args: closed.append(True) or True)
+    assert guide.just_opened()
+    guide._close_if_inactive()
+    assert not closed
+    guide.opened_at -= 5
+    assert not guide.just_opened()
+    guide._close_if_inactive()
+    while Gtk.events_pending():
+        Gtk.main_iteration()
+    assert closed == [True] or guide.is_active()
+    guide.destroy()
+
+
 def test_escape_clears_the_search_first_then_closes() -> None:
     guide, _saved = make()
     closed = []
