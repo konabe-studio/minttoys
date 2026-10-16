@@ -2979,3 +2979,211 @@ msgstr ""
 #: tuxtoys/textextractor/window.py
 msgid "Format the result as a table (T)"
 msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Most applications"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Cut"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Paste"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Undo"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Select all"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Find"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/keys.py
+msgid "Print"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Close the window or tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Quit the application"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Help"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open the menu bar"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open the context menu"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Move to the next control"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Move to the previous control"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Full screen"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Tabs and windows"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Navigation"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Page"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Bookmarks and tools"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Close the tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reopen the closed tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Next tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Previous tab"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new window"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Open a new private window"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Go to the address bar"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Back"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Forward"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Home page"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reload, skipping the cache"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Find in the page"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/cinnamon.py
+msgid "Zoom in"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py tuxtoys/modules/shortcutguide/cinnamon.py
+msgid "Zoom out"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Reset the zoom"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Save the page"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Bookmark the page"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Show all bookmarks"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "History sidebar"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Downloads"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/apps.py
+msgid "Web developer tools"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/module.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Shortcut Guide"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/module.py
+msgid "Shows Cinnamon's keyboard shortcuts and the active app's with Super+Shift+/."
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Turn on or off"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Switch between light and dark"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/cinnamon.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Increase opacity"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/cinnamon.py tuxtoys/modules/shortcutguide/reading.py
+msgid "Decrease opacity"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Pick a color"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Start measuring"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Start extracting text"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Open Shortcut Guide"
+msgstr ""
+
+#: tuxtoys/modules/shortcutguide/reading.py
+msgid "Pin the window"
+msgstr ""
