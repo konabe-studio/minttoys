@@ -3,11 +3,14 @@ PowerToys, among Cinnamon's custom shortcuts while it is on, and serves its sett
 window is a program of its own, which the shortcut starts through `tuxtoys shortcutguide`.
 """
 
+import shlex
 from collections.abc import Callable, Mapping
+from pathlib import Path
 from typing import Any, ClassVar
 
 from tuxtoys.api import SHORTCUTGUIDE_SETTINGS
 from tuxtoys.core.i18n import _
+from tuxtoys.core.nemo_action import PACKAGE_ROOT, program
 from tuxtoys.core.shortcut import CustomShortcut, Keybindings, cinnamon_keybindings
 from tuxtoys.modules.base import Context, Module
 from tuxtoys.modules.shortcutguide.options import (
@@ -16,6 +19,14 @@ from tuxtoys.modules.shortcutguide.options import (
     SHORTCUT_NAME,
     Options,
 )
+
+LAUNCHER = "tuxtoys-shortcut-guide"
+PROGRAM = "tuxtoys.shortcutguide"
+
+
+def guide_command(package_root: Path = PACKAGE_ROOT) -> list[str]:
+    """The command that opens Shortcut Guide: the installed program, or the checkout's."""
+    return shlex.split(program(package_root, LAUNCHER, PROGRAM, "")[0])
 
 
 class ShortcutGuide(Module):
