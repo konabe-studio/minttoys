@@ -375,3 +375,20 @@ class TestTextExtractor:
         assert status == 1
         assert "Text Extractor is switched off in TuxToys." in err
         assert "tuxtoys modules enable textextractor" in err
+
+
+class TestShortcutGuide:
+    def test_starts_it_while_it_is_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE, ModuleInfo("shortcutguide", "Shortcut Guide", "", "on", "")]
+        started: list[list[str]] = []
+        out, err = io.StringIO(), io.StringIO()
+        status = cli.main(["shortcutguide"], lambda: client, lambda: NOW, out, err, started.append)
+        assert status == 0
+        assert started[0][-2:] == ["-m", "tuxtoys.shortcutguide"]
+
+    def test_says_how_to_switch_it_on(self, client: FakeClient) -> None:
+        client.infos = [AWAKE]
+        status, _out, err = run(client, "shortcutguide")
+        assert status == 1
+        assert "Shortcut Guide is switched off in TuxToys." in err
+        assert "tuxtoys modules enable shortcutguide" in err
