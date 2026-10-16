@@ -52,8 +52,9 @@ class Sheet:
     id: str
     # The program's name, which is not translated.
     name: str
-    # A symbolic icon from the theme.
-    icon: str
+    # Icons from the theme, the first one it has: a symbolic one first, so the rail
+    # matches the theme's colors, then the app's own.
+    icons: tuple[str, ...]
     groups: tuple[Group, ...]
     # The windows it is the sheet for, by the class part of WM_CLASS, lower-cased.
     wm_classes: tuple[str, ...] = ()

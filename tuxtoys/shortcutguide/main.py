@@ -83,17 +83,17 @@ def main(argv: list[str] | None = None) -> int:
         lookup = Settings()
         customs, above = customs_and_above()
         found = [
-            Tab("cinnamon", "Cinnamon", cinnamon.SHEET.icon, cinnamon_sections(lookup, customs))
+            Tab("cinnamon", "Cinnamon", cinnamon.SHEET.icons, cinnamon_sections(lookup, customs))
         ]
         ours = tuxtoys_sections(customs, above)
         if ours:
-            found.append(Tab("tuxtoys", "TuxToys", f"{APP_ID}-symbolic", ours))
+            found.append(Tab("tuxtoys", "TuxToys", (f"{APP_ID}-symbolic",), ours))
         first = "cinnamon"
         sheet = apps.for_window(wm_class)
         if sheet is not None:
             sections = read(sheet, lookup)
             if sections:
-                found.append(Tab(sheet.id, sheet.name, sheet.icon, sections))
+                found.append(Tab(sheet.id, sheet.name, sheet.icons, sections))
                 first = sheet.id
         return found, first
 

@@ -44,13 +44,18 @@ SEARCH = "search"
 class Tab:
     id: str
     name: str
-    icon: str
+    icons: Sequence[str]
     sections: Sequence[Section]
 
 
-def themed(name: str, size: Gtk.IconSize) -> Gtk.Image:
-    """An icon from the theme; one of our own from the checkout until it is installed."""
-    if Gtk.IconTheme.get_default().has_icon(name) or not name.startswith(APP_ID):
+def themed(names: str | Sequence[str], size: Gtk.IconSize) -> Gtk.Image:
+    """The first of these icons the theme has; one of our own from the checkout until it
+    is installed."""
+    if isinstance(names, str):
+        names = (names,)
+    theme = Gtk.IconTheme.get_default()
+    name = next((name for name in names if theme.has_icon(name)), names[-1])
+    if theme.has_icon(name) or not name.startswith(APP_ID):
         return Gtk.Image.new_from_icon_name(name, size)
     from tuxtoys.core.nemo_action import PACKAGE_ROOT
 
@@ -127,7 +132,7 @@ class Guide(Gtk.ApplicationWindow):
         self.stack = Gtk.Stack(hexpand=True, transition_type=Gtk.StackTransitionType.NONE)
         body.add(self.stack)
         self._pages: dict[str, Gtk.Box] = {}
-        for tab in [*self.tabs, Tab(SEARCH, "", "", ())]:
+        for tab in [*self.tabs, Tab(SEARCH, "", (), ())]:
             scrolled = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER)
             content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             for side in ("start", "end"):
@@ -171,7 +176,7 @@ class Guide(Gtk.ApplicationWindow):
             row = Gtk.ListBoxRow()
             row.tab_id = tab.id
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
-            box.add(themed(tab.icon, Gtk.IconSize.LARGE_TOOLBAR))
+            box.add(themed(tab.icons, Gtk.IconSize.LARGE_TOOLBAR))
             name = Gtk.Label(label=tab.name, max_width_chars=10)
             name.set_ellipsize(Pango.EllipsizeMode.END)
             name.get_style_context().add_class("caption")
