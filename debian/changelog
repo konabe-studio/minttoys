@@ -12,6 +12,9 @@ tuxtoys (0.4.0~dev) UNRELEASED; urgency=medium
     table, as PowerToys' Text Extractor does. tesseract-ocr with its English
     and Hungarian data is recommended.
   * tuxtoys-settings --page opens a tool's page.
+  * Shortcut Guide shows Cinnamon's keyboard shortcuts, TuxToys' and the
+    active app's with Super+Shift+/, in their own words, with search and
+    pins, as PowerToys' Shortcut Guide does.
 
  -- Kōnabe Studio <konabe@proton.me>  Thu, 15 Oct 2026 11:45:00 +0200
 
