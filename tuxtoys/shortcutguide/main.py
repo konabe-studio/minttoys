@@ -87,7 +87,7 @@ def main(argv: list[str] | None = None) -> int:
         ]
         ours = tuxtoys_sections(customs, above)
         if ours:
-            found.append(Tab("tuxtoys", "TuxToys", (f"{APP_ID}-symbolic",), ours))
+            found.append(Tab("tuxtoys", "TuxToys", (APP_ID,), ours))
         first = "cinnamon"
         sheet = apps.for_window(wm_class)
         if sheet is not None:

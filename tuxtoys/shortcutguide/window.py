@@ -25,7 +25,8 @@ from tuxtoys.modules.shortcutguide.reading import (  # noqa: E402
     toggle_pin,
 )
 
-ICONS = "data/icons/hicolor/symbolic/apps"
+# Our own icons in the checkout, until they are installed.
+ICONS = ("data/icons/hicolor/symbolic/apps", "data/icons/hicolor/scalable/apps")
 CSS = b"""
 .shortcutguide-keycap {
     border: 1px solid alpha(@theme_fg_color, 0.3);
@@ -59,7 +60,8 @@ def themed(names: str | Sequence[str], size: Gtk.IconSize) -> Gtk.Image:
         return Gtk.Image.new_from_icon_name(name, size)
     from tuxtoys.core.nemo_action import PACKAGE_ROOT
 
-    path = PACKAGE_ROOT / ICONS / f"{name}.svg"
+    paths = [PACKAGE_ROOT / folder / f"{name}.svg" for folder in ICONS]
+    path = next((path for path in paths if path.exists()), paths[0])
     return Gtk.Image.new_from_gicon(Gio.FileIcon.new(Gio.File.new_for_path(str(path))), size)
 
 

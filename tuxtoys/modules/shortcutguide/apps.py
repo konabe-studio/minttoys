@@ -67,7 +67,7 @@ COMMON = Group(
 NEMO = Sheet(
     "nemo",
     "Nemo",
-    ("system-file-manager-symbolic", "nemo"),
+    ("system-file-manager", "nemo"),
     (
         Group(
             Text("_File", "nemo"),
@@ -142,7 +142,7 @@ NEMO = Sheet(
 XED = Sheet(
     "xed",
     "Xed",
-    ("accessories-text-editor-symbolic", "xed"),
+    ("org.x.editor", "xed", "accessories-text-editor"),
     (
         Group(
             Text("_File", "xed"),
@@ -203,7 +203,7 @@ XED = Sheet(
 TERMINAL = Sheet(
     "terminal",
     "Terminal",
-    ("utilities-terminal-symbolic", "org.gnome.Terminal"),
+    ("org.gnome.Terminal", "utilities-terminal"),
     (
         Group(
             Text("File", "gnome-terminal"),
@@ -258,7 +258,7 @@ TERMINAL = Sheet(
 FIREFOX = Sheet(
     "firefox",
     "Firefox",
-    ("firefox-symbolic", "firefox", "web-browser-symbolic"),
+    ("firefox", "web-browser"),
     (
         Group(
             # TRANSLATORS: a heading in Shortcut Guide's Firefox list.
