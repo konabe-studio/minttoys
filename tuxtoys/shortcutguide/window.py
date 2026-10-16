@@ -1,8 +1,8 @@
 """Shortcut Guide's window, laid out as PowerToys' is: a tall panel with a title, a search
-field and a close button at the top, a rail of sheets on the left (Cinnamon, TuxToys, the
-active app), and the chosen sheet's shortcuts beside it, pinned ones first. Right-click a
-shortcut, or press the Menu key on it, to pin or unpin it. Escape, or clicking elsewhere,
-puts it away.
+field and the theme's own close button in its header bar, a rail of sheets on the left
+(Cinnamon, TuxToys, the active app), and the chosen sheet's shortcuts beside it, pinned
+ones first. Click a shortcut, right-click it, or press Enter or the Menu key on it, to pin
+or unpin it. Escape, or clicking elsewhere, puts it away.
 """
 
 from collections.abc import Callable, Sequence
@@ -27,7 +27,6 @@ from tuxtoys.modules.shortcutguide.reading import (  # noqa: E402
 
 ICONS = "data/icons/hicolor/symbolic/apps"
 CSS = b"""
-window.shortcutguide { border: 1px solid @borders; }
 .shortcutguide-keycap {
     border: 1px solid alpha(@theme_fg_color, 0.3);
     border-radius: 4px;
@@ -36,6 +35,7 @@ window.shortcutguide { border: 1px solid @borders; }
 }
 .shortcutguide-heading { font-weight: bold; }
 .shortcutguide-rail row { padding: 6px 4px; }
+list row.shortcutguide-chosen { background-color: alpha(@theme_selected_bg_color, 0.3); }
 """
 SEARCH = "search"
 
@@ -108,7 +108,6 @@ class Guide(Gtk.ApplicationWindow):
         self._save_pins = save_pins
         self._open_settings = open_settings
         self._was_active = False
-        self.set_decorated(False)
         self.set_skip_taskbar_hint(True)
         self.set_skip_pager_hint(True)
         self.set_keep_above(True)
@@ -118,10 +117,9 @@ class Guide(Gtk.ApplicationWindow):
         self.set_size_request(width, height)
         self.move(x, y)
 
+        self.set_titlebar(self._header(width))
         outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.add(outer)
-        outer.add(self._header())
-        outer.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
         body = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, vexpand=True)
         outer.add(body)
         body.add(self._rail())
@@ -148,21 +146,20 @@ class Guide(Gtk.ApplicationWindow):
         self.rail.select_row(chosen or self.rail.get_row_at_index(0))
         self.search.grab_focus()
 
-    def _header(self) -> Gtk.Box:
-        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        for side in ("top", "bottom", "start", "end"):
-            getattr(header, f"set_margin_{side}")(8)
-        header.add(Gtk.Image.new_from_icon_name("input-keyboard-symbolic", Gtk.IconSize.MENU))
-        header.add(Gtk.Label(label=_("Shortcut Guide"), xalign=0))
-        self.search = Gtk.SearchEntry(hexpand=True)
+    def _header(self, width: int) -> Gtk.HeaderBar:
+        """A header bar, so the close button is the theme's own, as on Mint's windows."""
+        header = Gtk.HeaderBar(show_close_button=True)
+        title = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        title.add(Gtk.Image.new_from_icon_name("input-keyboard-symbolic", Gtk.IconSize.MENU))
+        title.add(Gtk.Label(label=_("Shortcut Guide"), xalign=0))
+        header.pack_start(title)
+        self.search = Gtk.SearchEntry()
         self.search.set_placeholder_text(_("Search shortcuts"))
+        # A header bar keeps its title in the middle at its own width: the most that fits
+        # beside the title and the close button.
+        self.search.set_size_request(max(160, width - 240), -1)
         self.search.connect("search-changed", self._on_search)
-        header.add(self.search)
-        close = Gtk.Button.new_from_icon_name("window-close-symbolic", Gtk.IconSize.MENU)
-        close.get_style_context().add_class("flat")
-        close.set_tooltip_text(_("Close (Esc)"))
-        close.connect("clicked", lambda _button: self.close())
-        header.add(close)
+        header.set_custom_title(self.search)
         return header
 
     def _rail(self) -> Gtk.Box:
@@ -203,6 +200,7 @@ class Guide(Gtk.ApplicationWindow):
         listing.get_style_context().add_class("frame")
         for row in rows:
             listing.add(self._row(row))
+        listing.connect("row-activated", lambda _list, item: self._pin_menu(item, item.row))
         content.add(listing)
 
     def _fill(self, tab: Tab) -> None:
@@ -237,7 +235,10 @@ class Guide(Gtk.ApplicationWindow):
         content.show_all()
 
     def _row(self, row: Row) -> Gtk.ListBoxRow:
-        item = Gtk.ListBoxRow(activatable=False)
+        # Activatable, so the theme lights it up under the pointer; Enter or a click opens
+        # the menu to pin it.
+        item = Gtk.ListBoxRow(activatable=True)
+        item.row = row
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
         for side in ("top", "bottom", "start", "end"):
             getattr(box, f"set_margin_{side}")(6)
@@ -252,13 +253,17 @@ class Guide(Gtk.ApplicationWindow):
         box.add(keycaps(row.keys))
         events = Gtk.EventBox()
         events.add(box)
-        events.connect("button-press-event", self._on_row_button, row)
+        events.connect("button-press-event", self._on_row_button, item)
         item.add(events)
         item.connect("popup-menu", lambda widget: self._pin_menu(widget, row) or True)
         return item
 
-    def _pin_menu(self, widget: Gtk.Widget, row: Row) -> None:
-        popover = Gtk.Popover(relative_to=widget)
+    def _pin_menu(self, item: Gtk.ListBoxRow, row: Row) -> None:
+        """The menu to pin or unpin a row, which is marked while the menu is open."""
+        chosen = item.get_style_context()
+        chosen.add_class("shortcutguide-chosen")
+        popover = Gtk.Popover(relative_to=item)
+        popover.connect("closed", lambda _popover: chosen.remove_class("shortcutguide-chosen"))
         button = Gtk.ModelButton(text=_("Unpin") if row.id in self.pins else _("Pin"))
         button.connect("clicked", lambda _button: self._toggle(row))
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -282,9 +287,11 @@ class Guide(Gtk.ApplicationWindow):
             self._fill_search(self.search.get_text())
         return False
 
-    def _on_row_button(self, widget: Gtk.Widget, event: Gdk.EventButton, row: Row) -> bool:
+    def _on_row_button(
+        self, _widget: Gtk.Widget, event: Gdk.EventButton, item: Gtk.ListBoxRow
+    ) -> bool:
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == Gdk.BUTTON_SECONDARY:
-            self._pin_menu(widget, row)
+            self._pin_menu(item, item.row)
             return True
         return False
 
